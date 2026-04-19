@@ -1,5 +1,22 @@
+# Visual Studio
 .vs/
-bin/
-obj/
 *.user
 *.suo
+
+# Compilación
+x64/
+Debug/
+Release/
+bin/
+obj/
+
+# Archivos temporales
+*.log
+*.tlog
+*.idb
+*.pdb
+*.ilk
+*.recipe
+
+# Otros
+*.VC.db
