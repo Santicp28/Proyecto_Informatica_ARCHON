@@ -142,9 +142,11 @@
     <ClCompile Include="src\Menu.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="includes\Color.h" />
     <ClInclude Include="includes\freeglut.h" />
     <ClInclude Include="includes\Juego.h" />
     <ClInclude Include="includes\Menu.h" />
+    <ClInclude Include="includes\Vector2D.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".getignore" />
