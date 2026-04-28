@@ -141,6 +141,7 @@
     <ClCompile Include="src\Juego.cpp" />
     <ClCompile Include="src\Menu.cpp" />
     <ClCompile Include="src\piezas.cpp" />
+    <ClCompile Include="src\Source.cpp" />
     <ClCompile Include="src\Tablero.cpp" />
   </ItemGroup>
   <ItemGroup>
