@@ -1,7 +1,9 @@
 #pragma once
-
 #include "Juego.h"
 #include "freeglut.h"
+#include "Tablero.h"
+#include "TiposPiezas.h"
+#include <vector>
 
 Juego juego;
 
