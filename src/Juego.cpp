@@ -23,6 +23,7 @@ void Juego::dibuja()
     case EstadoJuego::ARENA:
         glClearColor(0.25f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        //arena.dibuja();
         break;
 
     case EstadoJuego::RANKING:
@@ -39,8 +40,38 @@ void Juego::dibuja()
 
 void Juego::mueve(float dt)
 {
-    if (estado == EstadoJuego::MENU_PRINCIPAL) {
+    switch (estado)
+    {
+    case EstadoJuego::MENU_PRINCIPAL:
+
         menu.mueve(dt);
+
+        break;
+
+    case EstadoJuego::TABLERO:
+
+        // tablero.mueve(dt);
+
+        break;
+
+    case EstadoJuego::ARENA:
+
+        arena.mueve(dt);
+
+        if (arena.terminado())
+        {
+            estado = EstadoJuego::TABLERO;
+        }
+
+        break;
+
+    case EstadoJuego::RANKING:
+
+        break;
+
+    case EstadoJuego::FIN_PARTIDA:
+
+        break;
     }
 }
 
