@@ -138,9 +138,12 @@
   <ItemGroup>
     <ClCompile Include="src\ARCHON.cpp" />
     <ClCompile Include="src\Arena.cpp" />
+    <ClCompile Include="src\BordesArena.cpp" />
+    <ClCompile Include="src\InteraccionArena.cpp" />
     <ClCompile Include="src\interacción.cpp" />
     <ClCompile Include="src\Juego.cpp" />
     <ClCompile Include="src\Menu.cpp" />
+    <ClCompile Include="src\Pared.cpp" />
     <ClCompile Include="src\Tablero_logica.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -151,6 +154,9 @@
     <ClInclude Include="includes\Tablero_logica.h" />
     <ClInclude Include="includes\Vector2D.h" />
     <ClInclude Include="src\Arena.h" />
+    <ClInclude Include="src\BordesArena.h" />
+    <ClInclude Include="src\InteraccionArena.h" />
+    <ClInclude Include="src\Pared.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".getignore" />
