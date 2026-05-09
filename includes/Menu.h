@@ -3,17 +3,15 @@
 #include <string>
 #include <vector>
 
-using namespace std;
-
 struct Boton {
     float x, y, w, h;
-    string texto;
+    std::string texto;
     bool hover;
 };
 
 class Menu {
 private:
-    vector<Boton> botones;
+    std::vector<Boton> botones;
     bool quiere_jugar;
     bool quiere_salir;
     bool quiere_ranking;
@@ -24,7 +22,6 @@ private:
 public:
     void inicializa(int anchoVentana, int altoVentana);
     void dibuja();
-    void mueve(float dt);
 
     void tecla(unsigned char key);
     void teclaEspecial(int key);

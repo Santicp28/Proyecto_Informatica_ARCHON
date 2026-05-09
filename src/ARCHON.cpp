@@ -1,6 +1,4 @@
-#pragma once
-
-#include "Juego.h"
+    #include "Juego.h"
 #include "freeglut.h"
 
 Juego juego;
