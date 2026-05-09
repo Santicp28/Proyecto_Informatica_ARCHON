@@ -25,6 +25,7 @@ void Juego::dibuja()
     case EstadoJuego::ARENA:
         glClearColor(0.25f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        //arena.dibuja();
         break;
 
     case EstadoJuego::RANKING:
@@ -41,7 +42,6 @@ void Juego::dibuja()
 
 void Juego::mueve(float dt)
 {
-    
 
 }
 

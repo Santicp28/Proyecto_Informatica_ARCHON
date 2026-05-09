@@ -137,6 +137,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\ARCHON.cpp" />
+    <ClCompile Include="src\Arena.cpp" />
     <ClCompile Include="src\interacción.cpp" />
     <ClCompile Include="src\Juego.cpp" />
     <ClCompile Include="src\Menu.cpp" />
@@ -149,6 +150,7 @@
     <ClInclude Include="includes\Menu.h" />
     <ClInclude Include="includes\Tablero_logica.h" />
     <ClInclude Include="includes\Vector2D.h" />
+    <ClInclude Include="src\Arena.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".getignore" />
