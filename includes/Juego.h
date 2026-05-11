@@ -16,7 +16,7 @@ private:
     EstadoJuego estado;
     Tablero_logica tablero_logica;
     Menu menu;
-    Arena arena;
+//    Arena arena;
 
 public:
     void inicializa();
