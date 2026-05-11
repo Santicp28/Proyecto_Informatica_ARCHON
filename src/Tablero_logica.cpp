@@ -56,7 +56,7 @@ void Tablero_logica::inicializa()
     }
 }
 
-bool Tablero_logica::mover(int filaOrigen, int colOrigen, int filaDestino, int colDestino)
+bool Tablero_logica::mover(int filaOrigen, int colOrigen, int filaDestino, int colDestino) //PONER SWITCH CASE EN FUNCION DEL OCUPANTE, CADA PIEZA SE MUEVE DISTINTO
 {
     if (!posicionValida(filaOrigen, colOrigen)) {
         std::cout << "Movimiento invalido: origen fuera del tablero." << std::endl;
