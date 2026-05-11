@@ -56,7 +56,7 @@ public:
     bool hayCombatePendiente() const;
 	void limpiarCombatePendiente(); //cuando empieza la arena se limpia el flag de combate pendiente
 
-    //para saber donde está cada pieza después de que se resuelve l aarena
+    //para saber donde está cada pieza después de que se resuelve la arena
     Posicion getOrigenCombate() const;
     Posicion getDestinoCombate() const;
 
