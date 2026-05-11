@@ -1,5 +1,6 @@
-    #include "Juego.h"
+#include "Juego.h"
 #include "freeglut.h"
+#include <vector>
 
 Juego juego;
 

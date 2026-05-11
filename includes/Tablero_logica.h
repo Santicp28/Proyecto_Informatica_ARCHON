@@ -46,6 +46,9 @@ private:
     Posicion origenCombate;
     Posicion destinoCombate;
 
+    float cellSize{ 1.0f };
+    int gridSize{ 9 };
+
 public:
     void inicializa();
 
@@ -76,10 +79,13 @@ public:
     bool getHayOrigenSeleccionado() const;
     Posicion getOrigenSeleccionado() const;
 
+    void dibuja();//dibuja tablero
+
 private:
     bool posicionValida(int fila, int col) const;
 
     //para después de mover o terminar la arena
     //hacer una funcion para cuando se termina el combate y aplicar los resultados
     void cambiarTurno();
+    void setTileColor(int type);//para dibujar tablero
 };
