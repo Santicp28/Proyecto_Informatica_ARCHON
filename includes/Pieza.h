@@ -1,12 +1,21 @@
 #pragma once
 #include "freeglut.h"
+#include "Casilla.h"
+enum class TipoMovimiento {
+    camina,
+    vuela,
+    teletransporte
+};
 class Pieza
 {
-
 protected:
-    int fila, columna;   // Posición en la matriz (0-8)
+    Casilla casilla;   // Posición en la matriz (0-8)
+    double fuerza;
+    double cadencia;
+    double vida;
     bool esLuz;          // Bando
-    float cellSize;      // Tamaño de la casilla
+    float size;      // Tamaño de la casilla
+    TipoMovimiento tipo_movimiento;
     float boardOffset;   // Para centrar en el mundo OpenGL
 
 public:
