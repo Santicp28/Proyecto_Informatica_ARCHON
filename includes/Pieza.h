@@ -1,10 +1,16 @@
 #pragma once
 #include "freeglut.h"
 #include "Casilla.h"
+#include"Color.h"
+#include"Vector2D.h"
 enum class TipoMovimiento {
-    camina,
-    vuela,
-    teletransporte
+    CAMINA,
+    VUELA,
+    TELETRANSPORTE
+};
+enum class Bando {
+    LUZ,
+    OSCURIDAD
 };
 class Pieza
 {
@@ -13,23 +19,14 @@ protected:
     double fuerza;
     double cadencia;
     double vida;
-    bool esLuz;          // Bando
-    float size;      // Tamaño de la casilla
+    Bando bando;      // Bando
     TipoMovimiento tipo_movimiento;
-    float boardOffset;   // Para centrar en el mundo OpenGL
-
+    Color color;
 public:
-    Pieza(int r, int c, bool luz, float offset, float size)
-        : fila(r), columna(c), esLuz(luz), boardOffset(offset), cellSize(size) {
-    }
-
-    virtual ~Pieza() {}
-
-    // Cada pieza geométrica implementará su propio dibujo
-    virtual void dibujar() = 0;
-
+    virtual void dibuja(Vector2D esquina_arriba_izda,double size_celda);
+    virtual void dibujarForma() = 0;
     // Utilidad para convertir coordenadas de matriz a coordenadas de mundo
-    void calcularPosicionMundo(float& x, float& y) {
+    void calcularPosicionMundo(Vector2D esquina_arriba_izda, double size_celda) {
         x = boardOffset + columna * cellSize + (cellSize / 2.0f);
         y = boardOffset + fila * cellSize + (cellSize / 2.0f);
     }

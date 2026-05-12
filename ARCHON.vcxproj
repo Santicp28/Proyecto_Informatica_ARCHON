@@ -138,28 +138,44 @@
   <ItemGroup>
     <ClCompile Include="src\ARCHON.cpp" />
     <ClCompile Include="src\Arena.cpp" />
+    <ClCompile Include="src\Arquero.cpp" />
     <ClCompile Include="src\BordesArena.cpp" />
+    <ClCompile Include="src\Caballero.cpp" />
+    <ClCompile Include="src\Djinni.cpp" />
+    <ClCompile Include="src\Fenix.cpp" />
+    <ClCompile Include="src\Golem.cpp" />
     <ClCompile Include="src\InteraccionArena.cpp" />
     <ClCompile Include="src\interacción.cpp" />
     <ClCompile Include="src\Juego.cpp" />
+    <ClCompile Include="src\Mago.cpp" />
     <ClCompile Include="src\Menu.cpp" />
     <ClCompile Include="src\Pared.cpp" />
     <ClCompile Include="src\Pieza.cpp" />
     <ClCompile Include="src\Tablero_logica.cpp" />
     <ClCompile Include="src\TiposPiezas.cpp" />
+    <ClCompile Include="src\Unicornio.cpp" />
+    <ClCompile Include="src\Valquiria.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="includes\Arena.h" />
+    <ClInclude Include="includes\Arquero.h" />
     <ClInclude Include="includes\BordesArena.h" />
+    <ClInclude Include="includes\Caballero.h" />
     <ClInclude Include="includes\Color.h" />
+    <ClInclude Include="includes\Djinni.h" />
+    <ClInclude Include="includes\Fenix.h" />
     <ClInclude Include="includes\freeglut.h" />
+    <ClInclude Include="includes\Golem.h" />
     <ClInclude Include="includes\InteraccionArena.h" />
     <ClInclude Include="includes\Juego.h" />
+    <ClInclude Include="includes\Mago.h" />
     <ClInclude Include="includes\Menu.h" />
     <ClInclude Include="includes\Pared.h" />
     <ClInclude Include="includes\Pieza.h" />
     <ClInclude Include="includes\Tablero_logica.h" />
     <ClInclude Include="includes\TiposPiezas.h" />
+    <ClInclude Include="includes\Unicornio.h" />
+    <ClInclude Include="includes\Valquiria.h" />
     <ClInclude Include="includes\Vector2D.h" />
   </ItemGroup>
   <ItemGroup>
