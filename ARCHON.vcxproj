@@ -151,8 +151,8 @@
   <ItemGroup>
     <ClInclude Include="includes\Arena.h" />
     <ClInclude Include="includes\BordesArena.h" />
-    <ClInclude Include="includes\Casilla.h" />
     <ClInclude Include="includes\Color.h" />
+    <ClInclude Include="includes\freeglut.h" />
     <ClInclude Include="includes\InteraccionArena.h" />
     <ClInclude Include="includes\Juego.h" />
     <ClInclude Include="includes\Menu.h" />
