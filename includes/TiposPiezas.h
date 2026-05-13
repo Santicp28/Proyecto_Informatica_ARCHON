@@ -1,38 +1,74 @@
 #pragma once
-#include "Pieza.h"
+#include "raylib.h"
 
-// Representación de la Luz (Esfera)
-class PiezaEsferica : public Pieza {
-public:
-    using Pieza::Pieza; // Hereda el constructor
-
-    void dibujar() override {
-        float px, py;
-        calcularPosicionMundo(px, py);
-        glDisable(GL_LIGHTING);
-        glPushMatrix();
-        glTranslatef(px, py, 0.2f); // Elevamos la pieza sobre el tablero
-        glColor3f(1.0f, 0.8f, 0.0f); // Color Oro/Luz
-        glutSolidSphere(cellSize * 0.35f, 20, 20);
-        glPopMatrix();
-        glEnable(GL_LIGHTING);
-    }
+struct TiposPiezas
+{
+	const char* Sprite;
 };
 
-// Representación de la Oscuridad (Cubo)
-class PiezaCubica : public Pieza {
-public:
-    using Pieza::Pieza;
+// Representación de la Luz
+inline constexpr TiposPiezas wizard = {
+	"bin\Graficos\wizard.PNG"
+};
 
-    void dibujar() override {
-        float px, py;
-        calcularPosicionMundo(px, py);
-        glDisable(GL_LIGHTING);
-        glPushMatrix();
-        glTranslatef(px, py, 0.2f);
-        glColor3f(0.1f, 0.5f, 0.0f); // Color Cian/Oscuro
-        glutSolidCube(cellSize * 0.6f);
-        glPopMatrix();
-        glEnable(GL_LIGHTING);
-    }
+inline constexpr TiposPiezas unicorn = {
+	"bin\Graficos\unicorn.PNG"
+};
+
+inline constexpr TiposPiezas archer = {
+	"bin\Graficos\archer.PNG"
+};
+
+inline constexpr TiposPiezas golem = {
+	"bin\Graficos\golem.PNG"
+};
+
+inline constexpr TiposPiezas valkyries = {
+	"bin\Graficos\valkyries.PNG"
+};
+
+inline constexpr TiposPiezas djinni = {
+	"bin\Graficos\djinni.PNG"
+};
+
+inline constexpr TiposPiezas phoenix = {
+	"bin\Graficos\phoenix.PNG"
+};
+
+inline constexpr TiposPiezas knights = {
+	"bin\Graficos\knights.PNG"
+};
+
+// Representación de la oscuridad
+
+inline constexpr TiposPiezas sorceress = {
+	"bin\Graficos\sorceress.PNG"
+};
+
+inline constexpr TiposPiezas basilisk = {
+	"bin\Graficos\basilisk.PNG"
+};
+
+inline constexpr TiposPiezas manticore = {
+	"bin\Graficos\manticore.PNG"
+};
+
+inline constexpr TiposPiezas troll = {
+	"bin\Graficos\troll.PNG"
+};
+
+inline constexpr TiposPiezas banshee = {
+	"bin\Graficos\banshee.PNG"
+};
+
+inline constexpr TiposPiezas shapeshifter = {
+	"bin\Graficos\shapeshifter.PNG"
+};
+
+inline constexpr TiposPiezas dragon = {
+	"bin\Graficos\dragon.PNG"
+};
+
+inline constexpr TiposPiezas goblins = {
+	"bin\Graficos\goblins.PNG"
 };
