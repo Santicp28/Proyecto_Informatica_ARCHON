@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Archivos de encabezado\TiposPiezas">
+      <UniqueIdentifier>{db8cae76-b008-4aaa-a0eb-9b7261df6873}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\TiposPiezas">
+      <UniqueIdentifier>{430babef-d69d-43f4-b504-6a78059aa5e5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\interacción.cpp">
@@ -47,6 +53,30 @@
     </ClCompile>
     <ClCompile Include="src\TiposPiezas.cpp">
       <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Caballero.cpp">
+      <Filter>Archivos de origen\TiposPiezas</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Arquero.cpp">
+      <Filter>Archivos de origen\TiposPiezas</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Djinni.cpp">
+      <Filter>Archivos de origen\TiposPiezas</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fenix.cpp">
+      <Filter>Archivos de origen\TiposPiezas</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Golem.cpp">
+      <Filter>Archivos de origen\TiposPiezas</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mago.cpp">
+      <Filter>Archivos de origen\TiposPiezas</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Valquiria.cpp">
+      <Filter>Archivos de origen\TiposPiezas</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Unicornio.cpp">
+      <Filter>Archivos de origen\TiposPiezas</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -83,8 +113,32 @@
     <ClInclude Include="includes\Pared.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="includes\Casilla.h">
+    <ClInclude Include="includes\freeglut.h">
       <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\Arquero.h">
+      <Filter>Archivos de encabezado\TiposPiezas</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\Caballero.h">
+      <Filter>Archivos de encabezado\TiposPiezas</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\Djinni.h">
+      <Filter>Archivos de encabezado\TiposPiezas</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\Fenix.h">
+      <Filter>Archivos de encabezado\TiposPiezas</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\Golem.h">
+      <Filter>Archivos de encabezado\TiposPiezas</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\Mago.h">
+      <Filter>Archivos de encabezado\TiposPiezas</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\Unicornio.h">
+      <Filter>Archivos de encabezado\TiposPiezas</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\Valquiria.h">
+      <Filter>Archivos de encabezado\TiposPiezas</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
