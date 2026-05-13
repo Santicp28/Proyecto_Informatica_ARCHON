@@ -1,5 +1,7 @@
 #pragma once
 #include "Menu.h"
+#include "Arena.h"
+#include "Tablero_logica.h"
 
 enum class EstadoJuego {
     MENU_PRINCIPAL,
@@ -12,7 +14,9 @@ enum class EstadoJuego {
 class Juego {
 private:
     EstadoJuego estado;
+    Tablero_logica tablero_logica;
     Menu menu;
+//    Arena arena;
 
 public:
     void inicializa();

@@ -1,10 +1,10 @@
 #pragma once
-#include "Piezas.h"
+#include "Pieza.h"
 
 // Representación de la Luz (Esfera)
-class PiezaEsferica : public Piezas {
+class PiezaEsferica : public Pieza {
 public:
-    using Piezas::Piezas; // Hereda el constructor
+    using Pieza::Pieza; // Hereda el constructor
 
     void dibujar() override {
         float px, py;
@@ -20,9 +20,9 @@ public:
 };
 
 // Representación de la Oscuridad (Cubo)
-class PiezaCubica : public Piezas {
+class PiezaCubica : public Pieza {
 public:
-    using Piezas::Piezas;
+    using Pieza::Pieza;
 
     void dibujar() override {
         float px, py;

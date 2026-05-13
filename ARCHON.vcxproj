@@ -137,20 +137,28 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\ARCHON.cpp" />
+    <ClCompile Include="src\Arena.cpp" />
+    <ClCompile Include="src\BordesArena.cpp" />
+    <ClCompile Include="src\InteraccionArena.cpp" />
     <ClCompile Include="src\interacción.cpp" />
     <ClCompile Include="src\Juego.cpp" />
     <ClCompile Include="src\Menu.cpp" />
-    <ClCompile Include="src\piezas.cpp" />
-    <ClCompile Include="src\Source.cpp" />
-    <ClCompile Include="src\Tablero.cpp" />
+    <ClCompile Include="src\Pared.cpp" />
+    <ClCompile Include="src\Pieza.cpp" />
+    <ClCompile Include="src\Tablero_logica.cpp" />
+    <ClCompile Include="src\TiposPiezas.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="includes\Arena.h" />
+    <ClInclude Include="includes\BordesArena.h" />
     <ClInclude Include="includes\Color.h" />
     <ClInclude Include="includes\freeglut.h" />
+    <ClInclude Include="includes\InteraccionArena.h" />
     <ClInclude Include="includes\Juego.h" />
     <ClInclude Include="includes\Menu.h" />
-    <ClInclude Include="includes\piezas.h" />
-    <ClInclude Include="includes\Tablero.h" />
+    <ClInclude Include="includes\Pared.h" />
+    <ClInclude Include="includes\Pieza.h" />
+    <ClInclude Include="includes\Tablero_logica.h" />
     <ClInclude Include="includes\TiposPiezas.h" />
     <ClInclude Include="includes\Vector2D.h" />
   </ItemGroup>

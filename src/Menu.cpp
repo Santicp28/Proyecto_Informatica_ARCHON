@@ -18,8 +18,11 @@ void Menu::inicializa(int anchoVentana, int altoVentana)
     quiere_ranking = false;
 }
 
+//PARTE GRÁFICA DE EJEMPLO HASTA QUE SE DISEÑE UN MENÚ, TODO ESTO SERÁ REEMPLAZADO
 void Menu::dibuja()
 {
+    glDisable(GL_LIGHTING);
+
     glClearColor(0.08f, 0.08f, 0.15f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -36,7 +39,7 @@ void Menu::dibuja()
     dibujarTexto(340.0f, 520.0f, "ARCHON");
 
     glColor3f(0.85f, 0.85f, 0.85f);
-    dibujarTexto(260.0f, 480.0f, "Pulsa el raton o usa teclado");
+    dibujarTexto(260.0f, 480.0f, "J: Jugar   R: Ranking   ESC: Salir");
 
     for (const auto& b : botones) {
         if (b.hover)
@@ -66,11 +69,10 @@ void Menu::dibuja()
     glMatrixMode(GL_PROJECTION);
     glPopMatrix();
     glMatrixMode(GL_MODELVIEW);
+
+    glEnable(GL_LIGHTING);
 }
 
-void Menu::mueve(float dt)
-{
-}
 
 void Menu::tecla(unsigned char key)
 {
@@ -88,7 +90,8 @@ void Menu::teclaEspecial(int key)
 {
 }
 
-void Menu::raton(int button, int state, int x, int y, int altoVentana)
+
+void Menu::raton(int button, int state, int x, int y, int altoVentana) //para comprobar que se pulsa click izquierdo estando dentro de un boton, preguntando a la variable estaDentro
 {
     if (button != GLUT_LEFT_BUTTON || state != GLUT_DOWN)
         return;
@@ -102,7 +105,7 @@ void Menu::raton(int button, int state, int x, int y, int altoVentana)
     }
 }
 
-void Menu::movimientoRaton(int x, int y, int altoVentana)
+void Menu::movimientoRaton(int x, int y, int altoVentana) //esto para probar el menú, a cambiar cuando se desarrolle la parte gráfica, está de ejemplo
 {
     for (auto& b : botones) {
         b.hover = estaDentro(b, x, y, altoVentana);
