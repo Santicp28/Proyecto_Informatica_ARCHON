@@ -46,8 +46,8 @@ private:
     Posicion origenCombate;
     Posicion destinoCombate;
 
-    float cellSize{ 1.0f };
-    int gridSize{ 9 };
+    float sizeCasillas{ 1.0f };
+    int numeroCasillas{ 9 };
 
 public:
     void inicializa();

@@ -276,25 +276,22 @@ void Tablero_logica::dibuja() {
     {1, 0, 2, 1, 2, 1, 2, 0, 1},
     {0, 1, 0, 2, 3, 2, 0, 1, 0}
     };
-    gluLookAt(0.0, 0.0, 15.0,
-        0.0, 0.0, 0.0,
-        0.0, 1.0, 0.0);
     glClearColor(1.0f, 0.08f, 0.15f, 1.0f);
     glDisable(GL_LIGHTING); // Desactivar luces para el tablero
-    float startPos = -(gridSize * cellSize) / 2.0f;
+    float startPos = -(numeroCasillas * sizeCasillas) / 2.0f;
 
-    for (int row = 0; row < gridSize; ++row) {
-        for (int col = 0; col < gridSize; ++col) {
-            float x = startPos + col * cellSize;
-            float y = startPos + row * cellSize;
+    for (int row = 0; row < numeroCasillas; ++row) {
+        for (int col = 0; col < sizeCasillas; ++col) {
+            float x = startPos + col * sizeCasillas;
+            float y = startPos + row * sizeCasillas;
 
             // 1. Dibujar el fondo de la casilla
             setTileColor(layout[row][col]);
             glBegin(GL_QUADS);
             glVertex3f(x, y, 0.0f);
-            glVertex3f(x + cellSize, y, 0.0f);
-            glVertex3f(x + cellSize, y + cellSize, 0.0f);
-            glVertex3f(x, y + cellSize, 0.0f);
+            glVertex3f(x + sizeCasillas, y, 0.0f);
+            glVertex3f(x + sizeCasillas, y + sizeCasillas, 0.0f);
+            glVertex3f(x, y + sizeCasillas, 0.0f);
             glEnd();
 
             // 2. Dibujar el borde con un pequeño offset en Z para evitar parpadeo
@@ -302,9 +299,9 @@ void Tablero_logica::dibuja() {
             glLineWidth(2.0f);
             glBegin(GL_LINE_LOOP);
             glVertex3f(x, y, 0.01f);
-            glVertex3f(x + cellSize, y, 0.01f);
-            glVertex3f(x + cellSize, y + cellSize, 0.01f);
-            glVertex3f(x, y + cellSize, 0.01f);
+            glVertex3f(x + sizeCasillas, y, 0.01f);
+            glVertex3f(x + sizeCasillas, y + sizeCasillas, 0.01f);
+            glVertex3f(x, y + sizeCasillas, 0.01f);
             glEnd();
         }
     }

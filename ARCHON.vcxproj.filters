@@ -78,6 +78,12 @@
     <ClCompile Include="src\Unicornio.cpp">
       <Filter>Archivos de origen\TiposPiezas</Filter>
     </ClCompile>
+    <ClCompile Include="src\Casilla.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DesacopleGrafico.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="includes\Juego.h">
@@ -139,6 +145,12 @@
     </ClInclude>
     <ClInclude Include="includes\Valquiria.h">
       <Filter>Archivos de encabezado\TiposPiezas</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\Casilla.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\DesacopleGrafico.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

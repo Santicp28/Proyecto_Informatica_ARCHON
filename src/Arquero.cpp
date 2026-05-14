@@ -2,6 +2,5 @@
 
 void Arquero::dibuja()
 {
-    Pieza::dibuja();
    
 }

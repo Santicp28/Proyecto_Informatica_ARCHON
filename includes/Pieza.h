@@ -26,9 +26,9 @@ public:
     virtual void dibuja(Vector2D esquina_arriba_izda,double size_celda);
     virtual void dibujarForma() = 0;
     // Utilidad para convertir coordenadas de matriz a coordenadas de mundo
-    void calcularPosicionMundo(Vector2D esquina_arriba_izda, double size_celda) {
+   /* void calcularPosicionMundo(Vector2D esquina_arriba_izda, double size_celda) {
         x = boardOffset + columna * cellSize + (cellSize / 2.0f);
         y = boardOffset + fila * cellSize + (cellSize / 2.0f);
-    }
+    }*/
 };
 
