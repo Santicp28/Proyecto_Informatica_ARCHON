@@ -1,4 +1,5 @@
 #pragma once
+#include "Casilla.h"
 
 //esto se usará para simular también las piezas hasta que haya personajes definidos
 enum class Bando {
@@ -21,16 +22,11 @@ struct Posicion {
     int columna;
 };
 
-struct CasillaLogica {
-    TipoCasilla tipo;
-    Bando ocupante;
-};
-
 class Tablero_logica {
 private:
     static const int TAM = 9;
-
-    CasillaLogica casillas[TAM][TAM];
+    const Vector2D posicionPrimera;
+    Casilla tablero[TAM][TAM];
 
     Bando turnoActual;
 
@@ -79,7 +75,7 @@ public:
     bool getHayOrigenSeleccionado() const;
     Posicion getOrigenSeleccionado() const;
 
-    void dibuja();//dibuja tablero
+    void dibuja()const;//dibuja tablero
 
 private:
     bool posicionValida(int fila, int col) const;

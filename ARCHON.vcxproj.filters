@@ -19,6 +19,9 @@
     <Filter Include="Archivos de origen\TiposPiezas">
       <UniqueIdentifier>{430babef-d69d-43f4-b504-6a78059aa5e5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Archivos de encabezado\ClasesAuxiliares">
+      <UniqueIdentifier>{3770a68e-5405-419e-8a06-eca06f818946}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\interacción.cpp">
@@ -92,12 +95,6 @@
     <ClInclude Include="includes\Menu.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="includes\Vector2D.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="includes\Color.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="includes\Tablero_logica.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
@@ -117,9 +114,6 @@
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="includes\Pared.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="includes\freeglut.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="includes\Arquero.h">
@@ -150,7 +144,13 @@
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="includes\DesacopleGrafico.h">
-      <Filter>Archivos de encabezado</Filter>
+      <Filter>Archivos de encabezado\ClasesAuxiliares</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\freeglut.h">
+      <Filter>Archivos de encabezado\ClasesAuxiliares</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\Vector2D.h">
+      <Filter>Archivos de encabezado\ClasesAuxiliares</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

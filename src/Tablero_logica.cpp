@@ -264,7 +264,17 @@ Posicion Tablero_logica::getOrigenSeleccionado() const
     return origenSeleccionado;
 }
 
-void Tablero_logica::dibuja() {
+void Tablero_logica::dibuja()const {
+    
+    for (auto& fila : tablero)
+    {
+        for (auto& casilla : fila)
+        {
+            casilla.dibuja(posicionPrimera);
+        }
+    }
+    
+    
     int layout[9][9] = {
     {0, 1, 0, 2, 3, 2, 0, 1, 0},
     {1, 0, 2, 1, 2, 1, 2, 0, 1},

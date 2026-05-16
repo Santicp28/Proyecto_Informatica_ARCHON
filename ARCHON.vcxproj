@@ -164,7 +164,6 @@
     <ClInclude Include="includes\BordesArena.h" />
     <ClInclude Include="includes\Caballero.h" />
     <ClInclude Include="includes\Casilla.h" />
-    <ClInclude Include="includes\Color.h" />
     <ClInclude Include="includes\DesacopleGrafico.h" />
     <ClInclude Include="includes\Djinni.h" />
     <ClInclude Include="includes\Fenix.h" />

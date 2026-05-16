@@ -3,7 +3,7 @@
 
 struct TiposPiezas
 {
-	const char* Sprite;
+	const char* graf;
 };
 
 // Representación de la Luz
