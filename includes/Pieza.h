@@ -16,6 +16,7 @@ enum class Bando {
 };
 class Pieza
 {
+	friend class Interaccion;
 protected:
 
 

@@ -11,6 +11,8 @@ enum class TipoCasilla {
 
 class Casilla
 {
+
+	friend class Interaccion;
 	
 	const double longitud{ 1.0 };
 	TipoCasilla tipo;
