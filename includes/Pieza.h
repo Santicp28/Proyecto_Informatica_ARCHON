@@ -3,6 +3,8 @@
 #include "Casilla.h"
 #include"Color.h"
 #include"Vector2D.h"
+#include "PosicionMatriz.h"
+
 enum class TipoMovimiento {
     CAMINA,
     VUELA,
@@ -15,6 +17,9 @@ enum class Bando {
 class Pieza
 {
 protected:
+
+
+ 
     Casilla casilla;   // Posición en la matriz (0-8)
     double fuerza;
     double cadencia;
@@ -30,5 +35,7 @@ public:
         x = boardOffset + columna * cellSize + (cellSize / 2.0f);
         y = boardOffset + fila * cellSize + (cellSize / 2.0f);
     }*/
+
+    
 };
 

@@ -12,6 +12,8 @@ void Tablero_logica::inicializa()
     origenSeleccionado = { -1, -1 };
     hayOrigenSeleccionado = false;
 
+        
+
 
     for (int f = 0; f < TAM; f++) {
         for (int c = 0; c < TAM; c++) {
@@ -37,6 +39,7 @@ void Tablero_logica::inicializa()
         }
     }
 
+	
     //Colocación provisional
     for (int f = 0; f < TAM; f++) {
         casillas[f][0].ocupante = Bando::LUZ;

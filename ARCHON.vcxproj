@@ -169,12 +169,14 @@
     <ClInclude Include="includes\Fenix.h" />
     <ClInclude Include="includes\freeglut.h" />
     <ClInclude Include="includes\Golem.h" />
+    <ClInclude Include="includes\Interaccion.h" />
     <ClInclude Include="includes\InteraccionArena.h" />
     <ClInclude Include="includes\Juego.h" />
     <ClInclude Include="includes\Mago.h" />
     <ClInclude Include="includes\Menu.h" />
     <ClInclude Include="includes\Pared.h" />
     <ClInclude Include="includes\Pieza.h" />
+    <ClInclude Include="includes\PosicionMatriz.h" />
     <ClInclude Include="includes\Tablero_logica.h" />
     <ClInclude Include="includes\TiposPiezas.h" />
     <ClInclude Include="includes\Unicornio.h" />
