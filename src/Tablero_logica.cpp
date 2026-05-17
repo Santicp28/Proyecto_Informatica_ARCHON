@@ -1,6 +1,7 @@
 #include "Tablero_logica.h"
 #include <iostream>
 #include"freeglut.h"
+#include 
 
 void Tablero_logica::inicializa()
 {
@@ -11,39 +12,28 @@ void Tablero_logica::inicializa()
     origenSeleccionado = { -1, -1 };
     hayOrigenSeleccionado = false;
 
-    int layout[9][9] = {
-        {0, 1, 0, 2, 3, 2, 0, 1, 0},
-        {1, 0, 2, 1, 2, 1, 2, 0, 1},
-        {0, 2, 1, 0, 2, 0, 1, 2, 0},
-        {2, 1, 0, 1, 2, 1, 0, 1, 2},
-        {3, 2, 2, 2, 3, 2, 2, 2, 3},
-        {2, 1, 0, 1, 2, 1, 0, 1, 2},
-        {0, 2, 1, 0, 2, 0, 1, 2, 0},
-        {1, 0, 2, 1, 2, 1, 2, 0, 1},
-        {0, 1, 0, 2, 3, 2, 0, 1, 0}
-    };
 
     for (int f = 0; f < TAM; f++) {
         for (int c = 0; c < TAM; c++) {
             switch (layout[f][c]) {
             case 0:
-                casillas[f][c].tipo = TipoCasilla::OSCURA;
+                casillas[f][c].setTipo(TipoCasilla::OSCURA);
                 break;
             case 1:
-                casillas[f][c].tipo = TipoCasilla::CLARA;
+                casillas[f][c].setTipo(TipoCasilla::CLARA);
                 break;
             case 2:
-                casillas[f][c].tipo = TipoCasilla::OSCILANTE;
+                casillas[f][c].setTipo(TipoCasilla::OSCILANTE);
                 break;
             case 3:
-                casillas[f][c].tipo = TipoCasilla::PODER;
+                casillas[f][c].setTipo(TipoCasilla::PODER);
                 break;
             default:
-                casillas[f][c].tipo = TipoCasilla::INVALIDA;
+                casillas[f][c].setTipo(TipoCasilla::INVALIDA);
                 break;
             }
 
-            casillas[f][c].ocupante = Bando::NINGUNO;
+            
         }
     }
 

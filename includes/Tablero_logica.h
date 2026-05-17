@@ -8,15 +8,6 @@ enum class Bando {
     OSCURIDAD
 };
 
-
-enum class TipoCasilla {
-    OSCURA,
-    CLARA,
-    OSCILANTE,
-    PODER,
-    INVALIDA
-};
-
 struct Posicion {
     int fila;
     int columna;
@@ -26,7 +17,20 @@ class Tablero_logica {
 private:
     static const int TAM = 9;
     const Vector2D posicionPrimera;
-    Casilla tablero[TAM][TAM];
+    Casilla casillas[TAM][TAM];
+
+    //para inicializar los tipos de casillas
+    const int layout[9][9] = {
+        {0, 1, 0, 2, 3, 2, 0, 1, 0},
+        {1, 0, 2, 1, 2, 1, 2, 0, 1},
+        {0, 2, 1, 0, 2, 0, 1, 2, 0},
+        {2, 1, 0, 1, 2, 1, 0, 1, 2},
+        {3, 2, 2, 2, 3, 2, 2, 2, 3},
+        {2, 1, 0, 1, 2, 1, 0, 1, 2},
+        {0, 2, 1, 0, 2, 0, 1, 2, 0},
+        {1, 0, 2, 1, 2, 1, 2, 0, 1},
+        {0, 1, 0, 2, 3, 2, 0, 1, 0}
+    };
 
     Bando turnoActual;
 
