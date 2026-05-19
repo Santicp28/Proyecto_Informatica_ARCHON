@@ -163,86 +163,86 @@ void Tablero_logica::cambiarTurno()
 }
 
 
-void Tablero_logica::moverCursor(int df, int dc)
-{
-    int nuevaFila = cursor.fila + df;
-    int nuevaColumna = cursor.columna + dc;
-
-    if (posicionValida(nuevaFila, nuevaColumna)) {
-        cursor.fila = nuevaFila;
-        cursor.columna = nuevaColumna;
-
-        std::cout << "Cursor en fila " << cursor.fila
-            << ", columna " << cursor.columna << std::endl;
-    }
-    else {
-        std::cout << "No puedes mover el cursor fuera del tablero." << std::endl;
-    }
-}
-
-bool Tablero_logica::seleccionarConCursor()
-{
-    int f = cursor.fila;
-    int c = cursor.columna;
-
-    if (!hayOrigenSeleccionado) {
-        if (casillas[f][c].ocupante != turnoActual) {
-            std::cout << "No puedes seleccionar esa casilla. No contiene una pieza de tu turno." << std::endl;
-            return false;
-        }
-
-        origenSeleccionado = cursor;
-        hayOrigenSeleccionado = true;
-
-        std::cout << "Origen seleccionado: fila "
-            << origenSeleccionado.fila
-            << ", columna "
-            << origenSeleccionado.columna
-            << std::endl;
-
-        return true;
-    }
-
-    //para ir depurando sin tener la parte gráfica
-    std::cout << "Intentando mover desde fila "
-        << origenSeleccionado.fila
-        << ", columna "
-        << origenSeleccionado.columna
-        << " hasta fila "
-        << f
-        << ", columna "
-        << c
-        << std::endl;
-
-    bool movimientoCorrecto = mover(origenSeleccionado.fila, origenSeleccionado.columna, f, c);
-
-    if (movimientoCorrecto) {
-        std::cout << "Movimiento aceptado." << std::endl;
-    }
-    else {
-        std::cout << "Movimiento invalido." << std::endl;
-    }
-
-    hayOrigenSeleccionado = false;
-    origenSeleccionado = { -1, -1 };
-
-    return movimientoCorrecto;
-}
-
-Posicion Tablero_logica::getCursor() const
-{
-    return cursor;
-}
-
-bool Tablero_logica::getHayOrigenSeleccionado() const
-{
-    return hayOrigenSeleccionado;
-}
-
-Posicion Tablero_logica::getOrigenSeleccionado() const
-{
-    return origenSeleccionado;
-}
+//void Tablero_logica::moverCursor(int df, int dc)
+//{
+//    int nuevaFila = cursor.fila + df;
+//    int nuevaColumna = cursor.columna + dc;
+//
+//    if (posicionValida(nuevaFila, nuevaColumna)) {
+//        cursor.fila = nuevaFila;
+//        cursor.columna = nuevaColumna;
+//
+//        std::cout << "Cursor en fila " << cursor.fila
+//            << ", columna " << cursor.columna << std::endl;
+//    }
+//    else {
+//        std::cout << "No puedes mover el cursor fuera del tablero." << std::endl;
+//    }
+//}
+//
+//bool Tablero_logica::seleccionarConCursor()
+//{
+//    int f = cursor.fila;
+//    int c = cursor.columna;
+//
+//    if (!hayOrigenSeleccionado) {
+//        if (casillas[f][c].ocupante != turnoActual) {
+//            std::cout << "No puedes seleccionar esa casilla. No contiene una pieza de tu turno." << std::endl;
+//            return false;
+//        }
+//
+//        origenSeleccionado = cursor;
+//        hayOrigenSeleccionado = true;
+//
+//        std::cout << "Origen seleccionado: fila "
+//            << origenSeleccionado.fila
+//            << ", columna "
+//            << origenSeleccionado.columna
+//            << std::endl;
+//
+//        return true;
+//    }
+//
+//    //para ir depurando sin tener la parte gráfica
+//    std::cout << "Intentando mover desde fila "
+//        << origenSeleccionado.fila
+//        << ", columna "
+//        << origenSeleccionado.columna
+//        << " hasta fila "
+//        << f
+//        << ", columna "
+//        << c
+//        << std::endl;
+//
+//    bool movimientoCorrecto = mover(origenSeleccionado.fila, origenSeleccionado.columna, f, c);
+//
+//    if (movimientoCorrecto) {
+//        std::cout << "Movimiento aceptado." << std::endl;
+//    }
+//    else {
+//        std::cout << "Movimiento invalido." << std::endl;
+//    }
+//
+//    hayOrigenSeleccionado = false;
+//    origenSeleccionado = { -1, -1 };
+//
+//    return movimientoCorrecto;
+//}
+//
+//Posicion Tablero_logica::getCursor() const
+//{
+//    return cursor;
+//}
+//
+//bool Tablero_logica::getHayOrigenSeleccionado() const
+//{
+//    return hayOrigenSeleccionado;
+//}
+//
+//Posicion Tablero_logica::getOrigenSeleccionado() const
+//{
+//    return origenSeleccionado;
+//}
 
 void Tablero_logica::dibuja()const {
     
