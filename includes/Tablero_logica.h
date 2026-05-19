@@ -1,18 +1,9 @@
 #pragma once
 #include "Casilla.h"
-using enum TipoCasilla;
+#include "Pieza.h"
+#include <vector>
+#include "Tipos.h"
 
-//esto se usará para simular también las piezas hasta que haya personajes definidos
-enum class Bando {
-    NINGUNO,
-    LUZ,
-    OSCURIDAD
-};
-
-struct Posicion {
-    int fila;
-    int columna;
-};
 
 class Tablero_logica {
 private:
@@ -20,19 +11,21 @@ private:
     const Vector2D posicionPrimera;
     Casilla casillas[TAM][TAM];
 
+    std::vector<Pieza*> listaPiezas;
+
     Bando turnoActual;
 
     // el cursor es una posicion, la cual usaremos para iluminarla en el teclado con la parte gráfica, así como el origen seleccionado
-    Posicion cursor;
-    Posicion origenSeleccionado;
+    PosicionMatriz cursor;
+    PosicionMatriz origenSeleccionado;
     bool hayOrigenSeleccionado;
 
 	//flag cuando dos piezas de bandos opuestos se encuentran en la misma casilla
     bool combatePendiente;
 
     //estas son para saber cómo terminan las piezas después de la arena
-    Posicion origenCombate;
-    Posicion destinoCombate;
+    PosicionMatriz origenCombate;
+    PosicionMatriz destinoCombate;
 
     float sizeCasillas{ 1.0f };
     int numeroCasillas{ 9 };
@@ -48,8 +41,8 @@ public:
 	void limpiarCombatePendiente(); //cuando empieza la arena se limpia el flag de combate pendiente
 
     //para saber donde está cada pieza después de que se resuelve la arena
-    Posicion getOrigenCombate() const;
-    Posicion getDestinoCombate() const;
+    PosicionMatriz getOrigenCombate() const;
+    PosicionMatriz getDestinoCombate() const;
 
 	//para saber de quién es el turno, por ejemplo para mostrar en pantalla
     Bando getTurnoActual() const;
@@ -63,9 +56,9 @@ public:
     void moverCursor(int df, int dc);
     bool seleccionarConCursor();
 
-    Posicion getCursor() const;
+    PosicionMatriz getCursor() const;
     bool getHayOrigenSeleccionado() const;
-    Posicion getOrigenSeleccionado() const;
+    PosicionMatriz getOrigenSeleccionado() const;
 
     void dibuja()const;//dibuja tablero
 

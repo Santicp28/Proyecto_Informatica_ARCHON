@@ -176,8 +176,8 @@
     <ClInclude Include="includes\Menu.h" />
     <ClInclude Include="includes\Pared.h" />
     <ClInclude Include="includes\Pieza.h" />
-    <ClInclude Include="includes\PosicionMatriz.h" />
     <ClInclude Include="includes\Tablero_logica.h" />
+    <ClInclude Include="includes\Tipos.h" />
     <ClInclude Include="includes\TiposPiezas.h" />
     <ClInclude Include="includes\Unicornio.h" />
     <ClInclude Include="includes\Valquiria.h" />

@@ -1,14 +1,6 @@
 #pragma once
 #include"Vector2D.h"
-#include"PosicionMatriz.h"
-
-enum class TipoCasilla {
-	OSCURA,
-	CLARA,
-	OSCILANTE,
-	PODER,
-	INVALIDA
-};
+#include "Tipos.h"
 
 class Casilla
 {
