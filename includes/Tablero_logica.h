@@ -17,8 +17,10 @@ struct Posicion {
 class Tablero_logica {
 private:
     static const int TAM = 9;
-    const Vector2D posicionPrimera;
+    const Vector2D centro{ 0.0,0.0 };
     Casilla casillas[TAM][TAM];
+    double posicionCamaraZ{ 15.0 };
+    const double longitud{ 9.0 };
 
     Bando turnoActual;
 
@@ -67,7 +69,7 @@ public:
     bool getHayOrigenSeleccionado() const;
     Posicion getOrigenSeleccionado() const;
 
-    void dibuja()const;//dibuja tablero
+    void dibuja(const Vector2D& centro)const;//dibuja tablero
 
 private:
     bool posicionValida(int fila, int col) const;

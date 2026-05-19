@@ -2,6 +2,7 @@
 #include "Menu.h"
 #include "Arena.h"
 #include "Tablero_logica.h"
+#include"Vector2D.h"
 
 enum class EstadoJuego {
     MENU_PRINCIPAL,
@@ -13,9 +14,11 @@ enum class EstadoJuego {
 
 class Juego {
 private:
+
     EstadoJuego estado;
     Tablero_logica tablero_logica;
     Menu menu;
+    Vector2D centro{ 0.0,0.0 };
 //    Arena arena;
 
 public:

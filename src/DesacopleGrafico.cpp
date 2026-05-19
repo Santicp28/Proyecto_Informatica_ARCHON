@@ -1,20 +1,9 @@
 #include "DesacopleGrafico.h"
 
-void DesacopleGrafico::dibujaContornoCuadrado(const Vector2D& centro, const double longitud)
-{
-	// 2. Dibujar el borde con un pequeño offset en Z para evitar parpadeo
-	glColor3f(1.0f, 0.0f, 0.0f); // Gris oscuro para bordes elegantes
-	glLineWidth(2.0f);
-	glBegin(GL_LINE_LOOP);
-	glVertex3f(x, y, 0.01f);
-	glVertex3f(x + sizeCasillas, y, 0.01f);
-	glVertex3f(x + sizeCasillas, y + sizeCasillas, 0.01f);
-	glVertex3f(x, y + sizeCasillas, 0.01f);
-	glEnd();
-}
-void DesacopleGrafico::dibujaCuadrado(const Vector2D& centro, double longitud)
+void DesacopleGrafico::dibujaCuadrado(const Vector2D& centro, const Color& color, double longitud)
 {
 	longitud = longitud / 2.0;
+	DesacopleGrafico::dibujaColor(color);
 	glBegin(GL_QUADS);
 
 	glVertex2d(centro.x - longitud, centro.y - longitud); // abajo izquierda
@@ -24,4 +13,18 @@ void DesacopleGrafico::dibujaCuadrado(const Vector2D& centro, double longitud)
 
 	glEnd();
 
+}
+
+void DesacopleGrafico::dibujaContornoCuadrado(const Vector2D& centro, const Color& color, double longitud)
+{
+	// 2. Dibujar el borde con un pequeño offset en Z para evitar parpadeo
+	longitud = longitud / 2.0;
+	DesacopleGrafico::dibujaColor(color);
+	glLineWidth(2.0f);//ancho de lineas
+	glBegin(GL_LINE_LOOP);
+	glVertex3d(centro.x - longitud, centro.y - longitud, 0.1); // abajo izquierda
+	glVertex3d(centro.x + longitud, centro.y - longitud, 0.1); // abajo derecha
+	glVertex3d(centro.x + longitud, centro.y + longitud, 0.1); // arriba derecha
+	glVertex3d(centro.x - longitud, centro.y + longitud, 0.1); // arriba izquierda
+	glEnd();
 }

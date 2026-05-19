@@ -1,6 +1,7 @@
 #pragma once
 #include"Vector2D.h"
 #include"PosicionMatriz.h"
+#include"DesacopleGrafico.h"
 
 enum class TipoCasilla {
 	OSCURA,
@@ -14,15 +15,13 @@ class Casilla
 {
 	friend class Interaccion;
 	
-	const double longitud{ 1.0 };
 	TipoCasilla tipo;
-	Vector2D posicion2D{};
 	PosicionMatriz posicionMatriz;
+	Color color;
 
 public:
-	//Casilla(unsigned int f =1, char c = 'a', const int layaut[][] = {});
-	void dibuja()const;
+	void dibuja(const Vector2D& posicion, double longitud)const;
 	void setTipo(const TipoCasilla& nuevoTipo);
 	void setPosicion(const Vector2D& posicionPrimera, const unsigned int f, const unsigned int c);
-	TipoCasilla getTipo() const { return tipo; }
+	void inicializa(const TipoCasilla& nuevoTipo, PosicionMatriz nuevaPosicion);
 };

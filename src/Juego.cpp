@@ -18,10 +18,7 @@ void Juego::dibuja()
         break;
 
     case EstadoJuego::TABLERO:
-        gluLookAt(0.0, 0.0, 15.0,//// posición de la cámara
-            0.0, 0.0, 0.0, // punto al que mira
-            0.0, 1.0, 0.0);// vector "arriba" (define por asi decirlo la gravedad)
-        tablero_logica.dibuja();
+        tablero_logica.dibuja(centro);
         break;
 
     case EstadoJuego::ARENA:

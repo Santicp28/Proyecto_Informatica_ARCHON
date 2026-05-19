@@ -1,7 +1,7 @@
 #pragma once
 #include "freeglut.h"
 #include "Casilla.h"
-#include"Color.h"
+#include"DesacopleGrafico.h"
 #include"Vector2D.h"
 #include "PosicionMatriz.h"
 
