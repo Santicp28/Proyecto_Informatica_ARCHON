@@ -53,36 +53,36 @@ void Tablero_logica::inicializa()
 
 
 
-bool Tablero_logica::mover(Casilla origen, Casilla destino) //PONER SWITCH CASE EN FUNCION DEL OCUPANTE, CADA PIEZA SE MUEVE DISTINTO
+bool Tablero_logica::mover(Casilla origen, Casilla destino) //CADA PIEZA SE MUEVE DISTINTO
 {
-    if (!interacciones.posicionValida(origen, TAM)) {
+    if (!interaccion.posicionValida(origen, TAM)) {
         std::cout << "Movimiento invalido: origen fuera del tablero." << std::endl;
         return false;
     }
 
-    if (!interacciones.posicionValida(destino, TAM)) {
+    if (!interaccion.posicionValida(destino, TAM)) {
         std::cout << "Movimiento invalido: destino fuera del tablero." << std::endl;
         return false;
     }
 
-    Bando atacante = casillas[filaOrigen][colOrigen].ocupante;
-    Bando defensor = casillas[filaDestino][colDestino].ocupante;
+    Bando atacante = interaccion.getBandoOcupante(origen, listaPiezas);
+    Bando defensor = interaccion.getBandoOcupante(destino, listaPiezas);
 
-    //No hay pieza en origen.
-
+    //ILUMINAR O DESTACAR CASILLA SI HAY ERROR O MOSTRAR UN SONIDO O ALGO, TAMBIEN MOSTRAR MENSAJE PARA SABER EL ERROR
+    
+    //No hay pieza en origen
     if (atacante == Bando::NINGUNO) {
         std::cout << "Movimiento invalido: no hay pieza en el origen." << std::endl;
         return false;
     }
 
-
-    //No es el turno de ese bando.
+    //No es ty turno
     if (atacante != turnoActual) {
         std::cout << "Movimiento invalido: no es el turno de esa pieza." << std::endl;
         return false;
     }
 
-    //No puedes moverte sobre una pieza aliada.
+	//Hay una pieza aliada en destino
     if (defensor == atacante) {
         std::cout << "Movimiento invalido: la casilla destino tiene una pieza aliada." << std::endl;
         return false;
@@ -91,27 +91,23 @@ bool Tablero_logica::mover(Casilla origen, Casilla destino) //PONER SWITCH CASE 
     //Si hay enemigo, no movemos todavía
     //Dejamos marcado que tiene que abrirse la arena.
     if (defensor != Bando::NINGUNO && defensor != atacante) {
-        combatePendiente = true;
-        origenCombate = { filaOrigen, colOrigen };
-        destinoCombate = { filaDestino, colDestino };
+        combatePendiente = true; //FLAG PARA CAMBIAR A ARENA
+        origenCombate = origen.getPosicionMatriz();
+        destinoCombate = destino.getPosicionMatriz();
 
-        std::cout << "Combate pendiente entre origen ("
-            << filaOrigen << ", " << colOrigen
-            << ") y destino ("
-            << filaDestino << ", " << colDestino
-            << ")." << std::endl;
+        std::cout << "Combate pendiente entre origen (" << origenCombate.fila << ", " << origenCombate.columna
+            << ") y destino (" << destinoCombate.fila << ", " << destinoCombate.columna << ")." << std::endl;
 
         return true;
     }
 
     //Movimiento normal
-    casillas[filaDestino][colDestino].ocupante = atacante;
-    casillas[filaOrigen][colOrigen].ocupante = Bando::NINGUNO;
+	listaPiezas.moverDeCasilla(origen, destino);
 
     std::cout << "Pieza movida correctamente de ("
-        << filaOrigen << ", " << colOrigen
+        << origen.getPosicionMatriz().fila << ", " << origen.getPosicionMatriz().columna
         << ") a ("
-        << filaDestino << ", " << colDestino
+        << destino.getPosicionMatriz().fila << ", " << destino.getPosicionMatriz().columna
         << ")." << std::endl;
 
     cambiarTurno();
@@ -121,58 +117,51 @@ bool Tablero_logica::mover(Casilla origen, Casilla destino) //PONER SWITCH CASE 
     return true;
 }
 
+//funcion para saber si hay que cambiar a arena, obtenemos el flag de combate pendiente, para usarla en JUEGO.CPP 
 bool Tablero_logica::hayCombatePendiente() const
 {
     return combatePendiente;
 }
 
+//hay que limpiar el flag para que luego no se abra la arena en momentos no deseados
 void Tablero_logica::limpiarCombatePendiente()
 {
     combatePendiente = false;
 }
 
-Posicion Tablero_logica::getOrigenCombate() const
+
+//estas dos sirven para colocar las piezas después de la arena
+PosicionMatriz Tablero_logica::getOrigenCombate() const
 {
     return origenCombate;
 }
 
-Posicion Tablero_logica::getDestinoCombate() const
+PosicionMatriz Tablero_logica::getDestinoCombate() const
 {
     return destinoCombate;
 }
 
+
+
+//para saber de quién es el turno, por ejemplo para mostrar en pantalla
 Bando Tablero_logica::getTurnoActual() const
 {
     return turnoActual;
 }
 
-Bando Tablero_logica::getOcupante(int fila, int col) const
-{
-    if (!posicionValida(fila, col))
-        return Bando::NINGUNO;
-
-    return casillas[fila][col].ocupante;
-}
-
-TipoCasilla Tablero_logica::getTipoCasilla(int fila, int col) const
-{
-    if (!posicionValida(fila, col))
-        return TipoCasilla::INVALIDA;
-
-    return casillas[fila][col].tipo;
-}
-
+//funcion para camiar de turno, se llama después de mover o terminar la arena
 void Tablero_logica::cambiarTurno()
 {
     if (turnoActual == Bando::LUZ) {
         turnoActual = Bando::OSCURIDAD;
-        std::cout << "Ahora juega OSCURIDAD." << std::endl;
+        std::cout << "TURNO DE OSCURIDAD." << std::endl;
     }
     else {
         turnoActual = Bando::LUZ;
-        std::cout << "Ahora juega LUZ." << std::endl;
+        std::cout << "TURNO DE LUZ." << std::endl;
     }
 }
+
 
 void Tablero_logica::moverCursor(int df, int dc)
 {

@@ -1,6 +1,5 @@
 #pragma once
 #include "freeglut.h"
-#include "Casilla.h"
 #include"Color.h"
 #include"Vector2D.h"
 #include "Tipos.h"
@@ -10,9 +9,7 @@ class Pieza
 	friend class Interaccion;
 protected:
 
-
 	PosicionMatriz posicionMatriz; // Posición en la matriz (fila, columna)
-    Casilla casilla;   // Posición en la matriz (0-8)
     double fuerza;
     double cadencia;
     double vida;

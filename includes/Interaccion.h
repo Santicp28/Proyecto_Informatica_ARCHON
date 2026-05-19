@@ -4,6 +4,8 @@
 
 class Interaccion {
 public:
+
+    //cada casilla otorga un efecto a la pieza que contiente
     void piezaEfectoTipoCasilla(Pieza& p, Casilla c) {
 
         if (p.bando == Bando::LUZ) {
@@ -30,6 +32,7 @@ public:
         }
     }
 
+    //para asegurarnos que no nos salimos del tablero
     bool posicionValida(Casilla c, int tamano) const
     {
         int fila = c.getPosicionMatriz().fila;
@@ -37,8 +40,16 @@ public:
         return fila >= 0 && fila < tamano && col >= 0 && col < tamano;
     }
 
-    bool mismaPosicion(const Pieza& p, const Casilla& c)
+    //para saber de qué bando es la pieza de una casilla, si no hay, devuelve ninguno
+    Bando getBandoOcupante(const Casilla& c, const ListaPiezas& listaPiezas) const
     {
-        return p.getPosicionMatriz().fila == c.getPosicionMatriz().fila && p.getPosicionMatriz().columna == c.getPosicionMatriz().columna;
+        Pieza* p = listaPiezas.getPiezaEnPosicion(c.getPosicionMatriz());
+
+        if (p != nullptr) {
+            return p->bando;
+        }
+
+        return Bando::NINGUNO;
     }
 };
+

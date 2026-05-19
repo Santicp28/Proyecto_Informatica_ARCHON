@@ -14,7 +14,7 @@ private:
     Casilla casillas[TAM][TAM];
 
     ListaPiezas listaPiezas;
-    Interaccion interacciones;
+    Interaccion interaccion;
     Bando turnoActual;
 
     // el cursor es una posicion, la cual usaremos para iluminarla en el teclado con la parte gráfica, así como el origen seleccionado
