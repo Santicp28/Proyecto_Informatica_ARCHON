@@ -44,33 +44,6 @@ void Tablero_logica::dibuja(const Vector2D& centro)const {
     }
     glClearColor(1.0f, 0.08f, 0.15f, 1.0f);
     glDisable(GL_LIGHTING); // Desactivar luces para el tablero
-    float startPos = -(numeroCasillas * sizeCasillas) / 2.0f;
-
-    for (int row = 0; row < numeroCasillas; ++row) {
-        for (int col = 0; col < sizeCasillas; ++col) {
-            float x = startPos + col * sizeCasillas;
-            float y = startPos + row * sizeCasillas;
-
-            // 1. Dibujar el fondo de la casilla
-            setTileColor(layout[row][col]);
-            glBegin(GL_QUADS);
-            glVertex3f(x, y, 0.0f);
-            glVertex3f(x + sizeCasillas, y, 0.0f);
-            glVertex3f(x + sizeCasillas, y + sizeCasillas, 0.0f);
-            glVertex3f(x, y + sizeCasillas, 0.0f);
-            glEnd();
-
-            // 2. Dibujar el borde con un pequeño offset en Z para evitar parpadeo
-            glColor3f(1.0f, 0.0f, 0.0f); // Gris oscuro para bordes elegantes
-            glLineWidth(2.0f);
-            glBegin(GL_LINE_LOOP);
-            glVertex3f(x, y, 0.01f);
-            glVertex3f(x + sizeCasillas, y, 0.01f);
-            glVertex3f(x + sizeCasillas, y + sizeCasillas, 0.01f);
-            glVertex3f(x, y + sizeCasillas, 0.01f);
-            glEnd();
-        }
-    }
     glEnable(GL_LIGHTING);
 }
 

@@ -7,17 +7,6 @@ void Casilla::dibuja(const Vector2D& posicion, double longitud) const
     DesacopleGrafico::dibujaContornoCuadrado(posicion, { 0.5f, 0.5f, 0.5f }, longitud);
 }
 
-void Casilla::setTipo(const TipoCasilla& nuevoTipo)
-{
-	
-}
-
-void Casilla::setPosicion(const Vector2D& posicionPrimera, const unsigned int f, const unsigned int c)
-{
-	posicionMatriz= {f,c};
-	posicion2D = { posicionPrimera.x + posicionMatriz.columna * longitud, posicionPrimera.y - posicionMatriz.fila * longitud };
-}
-
 void Casilla::inicializa(const TipoCasilla& nuevoTipo, PosicionMatriz nuevaPosicion)
 {
     tipo = nuevoTipo;

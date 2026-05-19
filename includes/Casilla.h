@@ -21,7 +21,5 @@ class Casilla
 
 public:
 	void dibuja(const Vector2D& posicion, double longitud)const;
-	void setTipo(const TipoCasilla& nuevoTipo);
-	void setPosicion(const Vector2D& posicionPrimera, const unsigned int f, const unsigned int c);
 	void inicializa(const TipoCasilla& nuevoTipo, PosicionMatriz nuevaPosicion);
 };
