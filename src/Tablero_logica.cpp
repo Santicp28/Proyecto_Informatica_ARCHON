@@ -1,7 +1,7 @@
 #include "Tablero_logica.h"
 #include <iostream>
 
-
+using enum TipoCasilla;
 
 void Tablero_logica::inicializa()
 {

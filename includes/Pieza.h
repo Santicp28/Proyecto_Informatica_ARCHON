@@ -26,6 +26,7 @@ public:
         posicionMatriz.fila = fila;
         posicionMatriz.columna = columna;
 	}
+    PosicionMatriz getPosicionMatriz() const { return posicionMatriz; }
     // Utilidad para convertir coordenadas de matriz a coordenadas de mundo
    /* void calcularPosicionMundo(Vector2D esquina_arriba_izda, double size_celda) {
         x = boardOffset + columna * cellSize + (cellSize / 2.0f);

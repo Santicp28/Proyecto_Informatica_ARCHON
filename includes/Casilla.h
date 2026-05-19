@@ -16,5 +16,6 @@ public:
 	void dibuja()const;
 	void setTipo(const TipoCasilla& nuevoTipo);
 	void setPosicion(const Vector2D& posicionPrimera, const unsigned int f, const unsigned int c);
+	PosicionMatriz getPosicionMatriz() const { return posicionMatriz; }
 	TipoCasilla getTipo() const { return tipo; }
 };

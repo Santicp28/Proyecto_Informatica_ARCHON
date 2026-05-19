@@ -3,7 +3,7 @@
 #include "Pieza.h"
 #include <vector>
 #include "Tipos.h"
-
+#include "ListaPiezas.h"
 
 class Tablero_logica {
 private:
@@ -11,7 +11,7 @@ private:
     const Vector2D posicionPrimera;
     Casilla casillas[TAM][TAM];
 
-    std::vector<Pieza*> listaPiezas;
+    ListaPiezas listaPiezas;
 
     Bando turnoActual;
 
