@@ -1,6 +1,12 @@
 #include "Casilla.h"
 #include "DesacopleGrafico.h"
 
+void Casilla::dibuja(const Vector2D& posicion, double longitud) const
+{
+	DesacopleGrafico::dibujaCuadrado(posicion, color, longitud);
+    DesacopleGrafico::dibujaContornoCuadrado(posicion, { 0.5f, 0.5f, 0.5f }, longitud);
+}
+
 void Casilla::inicializa(const TipoCasilla& nuevoTipo, PosicionMatriz nuevaPosicion)
 {
     tipo = nuevoTipo;
@@ -22,31 +28,3 @@ void Casilla::inicializa(const TipoCasilla& nuevoTipo, PosicionMatriz nuevaPosic
         break;
     }
 }
-
-void Casilla::dibuja(const Vector2D& posicion, double longitud) const
-{
-    DesacopleGrafico::dibujaCuadrado(posicion, color, longitud);
-    DesacopleGrafico::dibujaContornoCuadrado(posicion, { 0.5f, 0.5f, 0.5f }, longitud);
-}
-
-void Casilla::setTipo(const TipoCasilla& nuevoTipo)
-{
-	tipo = nuevoTipo;
-    switch (tipo)
-    {
-    case TipoCasilla::OSCURA:
-        DesacopleGrafico::setColor({ 0.f, 0.f, 0.f });
-            break;
-
-    case TipoCasilla::CLARA: 
-        DesacopleGrafico::setColor({ 1.f, 1.f, 1.f });
-            break;
-    case TipoCasilla::OSCILANTE:
-        DesacopleGrafico::setColor({ 1.f, 1.f, 1.f });
-            break;
-    case TipoCasilla::PODER:
-        DesacopleGrafico::setColor({ 1.f, 1.f, 0.f });
-            break;
-    }
-}
-

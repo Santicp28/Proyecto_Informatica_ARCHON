@@ -18,10 +18,7 @@ void Juego::dibuja()
         break;
 
     case EstadoJuego::TABLERO:
-        gluLookAt(0.0, 0.0, 15.0,//// posición de la cámara
-            0.0, 0.0, 0.0, // punto al que mira
-            0.0, 1.0, 0.0);// vector "arriba" (define por asi decirlo la gravedad)
-        tablero_logica.dibuja();
+        tablero_logica.dibuja(centro);
         break;
 
     case EstadoJuego::ARENA:
@@ -68,16 +65,16 @@ void Juego::tecla(unsigned char key)
         break;
 
     case EstadoJuego::TABLERO:
-        if (key == 13) { // ENTER
-            tablero_logica.seleccionarConCursor();
+        //if (key == 13) { // ENTER
+        //    tablero_logica.seleccionarConCursor();
 
 
-            //tablero avisa de que se he elegido combate, haciendo que juego ponga el estado ARENA y limpiando el flag del combate pendiente para no volver a entrar 
-            if (tablero_logica.hayCombatePendiente()) {
-                estado = EstadoJuego::ARENA;
-                tablero_logica.limpiarCombatePendiente();
-            }
-        }
+        //    //tablero avisa de que se he elegido combate, haciendo que juego ponga el estado ARENA y limpiando el flag del combate pendiente para no volver a entrar 
+        //    if (tablero_logica.hayCombatePendiente()) {
+        //        estado = EstadoJuego::ARENA;
+        //        tablero_logica.limpiarCombatePendiente();
+        //    }
+        //}
 
         if (key == 27) { // ESC
             estado = EstadoJuego::MENU_PRINCIPAL;
@@ -106,28 +103,28 @@ void Juego::tecla(unsigned char key)
 
 void Juego::teclaEspecial(int key)
 {
-    if (estado == EstadoJuego::MENU_PRINCIPAL) {
-        menu.teclaEspecial(key);
-    }
-    else if (estado == EstadoJuego::TABLERO) { //con esto conseguimos mover el cursor mediante las flechas en el teclado
-        switch (key) {
-        case GLUT_KEY_UP:
-            tablero_logica.moverCursor(-1, 0);
-            break;
+    //if (estado == EstadoJuego::MENU_PRINCIPAL) {
+    //    menu.teclaEspecial(key);
+    //}
+    //else if (estado == EstadoJuego::TABLERO) { //con esto conseguimos mover el cursor mediante las flechas en el teclado
+    //    switch (key) {
+    //    case GLUT_KEY_UP:
+    //        tablero_logica.moverCursor(-1, 0);
+    //        break;
 
-        case GLUT_KEY_DOWN:
-            tablero_logica.moverCursor(1, 0);
-            break;
+    //    case GLUT_KEY_DOWN:
+    //        tablero_logica.moverCursor(1, 0);
+    //        break;
 
-        case GLUT_KEY_LEFT:
-            tablero_logica.moverCursor(0, -1);
-            break;
+    //    case GLUT_KEY_LEFT:
+    //        tablero_logica.moverCursor(0, -1);
+    //        break;
 
-        case GLUT_KEY_RIGHT:
-            tablero_logica.moverCursor(0, 1);
-            break;
-        }
-    }
+    //    case GLUT_KEY_RIGHT:
+    //        tablero_logica.moverCursor(0, 1);
+    //        break;
+    //    }
+    //}
 }
 
 

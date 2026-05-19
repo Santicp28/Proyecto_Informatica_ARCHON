@@ -16,6 +16,8 @@ private:
 
     static const int TAM = 9;
     Casilla casillas[TAM][TAM];
+    double posicionCamaraZ{ 15.0 };
+    const double longitud{ 500.0 };
 
     ListaPiezas listaPiezas;
     Interaccion interaccion;
@@ -32,11 +34,11 @@ private:
     //estas son para saber cómo terminan las piezas después de la arena
     PosicionMatriz origenCombate;
     PosicionMatriz destinoCombate;
+
+
 public:
+    void dibuja(const Vector2D& centro)const;
     void inicializa();
-
-
-
 
     //desarrollar como obtener las posiciones seleccionadas y pasarlas a esto !!!!!!!!!!!!!!!!!!!!!
     bool mover(Casilla origen, Casilla destino);
@@ -61,7 +63,6 @@ public:
     bool getHayOrigenSeleccionado() const;
     PosicionMatriz getOrigenSeleccionado() const;*/
 
-    void dibuja(const Vector2D& centro)const;
 
 private:
 

@@ -21,7 +21,6 @@ void Menu::inicializa(int anchoVentana, int altoVentana)
 //PARTE GRÁFICA DE EJEMPLO HASTA QUE SE DISEÑE UN MENÚ, TODO ESTO SERÁ REEMPLAZADO
 void Menu::dibuja()
 {
-    glDisable(GL_LIGHTING);
 
     glClearColor(0.08f, 0.08f, 0.15f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -70,7 +69,6 @@ void Menu::dibuja()
     glPopMatrix();
     glMatrixMode(GL_MODELVIEW);
 
-    glEnable(GL_LIGHTING);
 }
 
 

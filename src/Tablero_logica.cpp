@@ -50,7 +50,17 @@ void Tablero_logica::inicializa()
 
 }
 
+void Tablero_logica::dibuja(const Vector2D& centro)const {
+    double longitudCasilla = longitud / TAM;
+    Vector2D esquinaSuperiorIzda{ centro.x - longitud / 2.0, centro.y + longitud / 2.0 };
 
+    for (unsigned int f = 0; f < TAM; f++) {
+        for (unsigned int c = 0; c < TAM; c++) {
+            Vector2D centroCasilla{ esquinaSuperiorIzda.x + (c + 0.5) * longitudCasilla, esquinaSuperiorIzda.y - (f + 0.5) * longitudCasilla };
+            casillas[f][c].dibuja(centroCasilla, longitudCasilla);
+        }
+    }
+}
 
 
 bool Tablero_logica::mover(Casilla origen, Casilla destino) //CADA PIEZA SE MUEVE DISTINTO
@@ -244,17 +254,4 @@ void Tablero_logica::cambiarTurno()
 //    return origenSeleccionado;
 //}
 
-void Tablero_logica::dibuja(const Vector2D& centro)const {
-    DesacopleGrafico::setCamara(centro, posicionCamaraZ);
-    double longitudCasilla = longitud / TAM;
-    Vector2D esquinaSuperiorIzda{ centro.x - longitud / 2.0, centro.y + longitud / 2.0 };
-    for (unsigned int f = 0; f < TAM; f++) {
-        for (unsigned int c = 0; c < TAM; c++) {
-            Vector2D centroCasilla{ esquinaSuperiorIzda.x + (c + 0.5) * longitudCasilla, esquinaSuperiorIzda.y - (f + 0.5) * longitudCasilla };
-            casillas[f][c].dibuja(centroCasilla, longitudCasilla);
-        }
-    }
-    glClearColor(1.0f, 0.08f, 0.15f, 1.0f);
-    glDisable(GL_LIGHTING); // Desactivar luces para el tablero
-    glEnable(GL_LIGHTING);
-}
+
