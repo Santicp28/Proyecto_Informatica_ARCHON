@@ -21,7 +21,7 @@ void Casilla::inicializa(const TipoCasilla& nuevoTipo, PosicionMatriz nuevaPosic
         color = { 1.f, 1.f, 1.f };
         break;
     case TipoCasilla::OSCILANTE: //empieza blanca
-        color = { 0.8f, 0.8f, 0.8f };
+        color = { 0.7f, 0.7f, 0.7f };
         break;
     case TipoCasilla::PODER:
         color = { 1.f, 1.f, 0.f };
