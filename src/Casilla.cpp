@@ -1,18 +1,32 @@
 #include "Casilla.h"
 #include "DesacopleGrafico.h"
 
-void Casilla::dibuja() const
+void Casilla::inicializa(const TipoCasilla& nuevoTipo, PosicionMatriz nuevaPosicion)
 {
-	DesacopleGrafico::setCuadrado(posicion2D, longitud);
-    // 2. Dibujar el borde con un pequeño offset en Z para evitar parpadeo
-    glColor3f(1.0f, 0.0f, 0.0f); // Gris oscuro para bordes elegantes
-    glLineWidth(2.0f);
-    glBegin(GL_LINE_LOOP);
-    glVertex3f(x, y, 0.01f);
-    glVertex3f(x + sizeCasillas, y, 0.01f);
-    glVertex3f(x + sizeCasillas, y + sizeCasillas, 0.01f);
-    glVertex3f(x, y + sizeCasillas, 0.01f);
-    glEnd();
+    tipo = nuevoTipo;
+    posicionMatriz = nuevaPosicion;
+    switch (tipo)
+    {
+    case TipoCasilla::OSCURA:
+        color = { 0.f, 0.f, 0.f };
+        break;
+
+    case TipoCasilla::CLARA:
+        color = { 1.f, 1.f, 1.f };
+        break;
+    case TipoCasilla::OSCILANTE: //empieza blanca
+        color = { 0.7f, 0.7f, 0.7f };
+        break;
+    case TipoCasilla::PODER:
+        color = { 1.f, 1.f, 0.f };
+        break;
+    }
+}
+
+void Casilla::dibuja(const Vector2D& posicion, double longitud) const
+{
+    DesacopleGrafico::dibujaCuadrado(posicion, color, longitud);
+    DesacopleGrafico::dibujaContornoCuadrado(posicion, { 0.5f, 0.5f, 0.5f }, longitud);
 }
 
 void Casilla::setTipo(const TipoCasilla& nuevoTipo)
@@ -36,8 +50,3 @@ void Casilla::setTipo(const TipoCasilla& nuevoTipo)
     }
 }
 
-void Casilla::setPosicion(const Vector2D& posicionPrimera, const unsigned int f, const unsigned int c)
-{
-	posicionMatriz= {f,c};
-	posicion2D = { posicionPrimera.x + posicionMatriz.columna * longitud, posicionPrimera.y - posicionMatriz.fila * longitud };
-}

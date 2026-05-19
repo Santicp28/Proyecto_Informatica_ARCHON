@@ -1,4 +1,5 @@
 #include "Tablero_logica.h"
+#include "DesacopleGrafico.h"
 #include <iostream>
 
 using enum TipoCasilla;
@@ -29,8 +30,7 @@ void Tablero_logica::inicializa()
     };
     for (unsigned int f = 0; f < TAM; f++) {
         for (unsigned int c = 0; c < TAM; c++) {
-            casillas[f][c].setTipo(tipoCasillas[f][c]);
-            casillas[f][c].setPosicion( posicionPrimera, f, c );
+            casillas[f][c].inicializa(tipoCasillas[f][c], { f, c });
         }
     }
     //INICIALIZA CASILLAS
@@ -244,43 +244,17 @@ void Tablero_logica::cambiarTurno()
 //    return origenSeleccionado;
 //}
 
-void Tablero_logica::dibuja()const {
-    
-    for (auto& fila : casillas)
-    {
-        for (auto& casilla : fila)
-        {
-            casilla.dibuja();
+void Tablero_logica::dibuja(const Vector2D& centro)const {
+    DesacopleGrafico::setCamara(centro, posicionCamaraZ);
+    double longitudCasilla = longitud / TAM;
+    Vector2D esquinaSuperiorIzda{ centro.x - longitud / 2.0, centro.y + longitud / 2.0 };
+    for (unsigned int f = 0; f < TAM; f++) {
+        for (unsigned int c = 0; c < TAM; c++) {
+            Vector2D centroCasilla{ esquinaSuperiorIzda.x + (c + 0.5) * longitudCasilla, esquinaSuperiorIzda.y - (f + 0.5) * longitudCasilla };
+            casillas[f][c].dibuja(centroCasilla, longitudCasilla);
         }
     }
     glClearColor(1.0f, 0.08f, 0.15f, 1.0f);
     glDisable(GL_LIGHTING); // Desactivar luces para el tablero
-    float startPos = -(numeroCasillas * sizeCasillas) / 2.0f;
-
-    for (int row = 0; row < numeroCasillas; ++row) {
-        for (int col = 0; col < sizeCasillas; ++col) {
-            float x = startPos + col * sizeCasillas;
-            float y = startPos + row * sizeCasillas;
-
-             1. Dibujar el fondo de la casilla
-            setTileColor(layout[row][col]);
-            glBegin(GL_QUADS);
-            glVertex3f(x, y, 0.0f);
-            glVertex3f(x + sizeCasillas, y, 0.0f);
-            glVertex3f(x + sizeCasillas, y + sizeCasillas, 0.0f);
-            glVertex3f(x, y + sizeCasillas, 0.0f);
-            glEnd();
-
-             2. Dibujar el borde con un pequeño offset en Z para evitar parpadeo
-            glColor3f(1.0f, 0.0f, 0.0f); // Gris oscuro para bordes elegantes
-            glLineWidth(2.0f);
-            glBegin(GL_LINE_LOOP);
-            glVertex3f(x, y, 0.01f);
-            glVertex3f(x + sizeCasillas, y, 0.01f);
-            glVertex3f(x + sizeCasillas, y + sizeCasillas, 0.01f);
-            glVertex3f(x, y + sizeCasillas, 0.01f);
-            glEnd();
-        }
-    }
     glEnable(GL_LIGHTING);
 }

@@ -9,8 +9,12 @@
 
 class Tablero_logica {
 private:
+
+    const Vector2D centro{ 0.0, 0.0 };
+    double posicionCamaraZ{ 15.0 };
+    const double longitud{ 500.0 };
+
     static const int TAM = 9;
-    const Vector2D posicionPrimera;
     Casilla casillas[TAM][TAM];
 
     ListaPiezas listaPiezas;
@@ -28,11 +32,6 @@ private:
     //estas son para saber cómo terminan las piezas después de la arena
     PosicionMatriz origenCombate;
     PosicionMatriz destinoCombate;
-
-    float sizeCasillas{ 1.0f };
-    int numeroCasillas{ 9 };
-
-
 public:
     void inicializa();
 
@@ -53,23 +52,18 @@ public:
 	//para saber de quién es el turno, por ejemplo para mostrar en pantalla
     Bando getTurnoActual() const;
 
-    
-    //para otras interacciones futuras como hechizos ...
-    Bando getOcupante(int fila, int col) const;
-    TipoCasilla getTipoCasilla(int fila, int col) const;
 
-
-    void moverCursor(int df, int dc);
+    //DESARROLLAR ESTAS !!!!!!!!!!!!!!!!!!!!!!!!!!!!
+   /* void moverCursor(int df, int dc);
     bool seleccionarConCursor();
 
     PosicionMatriz getCursor() const;
     bool getHayOrigenSeleccionado() const;
-    PosicionMatriz getOrigenSeleccionado() const;
+    PosicionMatriz getOrigenSeleccionado() const;*/
 
-    void dibuja()const;//dibuja tablero
+    void dibuja(const Vector2D& centro)const;
 
 private:
-    bool posicionValida(int fila, int col) const;
 
     //para después de mover o terminar la arena
     //hacer una funcion para cuando se termina el combate y aplicar los resultados
