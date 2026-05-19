@@ -4,6 +4,8 @@
 #include <vector>
 #include "Tipos.h"
 #include "ListaPiezas.h"
+#include "Interaccion.h"
+
 
 class Tablero_logica {
 private:
@@ -12,7 +14,7 @@ private:
     Casilla casillas[TAM][TAM];
 
     ListaPiezas listaPiezas;
-
+    Interaccion interacciones;
     Bando turnoActual;
 
     // el cursor es una posicion, la cual usaremos para iluminarla en el teclado con la parte gráfica, así como el origen seleccionado
@@ -30,11 +32,15 @@ private:
     float sizeCasillas{ 1.0f };
     int numeroCasillas{ 9 };
 
+
 public:
     void inicializa();
 
+
+
+
     //desarrollar como obtener las posiciones seleccionadas y pasarlas a esto !!!!!!!!!!!!!!!!!!!!!
-    bool mover(int filaOrigen, int colOrigen, int filaDestino, int colDestino);
+    bool mover(Casilla origen, Casilla destino);
 
     //funcion para obtener el flag si hay combate
     bool hayCombatePendiente() const;

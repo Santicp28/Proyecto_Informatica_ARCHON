@@ -30,6 +30,13 @@ public:
         }
     }
 
+    bool posicionValida(Casilla c, int tamano) const
+    {
+        int fila = c.getPosicionMatriz().fila;
+        int col = c.getPosicionMatriz().columna;
+        return fila >= 0 && fila < tamano && col >= 0 && col < tamano;
+    }
+
     bool mismaPosicion(const Pieza& p, const Casilla& c)
     {
         return p.getPosicionMatriz().fila == c.getPosicionMatriz().fila && p.getPosicionMatriz().columna == c.getPosicionMatriz().columna;

@@ -8,7 +8,7 @@ class ListaPiezas
 {
     vector<Pieza*> listaPiezas;
 public:
-    void agregar(Pieza* p) { if (std::find(listaPiezas.begin(), listaPiezas.end(), p) == listaPiezas.end()) listaPiezas.push_back(p); }//comprueba  si ya existe esa dirección, sino la añade
+    void agregar(Pieza* p) { if (std::find(listaPiezas.begin(), listaPiezas.end(), p) == listaPiezas.end()) listaPiezas.push_back(p); }
     void dibuja(Vector2D esquina_arriba_izda, double size_celda) const { for (auto p : listaPiezas)p->dibuja(esquina_arriba_izda, size_celda); }
     
 
