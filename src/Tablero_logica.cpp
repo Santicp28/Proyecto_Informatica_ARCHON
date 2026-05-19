@@ -1,14 +1,16 @@
 #include "Tablero_logica.h"
 #include <iostream>
 
+
+
 void Tablero_logica::inicializa()
 {
     turnoActual = Bando::LUZ;
     combatePendiente = false;
+    hayOrigenSeleccionado = false;
 
     cursor = { 0, 0 };
-    origenSeleccionado = { -1, -1 };
-    hayOrigenSeleccionado = false;
+
 
     //para inicializar los tipos de casillas
     constexpr TipoCasilla tipoCasillas[TAM][TAM] =
