@@ -3,25 +3,16 @@
 #include "Vector2D.h"
 struct Color
 {
-	unsigned char r{ 255 }, g{ 255 }, b{ 255 };
+	float r{ 1.0f }, g{ 1.0f }, b{ 1.0f };
+
 };
 struct DesacopleGrafico
 {
-	void glLimpiarPantalla()const { glClear(GL_COLOR_BUFFER_BIT); }
-	void glPonCuadrado(const Vector2D& centro, const double& longitud)const;
-	void glPonColor(Color color) const{glColor3ub(color.r, color.g, color.b);}
+	static void limpiarPantalla() { glClear(GL_COLOR_BUFFER_BIT); }
+	static void dibujaCuadrado(const Vector2D& centro, const double longitud);
+	static void setColor(Color color) { glColor3f(color.r, color.g, color.b); }
+	static void setColorFondo(Color color) { glClearColor(color.r, color.g, color.b, 1.0f); }
+	static void desactivarSombras(){ glDisable(GL_LIGHTING); } // Desactivar luces para el tablero
+	static void dibujaContornoCuadrado(const Vector2D& centro, const double longitud);
 	
 };
-inline void DesacopleGrafico::glPonCuadrado(const Vector2D& centro, const double& longitud)const
-{
-	double mitad{ longitud / 2.0 };
-	glBegin(GL_QUADS);
-
-	glVertex2d(centro.x-mitad, centro.y-mitad); // abajo izquierda
-	glVertex2d(centro.x+ mitad, centro.y- mitad); // abajo derecha
-	glVertex2d(centro.x+ mitad, centro.y+ mitad); // arriba derecha
-	glVertex2d(centro.x- mitad, centro.y+ mitad); // arriba izquierda
-
-	glEnd();
-
-}

@@ -1,8 +1,6 @@
 #pragma once
-
-class PosicionMatriz
+struct PosicionMatriz
 {
-	public:
-		int fila;
-		int columna;
+		unsigned int fila;
+		unsigned int columna;
 };
