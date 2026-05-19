@@ -36,17 +36,17 @@ void Tablero_logica::inicializa()
     //INICIALIZA CASILLAS
 
 
-    //INICIALIZA PIEZAS --------- PONER SU POSICION INICIAL
-    //PIEZAS LUZ
-    listaPiezas.agregar(new );
-    listaPiezas.agregar(new );
-    listaPiezas.agregar(new );
+    ////INICIALIZA PIEZAS --------- PONER SU POSICION INICIAL
+    ////PIEZAS LUZ
+    //listaPiezas.agregar(new );
+    //listaPiezas.agregar(new );
+    //listaPiezas.agregar(new );
 
-    //PIEZAS OSCURIDAD
-    listaPiezas.agregar(new );
-    listaPiezas.agregar(new );
-    listaPiezas.agregar(new );
-    //INICIALIZA PIEZAS
+    ////PIEZAS OSCURIDAD
+    //listaPiezas.agregar(new );
+    //listaPiezas.agregar(new );
+    //listaPiezas.agregar(new );
+    ////INICIALIZA PIEZAS
 
 }
 

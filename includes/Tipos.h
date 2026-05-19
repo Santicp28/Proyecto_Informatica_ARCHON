@@ -21,6 +21,6 @@ enum class TipoMovimiento {
 };
 
 struct PosicionMatriz {
-    int fila;
-    int columna;
+    unsigned int fila;
+    unsigned int columna;
 };

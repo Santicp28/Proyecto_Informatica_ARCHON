@@ -1,6 +1,5 @@
 #pragma once
 #include"Vector2D.h"
-#include"PosicionMatriz.h"
 #include"DesacopleGrafico.h"
 #include "Tipos.h"
 

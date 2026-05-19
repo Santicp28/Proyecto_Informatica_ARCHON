@@ -10,14 +10,11 @@
 class Tablero_logica {
 private:
 
-    const Vector2D centro{ 0.0, 0.0 };
     double posicionCamaraZ{ 15.0 };
     const double longitud{ 500.0 };
 
     static const int TAM = 9;
     Casilla casillas[TAM][TAM];
-    double posicionCamaraZ{ 15.0 };
-    const double longitud{ 500.0 };
 
     ListaPiezas listaPiezas;
     Interaccion interaccion;
