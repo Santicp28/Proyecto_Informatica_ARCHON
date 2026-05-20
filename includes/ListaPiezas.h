@@ -20,11 +20,11 @@ public:
 
 
     //tablero se encarga de decidir si el movimiento es correcto, esta funcion solo se encarga de mover la pieza
-    void moverDeCasilla(const Casilla& origen, const Casilla& destino) {
+    void moverDeCasilla(PosicionMatriz origen, PosicionMatriz destino) {
         for (Pieza* p : listaPiezas) {
-            if (p->getPosicionMatriz().fila == origen.getPosicionMatriz().fila && p->getPosicionMatriz().columna == origen.getPosicionMatriz().columna) 
+            if (p->getPosicionMatriz().fila == origen.fila && p->getPosicionMatriz().columna == origen.columna) 
             {
-                p->setPosicionMatriz(destino.getPosicionMatriz().fila, destino.getPosicionMatriz().columna);
+                p->setPosicionMatriz(destino.fila, destino.columna);
                 break;
             }
         }

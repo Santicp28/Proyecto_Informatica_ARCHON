@@ -5,7 +5,7 @@
 #include "Tipos.h"
 #include "ListaPiezas.h"
 #include "Interaccion.h"
-
+#define TAM 9
 
 class Tablero_logica {
 private:
@@ -14,7 +14,6 @@ private:
     double posicionCamaraZ{ 15.0 };
     const double longitud{ 500.0 };
 
-    static const int TAM = 9;
     Casilla casillas[TAM][TAM];
 
     ListaPiezas listaPiezas;
@@ -38,8 +37,9 @@ public:
 
 
 
-    //desarrollar como obtener las posiciones seleccionadas y pasarlas a esto !!!!!!!!!!!!!!!!!!!!!
-    bool mover(Casilla origen, Casilla destino);
+   
+    bool mover(PosicionMatriz origen, PosicionMatriz destino);
+	
 
     //funcion para obtener el flag si hay combate
     bool hayCombatePendiente() const;
@@ -54,12 +54,12 @@ public:
 
 
     //DESARROLLAR ESTAS !!!!!!!!!!!!!!!!!!!!!!!!!!!!
-   /* void moverCursor(int df, int dc);
+    void moverCursor(int df, int dc);
     bool seleccionarConCursor();
 
     PosicionMatriz getCursor() const;
     bool getHayOrigenSeleccionado() const;
-    PosicionMatriz getOrigenSeleccionado() const;*/
+    PosicionMatriz getOrigenSeleccionado() const;
 
     void dibuja(const Vector2D& centro)const;
 

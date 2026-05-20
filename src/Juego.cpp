@@ -112,19 +112,19 @@ void Juego::teclaEspecial(int key)
     else if (estado == EstadoJuego::TABLERO) { //con esto conseguimos mover el cursor mediante las flechas en el teclado
         switch (key) {
         case GLUT_KEY_UP:
-            tablero_logica.moverCursor(-1, 0);
+            tablero_logica.moverCursor("arriba");
             break;
 
         case GLUT_KEY_DOWN:
-            tablero_logica.moverCursor(1, 0);
+            tablero_logica.moverCursor("abajo");
             break;
 
         case GLUT_KEY_LEFT:
-            tablero_logica.moverCursor(0, -1);
+            tablero_logica.moverCursor("izquierda");
             break;
 
         case GLUT_KEY_RIGHT:
-            tablero_logica.moverCursor(0, 1);
+            tablero_logica.moverCursor("derecha");
             break;
         }
     }

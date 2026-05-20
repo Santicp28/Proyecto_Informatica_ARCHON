@@ -33,23 +33,25 @@ public:
     }
 
     //para asegurarnos que no nos salimos del tablero
-    bool posicionValida(Casilla c, int tamano) const
+    bool posicionValida(PosicionMatriz pos, int tamano) const
     {
-        int fila = c.getPosicionMatriz().fila;
-        int col = c.getPosicionMatriz().columna;
+        int fila = pos.fila;
+        int col = pos.columna;
         return fila >= 0 && fila < tamano && col >= 0 && col < tamano;
-    }
+	}
 
     //para saber de qué bando es la pieza de una casilla, si no hay, devuelve ninguno
-    Bando getBandoOcupante(const Casilla& c, const ListaPiezas& listaPiezas) const
+    Bando getBandoOcupante(const PosicionMatriz& pos, const ListaPiezas& listaPiezas) const
     {
-        Pieza* p = listaPiezas.getPiezaEnPosicion(c.getPosicionMatriz());
-
+        Pieza* p = listaPiezas.getPiezaEnPosicion(pos);
         if (p != nullptr) {
             return p->bando;
         }
-
         return Bando::NINGUNO;
-    }
+	}
+
+
+
+
 };
 
