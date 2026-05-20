@@ -21,10 +21,6 @@ enum class TipoMovimiento {
 };
 
 struct PosicionMatriz {
-    int fila;
-    int columna;
+    unsigned int fila;
+    unsigned int columna;
 };
-
-bool operator ==(const PosicionMatriz& a, const PosicionMatriz& b) {
-    return a.fila == b.fila && a.columna == b.columna;
-}

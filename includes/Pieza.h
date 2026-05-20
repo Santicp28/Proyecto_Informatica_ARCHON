@@ -1,6 +1,7 @@
 #pragma once
 #include "freeglut.h"
-#include"Color.h"
+#include "Casilla.h"
+#include"DesacopleGrafico.h"
 #include"Vector2D.h"
 #include "Tipos.h"
 

@@ -15,18 +15,22 @@ int main(int argc, char* argv[])
 {
     glutInit(&argc, argv);
     glutInitWindowSize(800, 600);
-    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
+    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB );
     glutCreateWindow("ARCHON");
 
     // OpenGL básico
-    glEnable(GL_DEPTH_TEST);
-    glEnable(GL_COLOR_MATERIAL);
-    glEnable(GL_LIGHTING);
-    glEnable(GL_LIGHT0);
+    glDisable(GL_DEPTH_TEST);
+    glDisable(GL_LIGHTING);
+    glDisable(GL_LIGHT0);
 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluPerspective(40.0, 800 / 600.0f, 0.1, 150);
+    // Proyección 2D ortográfica
+    glOrtho(
+        0.0, 800.0,   // eje x estandar
+        600.0, 0.0,   // eje y invertido 
+        -1.0, 1.0 //grados de profundidad
+    );
 
     // CALLBACKS
     glutDisplayFunc(OnDraw);
@@ -46,7 +50,7 @@ int main(int argc, char* argv[])
 
 void OnDraw(void)
 {
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT);
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
