@@ -9,7 +9,7 @@ void Juego::inicializa()
     tablero_logica.inicializa();
 }
 
-void Juego::dibuja()
+void Juego::dibuja(const Renderer& renderer)
 {
     //fondos de colores para ir viendo si funciona, ir implementado las funciones de Adrián
     switch (estado) {
@@ -18,7 +18,7 @@ void Juego::dibuja()
         break;
 
     case EstadoJuego::TABLERO:
-        tablero_logica.dibuja(centro);
+        tablero_logica.dibuja(renderer);
         break;
 
     case EstadoJuego::ARENA:

@@ -1,6 +1,6 @@
 #pragma once
 #include"Vector2D.h"
-#include"DesacopleGrafico.h"
+#include"Renderer.h"
 #include "Tipos.h"
 
 class Casilla
@@ -13,7 +13,7 @@ class Casilla
 
 public:
 	void inicializa(const TipoCasilla& nuevoTipo, PosicionMatriz nuevaPosicion);
-	void dibuja(const Vector2D& posicion, double longitud)const;
+	void dibuja(const Renderer& renderer, const Vector2D& posicion, double longitud)const;
 	PosicionMatriz getPosicionMatriz() const { return posicionMatriz; }
 	TipoCasilla getTipo() const { return tipo; }
 };
