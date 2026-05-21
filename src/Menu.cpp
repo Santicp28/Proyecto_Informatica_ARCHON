@@ -1,13 +1,13 @@
 #include "Menu.h"
 #include "freeglut.h"
 
-void Menu::inicializa(int anchoVentana, int altoVentana)
+void Menu::inicializa()
 {
     botones.clear();
 
     float bw = 240.0f;
     float bh = 60.0f;
-    float x = anchoVentana / 2.0f - bw / 2.0f;
+    float x = 800 / 2.0f - bw / 2.0f;
 
     botones.push_back({ x, 340.0f, bw, bh, "JUGAR", false });
     botones.push_back({ x, 250.0f, bw, bh, "RANKING", false });
@@ -19,7 +19,7 @@ void Menu::inicializa(int anchoVentana, int altoVentana)
 }
 
 //PARTE GRÁFICA DE EJEMPLO HASTA QUE SE DISEÑE UN MENÚ, TODO ESTO SERÁ REEMPLAZADO
-void Menu::dibuja()
+void Menu::dibuja(const Renderer& renderer)
 {
 
     glClearColor(0.08f, 0.08f, 0.15f, 1.0f);

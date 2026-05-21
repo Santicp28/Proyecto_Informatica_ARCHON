@@ -6,14 +6,13 @@
 #include "ListaPiezas.h"
 #include "Interaccion.h"
 #include "Renderer.h"
-
+#include "Config.h"
 
 class Tablero_logica {
 private:
 
-    double posicionCamaraZ{ 15.0 };
-    const double longitud{ 500.0 };
-
+    double longitud;
+    Vector2D posicion;//en el centro
     static const int TAM = 9;
     Casilla casillas[TAM][TAM];
 

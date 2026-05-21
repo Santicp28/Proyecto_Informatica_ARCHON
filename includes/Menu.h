@@ -1,17 +1,11 @@
 #pragma once
-
-#include <string>
+#include"Renderer.h"
+#include "Boton.h"
 #include <vector>
-
-struct Boton {
-    float x, y, w, h;
-    std::string texto;
-    bool hover;
-};
+using std::vector;
 
 class Menu {
-private:
-    std::vector<Boton> botones;
+    vector<Boton> botones;
     bool quiere_jugar;
     bool quiere_salir;
     bool quiere_ranking;
@@ -20,8 +14,8 @@ private:
     void dibujarTexto(float x, float y, const std::string& texto) const;
 
 public:
-    void inicializa(int anchoVentana, int altoVentana);
-    void dibuja();
+    void inicializa();
+    void dibuja(const Renderer& renderer);
 
     void tecla(unsigned char key);
     void teclaEspecial(int key);

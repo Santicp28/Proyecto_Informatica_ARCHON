@@ -22,7 +22,7 @@ int main(int argc, char* argv[])
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB );
     glutCreateWindow("ARCHON");
 
-    renderer.inicializa2D(sizePantallaX, sizePantallaY);
+    renderer.inicializa2D();
     juego.inicializa();
 
     // CALLBACKS

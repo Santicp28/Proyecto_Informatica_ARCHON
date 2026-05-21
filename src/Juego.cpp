@@ -5,7 +5,7 @@
 void Juego::inicializa()
 {
     estado = EstadoJuego::MENU_PRINCIPAL;
-    menu.inicializa(800, 600);
+    menu.inicializa();
     tablero_logica.inicializa();
 }
 
@@ -14,7 +14,7 @@ void Juego::dibuja(const Renderer& renderer)
     //fondos de colores para ir viendo si funciona, ir implementado las funciones de Adrián
     switch (estado) {
     case EstadoJuego::MENU_PRINCIPAL:
-        menu.dibuja();
+        menu.dibuja(renderer);
         break;
 
     case EstadoJuego::TABLERO:
