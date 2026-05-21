@@ -3,6 +3,7 @@
 #include "Arena.h"
 #include "Tablero_logica.h"
 #include"Vector2D.h"
+#include "Renderer.h"
 
 enum class EstadoJuego {
     MENU_PRINCIPAL,
@@ -23,7 +24,7 @@ private:
 
 public:
     void inicializa();
-    void dibuja();
+    void dibuja(const Renderer& renderer);
     void mueve(float dt);
 
     void tecla(unsigned char key);
