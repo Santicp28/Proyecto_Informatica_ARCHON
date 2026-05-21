@@ -33,11 +33,11 @@ public:
     }
 
     //para asegurarnos que no nos salimos del tablero
-    bool posicionValida(PosicionMatriz pos, int tamano) const
+    bool posicionValida(PosicionMatriz pos) const
     {
         int fila = pos.fila;
         int col = pos.columna;
-        return fila >= 0 && fila < tamano && col >= 0 && col < tamano;
+        return fila >= 0 && fila < Tablero_logica::TAM && col >= 0 && col < Tablero_logica::TAM;
 	}
 
     //para saber de qué bando es la pieza de una casilla, si no hay, devuelve ninguno

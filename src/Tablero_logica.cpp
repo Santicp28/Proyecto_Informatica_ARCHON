@@ -71,18 +71,15 @@ bool Tablero_logica::mover(PosicionMatriz origen, PosicionMatriz destino) //CADA
 {
 
 	//comprobar si se puede mover, si no se puede, mostrar mensaje de error y no hacer nada
-    if (!interaccion.posicionValida(origen, TAM)) {
+    if (!interaccion.posicionValida(origen)) {
         std::cout << "Movimiento invalido: origen fuera del tablero." << std::endl;
         return false;
     }
 
-    if (!interaccion.posicionValida(destino, TAM)) {
+    if (!interaccion.posicionValida(destino)) {
         std::cout << "Movimiento invalido: destino fuera del tablero." << std::endl;
         return false;
     }
-
-    Casilla& casillaOrigen = casillas[origen.fila][origen.columna];
-    Casilla& casillaDestino = casillas[destino.fila][destino.columna];
 
     Bando atacante = interaccion.getBandoOcupante(origen, listaPiezas);
     Bando defensor = interaccion.getBandoOcupante(destino, listaPiezas);
@@ -186,7 +183,7 @@ void Tablero_logica::moverCursor(int df, int dc)
 {
 	PosicionMatriz nuevaPosicion{ cursor.fila + df, cursor.columna + dc };
 
-    if (interaccion.posicionValida(nuevaPosicion, TAM)) {
+    if (interaccion.posicionValida(nuevaPosicion)) {
 		cursor = nuevaPosicion;
         std::cout << "cursor en fila " << cursor.fila << ", columna " << cursor.columna << std::endl;
     }

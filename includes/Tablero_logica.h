@@ -6,10 +6,14 @@
 #include "ListaPiezas.h"
 #include "Interaccion.h"
 #include "Renderer.h"
-#define TAM 9
+
 
 class Tablero_logica {
 private:
+
+	friend class Interaccion;
+
+    static constexpr int TAM = 9;
 
     const Vector2D centro{ 0.0, 0.0 };
     double posicionCamaraZ{ 15.0 };
