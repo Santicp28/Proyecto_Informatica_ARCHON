@@ -6,6 +6,7 @@
 #include "ListaPiezas.h"
 #include "Interaccion.h"
 #include "Renderer.h"
+#define TAM 9
 
 class Tablero_logica {
 private:
@@ -39,8 +40,7 @@ public:
     void dibuja(const Renderer& renderer)const;
     void inicializa();
 
-    //desarrollar como obtener las posiciones seleccionadas y pasarlas a esto !!!!!!!!!!!!!!!!!!!!!
-    bool mover(Casilla origen, Casilla destino);
+    bool mover(PosicionMatriz origen, PosicionMatriz destino);
 
     //funcion para obtener el flag si hay combate
     bool hayCombatePendiente() const;
@@ -68,5 +68,5 @@ private:
 
     //para después de mover o terminar la arena
     //hacer una funcion para cuando se termina el combate y aplicar los resultados
-    void cambiarTurno();
+      void cambiarTurno();
 };
