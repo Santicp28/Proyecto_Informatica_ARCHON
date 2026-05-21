@@ -5,7 +5,6 @@
 #include "Tipos.h"
 #include "ListaPiezas.h"
 #include "Interaccion.h"
-#include "Renderer.h"
 
 
 class Tablero_logica {
@@ -35,7 +34,7 @@ private:
 
 
 public:
-    void dibuja(const Renderer& renderer)const;
+    void dibuja(const Vector2D& centro)const;
     void inicializa();
 
     //desarrollar como obtener las posiciones seleccionadas y pasarlas a esto !!!!!!!!!!!!!!!!!!!!!

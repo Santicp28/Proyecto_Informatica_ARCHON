@@ -1,9 +1,10 @@
 #include "Casilla.h"
+#include "DesacopleGrafico.h"
 
-void Casilla::dibuja(const Renderer& renderer, const Vector2D& posicion, double longitud) const
+void Casilla::dibuja(const Vector2D& posicion, double longitud) const
 {
-	renderer.dibujaCuadrado(posicion, color, longitud);
-    renderer.dibujaContornoCuadrado(posicion, { 0.5f, 0.5f, 0.5f }, longitud);
+	DesacopleGrafico::dibujaCuadrado(posicion, color, longitud);
+    DesacopleGrafico::dibujaContornoCuadrado(posicion, { 0.5f, 0.5f, 0.5f }, longitud);
 }
 
 void Casilla::inicializa(const TipoCasilla& nuevoTipo, PosicionMatriz nuevaPosicion)

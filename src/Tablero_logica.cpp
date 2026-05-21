@@ -1,5 +1,5 @@
 #include "Tablero_logica.h"
-#include "Renderer.h"
+#include "DesacopleGrafico.h"
 #include <iostream>
 
 using enum TipoCasilla;
@@ -50,15 +50,14 @@ void Tablero_logica::inicializa()
 
 }
 
-void Tablero_logica::dibuja(const Renderer& renderer)const {
+void Tablero_logica::dibuja(const Vector2D& centro)const {
     double longitudCasilla = longitud / TAM;
-    Vector2D centro = renderer.obtenerSizeDibujo() * 0.5;
     Vector2D esquinaSuperiorIzda{ centro.x - longitud / 2.0, centro.y + longitud / 2.0 };
 
     for (unsigned int f = 0; f < TAM; f++) {
         for (unsigned int c = 0; c < TAM; c++) {
             Vector2D centroCasilla{ esquinaSuperiorIzda.x + (c + 0.5) * longitudCasilla, esquinaSuperiorIzda.y - (f + 0.5) * longitudCasilla };
-            casillas[f][c].dibuja(renderer, centroCasilla, longitudCasilla);
+            casillas[f][c].dibuja(centroCasilla, longitudCasilla);
         }
     }
 }

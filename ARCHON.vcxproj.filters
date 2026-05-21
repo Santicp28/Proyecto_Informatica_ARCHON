@@ -22,9 +22,6 @@
     <Filter Include="Archivos de encabezado\ClasesAuxiliares">
       <UniqueIdentifier>{3770a68e-5405-419e-8a06-eca06f818946}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Archivos de origen\ClasesAuxiliares">
-      <UniqueIdentifier>{68cac1a4-68d8-46d3-9c05-274c8abae864}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\interacción.cpp">
@@ -87,8 +84,8 @@
     <ClCompile Include="src\Casilla.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="src\Renderer.cpp">
-      <Filter>Archivos de origen\ClasesAuxiliares</Filter>
+    <ClCompile Include="src\DesacopleGrafico.cpp">
+      <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -146,22 +143,13 @@
     <ClInclude Include="includes\Casilla.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="includes\DesacopleGrafico.h">
+      <Filter>Archivos de encabezado\ClasesAuxiliares</Filter>
+    </ClInclude>
     <ClInclude Include="includes\freeglut.h">
       <Filter>Archivos de encabezado\ClasesAuxiliares</Filter>
     </ClInclude>
     <ClInclude Include="includes\Vector2D.h">
-      <Filter>Archivos de encabezado\ClasesAuxiliares</Filter>
-    </ClInclude>
-    <ClInclude Include="includes\Interaccion.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="includes\ListaPiezas.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="includes\Tipos.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="includes\Renderer.h">
       <Filter>Archivos de encabezado\ClasesAuxiliares</Filter>
     </ClInclude>
   </ItemGroup>
