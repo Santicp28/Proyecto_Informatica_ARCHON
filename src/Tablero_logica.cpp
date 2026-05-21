@@ -225,21 +225,21 @@ bool Tablero_logica::seleccionarConCursor()
 
     return movimientoCorrecto;
 }
-//
-//Posicion Tablero_logica::getCursor() const
-//{
-//    return cursor;
-//}
-//
-//bool Tablero_logica::getHayOrigenSeleccionado() const
-//{
-//    return hayOrigenSeleccionado;
-//}
-//
-//Posicion Tablero_logica::getOrigenSeleccionado() const
-//{
-//    return origenSeleccionado;
-//}
+
+PosicionMatriz Tablero_logica::getCursor() const
+{
+    return cursor;
+}
+
+bool Tablero_logica::getHayOrigenSeleccionado() const
+{
+    return hayOrigenSeleccionado;
+}
+
+PosicionMatriz Tablero_logica::getOrigenSeleccionado() const
+{
+    return origenSeleccionado;
+}
 
 void Tablero_logica::dibuja(const Vector2D& centro)const {
     DesacopleGrafico::setCamara(centro, posicionCamaraZ);
