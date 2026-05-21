@@ -7,14 +7,13 @@
 #include "Interaccion.h"
 #include "Renderer.h"
 
-
 class Tablero_logica {
 private:
 
+    const Vector2D centro{ 0.0, 0.0 };
     double posicionCamaraZ{ 15.0 };
     const double longitud{ 500.0 };
 
-    static const int TAM = 9;
     Casilla casillas[TAM][TAM];
 
     ListaPiezas listaPiezas;
@@ -32,6 +31,8 @@ private:
     //estas son para saber cómo terminan las piezas después de la arena
     PosicionMatriz origenCombate;
     PosicionMatriz destinoCombate;
+public:
+    void inicializa();
 
 
 public:
@@ -54,13 +55,14 @@ public:
 
 
     //DESARROLLAR ESTAS !!!!!!!!!!!!!!!!!!!!!!!!!!!!
-   /* void moverCursor(int df, int dc);
+    void moverCursor(int df, int dc);
     bool seleccionarConCursor();
 
     PosicionMatriz getCursor() const;
     bool getHayOrigenSeleccionado() const;
-    PosicionMatriz getOrigenSeleccionado() const;*/
+    PosicionMatriz getOrigenSeleccionado() const;
 
+    void dibuja(const Vector2D& centro)const;
 
 private:
 

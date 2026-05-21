@@ -15,11 +15,9 @@ enum class EstadoJuego {
 
 class Juego {
 private:
-
     EstadoJuego estado;
     Tablero_logica tablero_logica;
     Menu menu;
-    Vector2D centro{ 400.0,300.0 };
 //    Arena arena;
 
 public:
