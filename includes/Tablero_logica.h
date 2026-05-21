@@ -13,7 +13,7 @@ private:
 
     double longitud;
     Vector2D posicion;//en el centro
-    static const int TAM = 9;
+    static constexpr int TAM = 9;
     Casilla casillas[TAM][TAM];
 
     ListaPiezas listaPiezas;

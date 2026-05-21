@@ -3,8 +3,6 @@
 
 void Menu::inicializa()
 {
-    botones.clear();
-
     float bw = 240.0f;
     float bh = 60.0f;
     float x = 800 / 2.0f - bw / 2.0f;

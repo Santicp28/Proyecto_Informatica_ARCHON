@@ -5,7 +5,8 @@
 using std::vector;
 
 class Menu {
-    vector<Boton> botones;
+    static constexpr int tam = 9;
+    Boton botones[tam];
     bool quiere_jugar;
     bool quiere_salir;
     bool quiere_ranking;
