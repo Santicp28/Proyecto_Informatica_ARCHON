@@ -3,20 +3,9 @@
 
 void Menu::inicializa()
 {
-    float bw = 240.0f;
-    float bh = 60.0f;
-    float x = 800 / 2.0f - bw / 2.0f;
-
-    botones.push_back({ x, 340.0f, bw, bh, "JUGAR", false });
-    botones.push_back({ x, 250.0f, bw, bh, "RANKING", false });
-    botones.push_back({ x, 160.0f, bw, bh, "SALIR", false });
-
-    quiere_jugar = false;
-    quiere_salir = false;
-    quiere_ranking = false;
+    seleccionado = 0;
 }
 
-//PARTE GRÁFICA DE EJEMPLO HASTA QUE SE DISEÑE UN MENÚ, TODO ESTO SERÁ REEMPLAZADO
 void Menu::dibuja(const Renderer& renderer)
 {
 
