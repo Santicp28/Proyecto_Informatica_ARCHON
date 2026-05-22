@@ -4,21 +4,18 @@
 #include "Renderer.h"
 using std::string;
 
-enum class Seleccion {
-    SELECCIONADO,
-    NO_SELECCIONADO
-};
-
 class Boton
 {
     string texto;
-    Seleccion estado;
-    Color color;
+    Color colorArea;
+    Color colorPerimetro;
+    double escala{ 1.0 };
 public:
     Boton(const string& texto)
         : texto(texto)
     {
     }
     void dibuja(const Renderer& renderer, const Vector2D& posicion, const Vector2D& size)const;
+    void setParametros(bool estado);
 };
 

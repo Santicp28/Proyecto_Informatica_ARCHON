@@ -36,9 +36,7 @@ void Tablero_logica::inicializa()
             casillas[f][c].inicializa(tipoCasillas[f][c], { f, c });
         }
     }
-    //INICIALIZA CASILLAS
-
-
+  
     ////INICIALIZA PIEZAS --------- PONER SU POSICION INICIAL
     ////PIEZAS LUZ
     //listaPiezas.agregar(new );

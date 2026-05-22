@@ -41,8 +41,6 @@ int main(int argc, char* argv[])
 
 void OnDraw(void)
 {   
-    renderer.limpiarPantalla();
-
     renderer.iniciaFrame();
 
     juego.dibuja(renderer);

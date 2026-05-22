@@ -11,7 +11,7 @@ void Juego::inicializa()
 
 void Juego::dibuja(const Renderer& renderer)
 {
-    //fondos de colores para ir viendo si funciona, ir implementado las funciones de Adrián
+    renderer.dibujaColorFondo({ 0.2f, 0.2f, 0.2f });
     switch (estado) {
     case EstadoJuego::MENU_PRINCIPAL:
         menu.dibuja(renderer);

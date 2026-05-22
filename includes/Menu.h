@@ -7,10 +7,9 @@ using std::vector, std::string;
 
 class Menu {
     vector<Boton> botones;
+    Color colorFondo{ 0.1f, 0.1f, 0.4f };
     unsigned int seleccionado{ 0 };
-
-    bool estaDentro(const Boton& b, int x, int y, int altoVentana) const;
-    void dibujarTexto(float x, float y, const std::string& texto) const;
+    string titulo{ "ARCHON" };
 
 public:
     Menu(const std::vector<std::string>& textos)
@@ -21,15 +20,8 @@ public:
 
     void inicializa();
     void dibuja(const Renderer& renderer);
+    void mueve(float dt);
 
     void tecla(unsigned char key);
     void teclaEspecial(int key);
-    void raton(int button, int state, int x, int y, int altoVentana);
-    void movimientoRaton(int x, int y, int altoVentana);
-
-    bool getQuiereJugar() const;
-    bool getQuiereSalir() const;
-    bool getQuiereRanking() const;
-
-    void resetAcciones();
 };
