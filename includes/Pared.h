@@ -1,6 +1,6 @@
 #pragma once
 #include "Vector2D.h"
-#include "color.h"
+#include "Renderer.h"
 
 class Interaccion;
 

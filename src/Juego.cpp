@@ -9,7 +9,7 @@ void Juego::inicializa()
     tablero_logica.inicializa();
 }
 
-void Juego::dibuja()
+void Juego::dibuja(const Renderer& renderer)
 {
     //fondos de colores para ir viendo si funciona, ir implementado las funciones de Adrián
     switch (estado) {
@@ -18,8 +18,7 @@ void Juego::dibuja()
         break;
 
     case EstadoJuego::TABLERO:
-        glClearColor(0.1f, 0.25f, 0.1f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        tablero_logica.dibuja(renderer);
         break;
 
     case EstadoJuego::ARENA:

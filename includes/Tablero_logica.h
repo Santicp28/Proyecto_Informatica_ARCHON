@@ -1,85 +1,76 @@
 #pragma once
+#include "Casilla.h"
+#include "Pieza.h"
+#include <vector>
+#include "Tipos.h"
+#include "ListaPiezas.h"
+#include "Interaccion.h"
+#include "Renderer.h"
 
-//esto se usará para simular también las piezas hasta que haya personajes definidos
-enum class Bando {
-    NINGUNO,
-    LUZ,
-    OSCURIDAD
-};
-
-
-enum class TipoCasilla {
-    OSCURA,
-    CLARA,
-    OSCILANTE,
-    PODER,
-    INVALIDA
-};
-
-struct Posicion {
-    int fila;
-    int columna;
-};
-
-struct CasillaLogica {
-    TipoCasilla tipo;
-    Bando ocupante;
-};
 
 class Tablero_logica {
 private:
-    static const int TAM = 9;
 
-    CasillaLogica casillas[TAM][TAM];
+	friend class Interaccion;
 
+    static constexpr int TAM = 9;
+
+    const Vector2D centro{ 0.0, 0.0 };
+    double posicionCamaraZ{ 15.0 };
+    const double longitud{ 500.0 };
+
+    Casilla casillas[TAM][TAM];
+
+    ListaPiezas listaPiezas;
+    Interaccion interaccion;
     Bando turnoActual;
 
     // el cursor es una posicion, la cual usaremos para iluminarla en el teclado con la parte gráfica, así como el origen seleccionado
-    Posicion cursor;
-    Posicion origenSeleccionado;
+    PosicionMatriz cursor;
+    PosicionMatriz origenSeleccionado;
     bool hayOrigenSeleccionado;
 
 	//flag cuando dos piezas de bandos opuestos se encuentran en la misma casilla
     bool combatePendiente;
 
     //estas son para saber cómo terminan las piezas después de la arena
-    Posicion origenCombate;
-    Posicion destinoCombate;
-
+    PosicionMatriz origenCombate;
+    PosicionMatriz destinoCombate;
 public:
     void inicializa();
 
-    //desarrollar como obtener las posiciones seleccionadas y pasarlas a esto !!!!!!!!!!!!!!!!!!!!!
-    bool mover(int filaOrigen, int colOrigen, int filaDestino, int colDestino);
+
+public:
+    void dibuja(const Renderer& renderer)const;
+    void inicializa();
+
+    bool mover(PosicionMatriz origen, PosicionMatriz destino);
 
     //funcion para obtener el flag si hay combate
     bool hayCombatePendiente() const;
 	void limpiarCombatePendiente(); //cuando empieza la arena se limpia el flag de combate pendiente
 
     //para saber donde está cada pieza después de que se resuelve la arena
-    Posicion getOrigenCombate() const;
-    Posicion getDestinoCombate() const;
+    PosicionMatriz getOrigenCombate() const;
+    PosicionMatriz getDestinoCombate() const;
 
 	//para saber de quién es el turno, por ejemplo para mostrar en pantalla
     Bando getTurnoActual() const;
 
-    
-    //para otras interacciones futuras como hechizos ...
-    Bando getOcupante(int fila, int col) const;
-    TipoCasilla getTipoCasilla(int fila, int col) const;
 
-
+    //DESARROLLAR ESTAS !!!!!!!!!!!!!!!!!!!!!!!!!!!!
     void moverCursor(int df, int dc);
     bool seleccionarConCursor();
 
-    Posicion getCursor() const;
+    PosicionMatriz getCursor() const;
     bool getHayOrigenSeleccionado() const;
-    Posicion getOrigenSeleccionado() const;
+    PosicionMatriz getOrigenSeleccionado() const;
+
+    void dibuja(const Vector2D& centro)const;
 
 private:
-    bool posicionValida(int fila, int col) const;
 
     //para después de mover o terminar la arena
     //hacer una funcion para cuando se termina el combate y aplicar los resultados
-    void cambiarTurno();
+      void cambiarTurno();
 };

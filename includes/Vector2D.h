@@ -1,5 +1,6 @@
 #pragma once
 #include <cmath>
+#include "freeglut.h"
 struct Vector2D
 {
 	double x{};

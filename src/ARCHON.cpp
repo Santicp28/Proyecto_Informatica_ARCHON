@@ -1,7 +1,10 @@
-    #include "Juego.h"
+#include "Juego.h"
+#include"Renderer.h"
 #include "freeglut.h"
+#include <vector>
 
 Juego juego;
+Renderer renderer;
 
 void OnDraw(void);
 void OnTimer(int value);
@@ -12,20 +15,15 @@ void OnPassiveMotion(int x, int y);
 
 int main(int argc, char* argv[])
 {
+    unsigned int sizePantallaX{ 800 };
+    unsigned int sizePantallaY{ 600 };
     glutInit(&argc, argv);
-    glutInitWindowSize(800, 600);
-    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
+    glutInitWindowSize(sizePantallaX, sizePantallaY);
+    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB );
     glutCreateWindow("ARCHON");
 
-    // OpenGL básico
-    glEnable(GL_DEPTH_TEST);
-    glEnable(GL_COLOR_MATERIAL);
-    glEnable(GL_LIGHTING);
-    glEnable(GL_LIGHT0);
-
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    gluPerspective(40.0, 800 / 600.0f, 0.1, 150);
+    renderer.inicializa2D(sizePantallaX, sizePantallaY);
+    juego.inicializa();
 
     // CALLBACKS
     glutDisplayFunc(OnDraw);
@@ -35,8 +33,6 @@ int main(int argc, char* argv[])
     glutMouseFunc(OnMouse);
     glutPassiveMotionFunc(OnPassiveMotion);
 
-    juego.inicializa();
-
     glutMainLoop();
     return 0;
 }
@@ -44,13 +40,12 @@ int main(int argc, char* argv[])
 // --------------------------------------------------
 
 void OnDraw(void)
-{
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+{   
+    renderer.limpiarPantalla();
 
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
+    renderer.iniciaFrame();
 
-    juego.dibuja();
+    juego.dibuja(renderer);
 
     glutSwapBuffers();
 }
