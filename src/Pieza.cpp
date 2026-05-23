@@ -18,3 +18,4 @@ void Pieza::dibuja(Vector2D esquina_arriba_izda, double size_celda)
     glPopMatrix();
     glEnable(GL_LIGHTING);
 }
+

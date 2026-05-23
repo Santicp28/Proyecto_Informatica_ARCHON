@@ -20,15 +20,14 @@ public:
 
 
     //tablero se encarga de decidir si el movimiento es correcto, esta funcion solo se encarga de mover la pieza
-    void moverDeCasilla(PosicionMatriz origen, PosicionMatriz destino) {
+    bool moverDeCasilla(PosicionMatriz origen, PosicionMatriz destino) {
         for (Pieza* p : listaPiezas) {
-            if (p->getPosicionMatriz().fila == origen.fila && p->getPosicionMatriz().columna == origen.columna) 
+            if (p->getPosicionMatriz() == origen)
             {
-                p->setPosicionMatriz(destino.fila, destino.columna);
-                break;
+				return p->mover(destino); //HACER MOVER PARA CADA TIPO DE PIEZA !!!!!!
             }
         }
-	}
+    }
 
     //llamar después de arena
 	void piezaPierde(Pieza* p) {
@@ -43,7 +42,7 @@ public:
     Pieza* getPiezaEnPosicion(PosicionMatriz pos) const
     {
         for (auto p : listaPiezas) {
-            if (p != nullptr && p->getPosicionMatriz().fila == pos.fila && p->getPosicionMatriz().columna == pos.columna) {return p;}
+            if (p != nullptr && p->getPosicionMatriz() == pos) {return p;}
         }
 
         return nullptr;
