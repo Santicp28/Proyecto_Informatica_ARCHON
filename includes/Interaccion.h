@@ -1,6 +1,7 @@
 #pragma once
 #include "Pieza.h"
 #include "Casilla.h"
+#include "Tipos.h"
 
 class Interaccion {
 public:
@@ -49,7 +50,6 @@ public:
         }
         return Bando::NINGUNO;
 	}
-
 
 
 
