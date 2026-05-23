@@ -70,34 +70,11 @@ void Tablero_logica::dibuja(const Renderer& renderer)const {
 bool Tablero_logica::mover(PosicionMatriz origen, PosicionMatriz destino) //CADA PIEZA SE MUEVE DISTINTO
 {
 
-	//comprobar si se puede mover, si no se puede, mostrar mensaje de error y no hacer nada
-    if (!interaccion.posicionValida(origen)) {
-        std::cout << "Movimiento invalido: origen fuera del tablero." << std::endl;
-        return false;
-    }
-
-    if (!interaccion.posicionValida(destino)) {
-        std::cout << "Movimiento invalido: destino fuera del tablero." << std::endl;
-        return false;
-    }
-
     Bando atacante = interaccion.getBandoOcupante(origen, listaPiezas);
     Bando defensor = interaccion.getBandoOcupante(destino, listaPiezas);
 
     //ILUMINAR O DESTACAR CASILLA SI HAY ERROR O MOSTRAR UN SONIDO O ALGO, TAMBIEN MOSTRAR MENSAJE PARA SABER EL ERROR
     
-    //No hay pieza en origen
-    if (atacante == Bando::NINGUNO) {
-        std::cout << "Movimiento invalido: no hay pieza en el origen." << std::endl;
-        return false;
-    }
-
-    //No es ty turno
-    if (atacante != turnoActual) {
-        std::cout << "Movimiento invalido: no es el turno de esa pieza." << std::endl;
-        return false;
-    }
-
 	//Hay una pieza aliada en destino
     if (defensor == atacante) {
         std::cout << "Movimiento invalido: la casilla destino tiene una pieza aliada." << std::endl;
@@ -249,3 +226,7 @@ PosicionMatriz Tablero_logica::getOrigenSeleccionado() const
     return origenSeleccionado;
 }
 
+void resaltarMovimientoPosible()
+{
+
+}
