@@ -1,8 +1,9 @@
 #pragma once
 #include "Pieza.h"
-class Arquero :
-    public Pieza
+class Arquero : public Pieza
 {
-    void dibuja();
+public:
+	Arquero(Bando b = Bando::LUZ);
+	void dibuja();
 };
 
