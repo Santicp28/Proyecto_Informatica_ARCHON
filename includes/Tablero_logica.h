@@ -36,8 +36,6 @@ private:
     //estas son para saber cómo terminan las piezas después de la arena
     PosicionMatriz origenCombate;
     PosicionMatriz destinoCombate;
-public:
-    void inicializa();
 
 
 public:
@@ -73,4 +71,6 @@ private:
     //para después de mover o terminar la arena
     //hacer una funcion para cuando se termina el combate y aplicar los resultados
       void cambiarTurno();
+
+      void resaltarMovimientoPosible();
 };

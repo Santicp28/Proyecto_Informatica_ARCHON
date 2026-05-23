@@ -3,6 +3,7 @@
 #include "Casilla.h"
 #include "Tipos.h"
 
+
 class Interaccion {
 public:
 
@@ -38,7 +39,7 @@ public:
     {
         int fila = pos.fila;
         int col = pos.columna;
-        return fila >= 0 && fila < Tablero_logica::TAM && col >= 0 && col < Tablero_logica::TAM;
+        return fila >= 0 && fila < 9 && col >= 0 && col < 9;
 	}
 
     //para saber de qué bando es la pieza de una casilla, si no hay, devuelve ninguno

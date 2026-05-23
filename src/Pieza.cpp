@@ -12,8 +12,8 @@ void Pieza::dibuja(Vector2D esquina_arriba_izda, double size_celda)
     glDisable(GL_LIGHTING);
     glPushMatrix();
     //calcularPosicionMundo();
-    glTranslatef(px, py, 0.2f); // Elevamos la pieza sobre el tablero
-    color.pon_color();
+    // glTranslatef(px, py, 0.2f); // Elevamos la pieza sobre el tablero
+    //color.pon_color();
     dibujarForma();
     glPopMatrix();
     glEnable(GL_LIGHTING);
