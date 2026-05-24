@@ -2,7 +2,7 @@
 #include "freeglut.h"
 #include "Vector2D.h"
 #include "Config.h"
-#include ""
+
 struct Color
 {
 	float r{ 1.0f }, g{ 1.0f }, b{ 1.0f };

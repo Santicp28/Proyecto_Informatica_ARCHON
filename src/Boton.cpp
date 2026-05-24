@@ -5,9 +5,10 @@ void Boton::dibuja(const Renderer& renderer, const Vector2D& posicion, const Vec
     renderer.dibujaContornoCuadrado(posicion, colorPerimetro, size * escala);
 }
 
-void Boton::setParametros(bool estado)
+void Boton::cambiarEstado()
 {
-    if (estado==true) {
+    seleccionado = !seleccionado;
+    if (seleccionado ==true) {
         
         colorArea = { 0.3f, 0.5f, 0.9f };
         colorPerimetro = { 1.0f,1.0f,0.0f };

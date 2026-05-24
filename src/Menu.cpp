@@ -1,50 +1,65 @@
 #include "Menu.h"
-#include "freeglut.h"
 
 void Menu::inicializa()
 {
     seleccionado = 0;
+    botones[seleccionado].cambiarEstado();
 }
 
 
 void Menu::dibuja(const Renderer& renderer)
 {
     renderer.dibujaColorFondo(colorFondo);
-
+    Vector2D sizeBotones{ calcularSizeBotones() };
     for (int i = 0; i < botones.size(); i++) {
-
-        botones[i].dibuja();
+        botones[i].dibuja(renderer,calcularPosicionBotones(i), sizeBotones);
     }
 }
 
 void Menu::mueve(float dt)
 {
-    for (int i = 0; i < botones.size(); i++)
-    {
-        if (i == seleccionado)
-            botones[i].setParametros(true);
-        else
-            botones[i].setParametros(false);
-    }
+
 }
 
-
-void Menu::tecla(unsigned char key)
+MenuAccion Menu::tecla(unsigned char key)
 {
-    if (key == 'w' || key == 'J')
-        if (seleccionado == 0)
+    if (key == 'w')
+    {
+        if (seleccionado == 0) {
+            botones[seleccionado].cambiarEstado();
             seleccionado = botones.size() - 1;
-        else
+            botones[seleccionado].cambiarEstado();
+        }
+        else {
+            botones[seleccionado].cambiarEstado();
             seleccionado = seleccionado - 1;
-
-    if (key == 's' || key == 'R')
-        if (seleccionado == botones.size()-1)
+            botones[seleccionado].cambiarEstado();
+        }
+    }
+        
+    if (key == 's')
+    {
+        if (seleccionado == botones.size() - 1) {
+            botones[seleccionado].cambiarEstado();
             seleccionado = 0;
-        else
-            seleccionado = seleccionado +1;
-
+            botones[seleccionado].cambiarEstado();
+        }
+        else {
+            botones[seleccionado].cambiarEstado();
+            seleccionado = seleccionado + 1;
+            botones[seleccionado].cambiarEstado();
+        }
+    }
     if (key == ' ')
-        //confirmar
+    {
+        switch (seleccionado)
+        {
+        case 0: return MenuAccion::JUGAR;
+        case 1: return MenuAccion::OPCIONES;
+        case 2: return MenuAccion::SALIR;
+        }
+    }
+    return MenuAccion::NINGUNA;
 }
 
 void Menu::teclaEspecial(int key)
