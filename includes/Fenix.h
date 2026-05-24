@@ -1,5 +1,6 @@
 #pragma once
 #include "Pieza.h"
+#include "TiposPiezas.h"
 class Fenix : public Pieza
 {
 public:

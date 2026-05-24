@@ -1,5 +1,5 @@
 #pragma once
-#include "raylib.h"
+
 
 struct TiposPiezas
 {
@@ -8,67 +8,67 @@ struct TiposPiezas
 
 // Representación de la Luz
 inline constexpr TiposPiezas wizard = {
-	"bin\Graficos\wizard.PNG"
+	"bin/Graficos/mago.png"
 };
 
 inline constexpr TiposPiezas unicorn = {
-	"bin\Graficos\unicorn.PNG"
+	"bin/Graficos/unicornio.png"
 };
 
 inline constexpr TiposPiezas archer = {
-	"bin\Graficos\archer.PNG"
+	"bin/Graficos/arquero.png"
 };
 
 inline constexpr TiposPiezas golem = {
-	"bin\Graficos\golem.PNG"
+	"bin/Graficos/golem.PNG"
 };
 
 inline constexpr TiposPiezas valkyries = {
-	"bin\Graficos\valkyries.PNG"
+	"bin/Graficos/valquiria.png"
 };
 
 inline constexpr TiposPiezas djinni = {
-	"bin\Graficos\djinni.PNG"
+	"bin/Graficos/djinni.png"
 };
 
 inline constexpr TiposPiezas phoenix = {
-	"bin\Graficos\phoenix.PNG"
+	"bin/Graficos/phoenix.PNG"
 };
 
 inline constexpr TiposPiezas knights = {
-	"bin\Graficos\knights.PNG"
+	"bin/Graficos/caballero.png"
 };
 
 // Representación de la oscuridad
 
 inline constexpr TiposPiezas sorceress = {
-	"bin\Graficos\sorceress.PNG"
+	"bin/Graficos/hechicero.png"
 };
 
 inline constexpr TiposPiezas basilisk = {
-	"bin\Graficos\basilisk.PNG"
+	"bin/Graficos/basilisco.png"
 };
 
 inline constexpr TiposPiezas manticore = {
-	"bin\Graficos\manticore.PNG"
+	"bin/Graficos/manticora.png"
 };
 
 inline constexpr TiposPiezas troll = {
-	"bin\Graficos\troll.PNG"
+	"bin/Graficos/troll.PNG"
 };
 
 inline constexpr TiposPiezas banshee = {
-	"bin\Graficos\banshee.PNG"
+	"bin/Graficos/banshee.png"
 };
 
 inline constexpr TiposPiezas shapeshifter = {
-	"bin\Graficos\shapeshifter.PNG"
+	"bin/Graficos/cambiaformas.png"
 };
 
 inline constexpr TiposPiezas dragon = {
-	"bin\Graficos\dragon.PNG"
+	"bin/Graficos/dragon.PNG"
 };
 
 inline constexpr TiposPiezas goblins = {
-	"bin\Graficos\goblins.PNG"
+	"bin/Graficos/duende.png"
 };
