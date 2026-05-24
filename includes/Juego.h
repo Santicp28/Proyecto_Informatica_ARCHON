@@ -3,6 +3,7 @@
 #include "Arena.h"
 #include "Tablero_logica.h"
 #include"Vector2D.h"
+#include "Renderer.h"
 
 enum class EstadoJuego {
     MENU_PRINCIPAL,
@@ -14,16 +15,14 @@ enum class EstadoJuego {
 
 class Juego {
 private:
-
     EstadoJuego estado;
     Tablero_logica tablero_logica;
     Menu menu;
-    Vector2D centro{ 400.0,300.0 };
 //    Arena arena;
 
 public:
     void inicializa();
-    void dibuja();
+    void dibuja(const Renderer& renderer);
     void mueve(float dt);
 
     void tecla(unsigned char key);

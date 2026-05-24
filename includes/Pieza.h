@@ -1,7 +1,7 @@
 #pragma once
 #include "freeglut.h"
 #include "Casilla.h"
-#include"Color.h"
+#include"Renderer.h"
 #include"Vector2D.h"
 enum class TipoMovimiento {
     CAMINA,
@@ -52,6 +52,9 @@ protected:
     Casilla casilla;   // Posición en la matriz (0-8)
     double ataque;
     double velocidad;
+
+	PosicionMatriz posicionMatriz; // Posición en la matriz (fila, columna)
+    double fuerza;
     double cadencia;
     double vida;
     double velocidad_ataque;
@@ -99,6 +102,14 @@ public:
         else if (vel_at == Velocidad_ataque::VARIABLE) velocidad_ataque = 8.0;
     }
     
+    void setPosicionMatriz(unsigned int fila, unsigned int columna) {
+        posicionMatriz.fila = fila;
+        posicionMatriz.columna = columna;
+	}
+    virtual bool mover(PosicionMatriz destino) = 0; //DESARROLLAR PARA CADA PIEZA !!!!!!!
+
+
+    PosicionMatriz getPosicionMatriz() const { return posicionMatriz; }
     // Utilidad para convertir coordenadas de matriz a coordenadas de mundo
    /* void calcularPosicionMundo(Vector2D esquina_arriba_izda, double size_celda) {
         x = boardOffset + columna * cellSize + (cellSize / 2.0f);

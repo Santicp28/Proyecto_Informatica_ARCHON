@@ -1,17 +1,24 @@
 #include "Tablero_logica.h"
-#include "DesacopleGrafico.h"
+#include "Renderer.h"
 #include <iostream>
+
+
+using enum TipoCasilla;
 
 void Tablero_logica::inicializa()
 {
-    turnoActual = Bando::LUZ;
-    combatePendiente = false;
 
-    cursor = { 0, 0 };
-    origenSeleccionado = { -1, -1 };
+
+    turnoActual = Bando::LUZ;
+    cursor = { 5, 0 };
+
+    combatePendiente = false;
     hayOrigenSeleccionado = false;
 
-    //para inicializar los tipos de casillas
+
+
+
+	//INICIALIZA CASILLAS
     constexpr TipoCasilla tipoCasillas[TAM][TAM] =
     {
      { OSCURA,     CLARA,     OSCURA,     OSCILANTE,  PODER,      OSCILANTE,  OSCURA,     CLARA,     OSCURA     },
@@ -24,240 +31,202 @@ void Tablero_logica::inicializa()
      { CLARA,      OSCURA,    OSCILANTE,  CLARA,      OSCILANTE,  CLARA,      OSCILANTE,  OSCURA,    CLARA      },
      { OSCURA,     CLARA,     OSCURA,     OSCILANTE,  PODER,      OSCILANTE,  OSCURA,     CLARA,     OSCURA     }
     };
-    for (unsigned int f = 0; f < TAM; f++) {
-        for (unsigned int c = 0; c < TAM; c++) {
+    for (int f = 0; f < TAM; f++) {
+        for (int c = 0; c < TAM; c++) {
             casillas[f][c].inicializa(tipoCasillas[f][c], { f, c });
         }
     }
-}
-	
+    //INICIALIZA CASILLAS
 
-void Tablero_logica::dibuja(const Vector2D& centro)const {
+
+    //INICIALIZA PIEZAS --------- PONER SU POSICION INICIAL
+    //PIEZAS LUZ
+    //listaPiezas.agregar(new );
+    //listaPiezas.agregar(new );
+    //listaPiezas.agregar(new );
+
+    ////PIEZAS OSCURIDAD
+    //listaPiezas.agregar(new );
+    //listaPiezas.agregar(new );
+    //listaPiezas.agregar(new );
+    //INICIALIZA PIEZAS
+
+}
+
+void Tablero_logica::dibuja(const Renderer& renderer)const {
     double longitudCasilla = longitud / TAM;
+    Vector2D centro = renderer.obtenerSizeDibujo() * 0.5;
     Vector2D esquinaSuperiorIzda{ centro.x - longitud / 2.0, centro.y + longitud / 2.0 };
 
     for (unsigned int f = 0; f < TAM; f++) {
         for (unsigned int c = 0; c < TAM; c++) {
-            Vector2D centroCasilla{esquinaSuperiorIzda.x + (c + 0.5) * longitudCasilla, esquinaSuperiorIzda.y - (f + 0.5) * longitudCasilla };
-            casillas[f][c].dibuja(centroCasilla, longitudCasilla);
+            Vector2D centroCasilla{ esquinaSuperiorIzda.x + (c + 0.5) * longitudCasilla, esquinaSuperiorIzda.y - (f + 0.5) * longitudCasilla };
+            casillas[f][c].dibuja(renderer, centroCasilla, longitudCasilla);
         }
     }
 }
 
 
-//    //Colocación provisional
-//    for (int f = 0; f < TAM; f++) {
-//        casillas[f][0].ocupante = Bando::LUZ;
-//        casillas[f][1].ocupante = Bando::LUZ;
-//
-//        casillas[f][7].ocupante = Bando::OSCURIDAD;
-//        casillas[f][8].ocupante = Bando::OSCURIDAD;
-//    }
-//}
-//
-//bool Tablero_logica::mover(int filaOrigen, int colOrigen, int filaDestino, int colDestino) //PONER SWITCH CASE EN FUNCION DEL OCUPANTE, CADA PIEZA SE MUEVE DISTINTO
-//{
-//    if (!posicionValida(filaOrigen, colOrigen)) {
-//        std::cout << "Movimiento invalido: origen fuera del tablero." << std::endl;
-//        return false;
-//    }
-//
-//    if (!posicionValida(filaDestino, colDestino)) {
-//        std::cout << "Movimiento invalido: destino fuera del tablero." << std::endl;
-//        return false;
-//    }
-//
-//    Bando atacante = casillas[filaOrigen][colOrigen].ocupante;
-//    Bando defensor = casillas[filaDestino][colDestino].ocupante;
-//
-//    //No hay pieza en origen.
-//
-//    if (atacante == Bando::NINGUNO) {
-//        std::cout << "Movimiento invalido: no hay pieza en el origen." << std::endl;
-//        return false;
-//    }
-//
-//
-//    //No es el turno de ese bando.
-//    if (atacante != turnoActual) {
-//        std::cout << "Movimiento invalido: no es el turno de esa pieza." << std::endl;
-//        return false;
-//    }
-//
-//    //No puedes moverte sobre una pieza aliada.
-//    if (defensor == atacante) {
-//        std::cout << "Movimiento invalido: la casilla destino tiene una pieza aliada." << std::endl;
-//        return false;
-//    }
-//
-//    //Si hay enemigo, no movemos todavía
-//    //Dejamos marcado que tiene que abrirse la arena.
-//    if (defensor != Bando::NINGUNO && defensor != atacante) {
-//        combatePendiente = true;
-//        origenCombate = { filaOrigen, colOrigen };
-//        destinoCombate = { filaDestino, colDestino };
-//
-//        std::cout << "Combate pendiente entre origen ("
-//            << filaOrigen << ", " << colOrigen
-//            << ") y destino ("
-//            << filaDestino << ", " << colDestino
-//            << ")." << std::endl;
-//
-//        return true;
-//    }
-//
-//    //Movimiento normal
-//    casillas[filaDestino][colDestino].ocupante = atacante;
-//    casillas[filaOrigen][colOrigen].ocupante = Bando::NINGUNO;
-//
-//    std::cout << "Pieza movida correctamente de ("
-//        << filaOrigen << ", " << colOrigen
-//        << ") a ("
-//        << filaDestino << ", " << colDestino
-//        << ")." << std::endl;
-//
-//    cambiarTurno();
-//
-//    std::cout << "Turno cambiado." << std::endl;
-//
-//    return true;
-//}
-//
-//bool Tablero_logica::hayCombatePendiente() const
-//{
-//    return combatePendiente;
-//}
-//
-//void Tablero_logica::limpiarCombatePendiente()
-//{
-//    combatePendiente = false;
-//}
-//
-//Posicion Tablero_logica::getOrigenCombate() const
-//{
-//    return origenCombate;
-//}
-//
-//Posicion Tablero_logica::getDestinoCombate() const
-//{
-//    return destinoCombate;
-//}
-//
-//Bando Tablero_logica::getTurnoActual() const
-//{
-//    return turnoActual;
-//}
-//
-//Bando Tablero_logica::getOcupante(int fila, int col) const
-//{
-//    if (!posicionValida(fila, col))
-//        return Bando::NINGUNO;
-//
-//    return casillas[fila][col].ocupante;
-//}
-//
-//TipoCasilla Tablero_logica::getTipoCasilla(int fila, int col) const
-//{
-//    if (!posicionValida(fila, col))
-//        return TipoCasilla::INVALIDA;
-//
-//    return casillas[fila][col].tipo;
-//}
-//
-//bool Tablero_logica::posicionValida(int fila, int col) const
-//{
-//    return fila >= 0 && fila < TAM && col >= 0 && col < TAM;
-//}
-//
-//void Tablero_logica::cambiarTurno()
-//{
-//    if (turnoActual == Bando::LUZ) {
-//        turnoActual = Bando::OSCURIDAD;
-//        std::cout << "Ahora juega OSCURIDAD." << std::endl;
-//    }
-//    else {
-//        turnoActual = Bando::LUZ;
-//        std::cout << "Ahora juega LUZ." << std::endl;
-//    }
-//}
-//
-//void Tablero_logica::moverCursor(int df, int dc)
-//{
-//    int nuevaFila = cursor.fila + df;
-//    int nuevaColumna = cursor.columna + dc;
-//
-//    if (posicionValida(nuevaFila, nuevaColumna)) {
-//        cursor.fila = nuevaFila;
-//        cursor.columna = nuevaColumna;
-//
-//        std::cout << "Cursor en fila " << cursor.fila
-//            << ", columna " << cursor.columna << std::endl;
-//    }
-//    else {
-//        std::cout << "No puedes mover el cursor fuera del tablero." << std::endl;
-//    }
-//}
-//
-//bool Tablero_logica::seleccionarConCursor()
-//{
-//    int f = cursor.fila;
-//    int c = cursor.columna;
-//
-//    if (!hayOrigenSeleccionado) {
-//        if (casillas[f][c].ocupante != turnoActual) {
-//            std::cout << "No puedes seleccionar esa casilla. No contiene una pieza de tu turno." << std::endl;
-//            return false;
-//        }
-//
-//        origenSeleccionado = cursor;
-//        hayOrigenSeleccionado = true;
-//
-//        std::cout << "Origen seleccionado: fila "
-//            << origenSeleccionado.fila
-//            << ", columna "
-//            << origenSeleccionado.columna
-//            << std::endl;
-//
-//        return true;
-//    }
-//
-//    //para ir depurando sin tener la parte gráfica
-//    std::cout << "Intentando mover desde fila "
-//        << origenSeleccionado.fila
-//        << ", columna "
-//        << origenSeleccionado.columna
-//        << " hasta fila "
-//        << f
-//        << ", columna "
-//        << c
-//        << std::endl;
-//
-//    bool movimientoCorrecto = mover(origenSeleccionado.fila, origenSeleccionado.columna, f, c);
-//
-//    if (movimientoCorrecto) {
-//        std::cout << "Movimiento aceptado." << std::endl;
-//    }
-//    else {
-//        std::cout << "Movimiento invalido." << std::endl;
-//    }
-//
-//    hayOrigenSeleccionado = false;
-//    origenSeleccionado = { -1, -1 };
-//
-//    return movimientoCorrecto;
-//}
-//
-//Posicion Tablero_logica::getCursor() const
-//{
-//    return cursor;
-//}
-//
-//bool Tablero_logica::getHayOrigenSeleccionado() const
-//{
-//    return hayOrigenSeleccionado;
-//}
-//
-//Posicion Tablero_logica::getOrigenSeleccionado() const
-//{
-//    return origenSeleccionado;
-//}
+bool Tablero_logica::mover(PosicionMatriz origen, PosicionMatriz destino) //CADA PIEZA SE MUEVE DISTINTO
+{
+
+    Bando atacante = interaccion.getBandoOcupante(origen, listaPiezas);
+    Bando defensor = interaccion.getBandoOcupante(destino, listaPiezas);
+
+    //ILUMINAR O DESTACAR CASILLA SI HAY ERROR O MOSTRAR UN SONIDO O ALGO, TAMBIEN MOSTRAR MENSAJE PARA SABER EL ERROR
+    
+	//Hay una pieza aliada en destino
+    if (defensor == atacante) {
+        std::cout << "Movimiento invalido: la casilla destino tiene una pieza aliada." << std::endl;
+        return false;
+    }
+
+    //Si hay enemigo, no movemos todavía
+    //Dejamos marcado que tiene que abrirse la arena.
+    if (defensor != Bando::NINGUNO && defensor != atacante) {
+        combatePendiente = true; //FLAG PARA CAMBIAR A ARENA
+        origenCombate = origen;
+        destinoCombate = destino;
+
+        std::cout << "Combate pendiente entre origen (" << origenCombate.fila << ", " << origenCombate.columna
+            << ") y destino (" << destinoCombate.fila << ", " << destinoCombate.columna << ")." << std::endl;
+
+        return true;
+    }
+
+    //Movimiento normal
+	listaPiezas.moverDeCasilla(origen, destino);
+
+    std::cout << "Pieza movida correctamente de (" << origen.fila << ", " << origen.columna << ") a (" << destino.fila << ", " << destino.columna << ")." << std::endl;
+
+    cambiarTurno();
+
+    std::cout << "Turno cambiado." << std::endl;
+
+    return true;
+}
+
+
+
+//funcion para saber si hay que cambiar a arena, obtenemos el flag de combate pendiente, para usarla en JUEGO.CPP 
+bool Tablero_logica::hayCombatePendiente() const
+{
+    return combatePendiente;
+}
+
+//hay que limpiar el flag para que luego no se abra la arena en momentos no deseados
+void Tablero_logica::limpiarCombatePendiente()
+{
+    combatePendiente = false;
+}
+
+
+//estas dos sirven para colocar las piezas después de la arena
+PosicionMatriz Tablero_logica::getOrigenCombate() const
+{
+    return origenCombate;
+}
+
+PosicionMatriz Tablero_logica::getDestinoCombate() const
+{
+    return destinoCombate;
+}
+
+
+
+//para saber de quién es el turno, por ejemplo para mostrar en pantalla
+Bando Tablero_logica::getTurnoActual() const
+{
+    return turnoActual;
+}
+
+//funcion para camiar de turno, se llama después de mover o terminar la arena
+void Tablero_logica::cambiarTurno()
+{
+    if (turnoActual == Bando::LUZ) {
+        turnoActual = Bando::OSCURIDAD;
+        cursor = { 4 , 8}; //cursor en el lado de oscuridad
+        std::cout << "TURNO DE OSCURIDAD." << std::endl;
+    }
+    else {
+        turnoActual = Bando::LUZ;
+		cursor = { 4 , 0 }; //cursor en el lado de luz
+        std::cout << "TURNO DE LUZ." << std::endl;
+    }
+}
+
+//comprueba si se puede mover y luego asigna la nueva posicion al cursor, se llama desde juego cuando se pulsa una flecha
+void Tablero_logica::moverCursor(int df, int dc)
+{
+	PosicionMatriz nuevaPosicion{ cursor.fila + df, cursor.columna + dc };
+
+    if (interaccion.posicionValida(nuevaPosicion)) {
+		cursor = nuevaPosicion;
+        std::cout << "cursor en fila " << cursor.fila << ", columna " << cursor.columna << std::endl;
+    }
+    else {
+        std::cout << "no puedes mover el cursor fuera del tablero" << std::endl;
+    }
+}
+
+
+
+bool Tablero_logica::seleccionarConCursor()
+{
+
+    if (!hayOrigenSeleccionado) {
+        if (interaccion.getBandoOcupante(cursor, listaPiezas) != turnoActual) {
+            std::cout << "no puedes seleccionar esa casilla. no contiene una pieza de tu turno." << std::endl;
+            return false;
+        }
+
+        origenSeleccionado = cursor;
+        hayOrigenSeleccionado = true;
+
+        std::cout << "origen seleccionado: fila " << origenSeleccionado.fila << ", columna " << origenSeleccionado.columna << std::endl;
+
+        return true;
+    }
+
+    //para ir depurando sin tener la parte gráfica
+    std::cout << "intentando mover desde fila "<< origenSeleccionado.fila << ", columna " << origenSeleccionado.columna
+        << " hasta fila "<< cursor.fila << ", columna " << cursor.columna << std::endl;
+
+    
+
+
+    bool movimientoCorrecto = mover(origenSeleccionado, cursor);
+
+    if (movimientoCorrecto) {
+        std::cout << "movimiento aceptado." << std::endl;
+    }
+    else {
+        std::cout << "movimiento invalido." << std::endl;
+    }
+
+    hayOrigenSeleccionado = false;
+
+	origenSeleccionado = { -1, -1 };//reiniciamos el origen seleccionado para evitar errores
+
+    return movimientoCorrecto;
+}
+
+PosicionMatriz Tablero_logica::getCursor() const
+{
+    return cursor;
+}
+
+bool Tablero_logica::getHayOrigenSeleccionado() const
+{
+    return hayOrigenSeleccionado;
+}
+
+PosicionMatriz Tablero_logica::getOrigenSeleccionado() const
+{
+    return origenSeleccionado;
+}
+
+void resaltarMovimientoPosible()
+{
+
+}

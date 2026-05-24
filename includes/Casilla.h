@@ -1,15 +1,7 @@
 #pragma once
 #include"Vector2D.h"
-#include"PosicionMatriz.h"
-#include"DesacopleGrafico.h"
-
-enum class TipoCasilla {
-	OSCURA,
-	CLARA,
-	OSCILANTE,
-	PODER,
-	INVALIDA
-};
+#include"Renderer.h"
+#include "Tipos.h"
 
 class Casilla
 {
@@ -20,6 +12,8 @@ class Casilla
 	Color color;
 
 public:
-	void dibuja(const Vector2D& posicion, double longitud)const;
 	void inicializa(const TipoCasilla& nuevoTipo, PosicionMatriz nuevaPosicion);
+	void dibuja(const Renderer& renderer, const Vector2D& posicion, double longitud)const;
+	PosicionMatriz getPosicionMatriz() const { return posicionMatriz; }
+	TipoCasilla getTipo() const { return tipo; }
 };

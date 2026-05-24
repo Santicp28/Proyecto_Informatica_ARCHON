@@ -1,6 +1,6 @@
 #pragma once
 #include "Vector2D.h"
-#include "DesacopleGrafico.h"
+#include "Renderer.h"
 
 class Interaccion;
 
