@@ -10,8 +10,6 @@ void OnDraw(void);
 void OnTimer(int value);
 void OnKeyboardDown(unsigned char key, int x, int y);
 void OnSpecialKeyboardDown(int key, int x, int y);
-void OnMouse(int button, int state, int x, int y);
-void OnPassiveMotion(int x, int y);
 
 int main(int argc, char* argv[])
 {
@@ -22,7 +20,7 @@ int main(int argc, char* argv[])
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB );
     glutCreateWindow("ARCHON");
 
-    renderer.inicializa2D(sizePantallaX, sizePantallaY);
+    renderer.inicializa2D();
     juego.inicializa();
 
     // CALLBACKS
@@ -30,8 +28,6 @@ int main(int argc, char* argv[])
     glutTimerFunc(25, OnTimer, 0);
     glutKeyboardFunc(OnKeyboardDown);
     glutSpecialFunc(OnSpecialKeyboardDown);
-    glutMouseFunc(OnMouse);
-    glutPassiveMotionFunc(OnPassiveMotion);
 
     glutMainLoop();
     return 0;
@@ -41,8 +37,6 @@ int main(int argc, char* argv[])
 
 void OnDraw(void)
 {   
-    renderer.limpiarPantalla();
-
     renderer.iniciaFrame();
 
     juego.dibuja(renderer);
@@ -59,18 +53,6 @@ void OnKeyboardDown(unsigned char key, int x, int y)
 void OnSpecialKeyboardDown(int key, int x, int y)
 {
     juego.teclaEspecial(key);
-    glutPostRedisplay();
-}
-
-void OnMouse(int button, int state, int x, int y)
-{
-    juego.raton(button, state, x, y);
-    glutPostRedisplay();
-}
-
-void OnPassiveMotion(int x, int y)
-{
-    juego.movimientoRaton(x, y);
     glutPostRedisplay();
 }
 

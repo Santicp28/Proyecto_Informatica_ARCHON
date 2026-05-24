@@ -6,19 +6,14 @@
 #include "ListaPiezas.h"
 #include "Interaccion.h"
 #include "Renderer.h"
-
+#include "Config.h"
 
 class Tablero_logica {
 private:
-
-	friend class Interaccion;
-
+    friend class Interaccion;
+    double longitud;
+    Vector2D posicion;//en el centro
     static constexpr int TAM = 9;
-
-    const Vector2D centro{ 0.0, 0.0 };
-    double posicionCamaraZ{ 15.0 };
-    const double longitud{ 500.0 };
-
     Casilla casillas[TAM][TAM];
 
     ListaPiezas listaPiezas;

@@ -1,5 +1,11 @@
 #pragma once
-
+enum class MenuAccion
+{
+    NINGUNA,
+    JUGAR,
+    OPCIONES,
+    SALIR
+};
 enum class Bando {
     NINGUNO,
     LUZ,
