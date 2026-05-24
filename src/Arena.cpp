@@ -3,7 +3,7 @@
 #include "freeglut.h"
 
 //SIN DEPENDER DE PIEZA
-
+//Resetea el estado completo del combate
 void Arena::inicializa(Pieza* p1, Pieza* p2)
 {
     // guardamos los punteros a las piezas del tablero
@@ -34,11 +34,10 @@ void Arena::inicializa(Pieza* p1, Pieza* p2)
    
 }
 
+//Actualiza físicas, ataques y condición de victoria cada frame
 void Arena::mueve(float dt)
 
 {
-
-    if (combateTerminado) return;
 
     if (combateTerminado) return;
 
@@ -54,12 +53,10 @@ void Arena::mueve(float dt)
     InteraccionArena::rebote(jugador1.posicion, jugador1.velocidad, jugador1.radio, bordes);
     InteraccionArena::rebote(jugador2.posicion, jugador2.velocidad, jugador2.radio, bordes);
 
-    //ATAQUES
-    if (jugador1.atacar && jugador1.cooldown <= 0)
-        procesarAtaque(jugador1, jugador2);
+    ////ATAQUES
+    //if (jugador1.atacar && jugador1.cooldown <= 0)procesarAtaque(jugador1, jugador2, dt);
 
-    if (jugador2.atacar && jugador2.cooldown <= 0)
-        procesarAtaque(jugador2, jugador1);
+    //if (jugador2.atacar && jugador2.cooldown <= 0) procesarAtaque(jugador2, jugador1, dt);
 
     //VICTORIA — comprobamos los dos a la vez para detectar empate
     bool muereJ1 = jugador1.vida <= 0;
@@ -82,29 +79,132 @@ void Arena::mueve(float dt)
         ganadorBando = 1;
     }
 }
-void Arena::procesarAtaque(EstadoCombate& atacante,EstadoCombate& defensor)
-{
-    if (InteraccionArena::colisionMelee(atacante.posicion, atacante.radio,defensor.posicion, defensor.radio))
-    {
-        // valores fijos mientras Pieza no tenga getters
-        double danioFijo = 10.0;
-        float cadenciaFija = 1.0f;
 
-        defensor.vida -= danioFijo;
+//CORREGIR CON GETTER 
+//
+////Aplica daño al defensor si hay contacto y el atacante tiene cooldown libre
+//void Arena::procesarAtaque(EstadoCombate& atacante,EstadoCombate& defensor, float dt)
+//{
+//
+//    TipoAtaque tipo = atacante.pieza->getTipoAtaque();
+//
+//    switch(tipo)
+//    {
+//    case TipoAtaque::MELEE:
+//        // daño puntual al tocar, un golpe, un daño, cooldown
+//        if (InteraccionArena::colisionMelee(atacante.posicion, atacante.radio, defensor.posicion, defensor.radio))
+//        {
+//            defensor.vida -= DANIO_MELEE;
+//            if (defensor.vida < 0) defensor.vida = 0;
+//            atacante.cooldown = CADENCIA_MELEE;
+//            atacante.atacar = false;
+//        }
+//        break;
+//
+//    case TipoAtaque::AREA:
+//        // daño continuo mientras el enemigo esté en el radio
+//        procesarArea(atacante, defensor, dt);
+//        break;
+//
+//    case TipoAtaque::PROYECTIL:
+//        // crea un proyectil en la dirección actual del atacante
+//        crearProyectil(atacante);
+//        break;
+//    }
+//}
+
+
+//daño continuo mientras el enemigo esté en el radio (banshee/phoenix) 
+void Arena::procesarArea(EstadoCombate& atacante, EstadoCombate& defensor, float dt)
+{
+    //el área de efecto es el doble del radio del atacante
+    float radioArea = atacante.radio * 2.0f;
+
+    if (InteraccionArena::colisionMelee(atacante.posicion, radioArea,defensor.posicion, defensor.radio))
+    {
+        //daño proporcional al tiempo, cuanto más tiempo dentro más daño
+        defensor.vida -= DANIO_AREA * dt;
         if (defensor.vida < 0) defensor.vida = 0;
 
-        atacante.cooldown = cadenciaFija;
+        //cooldown muy corto para simular daño continuo
+        atacante.cooldown = 0.1f;
+    }
+    else
+    {
+        //enemigo fuera del área, dejamos de atacar hasta nueva pulsación
         atacante.atacar = false;
     }
 }
 
 
+//crea un proyectil en la dirección actual del atacante
+void Arena::crearProyectil(EstadoCombate& atacante)
+{
+    Proyectil p;
+    p.posicion = atacante.posicion;
+    p.velocidad = atacante.direccion * VELOCIDAD_PROYECTIL;
+    p.danio = DANIO_PROYECTIL;
+    p.propietario = &atacante;
+
+    proyectiles.push_back(p);
+
+    atacante.cooldown = CADENCIA_PROYECTIL;
+    atacante.atacar = false;
+}
+
+//mueve todos los proyectiles y comprueba colisiones
+void Arena::actualizarProyectiles(float dt)
+{
+    for (auto& p : proyectiles)
+        p.posicion = p.posicion + p.velocidad * dt;
+
+    comprobarColisionProyectiles();
+}
+
+//elimina proyectiles que impactan o salen de la arena
+void Arena::comprobarColisionProyectiles()
+{
+    for (auto it = proyectiles.begin(); it != proyectiles.end();)
+    {
+        // el objetivo es siempre el enemigo del propietario
+        EstadoCombate* objetivo = (it->propietario == &jugador1) ? &jugador2 : &jugador1;
+
+        bool impacto = InteraccionArena::colisionMelee(it->posicion, it->radio,objetivo->posicion, objetivo->radio);
+
+        bool fueraArena =
+            it->posicion.x < BordesArena::X_MIN ||
+            it->posicion.x > BordesArena::X_MAX ||
+            it->posicion.y < BordesArena::Y_MIN ||
+            it->posicion.y > BordesArena::Y_MAX;
+
+        if (impacto)
+        {
+            objetivo->vida -= it->danio;
+            if (objetivo->vida < 0) objetivo->vida = 0;
+            it = proyectiles.erase(it);
+        }
+        else if (fueraArena)
+        {
+            it = proyectiles.erase(it);
+        }
+        else
+        {
+            ++it;
+        }
+    }
+}
+
+
+
+
+
+//Dibuja la arena: bordes, combatientes y barras de vida
 void Arena::dibuja() const
 {
     glMatrixMode(GL_PROJECTION);
     glPushMatrix();
     glLoadIdentity();
-    gluOrtho2D(0, 800, 0, 600);
+    gluOrtho2D(0, BordesArena::SizeArena.x, 0, BordesArena::SizeArena.y);
 
     glMatrixMode(GL_MODELVIEW);
     glPushMatrix();
@@ -120,6 +220,8 @@ void Arena::dibuja() const
     dibujarBarraVida(jugador1.pieza, 50.0f, 30.0f);
     dibujarBarraVida(jugador2.pieza, 550.0f, 30.0f);
 
+    dibujarProyectiles();
+
     glEnable(GL_LIGHTING);
 
     glPopMatrix();
@@ -127,7 +229,7 @@ void Arena::dibuja() const
     glPopMatrix();
     glMatrixMode(GL_MODELVIEW);
 }
-
+//Dibuja la barra de vida de un combatiente: gris=fondo, verde/amarillo/rojo=vida 
 void Arena::dibujarBarraVida(const Pieza* p, float x, float y) const
 {
     float ancho = 200.0f;
@@ -157,6 +259,8 @@ void Arena::dibujarBarraVida(const Pieza* p, float x, float y) const
     glEnd();
 }
 
+
+//Dibuja un círculo en la posición del combatiente: blanco=jugador1, gris=jugador2
 void Arena::dibujarCombatiente(const EstadoCombate& c) const
 {
     glPushMatrix();
@@ -178,6 +282,26 @@ void Arena::dibujarCombatiente(const EstadoCombate& c) const
     glPopMatrix();
 }
 
+// dibuja todos los proyectiles activos como círculos rojos 
+void Arena::dibujarProyectiles() const
+{
+    for (const auto& p : proyectiles)
+    {
+        glPushMatrix();
+        glTranslatef((float)p.posicion.x, (float)p.posicion.y, 0);
+        glColor3f(1.0f, 0.0f, 0.0f);
+
+        glBegin(GL_POLYGON);
+        for (int i = 0; i < 24; i++)
+        {
+            float a = 2.0f * 3.14159f * i / 24.0f;
+            glVertex2f(cos(a) * p.radio, sin(a) * p.radio);
+        }
+        glEnd();
+        glPopMatrix();
+    }
+}
+// Gestiona input de teclado: WASD mueve jugador1, espacio ataca
 void Arena::tecla(unsigned char key)
 {
     if (combateTerminado) return;
@@ -207,4 +331,3 @@ void Arena::teclaEspecial(int key)
 
 
 
-//POIENDO DENTRO DE PIEZA getters
