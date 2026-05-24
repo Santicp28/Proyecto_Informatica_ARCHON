@@ -1,15 +1,29 @@
 #pragma once
 #include "Pared.h"
-#include "InteraccionArena.h"
 
 class InteraccionArena;
 
 class BordesArena
 {
-    Pared suelo{ {  50, 50  }, { 750,  50  }, { 100, 80, 30 } };
-    Pared techo{ {  50, 550 }, { 750, 550  }, { 100, 80, 30 } };
-    Pared izq{ {  50, 50  }, {  50, 550  }, { 100, 80, 30 } };
-    Pared dcha{ { 750, 50  }, { 750, 550  }, { 100, 80, 30 } };
+protected:
+    // Tamaño total de la ventana de juego
+    inline static constexpr Vector2D SizeArena{ 800, 600 };
+    // Grosor del margen desde el borde de la ventana hasta la pared
+    inline static constexpr float MARGEN = 50.0f;
+
+    // Coordenadas de las 4 paredes calculadas automáticamente desde SizeArena
+    // Si se cambia SizeArena, las paredes se actualizan solas
+    inline static constexpr float X_MIN = MARGEN;
+    inline static constexpr float X_MAX = SizeArena.x - MARGEN;
+    inline static constexpr float Y_MIN = MARGEN;
+    inline static constexpr float Y_MAX = SizeArena.y - MARGEN;
+
+    // Cada pared se define con dos puntos (inicio y fin) y un color
+    Pared suelo{ {X_MIN, Y_MIN}, {X_MAX, Y_MIN}, {100, 80, 30} };
+    Pared techo{ {X_MIN, Y_MAX}, {X_MAX, Y_MAX}, {100, 80, 30} };
+    Pared izq{ {X_MIN, Y_MIN}, {X_MIN, Y_MAX}, {100, 80, 30} };
+    Pared dcha{ {X_MAX, Y_MIN}, {X_MAX, Y_MAX}, {100, 80, 30} };
+   
 public:
     void dibuja() const;
     friend class InteraccionArena;
