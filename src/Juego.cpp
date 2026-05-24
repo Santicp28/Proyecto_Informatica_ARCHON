@@ -85,7 +85,7 @@ void Juego::tecla(unsigned char key)
                 estado = EstadoJuego::ARENA;
                 tablero_logica.limpiarCombatePendiente();
             }
-        }
+        
 
         //if (key == 27) { // ESC
         //    estado = EstadoJuego::MENU_PRINCIPAL;
