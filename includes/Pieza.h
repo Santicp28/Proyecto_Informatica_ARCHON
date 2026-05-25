@@ -3,49 +3,7 @@
 #include "Casilla.h"
 #include"Renderer.h"
 #include"Vector2D.h"
-enum class TipoMovimiento {
-    CAMINA,
-    VUELA,
-    TELETRANSPORTE
-};
-enum class Bando {
-    LUZ,
-    OSCURIDAD
-};
-enum class Cadencia {
-    VARIABLE,
-    MUYRAPIDA,
-    RAPIDA,
-    PROMEDIO,
-    LENTA
-};
-enum class Velocidad {
-    VARIABLE,
-    NORMAL,
-    BAJA
-};
-enum class Vida {
-    VARIABLE,
-    MUYALTA,
-    ALTA,
-    MODERADA,
-    CORTA,
-    
-};
-enum class Ataque {
-    VARIABLE,
-    MUYALTO,
-    ALTO,
-    MODERADO,
-    BAJO
-};
-enum class Velocidad_ataque {
-    VARIABLE,
-    INSTANTANEO,
-    RAPIDO,
-    NORMAL,
-    LENTO
-};
+
 class Pieza
 {
 protected:

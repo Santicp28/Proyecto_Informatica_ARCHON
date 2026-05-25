@@ -20,6 +20,41 @@ enum class TipoMovimiento {
     TELETRANSPORTE
 };
 
+enum class Cadencia {
+    VARIABLE,
+    MUYRAPIDA,
+    RAPIDA,
+    PROMEDIO,
+    LENTA
+};
+enum class Velocidad {
+    VARIABLE,
+    NORMAL,
+    BAJA
+};
+enum class Vida {
+    VARIABLE,
+    MUYALTA,
+    ALTA,
+    MODERADA,
+    CORTA,
+
+};
+enum class Ataque {
+    VARIABLE,
+    MUYALTO,
+    ALTO,
+    MODERADO,
+    BAJO
+};
+enum class Velocidad_ataque {
+    VARIABLE,
+    INSTANTANEO,
+    RAPIDO,
+    NORMAL,
+    LENTO
+};
+
 struct PosicionMatriz {
     int fila;
     int columna;

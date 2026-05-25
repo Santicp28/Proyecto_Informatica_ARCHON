@@ -177,6 +177,8 @@
     <ClInclude Include="includes\Casilla.h" />
     <ClInclude Include="includes\Dragon.h" />
     <ClInclude Include="includes\Duende.h" />
+    <ClInclude Include="includes\ETSIDI.h" />
+    <ClInclude Include="includes\GrafMenu.h" />
     <ClInclude Include="includes\Hechicero.h" />
     <ClInclude Include="includes\Manticora.h" />
     <ClInclude Include="includes\Renderer.h" />

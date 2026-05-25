@@ -6,6 +6,6 @@ class Arquero : public Pieza
 {
 public:
 	Arquero(Bando b = Bando::LUZ);
-	void dibuja();
+	void dibujaSprite(const Renderer& renderer) override;
 };
 
