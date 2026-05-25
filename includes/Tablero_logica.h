@@ -23,7 +23,7 @@ private:
     // el cursor es una posicion, la cual usaremos para iluminarla en el teclado con la parte gráfica, así como el origen seleccionado
     PosicionMatriz cursor;
     PosicionMatriz origenSeleccionado;
-    bool hayOrigenSeleccionado;
+    bool hayOrigenSeleccionado = false;
 
 	//flag cuando dos piezas de bandos opuestos se encuentran en la misma casilla
     bool combatePendiente;
@@ -50,8 +50,6 @@ public:
 	//para saber de quién es el turno, por ejemplo para mostrar en pantalla
     Bando getTurnoActual() const;
 
-
-    //DESARROLLAR ESTAS !!!!!!!!!!!!!!!!!!!!!!!!!!!!
     void moverCursor(int df, int dc);
     bool seleccionarConCursor();
 
@@ -61,11 +59,13 @@ public:
 
     void dibuja(const Vector2D& centro)const;
 
+    void resaltarMovimientoPosible();
+
 private:
 
     //para después de mover o terminar la arena
     //hacer una funcion para cuando se termina el combate y aplicar los resultados
       void cambiarTurno();
 
-      void resaltarMovimientoPosible();
+      
 };
