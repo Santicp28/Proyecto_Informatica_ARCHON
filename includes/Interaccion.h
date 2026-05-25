@@ -10,6 +10,7 @@ public:
     //cada casilla otorga un efecto a la pieza que contiente
     void piezaEfectoTipoCasilla(Pieza& p, Casilla c) {
 
+
         if (p.bando == Bando::LUZ) {
             switch (c.getTipo()) {
             case TipoCasilla::CLARA:
