@@ -43,3 +43,15 @@ void Renderer::dibujaContornoCuadrado(const Vector2D& centro, const Color& color
 	glVertex3d(centro.x - desplazamiento.x, centro.y + desplazamiento.y, 0.1); // arriba izquierda
 	glEnd();
 }
+
+
+void Renderer::dibujaOvalo(const Vector2D& centro, const Color& color, double radioX, double radioY) const {
+	dibujaColor(color);
+	glBegin(GL_POLYGON);
+	for (int i = 0; i < 24; i++)
+	{
+		double a = 2.0f * Config::PI * i / 24.0f;
+		glVertex3d(centro.x + cos(a) * radioX,centro.y + sin(a) * radioY,0.1);
+	}
+	glEnd();
+}

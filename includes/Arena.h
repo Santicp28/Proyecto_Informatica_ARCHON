@@ -17,7 +17,7 @@ class Arena
 		//SI PONEMOS FISICAS EN PIEZA QUITAR VECTOR 2D
 		Vector2D posicion;      // posición física
 		Vector2D velocidad;     // velocidad de movimiento
-		Vector2D direccion = { 1, 0 };  // última dirección de movimiento, usado para disparo 
+		
 		
 		//ESTOS SE QUEDAN
 		float cooldown = 0.f;   // tiempo hasta poder atacar de nuevo

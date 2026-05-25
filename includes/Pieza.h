@@ -4,8 +4,8 @@
 #include"Renderer.h"
 #include"Vector2D.h"
 #include "Tipos.h"
-
-class Pieza
+#include "ObjetoMovil.h"
+class Pieza: public ObjetoMovil
 {
 	friend class Interaccion;
 protected:
@@ -34,6 +34,5 @@ public:
         y = boardOffset + fila * cellSize + (cellSize / 2.0f);
     }*/
 
-    
+    Pieza(double sizeradio = 1.0, Vector2D pos = {}, Vector2D vel = {}, Vector2D acel = {}): ObjetoMovil(pos, vel, acel, sizeradio) {}
 };
-

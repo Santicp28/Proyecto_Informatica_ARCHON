@@ -2,7 +2,7 @@
 #include "Vector2D.h"
 #include "Renderer.h"
 
-class Interaccion;
+class InteraccionArena;
 
 class Pared
 {
@@ -19,5 +19,5 @@ public:
 
     double distancia(const Vector2D& p, Vector2D* pdir = nullptr) const;
 
-    friend class Interaccion;
+    friend class InteraccionArena;
 };

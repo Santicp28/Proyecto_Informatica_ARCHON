@@ -1,164 +1,168 @@
 #include "InteraccionArena.h"
 #include <cmath>
-//SIN FISICA EN PIEZA 
 
-void InteraccionArena::rebote(Vector2D& pos,Vector2D& vel, float radio, const BordesArena& bordes)
+
+
+void InteraccionArena::colision(Pieza& p, const BordesArena& b)
 {
+    Vector2D dir;
+    double radio = p.sizeradio_;
+    double dif;
 
-    // ABAJO
-    // El radio lo usamos como distancia propia del personaje
-    // pos.y - radio = borde inferior del círculo si supera Y_MIN
-    //significa que ha tocado la parte de abajo del límite de Arena
-        if (pos.y - radio < BordesArena::Y_MIN)
+    // Abajo
+    dif = b.suelo.distancia(p.posicion_, &dir) - radio;
+    if (dif <= 0)
     {
-        // empujamos el círculo fuera de la pared
-        pos.y = BordesArena::Y_MIN + radio;
+        Vector2D pos = p.posicion_;
+        pos.x -= (dir.x * dif);
+        pos.y -= (dir.y * dif);
+        p.posicion_ = pos;
 
-        // cancelamos velocidad solo si iba hacia la pared
-        // vel.y negativa = va hacia abajo
-        if (vel.y < 0) vel.y = 0;
+        Vector2D vel = p.velocidad_;
+        double vn = vel.x * dir.x + vel.y * dir.y;
+        if (vn < 0)
+        {
+            vel.x -= vn * dir.x;
+            vel.y -= vn * dir.y;
+        }
+        p.velocidad_= vel;
     }
-    // ARRIBA
-    // pos.y + radio = borde superior del círculo
-        if (pos.y + radio > BordesArena::Y_MAX)
+
+    // Arriba
+    dif = b.techo.distancia(p.posicion_, &dir) - radio;
+    if (dif <= 0)
+    {
+        Vector2D pos = p.posicion_;
+        pos.x -= (dir.x * dif);
+        pos.y -= (dir.y * dif);
+        p.posicion_ = pos;
+
+        Vector2D vel = p.velocidad_;
+        double vn = vel.x * dir.x + vel.y *dir.y;
+        if (vn < 0)
         {
-            pos.y = BordesArena::Y_MAX - radio;
-
-            // vel.y positiva = va hacia arriba
-            if (vel.y > 0) vel.y = 0;
+            vel.x -= vn * dir.x;
+            vel.y -= vn * dir.y;
         }
+        p.velocidad_ = vel;
+    }
 
-     // PARED IZQUIERDA
-     // pos.x - radio = borde izquierdo del círculo
-        if (pos.x - radio < BordesArena::X_MIN)
+    // Izquierda
+    dif = b.izq.distancia(p.posicion_, &dir) - radio;
+    if (dif <= 0)
+    {
+        Vector2D pos = p.posicion_;
+        pos.x -= (dir.x * dif);
+        pos.y -= (dir.y * dif);
+        p.posicion_ = pos;
+
+        Vector2D vel = p.velocidad_;
+        double vn = vel.x * dir.x + vel.y * dir.y;
+        if (vn < 0)
         {
-            pos.x = BordesArena::X_MIN + radio;
-
-            // vel.x negativa = va hacia la izquierda
-            if (vel.x < 0) vel.x = 0;
+            vel.x -= vn *dir.x;
+            vel.y -= vn * dir.y;
         }
+        p.velocidad_ = vel;
+    }
 
-        // PARED DERECHA
-        // pos.x + radio = borde derecho del círculo
-        if (pos.x + radio > BordesArena::X_MAX)
+    // Derecha
+    dif = b.dcha.distancia(p.posicion_, &dir) - radio;
+    if (dif <= 0)
+    {
+        Vector2D pos = p.posicion_;
+        pos.x -= (dir.x * dif);
+        pos.y -= (dir.y * dif);
+        p.posicion_ = pos;
+
+        Vector2D vel = p.velocidad_;
+        double vn = vel.x * dir.x + vel.y * dir.y;
+        if (vn < 0)
         {
-            pos.x = BordesArena::X_MAX - radio;
-
-            // vel.x positiva = va hacia la derecha
-            if (vel.x > 0) vel.x = 0;
+            vel.x -= vn * dir.x;
+            vel.y -= vn * dir.y;
         }
+        p.velocidad_ = vel;
+    }
 }
 
-
-float InteraccionArena::distancia(const Vector2D& pos1, const Vector2D& pos2)
+double InteraccionArena::distancia(const Vector2D& a, const Vector2D& b)
 {
-    // Teorema de Pitágoras: sqrt( (x2-x1)^2 + (y2-y1)^2 )
-    float dx = pos2.x - pos1.x;
-    float dy = pos2.y - pos1.y;
+    double dx = b.x-a.x;
+    double dy = b.y-a.y;
     return std::sqrt(dx * dx + dy * dy);
 }
 
-bool InteraccionArena::colisionMelee(const Vector2D& pos1, float radio1,const Vector2D& pos2, float radio2)
+bool InteraccionArena::colision(const Pieza& p1, const Pieza& p2)
 {
-    // Hay contacto cuando la distancia entre centros
-    // es menor que la suma de los dos radios
-    return distancia(pos1, pos2) < (radio1 + radio2);
+    return distancia(p1.posicion_, p2.posicion_) < (p1.sizeradio_ + p2.sizeradio_);
 }
 
+bool InteraccionArena::colision(const Disparo& d, const Pieza& p)
+{
+    return distancia(d.posicion_, p.posicion_)< (d.sizeradio_ + p.sizeradio_);
+}
 
+bool InteraccionArena::colision(Disparo& d, const BordesArena& b)
+{
+    Vector2D dir;
+    double dif;
 
+    // Suelo
+    dif = b.suelo.distancia(d.posicion_, &dir)- d.sizeradio_;
 
-// CON FISICA EN PIEZA
-//void InteraccionArena::rebote(Pieza& p, const BordesArena& b)
-//{
-//    Vector2D dir;
-//    float radio = p.getRadio();
-//    double dif;
-//
-//    // Abajo
-//    dif = b.suelo.distancia(p.getPosicion(), &dir) - radio;
-//    if (dif <= 0)
-//    {
-//        Vector2D pos = p.getPosicion();
-//        pos.x -= (float)(dir.x * dif);
-//        pos.y -= (float)(dir.y * dif);
-//        p.setPosicion(pos);
-//
-//        Vector2D vel = p.getVelocidad();
-//        float vn = vel.x * (float)dir.x + vel.y * (float)dir.y;
-//        if (vn < 0)
-//        {
-//            vel.x -= vn * (float)dir.x;
-//            vel.y -= vn * (float)dir.y;
-//        }
-//        p.setVelocidad(vel);
-//    }
-//
-//    // Arriba
-//    dif = b.techo.distancia(p.getPosicion(), &dir) - radio;
-//    if (dif <= 0)
-//    {
-//        Vector2D pos = p.getPosicion();
-//        pos.x -= (float)(dir.x * dif);
-//        pos.y -= (float)(dir.y * dif);
-//        p.setPosicion(pos);
-//
-//        Vector2D vel = p.getVelocidad();
-//        float vn = vel.x * (float)dir.x + vel.y * (float)dir.y;
-//        if (vn < 0)
-//        {
-//            vel.x -= vn * (float)dir.x;
-//            vel.y -= vn * (float)dir.y;
-//        }
-//        p.setVelocidad(vel);
-//    }
-//
-//    // Izquierda
-//    dif = b.izq.distancia(p.getPosicion(), &dir) - radio;
-//    if (dif <= 0)
-//    {
-//        Vector2D pos = p.getPosicion();
-//        pos.x -= (float)(dir.x * dif);
-//        pos.y -= (float)(dir.y * dif);
-//        p.setPosicion(pos);
-//
-//        Vector2D vel = p.getVelocidad();
-//        float vn = vel.x * (float)dir.x + vel.y * (float)dir.y;
-//        if (vn < 0)
-//        {
-//            vel.x -= vn * (float)dir.x;
-//            vel.y -= vn * (float)dir.y;
-//        }
-//        p.setVelocidad(vel);
-//    }
-//
-//    // Derecha
-//    dif = b.dcha.distancia(p.getPosicion(), &dir) - radio;
-//    if (dif <= 0)
-//    {
-//        Vector2D pos = p.getPosicion();
-//        pos.x -= (float)(dir.x * dif);
-//        pos.y -= (float)(dir.y * dif);
-//        p.setPosicion(pos);
-//
-//        Vector2D vel = p.getVelocidad();
-//        float vn = vel.x * (float)dir.x + vel.y * (float)dir.y;
-//        if (vn < 0)
-//        {
-//            vel.x -= vn * (float)dir.x;
-//            vel.y -= vn * (float)dir.y;
-//        }
-//        p.setVelocidad(vel);
-//    }
-//}
-//bool InteraccionArena::colisionMelee(const Personaje& p1, const Personaje& p2)
-//{
-//    return distancia(p1, p2) < (p1.getRadio() + p2.getRadio());
-//}
-//
-//float InteraccionArena::distancia(const Personaje& p1, const Personaje& p2)
-//{
-//    float dx = p2.posicion().x - p1.posicion().x;
-//    float dy = p2.posicion().y - p1.posicion().y;
-//    return std::sqrt(dx * dx + dy * dy);
-//}
+    if (dif <= 0)
+    {
+        d.posicion_ =
+        d.posicion_ - dir * dif;
+
+        d.velocidad_ = { 0,0 };
+        d.aceleracion_ = { 0,0 };
+
+        return true;
+    }
+
+    // Techo
+    dif = b.techo.distancia(d.posicion_, &dir)- d.sizeradio_;
+
+    if (dif <= 0)
+    {
+        d.posicion_ =
+            d.posicion_ - dir * dif;
+
+        d.velocidad_ = { 0,0 };
+        d.aceleracion_ = { 0,0 };
+
+        return true;
+    }
+
+    // Izquierda
+    dif = b.izq.distancia(d.posicion_, &dir)- d.sizeradio_;
+
+    if (dif <= 0)
+    {
+        d.posicion_ =
+            d.posicion_ - dir * dif;
+
+        d.velocidad_ = { 0,0 };
+        d.aceleracion_ = { 0,0 };
+
+        return true;
+    }
+
+    // Derecha
+    dif = b.dcha.distancia(d.posicion_, &dir)- d.sizeradio_;
+
+    if (dif <= 0)
+    {
+        d.posicion_ =
+            d.posicion_ - dir * dif;
+
+        d.velocidad_ = { 0,0 };
+        d.aceleracion_ = { 0,0 };
+
+        return true;
+    }
+
+    return false;
+}
