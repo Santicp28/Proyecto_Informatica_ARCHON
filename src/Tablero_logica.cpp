@@ -64,6 +64,8 @@ void Tablero_logica::dibuja(const Renderer& renderer)const {
             casillas[f][c].dibuja(renderer, centroCasilla, longitudCasilla);
         }
     }
+
+
 }
 
 
@@ -226,7 +228,9 @@ PosicionMatriz Tablero_logica::getOrigenSeleccionado() const
     return origenSeleccionado;
 }
 
-void resaltarMovimientoPosible()
+void Tablero_logica::resaltarMovimientoPosible()
 {
+    if (hayOrigenSeleccionado) {
 
+    }
 }
