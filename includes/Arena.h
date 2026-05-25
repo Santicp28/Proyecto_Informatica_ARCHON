@@ -61,18 +61,6 @@ protected:
 	//daño continuo mientras el enemigo esté en el radio (banshee/phoenix)
 	void procesarArea(EstadoCombate& atacante, EstadoCombate& defensor, float dt);
 	
-	//crea un proyectil en la dirección actual del atacante
-	void crearProyectil(EstadoCombate& atacante);
-	
-	//mueve todos los proyectiles y comprueba colisiones
-	void actualizarProyectiles(float dt);
-	
-	//elimina proyectiles que impactan o salen de la arena
-	void comprobarColisionProyectiles();
-
-	// dibuja todos los proyectiles activos
-	void dibujarProyectiles() const;
-
 	//dibuja el círculo del combatiente en su posición
 	void dibujarCombatiente(const EstadoCombate& c) const;
 

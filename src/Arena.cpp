@@ -137,67 +137,6 @@ void Arena::procesarArea(EstadoCombate& atacante, EstadoCombate& defensor, float
 }
 
 
-//crea un proyectil en la dirección actual del atacante
-void Arena::crearProyectil(EstadoCombate& atacante)
-{
-    Proyectil p;
-    p.posicion = atacante.posicion;
-    p.velocidad = atacante.direccion * VELOCIDAD_PROYECTIL;
-    p.danio = DANIO_PROYECTIL;
-    p.propietario = &atacante;
-
-    proyectiles.push_back(p);
-
-    atacante.cooldown = CADENCIA_PROYECTIL;
-    atacante.atacar = false;
-}
-
-//mueve todos los proyectiles y comprueba colisiones
-void Arena::actualizarProyectiles(float dt)
-{
-    for (auto& p : proyectiles)
-        p.posicion = p.posicion + p.velocidad * dt;
-
-    comprobarColisionProyectiles();
-}
-
-//elimina proyectiles que impactan o salen de la arena
-void Arena::comprobarColisionProyectiles()
-{
-    for (auto it = proyectiles.begin(); it != proyectiles.end();)
-    {
-        // el objetivo es siempre el enemigo del propietario
-        EstadoCombate* objetivo = (it->propietario == &jugador1) ? &jugador2 : &jugador1;
-
-        bool impacto = InteraccionArena::colisionMelee(it->posicion, it->radio,objetivo->posicion, objetivo->radio);
-
-        bool fueraArena =
-            it->posicion.x < BordesArena::X_MIN ||
-            it->posicion.x > BordesArena::X_MAX ||
-            it->posicion.y < BordesArena::Y_MIN ||
-            it->posicion.y > BordesArena::Y_MAX;
-
-        if (impacto)
-        {
-            objetivo->vida -= it->danio;
-            if (objetivo->vida < 0) objetivo->vida = 0;
-            it = proyectiles.erase(it);
-        }
-        else if (fueraArena)
-        {
-            it = proyectiles.erase(it);
-        }
-        else
-        {
-            ++it;
-        }
-    }
-}
-
-
-
-
-
 //Dibuja la arena: bordes, combatientes y barras de vida
 void Arena::dibuja() const
 {
@@ -220,7 +159,7 @@ void Arena::dibuja() const
     dibujarBarraVida(jugador1.pieza, 50.0f, 30.0f);
     dibujarBarraVida(jugador2.pieza, 550.0f, 30.0f);
 
-    dibujarProyectiles();
+ /*   dibujarProyectiles();*/
 
     glEnable(GL_LIGHTING);
 
@@ -282,25 +221,7 @@ void Arena::dibujarCombatiente(const EstadoCombate& c) const
     glPopMatrix();
 }
 
-// dibuja todos los proyectiles activos como círculos rojos 
-void Arena::dibujarProyectiles() const
-{
-    for (const auto& p : proyectiles)
-    {
-        glPushMatrix();
-        glTranslatef((float)p.posicion.x, (float)p.posicion.y, 0);
-        glColor3f(1.0f, 0.0f, 0.0f);
 
-        glBegin(GL_POLYGON);
-        for (int i = 0; i < 24; i++)
-        {
-            float a = 2.0f * 3.14159f * i / 24.0f;
-            glVertex2f(cos(a) * p.radio, sin(a) * p.radio);
-        }
-        glEnd();
-        glPopMatrix();
-    }
-}
 // Gestiona input de teclado: WASD mueve jugador1, espacio ataca
 void Arena::tecla(unsigned char key)
 {
