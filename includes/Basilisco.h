@@ -1,9 +1,9 @@
 #pragma once
 #include "Pieza.h"
 #include "TiposPiezas.h"
-class Mago : public Pieza
+class Basilisco : public Pieza
 {
 public:
-    Mago(Bando b = Bando::LUZ);
+    Basilisco(Bando b = Bando::OSCURIDAD);
     void dibuja();
 };

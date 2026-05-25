@@ -1,6 +1,9 @@
 #pragma once
+#include <windows.h>
+#include "ETSIDI.h"
 #include "freeglut.h"
 #include "Vector2D.h"
+
 struct Color
 {
 	float r{ 1.0f }, g{ 1.0f }, b{ 1.0f };
@@ -21,6 +24,10 @@ public:
 
 	void dibujaCuadrado(const Vector2D& centro, const Color& color, double longitud)const;
 	void dibujaContornoCuadrado(const Vector2D& centro,const Color& color, double longitud)const;
+
+	void dibujaSprite(const char* rutaPNG, const Vector2D& centro, double ancho, double alto) const;
+	void dibujaTexto(const char* texto, const Vector2D& pos, double r = 1.0, double g = 1.0, double b = 1.0, int size = 12) const;
+
 private:
 	void dibujaColor(const Color& color)const { glColor3f(color.r, color.g, color.b); }
 	

@@ -72,5 +72,5 @@ private:
     //hacer una funcion para cuando se termina el combate y aplicar los resultados
       void cambiarTurno();
 
-      
+
 };

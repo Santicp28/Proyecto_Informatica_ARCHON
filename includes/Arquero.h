@@ -1,8 +1,12 @@
 #pragma once
 #include "Pieza.h"
-class Arquero :
-    public Pieza
+#include "TiposPiezas.h"
+
+class Arquero : public Pieza
 {
-    void dibuja();
+public:
+	Arquero(Bando b = Bando::LUZ);
+
+	void dibuja(const char* rutaPNG, const Vector2D& centro, double ancho, double alto) const override;
 };
 

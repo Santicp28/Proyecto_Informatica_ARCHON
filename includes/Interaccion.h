@@ -14,7 +14,7 @@ public:
             switch (c.getTipo()) {
             case TipoCasilla::CLARA:
                 p.ataque *= 1.2;
-				p.vida *= 1.2;
+                p.vida *= 1.2;
                 break;
             case TipoCasilla::OSCURA:
                 p.ataque *= 0.8;
