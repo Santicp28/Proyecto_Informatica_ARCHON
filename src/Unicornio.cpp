@@ -2,13 +2,17 @@
 #include "Pieza.h"
 
 Unicornio::Unicornio(Bando b) : Pieza(
-    Ataque::MODERADO,              // Moderate
-    Vida::MODERADA,                // Average
-    Velocidad::NORMAL,             // Normal
-    Cadencia::LENTA,            // Average
-    Velocidad_ataque::RAPIDO,      // Energy bolts (Fast)
+    Ataque::MODERADO,      
+    Vida::MODERADA,        
+    Velocidad::NORMAL,      
+    Cadencia::LENTA,       
+    Velocidad_ataque::RAPIDO,   
+	Rango::MEDIO,
     b,
-    TipoMovimiento::CAMINA         // Ground
+    TipoMovimiento::CAMINA     
 ) {
 }
-void Unicornio::dibuja() {}
+void Unicornio::dibuja(const Vector2D& centro, double ancho, double alto) const
+{
+
+}

@@ -153,7 +153,6 @@
     <ClCompile Include="src\Fenix.cpp" />
     <ClCompile Include="src\Golem.cpp" />
     <ClCompile Include="src\InteraccionArena.cpp" />
-    <ClCompile Include="src\interacción.cpp" />
     <ClCompile Include="src\Juego.cpp" />
     <ClCompile Include="src\Mago.cpp" />
     <ClCompile Include="src\Menu.cpp" />

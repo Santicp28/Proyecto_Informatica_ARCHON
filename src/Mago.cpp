@@ -2,13 +2,17 @@
 #include "Pieza.h"
 
 Mago::Mago(Bando b) : Pieza(
-    Ataque::ALTO,                  // High
-    Vida::MODERADA,                // Average
-    Velocidad::NORMAL,             // Normal
-    Cadencia::PROMEDIO,            // Average
-    Velocidad_ataque::NORMAL,      // Fireball (Middle)
+    Ataque::ALTO,               
+    Vida::MODERADA,        
+    Velocidad::NORMAL,  
+    Cadencia::PROMEDIO,    
+    Velocidad_ataque::NORMAL,
+	Rango::CORTO,
     b,
-    TipoMovimiento::TELETRANSPORTE // Teleport
+    TipoMovimiento::TELETRANSPORTE 
 ) {
 }
-void Mago::dibuja() {}
+void Mago::dibuja(const Vector2D& centro, double ancho, double alto) const
+{
+
+}

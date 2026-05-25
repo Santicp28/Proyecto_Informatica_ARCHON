@@ -2,15 +2,16 @@
 #include "Pieza.h"
 
 Banshee::Banshee(Bando b) : Pieza(
-    Ataque::MODERADO,              // Moderate
-    Vida::MODERADA,                // Average
-    Velocidad::NORMAL,             // Normal
-    Cadencia::LENTA,            // Average
-    Velocidad_ataque::RAPIDO,      // Keen
-    b,                             // Bando dinámico
-    TipoMovimiento::VUELA           // Air
+    Ataque::MODERADO,              
+    Vida::MODERADA,                
+    Velocidad::NORMAL,             
+    Cadencia::LENTA,            
+    Velocidad_ataque::RAPIDO, 
+	Rango::MEDIO,
+    b,                             
+    TipoMovimiento::VUELA           
 ) {
 }
-void Banshee::dibuja()
+void Banshee::dibuja(const Vector2D& centro, double ancho, double alto) const
 {
 }

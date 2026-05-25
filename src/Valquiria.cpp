@@ -2,13 +2,17 @@
 #include "Pieza.h"
 
 Valquiria::Valquiria(Bando b) : Pieza(
-    Ataque::MODERADO,              // Moderate
-    Vida::MODERADA,                // Average
-    Velocidad::NORMAL,             // Normal
-    Cadencia::PROMEDIO,            // Average
-    Velocidad_ataque::LENTO,       // Spear (Slow)
+    Ataque::MODERADO,    
+    Vida::MODERADA,     
+    Velocidad::NORMAL,  
+    Cadencia::PROMEDIO,         
+    Velocidad_ataque::LENTO,   
+    Rango::CORTO,
     b,
-    TipoMovimiento::VUELA           // Air
+    TipoMovimiento::VUELA     
 ) {
 }
-void Valquiria::dibuja() {}
+void Valquiria::dibuja(const Vector2D& centro, double ancho, double alto) const
+{
+
+}

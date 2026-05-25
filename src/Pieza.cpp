@@ -1,4 +1,5 @@
 #include "Pieza.h"
+#include <algorithm>
 
 bool Pieza::puedeMoverseA(PosicionMatriz destino) {
 	PosicionMatriz origen = getPosicionMatriz();
@@ -12,9 +13,20 @@ bool Pieza::puedeMoverseA(PosicionMatriz destino) {
 
 
 		case TipoMovimiento::VUELA:
+		{
+			int distancia = std::max(distanciaFila, distanciaColumna);
+
+			return distancia <= rango_movimiento;
+		}
+
 		case TipoMovimiento::TELETRANSPORTE:
-			bool movRecto = ((distanciaFila == 0 && distanciaColumna <= rango_movimiento) || (distanciaColumna == 0 && distanciaFila <= rango_movimiento));
-			bool movDiagonal = (distanciaFila == distanciaColumna && distanciaFila <= rango_movimiento); //vale cualquiera de las dos
-			return movRecto || movDiagonal;
+		{
+			int distancia = std::max(distanciaFila, distanciaColumna);
+
+			return distancia <= rango_movimiento;
+		}
+
+		default:
+			return false;
 	}
 }

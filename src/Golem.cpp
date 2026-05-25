@@ -2,13 +2,17 @@
 #include "Pieza.h"
 
 Golem::Golem(Bando b) : Pieza(
-    Ataque::ALTO,                  // High
-    Vida::ALTA,                    // Long
-    Velocidad::BAJA,               // Slow
-    Cadencia::LENTA,               // Long
-    Velocidad_ataque::LENTO,       // Stone chippings (Slow)
+    Ataque::ALTO,               
+    Vida::ALTA,              
+    Velocidad::BAJA,         
+    Cadencia::LENTA,      
+    Velocidad_ataque::LENTO,  
+	Rango::CORTO,
     b,
-    TipoMovimiento::CAMINA         // Ground
+    TipoMovimiento::CAMINA    
 ) {
 }
-void Golem::dibuja() {}
+void Golem::dibuja(const Vector2D& centro, double ancho, double alto) const
+{
+
+}
