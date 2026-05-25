@@ -1,14 +1,14 @@
-#include "Golem.h"
+#include "Trol.h"
 #include "Pieza.h"
 
-Golem::Golem(Bando b) : Pieza(
+Trol::Trol(Bando b) : Pieza(
     Ataque::ALTO,                  // High
     Vida::ALTA,                    // Long
     Velocidad::BAJA,               // Slow
     Cadencia::LENTA,               // Long
-    Velocidad_ataque::LENTO,       // Stone chippings (Slow)
+    Velocidad_ataque::LENTO,       // Rocks (Slow)
     b,
     TipoMovimiento::CAMINA         // Ground
 ) {
 }
-void Golem::dibuja() {}
+void Trol::dibuja() {}

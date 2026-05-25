@@ -1,10 +1,10 @@
 #pragma once
 #include "Pieza.h"
 #include "TiposPiezas.h"
-class Unicornio : public Pieza
+class Trol : public Pieza
 {
 public:
-    Unicornio(Bando b = Bando::LUZ);
+    Trol(Bando b = Bando::OSCURIDAD);
     void dibuja(const Vector2D& centro, double ancho, double alto) const;
 
    

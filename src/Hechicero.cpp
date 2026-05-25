@@ -1,14 +1,14 @@
-#include "Mago.h"
+#include "Hechicero.h"
 #include "Pieza.h"
 
-Mago::Mago(Bando b) : Pieza(
-    Ataque::ALTO,                  // High
+Hechicero::Hechicero(Bando b) : Pieza(
+    Ataque::MODERADO,              // Moderate
     Vida::MODERADA,                // Average
     Velocidad::NORMAL,             // Normal
     Cadencia::PROMEDIO,            // Average
-    Velocidad_ataque::NORMAL,      // Fireball (Middle)
+    Velocidad_ataque::RAPIDO,      // Light beams (Fast)
     b,
     TipoMovimiento::TELETRANSPORTE // Teleport
 ) {
 }
-void Mago::dibuja() {}
+void Hechicero::dibuja() {}

@@ -1,3 +1,6 @@
+#include <windows.h>
+#include "ETSIDI.h"
+#include "freeglut.h"
 #include "Renderer.h"
 
 void Renderer::inicializa2D()
@@ -42,4 +45,16 @@ void Renderer::dibujaContornoCuadrado(const Vector2D& centro, const Color& color
 	glVertex3d(centro.x + desplazamiento.x, centro.y + desplazamiento.y, 0.1); // arriba derecha
 	glVertex3d(centro.x - desplazamiento.x, centro.y + desplazamiento.y, 0.1); // arriba izquierda
 	glEnd();
+}
+
+void Renderer::dibujaSprite(const char* rutaPNG, const Vector2D& centro, double ancho, double alto) const {
+	ETSIDI::Sprite sprite(rutaPNG, (double)(centro.x - ancho / 2), (double)(centro.y - alto / 2), (double)ancho, (double)alto);
+	sprite.draw();
+}
+
+void Renderer::dibujaTexto(const char* texto, const Vector2D& pos,
+	float r, float g, float b, int size) const {
+	ETSIDI::setTextColor(r, g, b);
+	ETSIDI::setFont("ComicNeue-Regular.ttf", size);
+	ETSIDI::printxy(texto, (int)pos.x, (int)pos.y);
 }
