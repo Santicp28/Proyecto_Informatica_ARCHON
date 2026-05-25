@@ -27,13 +27,6 @@ public:
     virtual bool mover(PosicionMatriz destino) = 0; //DESARROLLAR PARA CADA PIEZA !!!!!!!
 
 
-    PosicionMatriz getPosicionMatriz() const { return posicionMatriz; }
-    // Utilidad para convertir coordenadas de matriz a coordenadas de mundo
-   /* void calcularPosicionMundo(Vector2D esquina_arriba_izda, double size_celda) {
-        x = boardOffset + columna * cellSize + (cellSize / 2.0f);
-        y = boardOffset + fila * cellSize + (cellSize / 2.0f);
-    }*/
-
-    
+    PosicionMatriz getPosicionMatriz() const { return posicionMatriz; }    
 };
 
