@@ -19,11 +19,12 @@ protected:
     double velocidad_ataque;
     Bando bando;      // Bando
     TipoMovimiento tipo_movimiento;
+    int rango_movimiento;
     Color color;
 public:
     virtual void dibuja(const Vector2D& centro, double ancho, double alto) const = 0;
 
-    Pieza(Ataque at, Vida vi, Velocidad vel, Cadencia cad, Velocidad_ataque vel_at, Bando b, TipoMovimiento tm)
+    Pieza(Ataque at, Vida vi, Velocidad vel, Cadencia cad, Velocidad_ataque vel_at, Rango ra, Bando b, TipoMovimiento tm)
         : bando(b), tipo_movimiento(tm) {
 
         // --- FUERZA (Ataque) ---
@@ -58,15 +59,23 @@ public:
         else if (vel_at == Velocidad_ataque::RAPIDO) velocidad_ataque = 12.0;
         else if (vel_at == Velocidad_ataque::INSTANTANEO) velocidad_ataque = 25.0;
         else if (vel_at == Velocidad_ataque::VARIABLE) velocidad_ataque = 8.0;
+
+        // --- RANGO (Casillas que puede avanzar en tablero) --- 
+        if (ra == Rango::CORTO) rango_movimiento = 3;
+        else if (ra == Rango::MEDIO) rango_movimiento = 4;
+        else if (ra == Rango::LARGO) rango_movimiento = 5;
     }
     
     void setPosicionMatriz(unsigned int fila, unsigned int columna) {
         posicionMatriz.fila = fila;
         posicionMatriz.columna = columna;
 	}
-    virtual bool mover(PosicionMatriz destino) = 0; //DESARROLLAR PARA CADA PIEZA !!!!!!!
 
+    bool puedeMoverseA(PosicionMatriz destino);
 
     PosicionMatriz getPosicionMatriz() const { return posicionMatriz; }
+    TipoMovimiento getTipoMovimiento() const { return tipo_movimiento; }
+
+	Bando getBando() const { return bando; }
 };
 

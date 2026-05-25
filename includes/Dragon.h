@@ -5,5 +5,7 @@ class Dragon : public Pieza
 {
 public:
     Dragon(Bando b = Bando::OSCURIDAD);
-    void dibuja();
+    void dibuja(const Vector2D& centro, double ancho, double alto) const;
+
+
 };

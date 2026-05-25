@@ -6,5 +6,6 @@ class Caballero : public Pieza
 {
 public:
     Caballero(Bando b = Bando::LUZ);
-    void dibuja();
+    void dibuja(const Vector2D& centro, double ancho, double alto) const;
+
 };

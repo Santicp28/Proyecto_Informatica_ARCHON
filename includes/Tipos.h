@@ -55,11 +55,17 @@ enum class Velocidad_ataque {
     LENTO
 };
 
+enum class Rango {
+    CORTO,
+	MEDIO,
+    LARGO
+};
+
 struct PosicionMatriz {
     int fila;
     int columna;
-};
 
-inline bool operator ==(const PosicionMatriz& a, const PosicionMatriz& b) {
-    return a.fila == b.fila && a.columna == b.columna;
-}
+    bool operator==(const PosicionMatriz& p) const {
+        return fila == p.fila && columna == p.columna;
+    }
+};

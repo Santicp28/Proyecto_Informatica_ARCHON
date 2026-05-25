@@ -9,8 +9,14 @@ Arquero::Arquero(Bando b) : Pieza(
     Velocidad_ataque::NORMAL,       // Arrow
     b,                              // Bando dinámico
     TipoMovimiento::CAMINA          // Ground
+
 ) {
 }
-void Arquero::dibuja(const char* rutaPNG, const Vector2D& centro, double ancho, double alto) const {
-    Renderer::dibujaSprite();
+
+void Arquero::dibuja(const Vector2D& centro, double ancho, double alto) const {
+    //a
 }
+
+
+
+    

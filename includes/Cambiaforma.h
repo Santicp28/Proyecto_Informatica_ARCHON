@@ -5,5 +5,6 @@ class Cambiaforma : public Pieza
 {
 public:
     Cambiaforma(Bando b = Bando::OSCURIDAD);
-    void dibuja();
+    void dibuja(const Vector2D& centro, double ancho, double alto) const;
+
 };
