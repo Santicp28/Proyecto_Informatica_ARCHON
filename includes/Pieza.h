@@ -3,16 +3,17 @@
 #include "Casilla.h"
 #include"Renderer.h"
 #include"Vector2D.h"
+#include "Tipos.h"
 
 class Pieza
 {
+
+    friend class Interaccion;
 protected:
-    Casilla casilla;   // Posición en la matriz (0-8)
-    double ataque;
-    double velocidad;
 
 	PosicionMatriz posicionMatriz; // Posición en la matriz (fila, columna)
-    double fuerza;
+    double ataque;
+    double velocidad;
     double cadencia;
     double vida;
     double velocidad_ataque;
@@ -20,8 +21,7 @@ protected:
     TipoMovimiento tipo_movimiento;
     Color color;
 public:
-    virtual void dibuja(Vector2D esquina_arriba_izda,double size_celda);
-    virtual void dibujarForma() = 0;
+    virtual void dibuja(const Vector2D& centro, double ancho, double alto) const = 0;
 
     Pieza(Ataque at, Vida vi, Velocidad vel, Cadencia cad, Velocidad_ataque vel_at, Bando b, TipoMovimiento tm)
         : bando(b), tipo_movimiento(tm) {
@@ -68,11 +68,8 @@ public:
 
 
     PosicionMatriz getPosicionMatriz() const { return posicionMatriz; }
-    // Utilidad para convertir coordenadas de matriz a coordenadas de mundo
-   /* void calcularPosicionMundo(Vector2D esquina_arriba_izda, double size_celda) {
-        x = boardOffset + columna * cellSize + (cellSize / 2.0f);
-        y = boardOffset + fila * cellSize + (cellSize / 2.0f);
-    }*/
+
+    
 
 };
 

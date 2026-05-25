@@ -66,11 +66,11 @@ public:
 
     void dibuja(const Vector2D& centro)const;
 
+    void resaltarMovimientoPosible();
+
 private:
 
     //para después de mover o terminar la arena
     //hacer una funcion para cuando se termina el combate y aplicar los resultados
       void cambiarTurno();
-
-      void resaltarMovimientoPosible();
 };

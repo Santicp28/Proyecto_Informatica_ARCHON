@@ -128,31 +128,31 @@ void Juego::teclaEspecial(int key)
 }
 
 
-void Juego::raton(int button, int state, int x, int y) //ejemplo para probar el menú, a cambiar en futuras versiones
-{
-    if (estado == EstadoJuego::MENU_PRINCIPAL) {
-        menu.raton(button, state, x, y, 600);
+//void Juego::raton(int button, int state, int x, int y) //ejemplo para probar el menú, a cambiar en futuras versiones
+//{
+//    if (estado == EstadoJuego::MENU_PRINCIPAL) {
+//        menu.raton(button, state, x, y, 600);
+//
+//        if (menu.getQuiereJugar()) {
+//            estado = EstadoJuego::TABLERO;
+//            menu.resetAcciones();
+//        }
+//        else if (menu.getQuiereRanking()) {
+//            estado = EstadoJuego::RANKING;
+//            menu.resetAcciones();
+//        }
+//        else if (menu.getQuiereSalir()) {
+//            exit(0);
+//        }
+//    }
+//}
 
-        if (menu.getQuiereJugar()) {
-            estado = EstadoJuego::TABLERO;
-            menu.resetAcciones();
-        }
-        else if (menu.getQuiereRanking()) {
-            estado = EstadoJuego::RANKING;
-            menu.resetAcciones();
-        }
-        else if (menu.getQuiereSalir()) {
-            exit(0);
-        }
-    }
-}
-
-void Juego::movimientoRaton(int x, int y)
-{
-    if (estado == EstadoJuego::MENU_PRINCIPAL) {
-        menu.movimientoRaton(x, y, 600);
-    }
-}
+//void Juego::movimientoRaton(int x, int y)
+//{
+//    if (estado == EstadoJuego::MENU_PRINCIPAL) {
+//        menu.movimientoRaton(x, y, 600);
+//    }
+//}
 
 EstadoJuego Juego::getEstado() const
 {
