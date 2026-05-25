@@ -9,11 +9,11 @@ class Bordes
 {
     friend class InteraccionArena;
 
-    Pared suelo;
-    Pared techo;
-    Pared izq;
-    Pared dcha;
-    Color color{ 0.0f,0.0f,0.5f };
+    const Pared suelo;
+    const Pared techo;
+    const Pared izq;
+    const Pared dcha;
+    const Color color{ 0.0f,0.0f,0.5f };
 public: 
     Bordes(const Vector2D& size, const Vector2D& centro);
     void dibuja(const Renderer& renderer)const;

@@ -7,9 +7,9 @@ class Interaccion;
 class Pared
 {
     friend class Interaccion;
-    Vector2D limite1;
-    Vector2D limite2;
-    Color color;
+    const Vector2D limite1;
+    const Vector2D limite2;
+    const Color color;
 
 public:
     Pared(const Vector2D& l1, const Vector2D& l2, const Color& col) :limite1(l1), limite2(l2), color(col) {}

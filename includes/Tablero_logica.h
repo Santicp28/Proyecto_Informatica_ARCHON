@@ -57,8 +57,6 @@ public:
     bool getHayOrigenSeleccionado() const;
     PosicionMatriz getOrigenSeleccionado() const;
 
-    void dibuja(const Vector2D& centro)const;
-
     void resaltarMovimientoPosible();
 
 private:

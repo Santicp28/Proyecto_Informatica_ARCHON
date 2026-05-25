@@ -11,6 +11,7 @@ class Pieza
 protected:
 
 	PosicionMatriz posicionMatriz; // Posición en la matriz (fila, columna)
+    Vector2D posicionArena;
     double fuerza;
     double cadencia;
     double vida;
@@ -24,8 +25,8 @@ public:
         posicionMatriz.fila = fila;
         posicionMatriz.columna = columna;
 	}
+    virtual void setPosicionArena(const Vector2D& posicion) { posicionArena = posicion; }
     virtual bool mover(PosicionMatriz destino) = 0; //DESARROLLAR PARA CADA PIEZA !!!!!!!
-
 
     PosicionMatriz getPosicionMatriz() const { return posicionMatriz; }
     // Utilidad para convertir coordenadas de matriz a coordenadas de mundo
