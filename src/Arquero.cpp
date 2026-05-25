@@ -11,6 +11,6 @@ Arquero::Arquero(Bando b) : Pieza(
     TipoMovimiento::CAMINA          // Ground
 ) {
 }
-void Arquero::dibuja(const char* rutaPNG, const Vector2D& centro, double ancho, double alto) const {
-    Renderer::dibujaSprite();
+void Arquero::dibuja(const Renderer& renderer, const char* rutaPNG, const Vector2D& centro, double ancho, double alto) const {
+    renderer.dibujaSprite(mago.graf,centro, ancho, alto);
 }
