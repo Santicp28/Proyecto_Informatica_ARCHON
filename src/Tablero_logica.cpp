@@ -1,5 +1,6 @@
 #include "Tablero_logica.h"
 #include "Renderer.h"
+#include <algorithm>
 #include <iostream>
 
 
@@ -14,6 +15,8 @@ void Tablero_logica::inicializa()
 
     combatePendiente = false;
     hayOrigenSeleccionado = false;
+    longitud = std::min(Config::sizeMundo.x, Config::sizeMundo.y);
+    posicion = { Config::sizeMundo * 0.5 };
 
 
 
@@ -55,8 +58,7 @@ void Tablero_logica::inicializa()
 
 void Tablero_logica::dibuja(const Renderer& renderer)const {
     double longitudCasilla = longitud / TAM;
-    Vector2D centro = renderer.obtenerSizeDibujo() * 0.5;
-    Vector2D esquinaSuperiorIzda{ centro.x - longitud / 2.0, centro.y + longitud / 2.0 };
+    Vector2D esquinaSuperiorIzda{ posicion.x - longitud / 2.0, posicion.y + longitud / 2.0 };
 
     for (unsigned int f = 0; f < TAM; f++) {
         for (unsigned int c = 0; c < TAM; c++) {
