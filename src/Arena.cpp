@@ -7,12 +7,8 @@
 void Arena::inicializa(Pieza* p1, Pieza* p2)
 {
     // guardamos los punteros a las piezas del tablero
-    jugador1.pieza = p1;
-    jugador2.pieza = p2;
-
-    // vida se resetea a su valor por defecto de EstadoCombate
-    jugador1.vida = jugador1.vidaMax;
-    jugador2.vida = jugador2.vidaMax;
+    jugador1-> setPosicion;
+    jugador2 = p2;
 
     // posicionamos jugadores: jugador1 izquierda, jugador2 derecha
     jugador1.posicion = { 150.0f, 300.0f };
@@ -79,65 +75,6 @@ void Arena::mueve(float dt)
         ganadorBando = 1;
     }
 }
-
-//CORREGIR CON GETTER 
-//
-////Aplica daño al defensor si hay contacto y el atacante tiene cooldown libre
-//void Arena::procesarAtaque(EstadoCombate& atacante,EstadoCombate& defensor, float dt)
-//{
-//
-//    TipoAtaque tipo = atacante.pieza->getTipoAtaque();
-//
-//    switch(tipo)
-//    {
-//    case TipoAtaque::MELEE:
-//        // daño puntual al tocar, un golpe, un daño, cooldown
-//        if (InteraccionArena::colisionMelee(atacante.posicion, atacante.radio, defensor.posicion, defensor.radio))
-//        {
-//            defensor.vida -= DANIO_MELEE;
-//            if (defensor.vida < 0) defensor.vida = 0;
-//            atacante.cooldown = CADENCIA_MELEE;
-//            atacante.atacar = false;
-//        }
-//        break;
-//
-//    case TipoAtaque::AREA:
-//        // daño continuo mientras el enemigo esté en el radio
-//        procesarArea(atacante, defensor, dt);
-//        break;
-//
-//    case TipoAtaque::PROYECTIL:
-//        // crea un proyectil en la dirección actual del atacante
-//        crearProyectil(atacante);
-//        break;
-//    }
-//}
-
-
-//daño continuo mientras el enemigo esté en el radio (banshee/phoenix) 
-void Arena::procesarArea(EstadoCombate& atacante, EstadoCombate& defensor, float dt)
-{
-    //el área de efecto es el doble del radio del atacante
-    float radioArea = atacante.radio * 2.0f;
-
-    if (InteraccionArena::colisionMelee(atacante.posicion, radioArea,defensor.posicion, defensor.radio))
-    {
-        //daño proporcional al tiempo, cuanto más tiempo dentro más daño
-        defensor.vida -= DANIO_AREA * dt;
-        if (defensor.vida < 0) defensor.vida = 0;
-
-        //cooldown muy corto para simular daño continuo
-        atacante.cooldown = 0.1f;
-    }
-    else
-    {
-        //enemigo fuera del área, dejamos de atacar hasta nueva pulsación
-        atacante.atacar = false;
-    }
-}
-
-
-//Dibuja la arena: bordes, combatientes y barras de vida
 void Arena::dibuja() const
 {
     glMatrixMode(GL_PROJECTION);
@@ -159,8 +96,6 @@ void Arena::dibuja() const
     dibujarBarraVida(jugador1.pieza, 50.0f, 30.0f);
     dibujarBarraVida(jugador2.pieza, 550.0f, 30.0f);
 
- /*   dibujarProyectiles();*/
-
     glEnable(GL_LIGHTING);
 
     glPopMatrix();
@@ -168,59 +103,6 @@ void Arena::dibuja() const
     glPopMatrix();
     glMatrixMode(GL_MODELVIEW);
 }
-//Dibuja la barra de vida de un combatiente: gris=fondo, verde/amarillo/rojo=vida 
-void Arena::dibujarBarraVida(const Pieza* p, float x, float y) const
-{
-    float ancho = 200.0f;
-    float alto = 15.0f;
-    // buscamos el EstadoCombate correspondiente a la pieza
-    // para leer la vida de EstadoCombate, no de Pieza
-    const EstadoCombate& c = (jugador1.pieza == p) ? jugador1 : jugador2;
-    float porcentaje = (float)(c.vida / c.vidaMax);
-
-    glColor3f(0.3f, 0.3f, 0.3f);
-    glBegin(GL_QUADS);
-    glVertex2f(x, y);
-    glVertex2f(x + ancho, y);
-    glVertex2f(x + ancho, y + alto);
-    glVertex2f(x, y + alto);
-    glEnd();
-
-    if (porcentaje > 0.5f)  glColor3f(0.2f, 0.8f, 0.2f);
-    else if (porcentaje > 0.25f) glColor3f(0.9f, 0.7f, 0.1f);
-    else                         glColor3f(0.9f, 0.1f, 0.1f);
-
-    glBegin(GL_QUADS);
-    glVertex2f(x, y);
-    glVertex2f(x + ancho * porcentaje, y);
-    glVertex2f(x + ancho * porcentaje, y + alto);
-    glVertex2f(x, y + alto);
-    glEnd();
-}
-
-
-//Dibuja un círculo en la posición del combatiente: blanco=jugador1, gris=jugador2
-void Arena::dibujarCombatiente(const EstadoCombate& c) const
-{
-    glPushMatrix();
-    glTranslatef(c.posicion.x, c.posicion.y, 0);
-
-    if (c.pieza == jugador1.pieza)
-        glColor3f(1.0f, 1.0f, 1.0f);
-    else
-        glColor3f(0.15f, 0.15f, 0.15f);
-
-    glBegin(GL_POLYGON);
-    for (int i = 0; i < 32; i++)
-    {
-        float a = 2.0f * 3.14159f * i / 32;
-        glVertex2f(cos(a) * c.radio, sin(a) * c.radio);
-    }
-    glEnd();
-
-    glPopMatrix();
-}
-
 
 // Gestiona input de teclado: WASD mueve jugador1, espacio ataca
 void Arena::tecla(unsigned char key)

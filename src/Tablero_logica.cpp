@@ -58,7 +58,7 @@ void Tablero_logica::inicializa()
 
 void Tablero_logica::dibuja(const Renderer& renderer)const {
     double longitudCasilla = longitud / TAM;
-    Vector2D esquinaSuperiorIzda{ posicion.x - longitud / 2.0, posicion.y + longitud / 2.0 };
+    Vector2D esquinaSuperiorIzda{ posicion.x - longitud / 2.0, posicion.y - longitud / 2.0 };
 
     for (unsigned int f = 0; f < TAM; f++) {
         for (unsigned int c = 0; c < TAM; c++) {

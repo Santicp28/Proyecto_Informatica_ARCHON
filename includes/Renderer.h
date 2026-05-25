@@ -19,8 +19,7 @@ public:
 
 	void dibujaCuadrado(const Vector2D& centro, const Color& color, const Vector2D& size )const;
 	void dibujaContornoCuadrado(const Vector2D& centro,const Color& color, const Vector2D& size)const;
-
-
+	void dibujaLinea(const Vector2D& limite1, const Vector2D& limite2, const Color& color)const;
 
 private:
 	void dibujaColor(const Color& color)const { glColor3f(color.r, color.g, color.b); }
