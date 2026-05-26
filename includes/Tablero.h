@@ -78,11 +78,14 @@ public:
     PosicionMatriz getOrigenSeleccionado() const;
 
     void resaltarMovimientoPosible();
+    void limpiarResaltados();
 
     bool movimientoLegal(PosicionMatriz origen, PosicionMatriz destino) const;
     bool caminoLibreEnL(PosicionMatriz origen, PosicionMatriz destino, bool primeroFilas) const;
 
     bool esMovimientoPosible(PosicionMatriz pos) const;
+
+	void dibujaOrigenSeleccionado(const Renderer& renderer, const Vector2D& posicion, double longitud) const;
 
 private:
 

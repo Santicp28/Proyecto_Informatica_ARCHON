@@ -11,9 +11,14 @@ class Casilla
 	PosicionMatriz posicionMatriz;
 	Color color;
 
+	bool resaltada = false;
+
 public:
 	void inicializa(const TipoCasilla& nuevoTipo, PosicionMatriz nuevaPosicion);
 	void dibuja(const Renderer& renderer, const Vector2D& posicion, double longitud)const;
+	void setResaltada(bool estado) { resaltada = estado; }
+
+
 	PosicionMatriz getPosicionMatriz() const { return posicionMatriz; }
 	TipoCasilla getTipo() const { return tipo; }
 };

@@ -4,6 +4,10 @@ void Casilla::dibuja(const Renderer& renderer, const Vector2D& posicion, double 
 {
     renderer.dibujaCuadrado(posicion, color, { longitud,longitud });
     renderer.dibujaContornoCuadrado(posicion, { 0.5f, 0.5f, 0.5f }, { longitud,longitud });
+
+    if (resaltada) {
+		renderer.dibujaSprite("bin/Graficos/posiciones.png", posicion, longitud, longitud);
+	}
 }
 
 void Casilla::inicializa(const TipoCasilla& nuevoTipo, PosicionMatriz nuevaPosicion)
