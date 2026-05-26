@@ -100,6 +100,7 @@ private:
     //hacer una funcion para cuando se termina el combate y aplicar los resultados
     void cambiarTurno();
 
+    //plantilla para agregar piezas
     template <typename T>
     void agregarPieza(int fila, int columna)
     {

@@ -41,158 +41,51 @@ void Tablero_logica::inicializa()
 
     // ------------- INICIALIZA PIEZAS --------- PONER SU POSICION INICIAL
     // ------COLUMNA 0
-    Pieza* valq1 = new Valquiria();
-    valq1->setPosicionMatriz(0, 0);
-
-    Pieza* golem1 = new Golem();
-    golem1->setPosicionMatriz(1, 0);
-
-    Pieza* unic1 = new Unicornio();
-    unic1->setPosicionMatriz(2, 0);
-
-    Pieza* djin1 = new Djinni();
-    djin1->setPosicionMatriz(3, 0);
-
-    Pieza* mago1 = new Mago();
-    mago1->setPosicionMatriz(4, 0);
-
-    Pieza* fenix1 = new Fenix();
-    fenix1->setPosicionMatriz(5, 0);
-
-    Pieza* unic2 = new Unicornio();
-    unic2->setPosicionMatriz(6, 0);
-
-    Pieza* golem2 = new Golem();
-    golem2->setPosicionMatriz(7, 0);
-
-    Pieza* valq2 = new Valquiria();
-    valq2->setPosicionMatriz(8, 0);
-
-    listaPiezas.agregar(valq1);
-    listaPiezas.agregar(golem1);
-    listaPiezas.agregar(unic1);
-    listaPiezas.agregar(djin1);
-    listaPiezas.agregar(mago1);
-    listaPiezas.agregar(fenix1);
-    listaPiezas.agregar(unic2);
-    listaPiezas.agregar(golem2);
-    listaPiezas.agregar(valq2);
+    agregarPieza<Valquiria>(0, 0);
+    agregarPieza<Golem>(1, 0);
+    agregarPieza<Unicornio>(2, 0);
+    agregarPieza<Djinni>(3, 0);
+    agregarPieza<Mago>(4, 0);
+    agregarPieza<Fenix>(5, 0);
+    agregarPieza<Unicornio>(6, 0);
+    agregarPieza<Golem>(7, 0);
+    agregarPieza<Valquiria>(8, 0);
 
 
     //------COLUMNA 1
-    Pieza* arq1 = new Arquero();
-    arq1->setPosicionMatriz(0, 1);
+    agregarPieza<Arquero>(0, 1);
+    agregarPieza<Caballero>(1, 1);
+    agregarPieza<Caballero>(2, 1);
+    agregarPieza<Caballero>(3, 1);
+    agregarPieza<Caballero>(4, 1);
+    agregarPieza<Caballero>(5, 1);
+    agregarPieza<Caballero>(6, 1);
+    agregarPieza<Caballero>(7, 1);
+    agregarPieza<Arquero>(8, 1);
 
-    Pieza* cab1 = new Caballero();
-    cab1->setPosicionMatriz(1, 1);
-
-    Pieza* cab2 = new Caballero();
-    cab2->setPosicionMatriz(2, 1);
-
-    Pieza* cab3 = new Caballero();
-    cab3->setPosicionMatriz(3, 1);
-
-    Pieza* cab4 = new Caballero();
-    cab4->setPosicionMatriz(4, 1);
-
-    Pieza* cab5 = new Caballero();
-    cab5->setPosicionMatriz(5, 1);
-
-    Pieza* cab6 = new Caballero();
-    cab6->setPosicionMatriz(6, 1);
-
-    Pieza* cab7 = new Caballero();
-    cab7->setPosicionMatriz(7, 1);
-
-    Pieza* arq2 = new Arquero();
-    arq2->setPosicionMatriz(8, 1);
-
-    listaPiezas.agregar(arq1);
-    listaPiezas.agregar(cab1);
-    listaPiezas.agregar(cab2);
-    listaPiezas.agregar(cab3);
-    listaPiezas.agregar(cab4);
-    listaPiezas.agregar(cab5);
-    listaPiezas.agregar(cab6);
-    listaPiezas.agregar(cab7);
-    listaPiezas.agregar(arq2);
 
     //------COLUMNA 7
-    Pieza* mant1 = new Manticora();
-    mant1->setPosicionMatriz(0, 7);
+    agregarPieza<Manticora>(0, 7);
+    agregarPieza<Duende>(1, 7);
+    agregarPieza<Duende>(2, 7);
+    agregarPieza<Duende>(3, 7);
+    agregarPieza<Duende>(4, 7);
+    agregarPieza<Duende>(5, 7);
+    agregarPieza<Duende>(6, 7);
+    agregarPieza<Duende>(7, 7);
+    agregarPieza<Manticora>(8, 7);
 
-    Pieza* gob1 = new Duende();
-    gob1->setPosicionMatriz(1, 7);
 
-    Pieza* gob2 = new Duende();
-    gob2->setPosicionMatriz(2, 7);
-
-    Pieza* gob3 = new Duende();
-    gob3->setPosicionMatriz(3, 7);
-
-    Pieza* gob4 = new Duende();
-    gob4->setPosicionMatriz(4, 7);
-
-    Pieza* gob5 = new Duende();
-    gob5->setPosicionMatriz(5, 7);
-
-    Pieza* gob6 = new Duende();
-    gob6->setPosicionMatriz(6, 7);
-
-    Pieza* gob7 = new Duende();
-    gob7->setPosicionMatriz(7, 7);
-
-    Pieza* mant2 = new Manticora();
-    mant2->setPosicionMatriz(8, 7);
-
-    listaPiezas.agregar(mant1);
-    listaPiezas.agregar(gob1);
-    listaPiezas.agregar(gob2);
-    listaPiezas.agregar(gob3);
-    listaPiezas.agregar(gob4);
-    listaPiezas.agregar(gob5);
-    listaPiezas.agregar(gob6);
-    listaPiezas.agregar(gob7);
-    listaPiezas.agregar(mant2);
-
-    //------COLUMNA 8
-    Pieza* bansh1 = new Banshee();
-    bansh1->setPosicionMatriz(0, 8);
-
-    Pieza* trol1 = new Trol();
-    trol1->setPosicionMatriz(1, 8);
-
-    Pieza* basi1 = new Basilisco();
-    basi1->setPosicionMatriz(2, 8);
-
-    Pieza* camb1 = new Cambiaforma();
-    camb1->setPosicionMatriz(3, 8);
-
-    Pieza* hech1 = new Hechicero();
-    hech1->setPosicionMatriz(4, 8);
-
-    Pieza* dragon1 = new Dragon();
-    dragon1->setPosicionMatriz(5, 8);
-
-    Pieza* basi2 = new Basilisco();
-    basi2->setPosicionMatriz(6, 8);
-
-    Pieza* trol2 = new Trol();
-    trol2->setPosicionMatriz(7, 8);
-
-    Pieza* bansh2 = new Banshee();
-    bansh2->setPosicionMatriz(8, 8);
-
-    listaPiezas.agregar(bansh1);
-    listaPiezas.agregar(trol1);
-    listaPiezas.agregar(basi1);
-    listaPiezas.agregar(camb1);
-    listaPiezas.agregar(hech1);
-    listaPiezas.agregar(dragon1);
-    listaPiezas.agregar(basi2);
-    listaPiezas.agregar(trol2);
-    listaPiezas.agregar(bansh2);
-
+    // ------COLUMNA 8
+    agregarPieza<Banshee>(0, 8);
+    agregarPieza<Trol>(1, 8);
+    agregarPieza<Basilisco>(2, 8);
+    agregarPieza<Cambiaforma>(3, 8);
+    agregarPieza<Hechicero>(4, 8);
+    agregarPieza<Dragon>(5, 8);
+    agregarPieza<Basilisco>(6, 8);
+    agregarPieza<Trol>(7, 8);
+    agregarPieza<Banshee>(8, 8);
 }
 
 

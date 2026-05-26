@@ -8,34 +8,23 @@ class Interaccion {
 public:
 
     //cada casilla otorga un efecto a la pieza que contiente
-    void piezaEfectoTipoCasilla(Pieza& p, Casilla c) {
+    //void piezaEfectoTipoCasilla(Pieza& p, Casilla c, double vidaExtra) {
+    //    
+    //    if (p.vida >= vidaExtra){
+    //        if (p.bando == Bando::LUZ) {
+    //            if (c.getTipo() == TipoCasilla::CLARA) p.vida += vidaExtra;
+    //        }
+    //        else {
+    //            if (c.getTipo() == TipoCasilla::CLARA) p.vida += vidaExtra;
+    //        }
+    //    }
+    //}
 
+  //  void restaurarVida(Pieza& p) {
+		//int vidaActual = p.vida;
+  //      if (vidaActual)
 
-        if (p.bando == Bando::LUZ) {
-            switch (c.getTipo()) {
-            case TipoCasilla::CLARA:
-                p.ataque *= 1.2;
-                p.vida *= 1.2;
-                break;
-            case TipoCasilla::OSCURA:
-                p.ataque *= 0.8;
-                p.vida *= 0.8;
-                break;
-            }
-        }
-        else {
-            switch (c.getTipo()) {
-            case TipoCasilla::OSCURA:
-                p.ataque *= 1.2;
-                p.vida *= 1.2;
-                break;
-            case TipoCasilla::CLARA:
-                p.ataque *= 0.8;
-                p.vida *= 0.8;
-                break;
-            }
-        }
-    }
+  //  }
 
     //para asegurarnos que no nos salimos del tablero
     bool posicionValida(PosicionMatriz pos) const
