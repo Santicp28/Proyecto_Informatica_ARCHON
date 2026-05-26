@@ -10,29 +10,26 @@ public:
     //cada casilla otorga un efecto a la pieza que contiente
     void piezaEfectoTipoCasilla(Pieza& p, Casilla c) {
 
-
         if (p.bando == Bando::LUZ) {
             switch (c.getTipo()) {
             case TipoCasilla::CLARA:
-                p.ataque *= 1.2;
-                p.vida *= 1.2;
+                p.fuerza *= 1.2;
                 break;
             case TipoCasilla::OSCURA:
-                p.ataque *= 0.8;
-                p.vida *= 0.8;
+                p.fuerza *= 0.8;
                 break;
+                //poner cada caso
             }
         }
         else {
             switch (c.getTipo()) {
             case TipoCasilla::OSCURA:
-                p.ataque *= 1.2;
-                p.vida *= 1.2;
+                p.fuerza *= 1.2;
                 break;
             case TipoCasilla::CLARA:
-                p.ataque *= 0.8;
-                p.vida *= 0.8;
+                p.fuerza *= 0.8;
                 break;
+                //igual
             }
         }
     }

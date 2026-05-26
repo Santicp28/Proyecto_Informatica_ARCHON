@@ -6,26 +6,7 @@
 #include "ListaPiezas.h"
 #include "Interaccion.h"
 #include "Renderer.h"
-
-#include "Arquero.h"
-#include "Banshee.h"
-#include "Basilisco.h"
-#include "Caballero.h"
-#include "Cambiaforma.h"
-#include "Djinni.h"
-#include "Dragon.h"
-#include "Duende.h"
-#include "Fenix.h"
-#include "Golem.h"
-#include "Hechicero.h"
-#include "Mago.h"
-#include "Manticora.h"
-#include "Trol.h"
-#include "Unicornio.h"
-#include "Valquiria.h"
-
-
-
+#include "Config.h"
 
 class Tablero_logica {
 private:
@@ -33,11 +14,6 @@ private:
     double longitud;
     Vector2D posicion{ Config::sizeMundo * 0.5 };//en el centro
     static constexpr int TAM = 9;
-
-    const Vector2D centro{ 0.0, 0.0 };
-    double posicionCamaraZ{ 15.0 };
-    const double longitud{ 500.0 };
-
     Casilla casillas[TAM][TAM];
 
     ListaPiezas listaPiezas;
@@ -49,16 +25,12 @@ private:
     PosicionMatriz origenSeleccionado;
     bool hayOrigenSeleccionado = false;
 
-    std::vector<PosicionMatriz> movimientosPosibles;
-
 	//flag cuando dos piezas de bandos opuestos se encuentran en la misma casilla
     bool combatePendiente;
 
     //estas son para saber cómo terminan las piezas después de la arena
     PosicionMatriz origenCombate;
     PosicionMatriz destinoCombate;
-
-
 
 
 public:
@@ -87,16 +59,11 @@ public:
 
     void resaltarMovimientoPosible();
 
-    bool movimientoLegal(PosicionMatriz origen, PosicionMatriz destino) const;
-    bool caminoLibreEnL(PosicionMatriz origen, PosicionMatriz destino, bool primeroFilas) const;
-
-    bool esMovimientoPosible(PosicionMatriz pos) const;
-
 private:
 
     //para después de mover o terminar la arena
     //hacer una funcion para cuando se termina el combate y aplicar los resultados
       void cambiarTurno();
 
-
+      
 };

@@ -10,6 +10,7 @@ class ListaPiezas
 
 public:
     void agregar(Pieza* p) { if (std::find(listaPiezas.begin(), listaPiezas.end(), p) == listaPiezas.end()) listaPiezas.push_back(p); }
+    void dibuja(Vector2D esquina_arriba_izda, double size_celda) const { for (auto p : listaPiezas)p->dibuja(esquina_arriba_izda, size_celda); }
     
 
     void destruirPiezas() {
@@ -21,14 +22,11 @@ public:
     //tablero se encarga de decidir si el movimiento es correcto, esta funcion solo se encarga de mover la pieza
     bool moverDeCasilla(PosicionMatriz origen, PosicionMatriz destino) {
         for (Pieza* p : listaPiezas) {
-            if (p != nullptr && p->getPosicionMatriz() == origen)
+            if (p->getPosicionMatriz() == origen)
             {
-                p->setPosicionMatriz(destino.fila, destino.columna);
-                return true;
+				return p->mover(destino); //HACER MOVER PARA CADA TIPO DE PIEZA !!!!!!
             }
-
         }
-        return false;
     }
 
     //llamar después de arena
@@ -48,11 +46,6 @@ public:
         }
 
         return nullptr;
-    }
-
-    bool hayPiezaEn(PosicionMatriz pos) const
-    {
-        return getPiezaEnPosicion(pos) != nullptr;
     }
 
     ~ListaPiezas() { destruirPiezas(); }
