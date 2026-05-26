@@ -158,14 +158,12 @@
     <ClCompile Include="src\Fenix.cpp" />
     <ClCompile Include="src\Golem.cpp" />
     <ClCompile Include="src\InteraccionArena.cpp" />
-    <ClCompile Include="src\interacción.cpp" />
     <ClCompile Include="src\Juego.cpp" />
     <ClCompile Include="src\Mago.cpp" />
     <ClCompile Include="src\Menu.cpp" />
     <ClCompile Include="src\Pared.cpp" />
     <ClCompile Include="src\Pieza.cpp" />
     <ClCompile Include="src\Tablero_logica.cpp" />
-    <ClCompile Include="src\TiposPiezas.cpp" />
     <ClCompile Include="src\Trol.cpp" />
     <ClCompile Include="src\Unicornio.cpp" />
     <ClCompile Include="src\Valquiria.cpp" />

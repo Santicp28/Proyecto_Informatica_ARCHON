@@ -4,6 +4,7 @@
 struct TiposPiezas
 {
 	const char* graf;
+	const char* grafAtaque;
 };
 
 // Representación de la Luz

@@ -92,5 +92,5 @@ public:
 
 
     virtual void setPosicionArena(const Vector2D& posicion) { posicionArena = posicion; }
-    Pieza(double sizeradio = 1.0, Vector2D pos = {}, Vector2D vel = {}, Vector2D acel = {}): ObjetoMovil(pos, vel, acel, sizeradio) {}
+   // Pieza(double sizeradio = 1.0, Vector2D pos = {}, Vector2D vel = {}, Vector2D acel = {}): ObjetoMovil(pos, vel, acel, sizeradio) {}
 };
