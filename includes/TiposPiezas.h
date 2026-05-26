@@ -55,7 +55,7 @@ inline constexpr TiposPiezas hechicero = {
 	"bin/Graficos/hazluz.PNG"
 };
 
-inline constexpr TiposPiezas bailisco = {
+inline constexpr TiposPiezas basilisco = {
 	"bin/Graficos/basilisco.png"
 	"bin/Graficos/laser.PNG"
 };

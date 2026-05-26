@@ -11,4 +11,6 @@ Hechicero::Hechicero(Bando b) : Pieza(
     TipoMovimiento::TELETRANSPORTE // Teleport
 ) {
 }
-void Hechicero::dibuja() {}
+void Hechicero::dibuja(const Renderer& renderer, const char* rutaPNG, const Vector2D& centro, double ancho, double alto) const {
+    renderer.dibujaSprite(hechicero.graf, centro, ancho, alto);
+}

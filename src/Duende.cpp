@@ -12,7 +12,6 @@ Duende::Duende(Bando b) : Pieza(
     TipoMovimiento::CAMINA         
 ) {
 }
-void Duende::dibuja(const Vector2D& centro, double ancho, double alto) const
-{
-
+void Duende::dibuja(const Renderer& renderer, const char* rutaPNG, const Vector2D& centro, double ancho, double alto) const {
+    renderer.dibujaSprite(duende.graf, centro, ancho, alto);
 }

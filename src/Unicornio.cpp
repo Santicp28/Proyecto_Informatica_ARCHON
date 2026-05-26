@@ -12,7 +12,6 @@ Unicornio::Unicornio(Bando b) : Pieza(
     TipoMovimiento::CAMINA     
 ) {
 }
-void Unicornio::dibuja(const Vector2D& centro, double ancho, double alto) const
-{
-
+void Unicornio::dibuja(const Renderer& renderer, const char* rutaPNG, const Vector2D& centro, double ancho, double alto) const {
+    renderer.dibujaSprite(unicornio.graf, centro, ancho, alto);
 }

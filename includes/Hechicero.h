@@ -5,6 +5,7 @@ class Hechicero : public Pieza
 {
 public:
     Hechicero(Bando b = Bando::OSCURIDAD);
-    void dibuja(const Vector2D& centro, double ancho, double alto) const;
+    
+    void dibuja(const Renderer& renderer, const char* rutaPNG, const Vector2D& centro, double ancho, double alto) const;
 
 };

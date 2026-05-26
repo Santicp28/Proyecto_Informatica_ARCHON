@@ -12,6 +12,6 @@ Cambiaforma::Cambiaforma(Bando b) : Pieza(
     TipoMovimiento::VUELA           
 ) {
 }
-void Cambiaforma::dibuja(const Vector2D& centro, double ancho, double alto) const
-{
+void Cambiaforma::dibuja(const Renderer& renderer, const char* rutaPNG, const Vector2D& centro, double ancho, double alto) const {
+    renderer.dibujaSprite(cambiaforma.graf, centro, ancho, alto);
 }

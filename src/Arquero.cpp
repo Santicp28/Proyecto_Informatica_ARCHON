@@ -13,5 +13,5 @@ Arquero::Arquero(Bando b) : Pieza(
 ) {
 }
 void Arquero::dibuja(const Renderer& renderer, const char* rutaPNG, const Vector2D& centro, double ancho, double alto) const {
-    renderer.dibujaSprite(mago.graf,centro, ancho, alto);
+    renderer.dibujaSprite(arquero.graf,centro, ancho, alto);
 }
