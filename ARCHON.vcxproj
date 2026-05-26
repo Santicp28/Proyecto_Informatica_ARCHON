@@ -172,7 +172,7 @@
     <ClCompile Include="src\Menu.cpp" />
     <ClCompile Include="src\Pared.cpp" />
     <ClCompile Include="src\Pieza.cpp" />
-    <ClCompile Include="src\Tablero_logica.cpp" />
+    <ClCompile Include="src\Tablero.cpp" />
     <ClCompile Include="src\TiposPiezas.cpp" />
     <ClCompile Include="src\Trol.cpp" />
     <ClCompile Include="src\Unicornio.cpp" />
@@ -209,7 +209,7 @@
     <ClInclude Include="includes\Menu.h" />
     <ClInclude Include="includes\Pared.h" />
     <ClInclude Include="includes\Pieza.h" />
-    <ClInclude Include="includes\Tablero_logica.h" />
+    <ClInclude Include="includes\Tablero.h" />
     <ClInclude Include="includes\Tipos.h" />
     <ClInclude Include="includes\TiposPiezas.h" />
     <ClInclude Include="includes\Trol.h" />

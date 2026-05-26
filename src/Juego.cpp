@@ -7,7 +7,7 @@ void Juego::inicializa()
 {
     estado = EstadoJuego::MENU_PRINCIPAL;
     menu.inicializa();
-    tablero_logica.inicializa();
+    Tablero.inicializa();
 }
 
 void Juego::dibuja(const Renderer& renderer)
@@ -19,7 +19,7 @@ void Juego::dibuja(const Renderer& renderer)
         break;
 
     case EstadoJuego::TABLERO:
-        tablero_logica.dibuja(renderer);
+        Tablero.dibuja(renderer);
         break;
 
     case EstadoJuego::ARENA:   
@@ -74,13 +74,13 @@ void Juego::tecla(unsigned char key)
         case EstadoJuego::TABLERO:
         {
             if (key == 13) { // ENTER
-                tablero_logica.seleccionarConCursor();
+                Tablero.seleccionarConCursor();
 
 
                 //tablero avisa de que se he elegido combate, haciendo que juego ponga el estado ARENA y limpiando el flag del combate pendiente para no volver a entrar 
-                if (tablero_logica.hayCombatePendiente()) {
+                if (Tablero.hayCombatePendiente()) {
                     estado = EstadoJuego::ARENA;
-                    tablero_logica.limpiarCombatePendiente();
+                    Tablero.limpiarCombatePendiente();
                 }
 
 
@@ -122,19 +122,19 @@ void Juego::tecla(unsigned char key)
         else if (estado == EstadoJuego::TABLERO) { //con esto conseguimos mover el cursor mediante las flechas en el teclado
             switch (key) {
             case GLUT_KEY_UP:
-                tablero_logica.moverCursor(-1, 0);
+                Tablero.moverCursor(-1, 0);
                 break;
 
             case GLUT_KEY_DOWN:
-                tablero_logica.moverCursor(1, 0);
+                Tablero.moverCursor(1, 0);
                 break;
 
             case GLUT_KEY_LEFT:
-                tablero_logica.moverCursor(0, -1);
+                Tablero.moverCursor(0, -1);
                 break;
 
             case GLUT_KEY_RIGHT:
-                tablero_logica.moverCursor(0, 1);
+                Tablero.moverCursor(0, 1);
                 break;
             }
         }

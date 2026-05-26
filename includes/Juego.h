@@ -1,7 +1,7 @@
 #pragma once
 #include "Menu.h"
 #include "Arena.h"
-#include "Tablero_logica.h"
+#include "Tablero.h"
 #include"Vector2D.h"
 #include "Renderer.h"
 #include "Tipos.h"
@@ -18,7 +18,7 @@ enum class EstadoJuego {
 class Juego {
 private:
     EstadoJuego estado;
-    Tablero_logica tablero_logica;
+    Tablero Tablero;
     Menu menu{ { "JUGAR","OPCIONES","SALIR" } };
     Arena arena;
 
