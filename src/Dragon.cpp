@@ -2,16 +2,13 @@
 #include "Pieza.h"
 
 Dragon::Dragon(Bando b) : Pieza(
-    Ataque::MUYALTO,               
-    Vida::MUYALTA,                 
-    Velocidad::NORMAL,             
-    Cadencia::LENTA,               
-    Velocidad_ataque::NORMAL,      
-	Rango::MEDIO,
+    Ataque::MUYALTO,               // Very High
+    Vida::MUYALTA,                 // Very Long
+    Velocidad::NORMAL,             // Normal
+    Cadencia::LENTA,               // Long
+    Velocidad_ataque::NORMAL,      // Fervent breath (Middle)
     b,
-    TipoMovimiento::VUELA           
+    TipoMovimiento::VUELA           // Air
 ) {
 }
-void Dragon::dibuja(const Renderer& renderer, const Vector2D& centro, double ancho, double alto) const {
-    renderer.dibujaSprite(dragon.graf, centro, ancho, alto);
-}
+void Dragon::dibuja() {}

@@ -40,42 +40,22 @@ public:
         }
     }
 
-
-
-    void dibujarPiezas(const Renderer& renderer, const Vector2D& esquinaSuperiorIzda, double longitudCasilla) const
-    {
-        for (const auto& pieza : listaPiezas) {
-            if (pieza != nullptr) {
-
-                PosicionMatriz pos = pieza->getPosicionMatriz();
-
-                Vector2D centroPieza{
-                    esquinaSuperiorIzda.x + (pos.columna + 0.5) * longitudCasilla,
-                    esquinaSuperiorIzda.y - (pos.fila + 0.5) * longitudCasilla
-                };
-
-                pieza->dibuja(renderer, centroPieza, longitudCasilla, longitudCasilla);
-            }
-        }
-    }
-
     //sirve para obtener la pieza que hay en una posición dada
     Pieza* getPiezaEnPosicion(PosicionMatriz pos) const
     {
         for (auto p : listaPiezas) {
-            if (p != nullptr && p->getPosicionMatriz() == pos) { return p; }
+            if (p != nullptr && p->getPosicionMatriz() == pos) {return p;}
         }
 
         return nullptr;
     }
-
 
     bool hayPiezaEn(PosicionMatriz pos) const
     {
         return getPiezaEnPosicion(pos) != nullptr;
     }
 
-
-
     ~ListaPiezas() { destruirPiezas(); }
+
+
 };  

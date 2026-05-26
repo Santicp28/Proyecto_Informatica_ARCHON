@@ -2,16 +2,13 @@
 #include "Pieza.h"
 
 Trol::Trol(Bando b) : Pieza(
-    Ataque::ALTO,                
-    Vida::ALTA,      
-    Velocidad::BAJA,        
-    Cadencia::LENTA, 
-    Velocidad_ataque::LENTO,  
-	Rango::CORTO,
+    Ataque::ALTO,                  // High
+    Vida::ALTA,                    // Long
+    Velocidad::BAJA,               // Slow
+    Cadencia::LENTA,               // Long
+    Velocidad_ataque::LENTO,       // Rocks (Slow)
     b,
-    TipoMovimiento::CAMINA      
+    TipoMovimiento::CAMINA         // Ground
 ) {
 }
-void Trol::dibuja(const Renderer& renderer, const Vector2D& centro, double ancho, double alto) const {
-    renderer.dibujaSprite(trol.graf, centro, ancho, alto);
-}
+void Trol::dibuja() {}

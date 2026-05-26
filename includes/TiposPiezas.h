@@ -30,7 +30,7 @@ inline constexpr TiposPiezas golem = {
 
 inline constexpr TiposPiezas valquiria = {
 	"bin/Graficos/valquiria.png"
-	"bin/Graficos/lanza.png"
+	"bin/Graficos/lanza.PNG"
 };
 
 inline constexpr TiposPiezas djinni = {
@@ -55,7 +55,7 @@ inline constexpr TiposPiezas hechicero = {
 	"bin/Graficos/hazluz.PNG"
 };
 
-inline constexpr TiposPiezas basilisco = {
+inline constexpr TiposPiezas bailisco = {
 	"bin/Graficos/basilisco.png"
 	"bin/Graficos/laser.PNG"
 };

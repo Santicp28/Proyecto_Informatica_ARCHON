@@ -1,18 +1,14 @@
 #include "Hechicero.h"
 #include "Pieza.h"
-#include "TiposPiezas.h"
 
 Hechicero::Hechicero(Bando b) : Pieza(
-    Ataque::MODERADO,              
-    Vida::MODERADA,                
-    Velocidad::NORMAL,             
-    Cadencia::PROMEDIO,            
-    Velocidad_ataque::RAPIDO,    
-	Rango::CORTO,
+    Ataque::MODERADO,              // Moderate
+    Vida::MODERADA,                // Average
+    Velocidad::NORMAL,             // Normal
+    Cadencia::PROMEDIO,            // Average
+    Velocidad_ataque::RAPIDO,      // Light beams (Fast)
     b,
-    TipoMovimiento::TELETRANSPORTE 
+    TipoMovimiento::TELETRANSPORTE // Teleport
 ) {
 }
-void Hechicero::dibuja(const Renderer& renderer, const Vector2D& centro, double ancho, double alto) const {
-    renderer.dibujaSprite(hechicero.graf, centro, ancho, alto);
-}
+void Hechicero::dibuja() {}

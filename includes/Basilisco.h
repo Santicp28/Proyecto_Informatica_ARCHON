@@ -5,6 +5,6 @@ class Basilisco : public Pieza
 {
 public:
     Basilisco(Bando b = Bando::OSCURIDAD);
+    void dibuja(const Vector2D& centro, double ancho, double alto) const;
 
-    void dibuja(const Renderer& renderer, const Vector2D& centro, double ancho, double alto) const override;
 };

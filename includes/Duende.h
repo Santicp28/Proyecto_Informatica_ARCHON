@@ -5,7 +5,7 @@ class Duende : public Pieza
 {
 public:
     Duende(Bando b = Bando::OSCURIDAD);
+    void dibuja(const Vector2D& centro, double ancho, double alto) const;
 
-    void dibuja(const Renderer& renderer, const Vector2D& centro, double ancho, double alto) const override;
 
 };

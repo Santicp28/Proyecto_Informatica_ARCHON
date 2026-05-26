@@ -38,55 +38,31 @@ void Tablero_logica::inicializa()
     //INICIALIZA CASILLAS
 
 
-    // ------------- INICIALIZA PIEZAS --------- PONER SU POSICION INICIAL
-    // ------COLUMNA 0
-    agregarPieza<Valquiria>(0, 0);
-    agregarPieza<Golem>(1, 0);
-    agregarPieza<Unicornio>(2, 0);
-    agregarPieza<Djinni>(3, 0);
-    agregarPieza<Mago>(4, 0);
-    agregarPieza<Fenix>(5, 0);
-    agregarPieza<Unicornio>(6, 0);
-    agregarPieza<Golem>(7, 0);
-    agregarPieza<Valquiria>(8, 0);
+    //INICIALIZA PIEZAS --------- PONER SU POSICION INICIAL
+    //PIEZAS LUZ
+	Pieza* valq1 = new Valquiria();
+	    valq1->setPosicionMatriz(0, 0);
+
+	Pieza* golem1 = new Golem();
+    	golem1->setPosicionMatriz(1, 0);
+
+    Pieza* unic1 = new Unicornio();
+	    unic1->setPosicionMatriz(2, 0);
+
+    Pieza
 
 
-    //------COLUMNA 1
-    agregarPieza<Arquero>(0, 1);
-    agregarPieza<Caballero>(1, 1);
-    agregarPieza<Caballero>(2, 1);
-    agregarPieza<Caballero>(3, 1);
-    agregarPieza<Caballero>(4, 1);
-    agregarPieza<Caballero>(5, 1);
-    agregarPieza<Caballero>(6, 1);
-    agregarPieza<Caballero>(7, 1);
-    agregarPieza<Arquero>(8, 1);
+    listaPiezas.agregar(new Arquero());
+    listaPiezas.agregar(new );
+    listaPiezas.agregar(new );
 
+    ////PIEZAS OSCURIDAD
+    listaPiezas.agregar(new );
+    listaPiezas.agregar(new );
+    listaPiezas.agregar(new );
+    //INICIALIZA PIEZAS
 
-    //------COLUMNA 7
-    agregarPieza<Manticora>(0, 7);
-    agregarPieza<Duende>(1, 7);
-    agregarPieza<Duende>(2, 7);
-    agregarPieza<Duende>(3, 7);
-    agregarPieza<Duende>(4, 7);
-    agregarPieza<Duende>(5, 7);
-    agregarPieza<Duende>(6, 7);
-    agregarPieza<Duende>(7, 7);
-    agregarPieza<Manticora>(8, 7);
-
-
-    // ------COLUMNA 8
-    agregarPieza<Banshee>(0, 8);
-    agregarPieza<Trol>(1, 8);
-    agregarPieza<Basilisco>(2, 8);
-    agregarPieza<Cambiaforma>(3, 8);
-    agregarPieza<Hechicero>(4, 8);
-    agregarPieza<Dragon>(5, 8);
-    agregarPieza<Basilisco>(6, 8);
-    agregarPieza<Trol>(7, 8);
-    agregarPieza<Banshee>(8, 8);
 }
-
 
 void Tablero_logica::dibuja(const Renderer& renderer)const {
     double longitudCasilla = longitud / TAM;
@@ -98,8 +74,6 @@ void Tablero_logica::dibuja(const Renderer& renderer)const {
              casillas[f][c].dibuja(renderer, centroCasilla, longitudCasilla);
         }
     }
-
-	listaPiezas.dibujarPiezas(renderer, esquinaSuperiorIzda, longitudCasilla);
 
 
 }

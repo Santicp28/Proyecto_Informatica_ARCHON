@@ -5,6 +5,7 @@ class Dragon : public Pieza
 {
 public:
     Dragon(Bando b = Bando::OSCURIDAD);
-    void dibuja(const Renderer& renderer, const Vector2D& centro, double ancho, double alto) const override;
+    void dibuja(const Vector2D& centro, double ancho, double alto) const;
+
 
 };

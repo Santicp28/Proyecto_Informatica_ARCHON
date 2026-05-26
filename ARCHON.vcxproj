@@ -70,10 +70,6 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(SolutionDir)\bin\</OutDir>
-    <IntDir>$(ShortProjectName).vs\tmpx64Debug\$(Platform)\$(Configuration)\</IntDir>
-  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -113,13 +109,13 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)includes;$(SolutionDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)includes</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>ETSIDI.lib;freeglut.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>freeglut.lib;opengl32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -151,7 +147,6 @@
     <ClCompile Include="src\Casilla.cpp" />
     <ClCompile Include="src\Dragon.cpp" />
     <ClCompile Include="src\Duende.cpp" />
-    <ClCompile Include="src\Hechicero.cpp" />
     <ClCompile Include="src\Manticora.cpp" />
     <ClCompile Include="src\Disparo.cpp" />
     <ClCompile Include="src\ListaDisparos.cpp" />
@@ -161,6 +156,7 @@
     <ClCompile Include="src\Fenix.cpp" />
     <ClCompile Include="src\Golem.cpp" />
     <ClCompile Include="src\InteraccionArena.cpp" />
+    <ClCompile Include="src\interacción.cpp" />
     <ClCompile Include="src\Juego.cpp" />
     <ClCompile Include="src\Mago.cpp" />
     <ClCompile Include="src\Menu.cpp" />
