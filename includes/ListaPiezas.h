@@ -44,6 +44,8 @@ public:
 
     void dibujarPiezas(const Renderer& renderer, const Vector2D& esquinaSuperiorIzda, double longitudCasilla) const
     {
+        double escalaPieza = 0.65;
+
         for (const auto& pieza : listaPiezas) {
             if (pieza != nullptr) {
 
@@ -54,8 +56,8 @@ public:
                     esquinaSuperiorIzda.y - (pos.fila + 0.5) * longitudCasilla
                 };
 
-                pieza->dibuja(renderer, centroPieza, longitudCasilla, longitudCasilla);
-            }
+                pieza->dibuja(renderer, centroPieza, longitudCasilla*escalaPieza, longitudCasilla*escalaPieza);
+            }   
         }
     }
 

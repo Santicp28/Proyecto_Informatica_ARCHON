@@ -120,7 +120,7 @@ bool Tablero_logica::mover(PosicionMatriz origen, PosicionMatriz destino)
 
     //Si hay enemigo, no movemos todavía
     //Dejamos marcado que tiene que abrirse la arena
-    if (defensor->getBando() != Bando::NINGUNO) {
+    if (defensor != nullptr && defensor->getBando() != Bando::NINGUNO) {
         combatePendiente = true; //FLAG PARA CAMBIAR A ARENA
         origenCombate = origen;
         destinoCombate = destino;

@@ -23,7 +23,7 @@ void Renderer::inicializa2D(unsigned int longitud,unsigned int altura)
 void Renderer::dibujaCuadrado(const Vector2D& centro, const Color& color, double longitud)const
 {
 	longitud = longitud / 2.0;
-	dibujaColor(color);
+	dibujaColor(color);	
 	glBegin(GL_QUADS);
 
 	glVertex2d(centro.x - longitud, centro.y - longitud); // abajo izquierda
