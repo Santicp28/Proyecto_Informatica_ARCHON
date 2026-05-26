@@ -1,4 +1,5 @@
 #include "Renderer.h"
+#include "Config.h"
 
 void Renderer::inicializa2D()
 {
@@ -8,7 +9,7 @@ void Renderer::inicializa2D()
 	glMatrixMode(GL_PROJECTION);//Cambia al modo matriz de proyección (estás definiendo “cómo se ve la cámara”, no los objetos)
 	glLoadIdentity();//Resetea la matriz de proyección
 	glOrtho
-		(0, Config::sizeMundo.x,// eje x estandar (0= izda, 800= drcha)
+		(0, Config::sizeMundo.x,// eje x estandar (0= izda, 800= drcha)    útil para menus
 		 Config::sizeMundo.y, 0,// eje y invertido (600= abajo, 0= arriba)
 		 -1.0, 1.0);//grados de profundidad
 
@@ -21,10 +22,10 @@ void Renderer::dibujaCuadrado(const Vector2D& centro, const Color& color, const 
 	dibujaColor(color);
 	glBegin(GL_QUADS);
 
-	glVertex3d(centro.x - desplazamiento.x, centro.y - desplazamiento.y, 0.1); // abajo izquierda
-	glVertex3d(centro.x + desplazamiento.x, centro.y - desplazamiento.y, 0.1); // abajo derecha
-	glVertex3d(centro.x + desplazamiento.x, centro.y + desplazamiento.y, 0.1); // arriba derecha
-	glVertex3d(centro.x - desplazamiento.x, centro.y + desplazamiento.y, 0.1); // arriba izquierda
+	glVertex2d(centro.x - desplazamiento.x, centro.y - desplazamiento.y); // arriba izquierda
+	glVertex2d(centro.x + desplazamiento.x, centro.y - desplazamiento.y); // arriba derecha
+	glVertex2d(centro.x + desplazamiento.x, centro.y + desplazamiento.y); // abajo derecha
+	glVertex2d(centro.x - desplazamiento.x, centro.y + desplazamiento.y); // abajo izquierda
 
 	glEnd();
 
@@ -37,10 +38,20 @@ void Renderer::dibujaContornoCuadrado(const Vector2D& centro, const Color& color
 	dibujaColor(color);
 	glLineWidth(2.0f);//ancho de lineas
 	glBegin(GL_LINE_LOOP);
-	glVertex3d(centro.x - desplazamiento.x, centro.y - desplazamiento.y, 0.1); // abajo izquierda
-	glVertex3d(centro.x + desplazamiento.x, centro.y - desplazamiento.y, 0.1); // abajo derecha
-	glVertex3d(centro.x + desplazamiento.x, centro.y + desplazamiento.y, 0.1); // arriba derecha
-	glVertex3d(centro.x - desplazamiento.x, centro.y + desplazamiento.y, 0.1); // arriba izquierda
+	glVertex2d(centro.x - desplazamiento.x, centro.y - desplazamiento.y); // abajo izquierda
+	glVertex2d(centro.x + desplazamiento.x, centro.y - desplazamiento.y); // abajo derecha
+	glVertex2d(centro.x + desplazamiento.x, centro.y + desplazamiento.y); // arriba derecha
+	glVertex2d(centro.x - desplazamiento.x, centro.y + desplazamiento.y); // arriba izquierda
+	glEnd();
+}
+
+void Renderer::dibujaLinea(const Vector2D& limite1, const Vector2D& limite2, const Color& color) const
+{
+	dibujaColor(color);
+	glLineWidth(2.0f);//ancho de lineas
+	glBegin(GL_LINES);
+	glVertex2d(limite1.x, limite1.y);
+	glVertex2d(limite2.x, limite2.y);
 	glEnd();
 }
 
@@ -54,4 +65,8 @@ void Renderer::dibujaOvalo(const Vector2D& centro, const Color& color, double ra
 		glVertex3d(centro.x + cos(a) * radioX,centro.y + sin(a) * radioY,0.1);
 	}
 	glEnd();
+}
+void Renderer::cuadradoParaPruebas() const
+{
+	dibujaCuadrado(Config::sizeMundo * 0.5, { 1.0,1.0,1.0 }, Config::sizeMundo * 0.2);
 }

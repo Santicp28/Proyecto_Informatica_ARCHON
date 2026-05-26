@@ -139,7 +139,7 @@
     <ClCompile Include="src\ARCHON.cpp" />
     <ClCompile Include="src\Arena.cpp" />
     <ClCompile Include="src\Arquero.cpp" />
-    <ClCompile Include="src\BordesArena.cpp" />
+    <ClCompile Include="src\Bordes.cpp" />
     <ClCompile Include="src\Boton.cpp" />
     <ClCompile Include="src\Caballero.cpp" />
     <ClCompile Include="src\Casilla.cpp" />
@@ -165,7 +165,7 @@
   <ItemGroup>
     <ClInclude Include="includes\Arena.h" />
     <ClInclude Include="includes\Arquero.h" />
-    <ClInclude Include="includes\BordesArena.h" />
+    <ClInclude Include="includes\Bordes.h" />
     <ClInclude Include="includes\Boton.h" />
     <ClInclude Include="includes\Caballero.h" />
     <ClInclude Include="includes\Casilla.h" />

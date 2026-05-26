@@ -6,18 +6,13 @@ class InteraccionArena;
 
 class Pared
 {
-    Vector2D limite1_;
-    Vector2D limite2_;
-    Color    color_;
+    friend class Interaccion;
+    const Vector2D limite1;
+    const Vector2D limite2;
+    const Color color;
 
 public:
-    Pared() = default;
-    Pared(const Vector2D& l1, const Vector2D& l2, const Color& c);
-
-    void dibuja() const;
-    void color(const Color& col) { color_ = col; }
-
+    Pared(const Vector2D& l1, const Vector2D& l2, const Color& col) :limite1(l1), limite2(l2), color(col) {}
+    void dibuja(const Renderer& renderer)const;
     double distancia(const Vector2D& p, Vector2D* pdir = nullptr) const;
-
-    friend class InteraccionArena;
 };

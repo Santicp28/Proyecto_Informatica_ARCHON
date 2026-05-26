@@ -20,6 +20,7 @@ private:
     EstadoJuego estado;
     Tablero_logica tablero_logica;
     Menu menu{ { "JUGAR","OPCIONES","SALIR" } };
+    Arena arena;
 //    Arena arena;
 
 public:

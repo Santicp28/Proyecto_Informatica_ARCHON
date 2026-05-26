@@ -1,6 +1,6 @@
 #pragma once
 #include "Pieza.h"
-#include "BordesArena.h"
+#include "Bordes.h"
 #include "Disparo.h"
 #include "Pared.h"
 class InteraccionArena
