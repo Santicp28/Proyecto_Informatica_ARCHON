@@ -33,7 +33,7 @@
 //   
 //}
 
-
+//
 //void Arena::mueve(float dt)
 //
 //{
@@ -72,7 +72,7 @@
 //        ganadorBando = 1;
 //    }
 //}
-//
+
 
 //
 ////Dibuja la arena: bordes, combatientes y barras de vida
@@ -160,33 +160,106 @@
 //}
 //
 //
-// Gestiona input de teclado: WASD mueve jugador1, espacio ataca
-//void Arena::tecla(unsigned char key)
-//{
-//    if (combateTerminado) return;
-//    switch (key)
-//    {
-//    case 'w': jugador1.velocidad = { 0,  VELOCIDAD }; break;
-//    case 's': jugador1.velocidad = { 0, -VELOCIDAD }; break;
-//    case 'a': jugador1.velocidad = { -VELOCIDAD, 0 }; break;
-//    case 'd': jugador1.velocidad = { VELOCIDAD, 0 }; break;
-//    case ' ': jugador1.atacar = true; break;
-//    case 13:  jugador2.atacar = true; break; //tecla enter
-//    }
-//}
-//
-//void Arena::teclaEspecial(int key)
-//{
-//    if (combateTerminado) return;
-//    switch (key)
-//    {
-//    case GLUT_KEY_UP:    jugador2.velocidad = { 0,  VELOCIDAD }; break;
-//    case GLUT_KEY_DOWN:  jugador2.velocidad = { 0, -VELOCIDAD }; break;
-//    case GLUT_KEY_LEFT:  jugador2.velocidad = { -VELOCIDAD, 0 }; break;
-//    case GLUT_KEY_RIGHT: jugador2.velocidad = { VELOCIDAD, 0 }; break;
-//    }
-//}
-//
-//
-//
 
+void Arena::tecla(unsigned char key)
+{
+    if (combateTerminado) return;
+    switch (key)
+    {
+    case 'w':
+    case 'W':
+        jugador1.velocidad.y = VELOCIDAD;
+        break;
+    case 's':
+    case 'S':
+        jugador1.velocidad.y = -VELOCIDAD;
+        break;
+    case 'a':
+    case 'A':
+        jugador1.velocidad.x = -VELOCIDAD;
+        break;
+    case 'd':
+    case 'D':
+        jugador1.velocidad.x = VELOCIDAD;
+        break;
+    
+    case ' ':
+        jugador1.atacar = true;
+        break;
+
+    case 13:  
+        jugador2.atacar = true; 
+        break; //13 es tecla enter
+
+    
+    }
+}
+
+void Arena::teclaUP(unsigned char key)
+{
+    switch (key)
+    {
+
+    case 'w':
+    case 'W':
+    case 's':
+    case 'S':
+        jugador1.velocidad.y = 0;
+        break;
+
+    case 'a':
+    case 'A':
+    case 'd':
+    case 'D':
+        jugador1.velocidad.x = 0;
+        break;
+
+    case ' ':
+        jugador1.atacar = false;
+        break;
+
+    case 13:  
+        jugador2.atacar = false;
+        break; //13 es tecla enter
+    }
+}
+
+
+void Arena::teclaEspecial(int key)
+{
+    if (combateTerminado) return;
+    switch (key)
+    {
+    case GLUT_KEY_UP:
+        jugador2.velocidad.y = VELOCIDAD;
+        break;
+
+    case GLUT_KEY_DOWN:
+        jugador2.velocidad.y = -VELOCIDAD;
+        break;
+
+    case GLUT_KEY_LEFT:
+        jugador2.velocidad.x = -VELOCIDAD;
+        break;
+
+    case GLUT_KEY_RIGHT:
+        jugador2.velocidad.x = VELOCIDAD;
+        break;
+    }
+
+}
+void Arena::teclaEspecialUP(int key)
+{
+    switch (key)
+    {
+
+    case GLUT_KEY_UP:
+    case GLUT_KEY_DOWN:
+        jugador2.velocidad.y = 0;
+         break;
+    case GLUT_KEY_LEFT:
+    case GLUT_KEY_RIGHT:
+         jugador2.velocidad.x = 0;
+         break;
+    }
+}
