@@ -2,7 +2,7 @@
 #include "Pieza.h"
 #include "Casilla.h"
 #include "Tipos.h"
-
+#include "ListaPiezas.h"
 
 class Interaccion {
 public:
@@ -27,7 +27,7 @@ public:
   //  }
 
     //para asegurarnos que no nos salimos del tablero
-    bool posicionValida(PosicionMatriz pos) const
+    static bool posicionValida(PosicionMatriz pos)
     {
         int fila = pos.fila;
         int col = pos.columna;
@@ -35,7 +35,7 @@ public:
     }
 
     //para saber de qué bando es la pieza de una casilla, si no hay, devuelve ninguno
-    Bando getBandoOcupante(const PosicionMatriz& pos, const ListaPiezas& listaPiezas) const
+    static Bando getBandoOcupante(const PosicionMatriz& pos, const ListaPiezas& listaPiezas) 
     {
         Pieza* p = listaPiezas.getPiezaEnPosicion(pos);
         if (p != nullptr) {
