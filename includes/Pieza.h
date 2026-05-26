@@ -23,10 +23,19 @@ protected:
     int rango_movimiento;
     Color color;
 public:
-    virtual void dibuja(const Vector2D& centro, double ancho, double alto) const = 0;
+    virtual void dibuja(const Renderer& renderer, const Vector2D& centro, double ancho, double alto) const = 0;
 
     Pieza(Ataque at, Vida vi, Velocidad vel, Cadencia cad, Velocidad_ataque vel_at, Rango ra, Bando b, TipoMovimiento tm)
-        : bando(b), tipo_movimiento(tm) {
+        : 
+        posicionMatriz{ 0, 0 },
+        ataque(0.0),
+        velocidad(0.0),
+        cadencia(0.0),
+        vida(0.0),
+        velocidad_ataque(0.0),
+        bando(b),
+        tipo_movimiento(tm),
+        rango_movimiento(0) {
 
         // --- FUERZA (Ataque) ---
         if (at == Ataque::BAJO) ataque = 25.0;

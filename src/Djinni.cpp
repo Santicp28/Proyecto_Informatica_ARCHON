@@ -2,13 +2,16 @@
 #include "Pieza.h"
 
 Djinni::Djinni(Bando b) : Pieza(
-    Ataque::MODERADO,              // Moderate
-    Vida::ALTA,                // Average
-    Velocidad::NORMAL,             // Normal (Fast base)
-    Cadencia::PROMEDIO,            // Average
-    Velocidad_ataque::NORMAL,      // Twister (Middle)
+    Ataque::MODERADO,              
+    Vida::ALTA,                
+    Velocidad::NORMAL,             
+    Cadencia::PROMEDIO,            
+    Velocidad_ataque::NORMAL,      
+    Rango::MEDIO,
     b,
-    TipoMovimiento::VUELA           // Air
+    TipoMovimiento::VUELA   
 ) {
 }
-void Djinni::dibuja() {}
+void Djinni::dibuja(const Renderer& renderer, const Vector2D& centro, double ancho, double alto) const {
+    renderer.dibujaSprite(djinni.graf, centro, ancho, alto);
+}
