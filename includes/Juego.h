@@ -21,7 +21,6 @@ private:
     Tablero_logica tablero_logica;
     Menu menu{ { "JUGAR","OPCIONES","SALIR" } };
     Arena arena;
-//    Arena arena;
 
 public:
     void inicializa();
@@ -30,4 +29,7 @@ public:
 
     void tecla(unsigned char key);
     void teclaEspecial(int key);
+
+    EstadoJuego getEstado() const;
+    void setEstado(EstadoJuego nuevoEstado);
 };

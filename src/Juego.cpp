@@ -45,97 +45,134 @@ void Juego::mueve(float dt)
 
 void Juego::tecla(unsigned char key)
 {
-    switch (estado) 
-    {
-    case EstadoJuego::MENU_PRINCIPAL:
-    {
-
-        MenuAccion accion = menu.tecla(key);
-
-        switch (accion)
+    switch (estado){
+        case EstadoJuego::MENU_PRINCIPAL:
         {
-        case MenuAccion::JUGAR:
-            estado = EstadoJuego::TABLERO;
-            break;
 
-        case MenuAccion::OPCIONES:
-            estado = EstadoJuego::ARENA;
-            break;
+            MenuAccion accion = menu.tecla(key);
 
-        case MenuAccion::SALIR:
-            exit(0);
-            break;
+            switch (accion)
+            {
+            case MenuAccion::JUGAR:
+                estado = EstadoJuego::TABLERO;
+                break;
 
-        default:
-            break;
-        }
-        break;
-    }
-
-    case EstadoJuego::TABLERO:
-    {
-        //if (key == 13) { // ENTER
-        //    tablero_logica.seleccionarConCursor();
-
-
-            //tablero avisa de que se he elegido combate, haciendo que juego ponga el estado ARENA y limpiando el flag del combate pendiente para no volver a entrar 
-            if (tablero_logica.hayCombatePendiente()) {
+            case MenuAccion::OPCIONES:
                 estado = EstadoJuego::ARENA;
-                tablero_logica.limpiarCombatePendiente();
+                break;
+
+            case MenuAccion::SALIR:
+                exit(0);
+                break;
+
+            default:
+                break;
             }
-        
-
-        //if (key == 27) { // ESC
-        //    estado = EstadoJuego::MENU_PRINCIPAL;
-        //}
-        break;
-    }
-    case EstadoJuego::ARENA:
-    {
-        if (key == 27) { //también para ir probando como cambia, revisar en siguientes versiones cuando desarrollemos la arena
-            estado = EstadoJuego::TABLERO;
-        }
-        break;
-    }
-    case EstadoJuego::OPCIONES:
-    {
-        if (key == 27) { //desarrollar esto al final
-            estado = EstadoJuego::MENU_PRINCIPAL;
-        }
-        break;
-    }
-    case EstadoJuego::FIN_PARTIDA:
-    {
-        if (key == 27) { //desarrollar esto al final
-            estado = EstadoJuego::MENU_PRINCIPAL;
-        }
-        break;
-    }
-    }
-}
-
-void Juego::teclaEspecial(int key)
-{
-    if (estado == EstadoJuego::MENU_PRINCIPAL) {
-        menu.teclaEspecial(key);
-    }
-    else if (estado == EstadoJuego::TABLERO) { //con esto conseguimos mover el cursor mediante las flechas en el teclado
-        switch (key) {
-        case GLUT_KEY_UP:
-            tablero_logica.moverCursor(-1, 0);
             break;
+        }
 
-        case GLUT_KEY_DOWN:
-            tablero_logica.moverCursor(1, 0);
+        case EstadoJuego::TABLERO:
+        {
+            if (key == 13) { // ENTER
+                tablero_logica.seleccionarConCursor();
+
+
+                //tablero avisa de que se he elegido combate, haciendo que juego ponga el estado ARENA y limpiando el flag del combate pendiente para no volver a entrar 
+                if (tablero_logica.hayCombatePendiente()) {
+                    estado = EstadoJuego::ARENA;
+                    tablero_logica.limpiarCombatePendiente();
+                }
+
+
+                if (key == 27) { // ESC
+                    estado = EstadoJuego::MENU_PRINCIPAL;
+                }
+                break;
+            }
+        }
+        case EstadoJuego::ARENA:
+        {
+            if (key == 27) { //también para ir probando como cambia, revisar en siguientes versiones cuando desarrollemos la arena
+                estado = EstadoJuego::TABLERO;
+            }
             break;
-
-        case GLUT_KEY_LEFT:
-            tablero_logica.moverCursor(0, -1);
+        }
+        case EstadoJuego::OPCIONES:
+        {
+            if (key == 27) { //desarrollar esto al final
+                estado = EstadoJuego::MENU_PRINCIPAL;
+            }
             break;
-
-        case GLUT_KEY_RIGHT:
-            tablero_logica.moverCursor(0, 1);
+        }
+        case EstadoJuego::FIN_PARTIDA:
+        {
+            if (key == 27) { //desarrollar esto al final
+                estado = EstadoJuego::MENU_PRINCIPAL;
+            }
             break;
         }
     }
 }
+
+    void Juego::teclaEspecial(int key)
+    {
+        if (estado == EstadoJuego::MENU_PRINCIPAL) {
+            menu.teclaEspecial(key);
+        }
+        else if (estado == EstadoJuego::TABLERO) { //con esto conseguimos mover el cursor mediante las flechas en el teclado
+            switch (key) {
+            case GLUT_KEY_UP:
+                tablero_logica.moverCursor(-1, 0);
+                break;
+
+            case GLUT_KEY_DOWN:
+                tablero_logica.moverCursor(1, 0);
+                break;
+
+            case GLUT_KEY_LEFT:
+                tablero_logica.moverCursor(0, -1);
+                break;
+
+            case GLUT_KEY_RIGHT:
+                tablero_logica.moverCursor(0, 1);
+                break;
+            }
+        }
+    }
+
+
+    //void Juego::raton(int button, int state, int x, int y) //ejemplo para probar el menú, a cambiar en futuras versiones
+    //{
+    //    if (estado == EstadoJuego::MENU_PRINCIPAL) {
+    //        menu.raton(button, state, x, y, 600);
+    //
+    //        if (menu.getQuiereJugar()) {
+    //            estado = EstadoJuego::TABLERO;
+    //            menu.resetAcciones();
+    //        }
+    //        else if (menu.getQuiereRanking()) {
+    //            estado = EstadoJuego::RANKING;
+    //            menu.resetAcciones();
+    //        }
+    //        else if (menu.getQuiereSalir()) {
+    //            exit(0);
+    //        }
+    //    }
+    //}
+
+    //void Juego::movimientoRaton(int x, int y)
+    //{
+    //    if (estado == EstadoJuego::MENU_PRINCIPAL) {
+    //        menu.movimientoRaton(x, y, 600);
+    //    }
+    //}
+
+    EstadoJuego Juego::getEstado() const
+    {
+        return estado;
+    } //geters para interacciones con otras partes
+
+    void Juego::setEstado(EstadoJuego nuevoEstado)
+    {
+        estado = nuevoEstado;
+    }

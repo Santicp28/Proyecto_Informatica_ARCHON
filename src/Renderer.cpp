@@ -1,4 +1,3 @@
-#include <windows.h>
 #include "ETSIDI.h"
 #include "freeglut.h"
 #include "Renderer.h"
@@ -48,20 +47,7 @@ void Renderer::dibujaContornoCuadrado(const Vector2D& centro, const Color& color
 	glEnd();
 }
 
-void Renderer::dibujaSprite(const char* rutaPNG, const Vector2D& centro, double ancho, double alto) const {
-	
-	glPushMatrix();
 
-	glTranslated(centro.x, centro.y, 0.0);
-	glScaled(1.0, -1.0, 1.0);
-	glTranslated(-centro.x, -centro.y, 0.0);
-
-	ETSIDI::Sprite sprite(rutaPNG, (double)(centro.x - ancho / 2), (double)(centro.y - alto / 2), (double)ancho, (double)alto);
-
-	sprite.draw();
-
-	glPopMatrix();
-}
 
 void Renderer::dibujaLinea(const Vector2D& limite1, const Vector2D& limite2, const Color& color) const
 {
@@ -86,6 +72,20 @@ void Renderer::dibujaOvalo(const Vector2D& centro, const Color& color, double ra
 void Renderer::cuadradoParaPruebas() const
 {
 	dibujaCuadrado(Config::sizeMundo * 0.5, { 1.0,1.0,1.0 }, Config::sizeMundo * 0.2);
+}
+void Renderer::dibujaSprite(const char* rutaPNG, const Vector2D& centro, double ancho, double alto) const {
+
+	glPushMatrix();
+
+	glTranslated(centro.x, centro.y, 0.0);
+	glScaled(1.0, -1.0, 1.0);
+	glTranslated(-centro.x, -centro.y, 0.0);
+
+	ETSIDI::Sprite sprite(rutaPNG, (double)(centro.x - ancho / 2), (double)(centro.y - alto / 2), (double)ancho, (double)alto);
+
+	sprite.draw();
+
+	glPopMatrix();
 }
 
 void Renderer::dibujaTexto(const char* texto, const Vector2D& pos, double r, double g, double b, int size) const {

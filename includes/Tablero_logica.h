@@ -8,6 +8,23 @@
 #include "Renderer.h"
 #include "Config.h"
 
+#include "Arquero.h"
+#include "Banshee.h"
+#include "Basilisco.h"
+#include "Caballero.h"
+#include "Cambiaforma.h"
+#include "Djinni.h"
+#include "Dragon.h"
+#include "Duende.h"
+#include "Fenix.h"
+#include "Golem.h"
+#include "Hechicero.h"
+#include "Mago.h"
+#include "Manticora.h"
+#include "Trol.h"
+#include "Unicornio.h"
+#include "Valquiria.h"
+
 class Tablero_logica {
 private:
     friend class Interaccion;
@@ -24,6 +41,7 @@ private:
     PosicionMatriz cursor;
     PosicionMatriz origenSeleccionado;
     bool hayOrigenSeleccionado = false;
+    std::vector<PosicionMatriz> movimientosPosibles;
 
 	//flag cuando dos piezas de bandos opuestos se encuentran en la misma casilla
     bool combatePendiente;
@@ -41,13 +59,13 @@ public:
 
     //funcion para obtener el flag si hay combate
     bool hayCombatePendiente() const;
-	void limpiarCombatePendiente(); //cuando empieza la arena se limpia el flag de combate pendiente
+    void limpiarCombatePendiente(); //cuando empieza la arena se limpia el flag de combate pendiente
 
     //para saber donde está cada pieza después de que se resuelve la arena
     PosicionMatriz getOrigenCombate() const;
     PosicionMatriz getDestinoCombate() const;
 
-	//para saber de quién es el turno, por ejemplo para mostrar en pantalla
+    //para saber de quién es el turno, por ejemplo para mostrar en pantalla
     Bando getTurnoActual() const;
 
     void moverCursor(int df, int dc);
@@ -59,11 +77,22 @@ public:
 
     void resaltarMovimientoPosible();
 
+    bool movimientoLegal(PosicionMatriz origen, PosicionMatriz destino) const;
+    bool caminoLibreEnL(PosicionMatriz origen, PosicionMatriz destino, bool primeroFilas) const;
+
+    bool esMovimientoPosible(PosicionMatriz pos) const;
 private:
 
     //para después de mover o terminar la arena
     //hacer una funcion para cuando se termina el combate y aplicar los resultados
       void cambiarTurno();
 
-      
+      //plantilla para agregar piezas
+      template <typename T>
+      void agregarPieza(int fila, int columna)
+      {
+          Pieza* p = new T();
+          p->setPosicionMatriz(fila, columna);
+          listaPiezas.agregar(p);
+      }
 };
