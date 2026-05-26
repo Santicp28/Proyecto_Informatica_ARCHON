@@ -51,7 +51,16 @@ void Renderer::dibujaContornoCuadrado(const Vector2D& centro, const Color& color
 
 void Renderer::dibujaSprite(const char* rutaPNG, const Vector2D& centro, double ancho, double alto) const {
 	ETSIDI::Sprite sprite(rutaPNG, (double)(centro.x - ancho / 2), (double)(centro.y - alto / 2), (double)ancho, (double)alto);
+
+	glPushMatrix();
+
+	glTranslated(centro.x, centro.y, 0.0);
+	glScaled(1.0, -1.0, 1.0);
+	glTranslated(-centro.x, -centro.y, 0.0);
+
 	sprite.draw();
+
+	glPopMatrix();
 }
 
 void Renderer::dibujaTexto(const char* texto, const Vector2D& pos, double r, double g, double b, int size) const {
