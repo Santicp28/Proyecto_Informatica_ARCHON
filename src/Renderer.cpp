@@ -1,3 +1,6 @@
+#include <windows.h>
+#include "ETSIDI.h"
+#include "freeglut.h"
 #include "Renderer.h"
 #include "Config.h"
 
@@ -45,6 +48,21 @@ void Renderer::dibujaContornoCuadrado(const Vector2D& centro, const Color& color
 	glEnd();
 }
 
+void Renderer::dibujaSprite(const char* rutaPNG, const Vector2D& centro, double ancho, double alto) const {
+	
+	glPushMatrix();
+
+	glTranslated(centro.x, centro.y, 0.0);
+	glScaled(1.0, -1.0, 1.0);
+	glTranslated(-centro.x, -centro.y, 0.0);
+
+	ETSIDI::Sprite sprite(rutaPNG, (double)(centro.x - ancho / 2), (double)(centro.y - alto / 2), (double)ancho, (double)alto);
+
+	sprite.draw();
+
+	glPopMatrix();
+}
+
 void Renderer::dibujaLinea(const Vector2D& limite1, const Vector2D& limite2, const Color& color) const
 {
 	dibujaColor(color);
@@ -54,7 +72,6 @@ void Renderer::dibujaLinea(const Vector2D& limite1, const Vector2D& limite2, con
 	glVertex2d(limite2.x, limite2.y);
 	glEnd();
 }
-
 
 void Renderer::dibujaOvalo(const Vector2D& centro, const Color& color, double radioX, double radioY) const {
 	dibujaColor(color);
@@ -69,4 +86,10 @@ void Renderer::dibujaOvalo(const Vector2D& centro, const Color& color, double ra
 void Renderer::cuadradoParaPruebas() const
 {
 	dibujaCuadrado(Config::sizeMundo * 0.5, { 1.0,1.0,1.0 }, Config::sizeMundo * 0.2);
+}
+
+void Renderer::dibujaTexto(const char* texto, const Vector2D& pos, double r, double g, double b, int size) const {
+	ETSIDI::setTextColor(r, g, b);
+	ETSIDI::setFont("ComicNeue-Regular.ttf", size);
+	ETSIDI::printxy(texto, (int)pos.x, (int)pos.y);
 }
