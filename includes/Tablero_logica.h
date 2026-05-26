@@ -6,7 +6,6 @@
 #include "ListaPiezas.h"
 #include "Interaccion.h"
 #include "Renderer.h"
-#include "Config.h"
 
 #include "Arquero.h"
 #include "Banshee.h"

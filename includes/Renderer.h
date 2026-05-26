@@ -13,7 +13,7 @@ class Renderer
 {
 	Vector2D sizeDibujo{};
 public:
-	void inicializa2D();
+	void inicializa2D(unsigned int longitud, unsigned int altura);
 
 	Vector2D obtenerSizeDibujo()const { return sizeDibujo; }
 
