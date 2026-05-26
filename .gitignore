@@ -2,21 +2,41 @@
 .vs/
 *.user
 *.suo
+*.VC.db
+*.VC.opendb
 
 # Compilación
 x64/
+x86/
 Debug/
 Release/
 bin/
 obj/
+[Bb]uild/
+
 
 # Archivos temporales
-*.log
-*.tlog
-*.idb
+*.exe
 *.pdb
 *.ilk
+*.idb
+*.ipdb
+*.iobj
+*.tlog
+*.lastbuildstate
 *.recipe
+*.log
 
-# Otros
-*.VC.db
+# Mantener archivos del proyecto
+!*.sln
+!*.vcxproj
+!*.vcxproj.filters
+
+
+# Mantener assets y dependencias necesarias
+!assets/
+!assets/**
+!includes/
+!includes/**
+!include/
+!include/**

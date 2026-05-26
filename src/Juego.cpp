@@ -87,8 +87,9 @@ void Juego::tecla(unsigned char key)
                 if (key == 27) { // ESC
                     estado = EstadoJuego::MENU_PRINCIPAL;
                 }
-                break;
+                
             }
+			break;
         }
         case EstadoJuego::ARENA:
         {
