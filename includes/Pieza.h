@@ -22,7 +22,7 @@ protected:
     int rango_movimiento;
     Color color;
 public:
-    virtual void dibuja(const Vector2D& centro, double ancho, double alto) const = 0;
+    virtual void dibuja(const Renderer& renderer, const Vector2D& centro, double ancho, double alto) const = 0;
 
     Pieza(Ataque at, Vida vi, Velocidad vel, Cadencia cad, Velocidad_ataque vel_at, Rango ra, Bando b, TipoMovimiento tm)
         : 
