@@ -1,3 +1,6 @@
+#include <windows.h>
+#include "ETSIDI.h"
+#include "freeglut.h"
 #include "Renderer.h"
 #include "Config.h"
 
@@ -55,6 +58,17 @@ void Renderer::dibujaLinea(const Vector2D& limite1, const Vector2D& limite2, con
 	glEnd();
 }
 
+void Renderer::dibujaSprite(const char* rutaPNG, const Vector2D& centro, double ancho, double alto) const {
+	ETSIDI::Sprite sprite(rutaPNG, (double)(centro.x - ancho / 2), (double)(centro.y - alto / 2), (double)ancho, (double)alto);
+	sprite.draw();
+}
+
+void Renderer::dibujaTexto(const char* texto, const Vector2D& pos,
+	float r, float g, float b, int size) const {
+	ETSIDI::setTextColor(r, g, b);
+	ETSIDI::setFont("ComicNeue-Regular.ttf", size);
+	ETSIDI::printxy(texto, (int)pos.x, (int)pos.y);
+}
 void Renderer::cuadradoParaPruebas() const
 {
 	dibujaCuadrado(Config::sizeMundo * 0.5, { 1.0,1.0,1.0 }, Config::sizeMundo * 0.2);

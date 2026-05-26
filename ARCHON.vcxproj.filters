@@ -90,8 +90,26 @@
     <ClCompile Include="src\Renderer.cpp">
       <Filter>Archivos de origen\ClasesAuxiliares</Filter>
     </ClCompile>
-    <ClCompile Include="src\Boton.cpp">
-      <Filter>Archivos de origen</Filter>
+    <ClCompile Include="src\Basilisco.cpp">
+      <Filter>Archivos de origen\TiposPiezas</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Banshee.cpp">
+      <Filter>Archivos de origen\TiposPiezas</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Dragon.cpp">
+      <Filter>Archivos de origen\TiposPiezas</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Cambiaforma.cpp">
+      <Filter>Archivos de origen\TiposPiezas</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Duende.cpp">
+      <Filter>Archivos de origen\TiposPiezas</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Manticora.cpp">
+      <Filter>Archivos de origen\TiposPiezas</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Trol.cpp">
+      <Filter>Archivos de origen\TiposPiezas</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -161,16 +179,40 @@
     <ClInclude Include="includes\ListaPiezas.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="includes\Tipos.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
     <ClInclude Include="includes\Renderer.h">
       <Filter>Archivos de encabezado\ClasesAuxiliares</Filter>
     </ClInclude>
-    <ClInclude Include="includes\Tipos.h">
-      <Filter>Archivos de encabezado\ClasesAuxiliares</Filter>
-    </ClInclude>
-    <ClInclude Include="includes\Boton.h">
+    <ClInclude Include="includes\GrafMenu.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="includes\Config.h">
+    <ClInclude Include="includes\Banshee.h">
+      <Filter>Archivos de encabezado\TiposPiezas</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\Basilisco.h">
+      <Filter>Archivos de encabezado\TiposPiezas</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\Cambiaforma.h">
+      <Filter>Archivos de encabezado\TiposPiezas</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\Dragon.h">
+      <Filter>Archivos de encabezado\TiposPiezas</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\Duende.h">
+      <Filter>Archivos de encabezado\TiposPiezas</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\Hechicero.h">
+      <Filter>Archivos de encabezado\TiposPiezas</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\Manticora.h">
+      <Filter>Archivos de encabezado\TiposPiezas</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\Trol.h">
+      <Filter>Archivos de encabezado\TiposPiezas</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\ETSIDI.h">
       <Filter>Archivos de encabezado\ClasesAuxiliares</Filter>
     </ClInclude>
   </ItemGroup>

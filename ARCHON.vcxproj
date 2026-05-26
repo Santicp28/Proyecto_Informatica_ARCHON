@@ -139,10 +139,15 @@
     <ClCompile Include="src\ARCHON.cpp" />
     <ClCompile Include="src\Arena.cpp" />
     <ClCompile Include="src\Arquero.cpp" />
+    <ClCompile Include="src\Banshee.cpp" />
+    <ClCompile Include="src\Basilisco.cpp" />
     <ClCompile Include="src\Bordes.cpp" />
-    <ClCompile Include="src\Boton.cpp" />
-    <ClCompile Include="src\Caballero.cpp" />
+   <ClCompile Include="src\Caballero.cpp" />
+    <ClCompile Include="src\Cambiaforma.cpp" />
     <ClCompile Include="src\Casilla.cpp" />
+    <ClCompile Include="src\Dragon.cpp" />
+    <ClCompile Include="src\Duende.cpp" />
+    <ClCompile Include="src\Manticora.cpp" />
     <ClCompile Include="src\Disparo.cpp" />
     <ClCompile Include="src\ListaDisparos.cpp" />
     <ClCompile Include="src\ObjetoMovil.cpp" />
@@ -159,17 +164,27 @@
     <ClCompile Include="src\Pieza.cpp" />
     <ClCompile Include="src\Tablero_logica.cpp" />
     <ClCompile Include="src\TiposPiezas.cpp" />
+    <ClCompile Include="src\Trol.cpp" />
     <ClCompile Include="src\Unicornio.cpp" />
     <ClCompile Include="src\Valquiria.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="includes\Arena.h" />
     <ClInclude Include="includes\Arquero.h" />
+    <ClInclude Include="includes\Banshee.h" />
+    <ClInclude Include="includes\Basilisco.h" />
     <ClInclude Include="includes\Bordes.h" />
     <ClInclude Include="includes\Boton.h" />
     <ClInclude Include="includes\Caballero.h" />
+    <ClInclude Include="includes\Cambiaforma.h" />
     <ClInclude Include="includes\Casilla.h" />
-    <ClInclude Include="includes\Config.h" />
+    <ClInclude Include="includes\Dragon.h" />
+    <ClInclude Include="includes\Duende.h" />
+    <ClInclude Include="includes\ETSIDI.h" />
+    <ClInclude Include="includes\GrafMenu.h" />
+    <ClInclude Include="includes\Hechicero.h" />
+    <ClInclude Include="includes\Manticora.h" />
+     <ClInclude Include="includes\Config.h" />
     <ClInclude Include="includes\Disparo.h" />
     <ClInclude Include="includes\ListaDisparos.h" />
     <ClInclude Include="includes\ObjetoMovil.h" />
@@ -189,6 +204,7 @@
     <ClInclude Include="includes\Tablero_logica.h" />
     <ClInclude Include="includes\Tipos.h" />
     <ClInclude Include="includes\TiposPiezas.h" />
+    <ClInclude Include="includes\Trol.h" />
     <ClInclude Include="includes\Unicornio.h" />
     <ClInclude Include="includes\Valquiria.h" />
     <ClInclude Include="includes\Vector2D.h" />

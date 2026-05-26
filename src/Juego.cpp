@@ -1,21 +1,20 @@
 #include "Juego.h"
 #include "freeglut.h"
 #include <cstdlib>
-#include "Tipos.h"
 
 void Juego::inicializa()
 {
     estado = EstadoJuego::MENU_PRINCIPAL;
-    menu.inicializa();
+    menu.inicializa(800, 600);
     tablero_logica.inicializa();
 }
 
 void Juego::dibuja(const Renderer& renderer)
 {
-    renderer.dibujaColorFondo({ 0.2f, 0.2f, 0.2f });
+    //fondos de colores para ir viendo si funciona, ir implementado las funciones de Adrián
     switch (estado) {
     case EstadoJuego::MENU_PRINCIPAL:
-        menu.dibuja(renderer);
+        menu.dibuja();
         break;
 
     case EstadoJuego::TABLERO:
@@ -26,7 +25,7 @@ void Juego::dibuja(const Renderer& renderer)
         arena.dibuja(renderer);
         break;
 
-    case EstadoJuego::OPCIONES:
+    case EstadoJuego::RANKING:
         glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         break;
@@ -45,16 +44,12 @@ void Juego::mueve(float dt)
 
 void Juego::tecla(unsigned char key)
 {
-    switch (estado) 
-    {
+    switch (estado) {
+
     case EstadoJuego::MENU_PRINCIPAL:
-    {
+        menu.tecla(key);
 
-        MenuAccion accion = menu.tecla(key);
-
-        switch (accion)
-        {
-        case MenuAccion::JUGAR:
+        if (menu.getQuiereJugar()) {
             estado = EstadoJuego::TABLERO;
             break;
 
@@ -64,18 +59,12 @@ void Juego::tecla(unsigned char key)
 
         case MenuAccion::SALIR:
             exit(0);
-            break;
-
-        default:
-            break;
         }
         break;
-    }
 
     case EstadoJuego::TABLERO:
-    {
-        //if (key == 13) { // ENTER
-        //    tablero_logica.seleccionarConCursor();
+        if (key == 13) { // ENTER
+            tablero_logica.seleccionarConCursor();
 
 
             //tablero avisa de que se he elegido combate, haciendo que juego ponga el estado ARENA y limpiando el flag del combate pendiente para no volver a entrar 
@@ -83,34 +72,30 @@ void Juego::tecla(unsigned char key)
                 estado = EstadoJuego::ARENA;
                 tablero_logica.limpiarCombatePendiente();
             }
-        
+        }
 
-        //if (key == 27) { // ESC
-        //    estado = EstadoJuego::MENU_PRINCIPAL;
-        //}
+        if (key == 27) { // ESC
+            estado = EstadoJuego::MENU_PRINCIPAL;
+        }
         break;
-    }
+
     case EstadoJuego::ARENA:
-    {
         if (key == 27) { //también para ir probando como cambia, revisar en siguientes versiones cuando desarrollemos la arena
             estado = EstadoJuego::TABLERO;
         }
         break;
-    }
-    case EstadoJuego::OPCIONES:
-    {
+
+    case EstadoJuego::RANKING:
         if (key == 27) { //desarrollar esto al final
             estado = EstadoJuego::MENU_PRINCIPAL;
         }
         break;
-    }
+
     case EstadoJuego::FIN_PARTIDA:
-    {
         if (key == 27) { //desarrollar esto al final
             estado = EstadoJuego::MENU_PRINCIPAL;
         }
         break;
-    }
     }
 }
 
@@ -138,4 +123,41 @@ void Juego::teclaEspecial(int key)
             break;
         }
     }
+}
+
+
+//void Juego::raton(int button, int state, int x, int y) //ejemplo para probar el menú, a cambiar en futuras versiones
+//{
+//    if (estado == EstadoJuego::MENU_PRINCIPAL) {
+//        menu.raton(button, state, x, y, 600);
+//
+//        if (menu.getQuiereJugar()) {
+//            estado = EstadoJuego::TABLERO;
+//            menu.resetAcciones();
+//        }
+//        else if (menu.getQuiereRanking()) {
+//            estado = EstadoJuego::RANKING;
+//            menu.resetAcciones();
+//        }
+//        else if (menu.getQuiereSalir()) {
+//            exit(0);
+//        }
+//    }
+//}
+
+//void Juego::movimientoRaton(int x, int y)
+//{
+//    if (estado == EstadoJuego::MENU_PRINCIPAL) {
+//        menu.movimientoRaton(x, y, 600);
+//    }
+//}
+
+EstadoJuego Juego::getEstado() const
+{
+    return estado;
+} //geters para interacciones con otras partes
+
+void Juego::setEstado(EstadoJuego nuevoEstado)
+{
+    estado = nuevoEstado;
 }
