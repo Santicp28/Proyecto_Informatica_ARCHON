@@ -45,9 +45,6 @@
     <ClCompile Include="src\Arena.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="src\BordesArena.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
     <ClCompile Include="src\Pared.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
@@ -90,19 +87,37 @@
     <ClCompile Include="src\Renderer.cpp">
       <Filter>Archivos de origen\ClasesAuxiliares</Filter>
     </ClCompile>
-    <ClCompile Include="src\Basilisco.cpp">
-      <Filter>Archivos de origen\TiposPiezas</Filter>
+    <ClCompile Include="src\Boton.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Bordes.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Disparo.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ListaDisparos.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ObjetoMovil.cpp">
+      <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="src\Banshee.cpp">
       <Filter>Archivos de origen\TiposPiezas</Filter>
     </ClCompile>
-    <ClCompile Include="src\Dragon.cpp">
+    <ClCompile Include="src\Basilisco.cpp">
       <Filter>Archivos de origen\TiposPiezas</Filter>
     </ClCompile>
     <ClCompile Include="src\Cambiaforma.cpp">
       <Filter>Archivos de origen\TiposPiezas</Filter>
     </ClCompile>
+    <ClCompile Include="src\Dragon.cpp">
+      <Filter>Archivos de origen\TiposPiezas</Filter>
+    </ClCompile>
     <ClCompile Include="src\Duende.cpp">
+      <Filter>Archivos de origen\TiposPiezas</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Hechicero.cpp">
       <Filter>Archivos de origen\TiposPiezas</Filter>
     </ClCompile>
     <ClCompile Include="src\Manticora.cpp">
@@ -123,9 +138,6 @@
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="includes\Arena.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="includes\BordesArena.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="includes\Pieza.h">
@@ -179,13 +191,28 @@
     <ClInclude Include="includes\ListaPiezas.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="includes\Tipos.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="includes\Renderer.h">
       <Filter>Archivos de encabezado\ClasesAuxiliares</Filter>
     </ClInclude>
-    <ClInclude Include="includes\GrafMenu.h">
+    <ClInclude Include="includes\Tipos.h">
+      <Filter>Archivos de encabezado\ClasesAuxiliares</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\Boton.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\Config.h">
+      <Filter>Archivos de encabezado\ClasesAuxiliares</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\Bordes.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\Disparo.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\ListaDisparos.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\ObjetoMovil.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="includes\Banshee.h">
@@ -211,9 +238,6 @@
     </ClInclude>
     <ClInclude Include="includes\Trol.h">
       <Filter>Archivos de encabezado\TiposPiezas</Filter>
-    </ClInclude>
-    <ClInclude Include="includes\ETSIDI.h">
-      <Filter>Archivos de encabezado\ClasesAuxiliares</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,151 +1,67 @@
 #include "Menu.h"
-#include "freeglut.h"
 
-void Menu::inicializa(int anchoVentana, int altoVentana)
+void Menu::inicializa()
 {
-    botones.clear();
-
-    float bw = 240.0f;
-    float bh = 60.0f;
-    float x = anchoVentana / 2.0f - bw / 2.0f;
-
-    botones.push_back({ x, 340.0f, bw, bh, "JUGAR", false });
-    botones.push_back({ x, 250.0f, bw, bh, "RANKING", false });
-    botones.push_back({ x, 160.0f, bw, bh, "SALIR", false });
-
-    quiere_jugar = false;
-    quiere_salir = false;
-    quiere_ranking = false;
+    seleccionado = 0;
+    botones[seleccionado].cambiarEstado();
 }
 
-//PARTE GRÁFICA DE EJEMPLO HASTA QUE SE DISEÑE UN MENÚ, TODO ESTO SERÁ REEMPLAZADO
-void Menu::dibuja()
+
+void Menu::dibuja(const Renderer& renderer)
 {
-    glDisable(GL_LIGHTING);
-
-    glClearColor(0.08f, 0.08f, 0.15f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-    glMatrixMode(GL_PROJECTION);
-    glPushMatrix();
-    glLoadIdentity();
-    gluOrtho2D(0, 800, 0, 600);
-
-    glMatrixMode(GL_MODELVIEW);
-    glPushMatrix();
-    glLoadIdentity();
-
-    glColor3f(1.0f, 0.9f, 0.3f);
-    dibujarTexto(340.0f, 520.0f, "ARCHON");
-
-    glColor3f(0.85f, 0.85f, 0.85f);
-    dibujarTexto(260.0f, 480.0f, "J: Jugar   R: Ranking   ESC: Salir");
-
-    for (const auto& b : botones) {
-        if (b.hover)
-            glColor3f(0.3f, 0.5f, 0.9f);
-        else
-            glColor3f(0.2f, 0.25f, 0.4f);
-
-        glBegin(GL_QUADS);
-        glVertex2f(b.x, b.y);
-        glVertex2f(b.x + b.w, b.y);
-        glVertex2f(b.x + b.w, b.y + b.h);
-        glVertex2f(b.x, b.y + b.h);
-        glEnd();
-
-        glColor3f(1, 1, 1);
-        glBegin(GL_LINE_LOOP);
-        glVertex2f(b.x, b.y);
-        glVertex2f(b.x + b.w, b.y);
-        glVertex2f(b.x + b.w, b.y + b.h);
-        glVertex2f(b.x, b.y + b.h);
-        glEnd();
-
-        dibujarTexto(b.x + 75.0f, b.y + 25.0f, b.texto);
+    renderer.dibujaColorFondo(colorFondo);
+    Vector2D sizeBotones{ calcularSizeBotones() };
+    for (int i = 0; i < botones.size(); i++) {
+        botones[i].dibuja(renderer,calcularPosicionBotones(i), sizeBotones);
     }
-
-    glPopMatrix();
-    glMatrixMode(GL_PROJECTION);
-    glPopMatrix();
-    glMatrixMode(GL_MODELVIEW);
-
-    glEnable(GL_LIGHTING);
 }
 
-
-void Menu::tecla(unsigned char key)
+void Menu::mueve(float dt)
 {
-    if (key == 'j' || key == 'J')
-        quiere_jugar = true;
 
-    if (key == 'r' || key == 'R')
-        quiere_ranking = true;
+}
 
-    if (key == 27)
-        quiere_salir = true;
+MenuAccion Menu::tecla(unsigned char key)
+{
+    if (key == 'w')
+    {
+        if (seleccionado == 0) {
+            botones[seleccionado].cambiarEstado();
+            seleccionado = botones.size() - 1;
+            botones[seleccionado].cambiarEstado();
+        }
+        else {
+            botones[seleccionado].cambiarEstado();
+            seleccionado = seleccionado - 1;
+            botones[seleccionado].cambiarEstado();
+        }
+    }
+        
+    if (key == 's')
+    {
+        if (seleccionado == botones.size() - 1) {
+            botones[seleccionado].cambiarEstado();
+            seleccionado = 0;
+            botones[seleccionado].cambiarEstado();
+        }
+        else {
+            botones[seleccionado].cambiarEstado();
+            seleccionado = seleccionado + 1;
+            botones[seleccionado].cambiarEstado();
+        }
+    }
+    if (key == ' ')
+    {
+        switch (seleccionado)
+        {
+        case 0: return MenuAccion::JUGAR;
+        case 1: return MenuAccion::OPCIONES;
+        case 2: return MenuAccion::SALIR;
+        }
+    }
+    return MenuAccion::NINGUNA;
 }
 
 void Menu::teclaEspecial(int key)
 {
-}
-
-
-void Menu::raton(int button, int state, int x, int y, int altoVentana) //para comprobar que se pulsa click izquierdo estando dentro de un boton, preguntando a la variable estaDentro
-{
-    if (button != GLUT_LEFT_BUTTON || state != GLUT_DOWN)
-        return;
-
-    for (const auto& b : botones) {
-        if (estaDentro(b, x, y, altoVentana)) {
-            if (b.texto == "JUGAR") quiere_jugar = true;
-            if (b.texto == "RANKING") quiere_ranking = true;
-            if (b.texto == "SALIR") quiere_salir = true;
-        }
-    }
-}
-
-void Menu::movimientoRaton(int x, int y, int altoVentana) //esto para probar el menú, a cambiar cuando se desarrolle la parte gráfica, está de ejemplo
-{
-    for (auto& b : botones) {
-        b.hover = estaDentro(b, x, y, altoVentana);
-    }
-}
-
-bool Menu::getQuiereJugar() const
-{
-    return quiere_jugar;
-}
-
-bool Menu::getQuiereSalir() const
-{
-    return quiere_salir;
-}
-
-bool Menu::getQuiereRanking() const
-{
-    return quiere_ranking;
-}
-
-void Menu::resetAcciones()
-{
-    quiere_jugar = false;
-    quiere_salir = false;
-    quiere_ranking = false;
-}
-
-bool Menu::estaDentro(const Boton& b, int x, int y, int altoVentana) const
-{
-    int yOpenGL = altoVentana - y;
-
-    return x >= b.x && x <= b.x + b.w &&
-        yOpenGL >= b.y && yOpenGL <= b.y + b.h;
-}
-
-void Menu::dibujarTexto(float x, float y, const std::string& texto) const
-{
-    glRasterPos2f(x, y);
-    for (char c : texto) {
-        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, c);
-    }
 }

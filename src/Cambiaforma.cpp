@@ -2,13 +2,14 @@
 #include "Pieza.h"
 
 Cambiaforma::Cambiaforma(Bando b) : Pieza(
-    Ataque::VARIABLE,              // Variable
-    Vida::VARIABLE,                // Variable
-    Velocidad::VARIABLE,           // Variable
-    Cadencia::VARIABLE,            // Variable
-    Velocidad_ataque::VARIABLE,    // Variable
-    b,                             // Bando dinámico
-    TipoMovimiento::VUELA           // Air
+    Ataque::VARIABLE,              
+    Vida::VARIABLE,                
+    Velocidad::VARIABLE,           
+    Cadencia::VARIABLE,            
+    Velocidad_ataque::VARIABLE,    
+	Rango::LARGO,
+    b,                             
+    TipoMovimiento::VUELA           
 ) {
 }
 void Cambiaforma::dibuja(const Renderer& renderer, const Vector2D& centro, double ancho, double alto) const {

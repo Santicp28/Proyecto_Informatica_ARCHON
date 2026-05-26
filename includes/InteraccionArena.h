@@ -1,11 +1,22 @@
-//#pragma once
-//#include "Personaje.h"
-//#include "BordesArena.h"
-//
-//class InteraccionArena
-//{
-//public:
-//    static void rebote(Personaje& p, const BordesArena& b);
-//    static bool colisionMelee(const Personaje& p1, const Personaje& p2);
-//    static float distancia(const Personaje& p1, const Personaje& p2);
-//};
+#pragma once
+#include "Pieza.h"
+#include "Bordes.h"
+#include "Disparo.h"
+#include "Pared.h"
+class InteraccionArena
+{
+	friend class Disparo;
+	friend class Pieza;
+public:
+
+  // static void colision(Pieza& p, const BordesArena& b);
+  // static bool colision(Disparo& d, const BordesArena& b);
+  // static bool colision(const Pieza& p1, const Pieza& p2);
+  // static bool colision(const Disparo& d, const Pieza& p);
+  //// static bool colision(const Disparo& d, const Barrera& b);
+  // static double distancia(const Vector2D& pos1, const Vector2D& pos2);
+  // static bool fueraArena(const Disparo& d);
+  // static void  procesarAtaque(Pieza& atacante, double& cooldown, Pieza& defensor);
+  
+   
+};

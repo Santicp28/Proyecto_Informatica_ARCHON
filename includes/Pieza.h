@@ -4,14 +4,15 @@
 #include"Renderer.h"
 #include"Vector2D.h"
 #include "Tipos.h"
+#include "ObjetoMovil.h"
 
-class Pieza
+class Pieza: public ObjetoMovil
 {
-
-    friend class Interaccion;
+	friend class Interaccion;
 protected:
 
 	PosicionMatriz posicionMatriz; // Posición en la matriz (fila, columna)
+    Vector2D posicionArena;
     double ataque;
     double velocidad;
     double cadencia;
@@ -19,12 +20,22 @@ protected:
     double velocidad_ataque;
     Bando bando;      // Bando
     TipoMovimiento tipo_movimiento;
+    int rango_movimiento;
     Color color;
 public:
     virtual void dibuja(const Renderer& renderer, const Vector2D& centro, double ancho, double alto) const = 0;
 
-    Pieza(Ataque at, Vida vi, Velocidad vel, Cadencia cad, Velocidad_ataque vel_at, Bando b, TipoMovimiento tm)
-        : bando(b), tipo_movimiento(tm) {
+    Pieza(Ataque at, Vida vi, Velocidad vel, Cadencia cad, Velocidad_ataque vel_at, Rango ra, Bando b, TipoMovimiento tm)
+        :
+        posicionMatriz{ 0, 0 },
+        ataque(0.0),
+        velocidad(0.0),
+        cadencia(0.0),
+        vida(0.0),
+        velocidad_ataque(0.0),
+        bando(b),
+        tipo_movimiento(tm),
+        rango_movimiento(0) {
 
         // --- FUERZA (Ataque) ---
         if (at == Ataque::BAJO) ataque = 25.0;
@@ -58,18 +69,28 @@ public:
         else if (vel_at == Velocidad_ataque::RAPIDO) velocidad_ataque = 12.0;
         else if (vel_at == Velocidad_ataque::INSTANTANEO) velocidad_ataque = 25.0;
         else if (vel_at == Velocidad_ataque::VARIABLE) velocidad_ataque = 8.0;
+
+        // --- RANGO (Casillas que puede avanzar en tablero) --- 
+        if (ra == Rango::CORTO) rango_movimiento = 3;
+        else if (ra == Rango::MEDIO) rango_movimiento = 4;
+        else if (ra == Rango::LARGO) rango_movimiento = 5;
     }
-    
+
     void setPosicionMatriz(unsigned int fila, unsigned int columna) {
         posicionMatriz.fila = fila;
         posicionMatriz.columna = columna;
-	}
-    virtual bool mover(PosicionMatriz destino) = 0; //DESARROLLAR PARA CADA PIEZA !!!!!!!
+    }
 
+    bool puedeMoverseA(PosicionMatriz destino);
 
     PosicionMatriz getPosicionMatriz() const { return posicionMatriz; }
+    TipoMovimiento getTipoMovimiento() const { return tipo_movimiento; }
 
-    
+    Bando getBando() const { return bando; }
 
+
+
+
+    virtual void setPosicionArena(const Vector2D& posicion) { posicionArena = posicion; }
+    //Pieza(double sizeradio = 1.0, Vector2D pos = {}, Vector2D vel = {}, Vector2D acel = {}): ObjetoMovil(pos, vel, acel, sizeradio) {}
 };
-

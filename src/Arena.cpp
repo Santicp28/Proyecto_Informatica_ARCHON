@@ -1,124 +1,160 @@
-//
-//#include "Arena.h"
-//#include "InteraccionArena.h"
-//#include "freeglut.h"
-//
-//void Arena::inicializa(Personaje* p1, Personaje* p2)
-//{
-//    jugador1 = p1;
-//    jugador2 = p2;
-//
-//    jugador1->posicion({ 150.0f, 300.0f });
-//    jugador2->posicion({ 650.0f, 300.0f });
-//
-//    jugador1->velocidad({ 0, 0 });
-//    jugador2->velocidad({ 0, 0 });
-//
-//    combateTerminado = false;
-//    ganadorBando = 0;
-//}
-//
+#include "Arena.h"
+
+void Arena::inicializa(Pieza* p1, Pieza* p2)
+{
+    jugador1 = p1;
+    jugador2 = p2;
+    jugador1->setPosicionArena(posicionInicialJugador1);
+    jugador2->setPosicionArena(posicionInicialJugador2);
+
+    combateTerminado = false;
+    ganadorBando = 0;
+   
+}
+
 //void Arena::mueve(float dt)
 //
 //{
 //
 //    if (combateTerminado) return;
 //
-//    jugador1->mueve(dt);
-//    jugador2->mueve(dt);
+//    //MOVER
+//    jugador1.posicion = jugador1.posicion + jugador1.velocidad * dt;
+//    jugador2.posicion = jugador2.posicion + jugador2.velocidad * dt;
 //
-//    InteraccionArena::rebote(*jugador1, bordes);
-//    InteraccionArena::rebote(*jugador2, bordes);
+//    //COOLDOWNS
+//    jugador1.cooldown -= dt; if (jugador1.cooldown < 0) jugador1.cooldown = 0;
+//    jugador2.cooldown -= dt; if (jugador2.cooldown < 0) jugador2.cooldown = 0;
 //
-//    if (InteraccionArena::colisionMelee(*jugador1, *jugador2))
+//    //COLISIÓN CON BORDES
+//    InteraccionArena::colision(p1, bordes);
+//    InteraccionArena::colision(p2, bordes);
+//
+//    bool muereJ1 = jugador1.vida <= 0;
+//    bool muereJ2 = jugador2.vida <= 0;
+//   
+//    if (muereJ1 && muereJ2)
 //    {
-//        jugador1->atacar();
-//        jugador2->atacar();
+//        // empate — mueren los dos en el mismo frame
+//        combateTerminado = true;
+//        ganadorBando = 0;
 //    }
-//
-//    if (!jugador1->estaVivo())
+//    else if (muereJ1)
 //    {
 //        combateTerminado = true;
 //        ganadorBando = 2;
 //    }
-//    else if (!jugador2->estaVivo())
+//    else if (muereJ2)
 //    {
 //        combateTerminado = true;
 //        ganadorBando = 1;
 //    }
 //}
-//
-//void Arena::dibuja() const
-//{
-//    glMatrixMode(GL_PROJECTION);
-//    glPushMatrix();
-//    glLoadIdentity();
-//    gluOrtho2D(0, 800, 0, 600);
-//
-//    glMatrixMode(GL_MODELVIEW);
-//    glPushMatrix();
-//    glLoadIdentity();
-//
-//    glDisable(GL_LIGHTING);
-//
-//    bordes.dibuja();
-//
-//    jugador1->dibuja();
-//    jugador2->dibuja();
-//
-//    dibujarBarraVida(jugador1, 50.0f, 30.0f);
-//    dibujarBarraVida(jugador2, 550.0f, 30.0f);
-//
-//    glEnable(GL_LIGHTING);
-//
-//    glPopMatrix();
-//    glMatrixMode(GL_PROJECTION);
-//    glPopMatrix();
-//    glMatrixMode(GL_MODELVIEW);
-//}
-//
-//void Arena::dibujarBarraVida(const Personaje* p, float x, float y) const
-//{
-//    float ancho = 200.0f;
-//    float alto = 15.0f;
-//    float porcentaje = (float)p->getVida() / (float)p->getVidaMax();
-//
-//    glColor3f(0.3f, 0.3f, 0.3f);
-//    glBegin(GL_QUADS);
-//    glVertex2f(x, y);
-//    glVertex2f(x + ancho, y);
-//    glVertex2f(x + ancho, y + alto);
-//    glVertex2f(x, y + alto);
-//    glEnd();
-//
-//    if (porcentaje > 0.5f)  glColor3f(0.2f, 0.8f, 0.2f);
-//    else if (porcentaje > 0.25f) glColor3f(0.9f, 0.7f, 0.1f);
-//    else                         glColor3f(0.9f, 0.1f, 0.1f);
-//
-//    glBegin(GL_QUADS);
-//    glVertex2f(x, y);
-//    glVertex2f(x + ancho * porcentaje, y);
-//    glVertex2f(x + ancho * porcentaje, y + alto);
-//    glVertex2f(x, y + alto);
-//    glEnd();
-//}
+
+void Arena::dibuja(const Renderer& renderer) const
+{
+    bordes.dibuja(renderer);
+}
 //
 //void Arena::tecla(unsigned char key)
 //{
-//    if (!jugador1 || combateTerminado) return;
+//    if (combateTerminado) return;
+//    switch (key)
+//    {
+//    case 'w':
+//    case 'W':
+//        jugador1.velocidad.y = VELOCIDAD;
+//        break;
+//    case 's':
+//    case 'S':
+//        jugador1.velocidad.y = -VELOCIDAD;
+//        break;
+//    case 'a':
+//    case 'A':
+//        jugador1.velocidad.x = -VELOCIDAD;
+//        break;
+//    case 'd':
+//    case 'D':
+//        jugador1.velocidad.x = VELOCIDAD;
+//        break;
+//    
+//    case ' ':
+//        jugador1.atacar = true;
+//        break;
 //
-//    if (key == 'w' || key == 'W') jugador1->velocidad({ 0,  180.0f });
-//    if (key == 's' || key == 'S') jugador1->velocidad({ 0, -180.0f });
-//    if (key == 'a' || key == 'A') jugador1->velocidad({ -180.0f, 0 });
-//    if (key == 'd' || key == 'D') jugador1->velocidad({ 180.0f, 0 });
+//    case 13:  
+//        jugador2.atacar = true; 
+//        break; //13 es tecla enter
+//
+//    
+//    }
 //}
 //
-//void Arena::teclaEspecial(unsigned char key)
+//void Arena::teclaUP(unsigned char key)
 //{
-//    if (!jugador2 || combateTerminado) return;
+//    switch (key)
+//    {
 //
-//    if (key == GLUT_KEY_UP)    jugador2->velocidad({ 0,  180.0f });
-//    if (key == GLUT_KEY_DOWN)  jugador2->velocidad({ 0, -180.0f });
-//    if (key == GLUT_KEY_LEFT)  jugador2->velocidad({ -180.0f, 0 });
-//    if (key == GLUT_KEY_RIGHT) jugador2->velocidad({ 180.0f, 0 });
+//    case 'w':
+//    case 'W':
+//    case 's':
+//    case 'S':
+//        jugador1.velocidad.y = 0;
+//        break;
+//
+//    case 'a':
+//    case 'A':
+//    case 'd':
+//    case 'D':
+//        jugador1.velocidad.x = 0;
+//        break;
+//
+//    case ' ':
+//        jugador1.atacar = false;
+//        break;
+//
+//    case 13:  
+//        jugador2.atacar = false;
+//        break; //13 es tecla enter
+//    }
+//}
+//
+//
+//void Arena::teclaEspecial(int key)
+//{
+//    if (combateTerminado) return;
+//    switch (key)
+//    {
+//    case GLUT_KEY_UP:
+//        jugador2.velocidad.y = VELOCIDAD;
+//        break;
+//
+//    case GLUT_KEY_DOWN:
+//        jugador2.velocidad.y = -VELOCIDAD;
+//        break;
+//
+//    case GLUT_KEY_LEFT:
+//        jugador2.velocidad.x = -VELOCIDAD;
+//        break;
+//
+//    case GLUT_KEY_RIGHT:
+//        jugador2.velocidad.x = VELOCIDAD;
+//        break;
+//    }
+//
+//}
+//void Arena::teclaEspecialUP(int key)
+//{
+//    switch (key)
+//    {
+//
+//    case GLUT_KEY_UP:
+//    case GLUT_KEY_DOWN:
+//        jugador2.velocidad.y = 0;
+//         break;
+//    case GLUT_KEY_LEFT:
+//    case GLUT_KEY_RIGHT:
+//         jugador2.velocidad.x = 0;
+//         break;
+//    }
 //}

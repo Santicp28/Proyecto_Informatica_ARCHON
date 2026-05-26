@@ -1,5 +1,11 @@
 #pragma once
-
+enum class MenuAccion
+{
+    NINGUNA,
+    JUGAR,
+    OPCIONES,
+    SALIR
+};
 enum class Bando {
     NINGUNO,
     LUZ,
@@ -19,6 +25,7 @@ enum class TipoMovimiento {
     VUELA,
     TELETRANSPORTE
 };
+
 
 enum class Cadencia {
     VARIABLE,
@@ -55,11 +62,24 @@ enum class Velocidad_ataque {
     LENTO
 };
 
+enum class Rango {
+    CORTO,
+    MEDIO,
+    LARGO
+};
+
 struct PosicionMatriz {
     int fila;
     int columna;
+
+    bool operator==(const PosicionMatriz& p) const {
+        return fila == p.fila && columna == p.columna;
+    }
 };
 
-inline bool operator ==(const PosicionMatriz& a, const PosicionMatriz& b) {
-    return a.fila == b.fila && a.columna == b.columna;
-}
+// PARA SABER QUE ATAQUE USAMOS
+enum class TipoAtaque {
+    MELEE,      // daño puntual al tocar (knight, goblin)
+    AREA,       // daño continuo en radio alrededor (banshee, phoenix)
+    PROYECTIL   // dispara un objeto que viaja (wizard, archer, unicorn)
+};

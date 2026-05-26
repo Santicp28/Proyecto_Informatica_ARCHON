@@ -2,13 +2,14 @@
 #include "Pieza.h"
 
 Manticora::Manticora(Bando b) : Pieza(
-    Ataque::BAJO,                  // Low
-    Vida::MODERADA,                // Average
-    Velocidad::NORMAL,             // Normal
-    Cadencia::PROMEDIO,            // Average
-    Velocidad_ataque::LENTO,      // Spikes (Slow-Normal)
+    Ataque::BAJO,           
+    Vida::MODERADA,          
+    Velocidad::NORMAL,           
+    Cadencia::PROMEDIO,       
+    Velocidad_ataque::LENTO,   
+	Rango::CORTO,
     b,
-    TipoMovimiento::CAMINA         // Ground
+    TipoMovimiento::CAMINA   
 ) {
 }
 void Manticora::dibuja(const Renderer& renderer, const Vector2D& centro, double ancho, double alto) const {

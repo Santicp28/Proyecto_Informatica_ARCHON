@@ -1,61 +1,316 @@
 #include "Tablero.h"
+#include "Renderer.h"
+#include <algorithm>
+#include <iostream>
 
-VisualBoard::VisualBoard(float cSize) : gridSize(9), cellSize(cSize) {
-    // Inicializamos la matriz oficial de Archon una sola vez
-    int officialLayout[9][9] = {
-        {0, 1, 0, 2, 3, 2, 0, 1, 0},
-        {1, 0, 2, 1, 2, 1, 2, 0, 1},
-        {0, 2, 1, 0, 2, 0, 1, 2, 0},
-        {2, 1, 0, 1, 2, 1, 0, 1, 2},
-        {3, 2, 2, 2, 3, 2, 2, 2, 3},
-        {2, 1, 0, 1, 2, 1, 0, 1, 2},
-        {0, 2, 1, 0, 2, 0, 1, 2, 0},
-        {1, 0, 2, 1, 2, 1, 2, 0, 1},
-        {0, 1, 0, 2, 3, 2, 0, 1, 0}
+
+using enum TipoCasilla;
+
+void Tablero::inicializa()
+{
+
+
+    turnoActual = Bando::LUZ;
+    cursor = { 4, 0 };
+
+    combatePendiente = false;
+    hayOrigenSeleccionado = false;
+    longitud = std::min(Config::sizeMundo.x, Config::sizeMundo.y);
+
+	//INICIALIZA CASILLAS
+    constexpr TipoCasilla tipoCasillas[TAM][TAM] =
+    {
+     { OSCURA,     CLARA,     OSCURA,     OSCILANTE,  PODER,      OSCILANTE,  OSCURA,     CLARA,     OSCURA     },
+     { CLARA,      OSCURA,    OSCILANTE,  CLARA,      OSCILANTE,  CLARA,      OSCILANTE,  OSCURA,    CLARA      },
+     { OSCURA,     OSCILANTE, CLARA,      OSCURA,     OSCILANTE,  OSCURA,     CLARA,      OSCILANTE, OSCURA     },
+     { OSCILANTE,  CLARA,     OSCURA,     CLARA,      OSCILANTE,  CLARA,      OSCURA,     CLARA,     OSCILANTE  },
+     { PODER,      OSCILANTE, OSCILANTE,  OSCILANTE,  PODER,      OSCILANTE,  OSCILANTE,  OSCILANTE, PODER      },
+     { OSCILANTE,  CLARA,     OSCURA,     CLARA,      OSCILANTE,  CLARA,      OSCURA,     CLARA,     OSCILANTE  },
+     { OSCURA,     OSCILANTE, CLARA,      OSCURA,     OSCILANTE,  OSCURA,     CLARA,      OSCILANTE, OSCURA     },
+     { CLARA,      OSCURA,    OSCILANTE,  CLARA,      OSCILANTE,  CLARA,      OSCILANTE,  OSCURA,    CLARA      },
+     { OSCURA,     CLARA,     OSCURA,     OSCILANTE,  PODER,      OSCILANTE,  OSCURA,     CLARA,     OSCURA     }
     };
-    for (int i = 0; i < 9; i++)
-        for (int j = 0; j < 9; j++)
-            layout[i][j] = officialLayout[i][j];
-}
-
-void VisualBoard::draw() {
-    glDisable(GL_LIGHTING); // Desactivar luces para el tablero
-    float startPos = -(gridSize * cellSize) / 2.0f;
-
-    for (int row = 0; row < gridSize; ++row) {
-        for (int col = 0; col < gridSize; ++col) {
-            float x = startPos + col * cellSize;
-            float y = startPos + row * cellSize;
-
-            // 1. Dibujar el fondo de la casilla
-            setTileColor(layout[row][col]);
-            glBegin(GL_QUADS);
-            glVertex3f(x, y, 0.0f);
-            glVertex3f(x + cellSize, y, 0.0f);
-            glVertex3f(x + cellSize, y + cellSize, 0.0f);
-            glVertex3f(x, y + cellSize, 0.0f);
-            glEnd();
-
-            // 2. Dibujar el borde con un pequeño offset en Z para evitar parpadeo
-            glColor3f(1.0f, 0.0f, 0.0f); // Gris oscuro para bordes elegantes
-            glLineWidth(2.0f);
-            glBegin(GL_LINE_LOOP);
-            glVertex3f(x, y, 0.01f);
-            glVertex3f(x + cellSize, y, 0.01f);
-            glVertex3f(x + cellSize, y + cellSize, 0.01f);
-            glVertex3f(x, y + cellSize, 0.01f);
-            glEnd();
+    for (int f = 0; f < TAM; f++) {
+        for (int c = 0; c < TAM; c++) {
+            casillas[f][c].inicializa(tipoCasillas[f][c], { f, c });
         }
     }
-    glEnable(GL_LIGHTING);
+    //INICIALIZA CASILLAS
+
+
+    // ------------- INICIALIZA PIEZAS --------- PONER SU POSICION INICIAL
+    // ------COLUMNA 0
+    agregarPieza<Valquiria>(0, 0);
+    agregarPieza<Golem>(1, 0);
+    agregarPieza<Unicornio>(2, 0);
+    agregarPieza<Djinni>(3, 0);
+    agregarPieza<Mago>(4, 0);
+    agregarPieza<Fenix>(5, 0);
+    agregarPieza<Unicornio>(6, 0);
+    agregarPieza<Golem>(7, 0);
+    agregarPieza<Valquiria>(8, 0);
+
+
+    //------COLUMNA 1
+    agregarPieza<Arquero>(0, 1);
+    agregarPieza<Caballero>(1, 1);
+    agregarPieza<Caballero>(2, 1);
+    agregarPieza<Caballero>(3, 1);
+    agregarPieza<Caballero>(4, 1);
+    agregarPieza<Caballero>(5, 1);
+    agregarPieza<Caballero>(6, 1);
+    agregarPieza<Caballero>(7, 1);
+    agregarPieza<Arquero>(8, 1);
+
+
+    //------COLUMNA 7
+    agregarPieza<Manticora>(0, 7);
+    agregarPieza<Duende>(1, 7);
+    agregarPieza<Duende>(2, 7);
+    agregarPieza<Duende>(3, 7);
+    agregarPieza<Duende>(4, 7);
+    agregarPieza<Duende>(5, 7);
+    agregarPieza<Duende>(6, 7);
+    agregarPieza<Duende>(7, 7);
+    agregarPieza<Manticora>(8, 7);
+
+
+    // ------COLUMNA 8
+    agregarPieza<Banshee>(0, 8);
+    agregarPieza<Trol>(1, 8);
+    agregarPieza<Basilisco>(2, 8);
+    agregarPieza<Cambiaforma>(3, 8);
+    agregarPieza<Hechicero>(4, 8);
+    agregarPieza<Dragon>(5, 8);
+    agregarPieza<Basilisco>(6, 8);
+    agregarPieza<Trol>(7, 8);
+    agregarPieza<Banshee>(8, 8);
 }
 
-void VisualBoard::setTileColor(int type) {
-    switch (type) {
-    case 0: glColor3f(0.05f, 0.05f, 0.05f); break; // Negro
-    case 1: glColor3f(0.95f, 0.95f, 0.95f); break; // Blanco
-    case 2: glColor3f(0.50f, 0.50f, 0.50f); break; // Gris (Shifting)
-    case 3: glColor3f(0.00f, 0.80f, 0.80f); break; // Cian (Power Point)
-    default: glColor3f(0.3f, 0.3f, 0.3f);
+void Tablero::dibuja(const Renderer& renderer)const {
+    double longitudCasilla = longitud / TAM;
+    Vector2D esquinaSuperiorIzda{ posicion.x - longitud / 2.0, posicion.y - longitud / 2.0 };
+
+    for (unsigned int f = 0; f < TAM; f++) {
+        for (unsigned int c = 0; c < TAM; c++) {
+            Vector2D centroCasilla{ esquinaSuperiorIzda.x + (c + 0.5) * longitudCasilla, esquinaSuperiorIzda.y + (f + 0.5) * longitudCasilla };
+             casillas[f][c].dibuja(renderer, centroCasilla, longitudCasilla);
+        }
+    }
+
+	listaPiezas.dibujarPiezas(renderer, esquinaSuperiorIzda, longitudCasilla);
+
+}
+
+
+// --------------- LOGICA DE MOVIMIENTO ------------------ START
+
+bool Tablero::mover(PosicionMatriz origen, PosicionMatriz destino) 
+{
+    if (!movimientoLegal(origen, destino)) return false;
+        
+    Pieza* atacante = listaPiezas.getPiezaEnPosicion(origen);
+    Pieza* defensor = listaPiezas.getPiezaEnPosicion(destino);
+
+    //ILUMINAR O DESTACAR CASILLA SI HAY ERROR O MOSTRAR UN SONIDO O ALGO, TAMBIEN MOSTRAR MENSAJE PARA SABER EL ERROR
+
+    //Si hay enemigo, no movemos todavía
+    //Dejamos marcado que tiene que abrirse la arena
+    if (defensor != nullptr && defensor->getBando() != Bando::NINGUNO) {
+        combatePendiente = true; //FLAG PARA CAMBIAR A ARENA
+        origenCombate = origen;
+        destinoCombate = destino;
+
+        return true;
+    }
+
+    //Movimiento normal
+	listaPiezas.moverDeCasilla(origen, destino);
+    cambiarTurno();
+
+    return true;
+}
+
+
+bool Tablero::movimientoLegal(PosicionMatriz origen, PosicionMatriz destino) const
+{
+
+    Pieza* atacante = listaPiezas.getPiezaEnPosicion(origen);
+    Pieza* defensor = listaPiezas.getPiezaEnPosicion(destino);
+
+    if (defensor != nullptr && defensor->getBando() == atacante->getBando()) return false; //Hay una pieza aliada en destino
+
+    if (!atacante->puedeMoverseA(destino)) return false; //esa pieza no permite ese movimiento
+
+    if (atacante->getTipoMovimiento() == TipoMovimiento::CAMINA) {
+        if (!caminoLibreEnL(origen, destino, true) && !caminoLibreEnL(origen, destino, false)) return false;
+    }//si la pieza vuela o se teletransporta no hace falta comprobar el camino
+
+    return true;
+}
+
+
+bool Tablero::caminoLibreEnL(PosicionMatriz origen, PosicionMatriz destino, bool primeroFilas) const //primero avanza por filas y luego por columnas para comprobar el camino en L, para comprobar las distintas posibilidades de camino. Se llama 2 veces.
+{
+    PosicionMatriz actual = origen;
+
+    if (primeroFilas) {
+        while (actual.fila != destino.fila) {
+            if (destino.fila > actual.fila)
+                actual.fila++;
+            else
+                actual.fila--;
+
+            if (actual != destino && listaPiezas.hayPiezaEn(actual))
+                return false;
+        }
+
+        while (actual.columna != destino.columna) {
+            if (destino.columna > actual.columna)
+                actual.columna++;
+            else
+                actual.columna--;
+
+            if (actual != destino && listaPiezas.hayPiezaEn(actual))
+                return false;
+        }
+    }
+    else {
+        while (actual.columna != destino.columna) {
+            if (destino.columna > actual.columna)
+                actual.columna++;
+            else
+                actual.columna--;
+
+            if (actual != destino && listaPiezas.hayPiezaEn(actual))
+                return false;
+        }
+
+        while (actual.fila != destino.fila) {
+            if (destino.fila > actual.fila)
+                actual.fila++;
+            else
+                actual.fila--;
+
+            if (actual != destino && listaPiezas.hayPiezaEn(actual))
+                return false;
+        }
+    }
+
+    return true;
+}
+
+// --------------- LOGICA DE MOVIMIENTO ------------------ END
+
+
+
+
+
+
+// ----------------- FUNCIONES DEL CURSOR ----------------- START
+
+// MOSTRAR STATS DE LA PIEZA EN LA QUE TENGO EL CURSOR!!!!!!!!!
+
+//comprueba si se puede mover y luego asigna la nueva posicion al cursor, se llama desde juego cuando se pulsa una flecha
+void Tablero::moverCursor(int df, int dc)
+{
+	PosicionMatriz nuevaPosicion{ cursor.fila + df, cursor.columna + dc };
+
+    if (interaccion.posicionValida(nuevaPosicion)) cursor = nuevaPosicion;
+}
+
+
+bool Tablero::seleccionarConCursor()
+{
+
+    if (!hayOrigenSeleccionado) {
+		if (interaccion.getBandoOcupante(cursor, listaPiezas) != turnoActual) return false; //solo puedo seleccionar una pieza de mi turno
+
+        origenSeleccionado = cursor;
+        hayOrigenSeleccionado = true;
+
+		resaltarMovimientoPosible();//actualizamos los movimientos posibles para el origen seleccionado, para luego mostrarlos en la parte gráfica
+
+        return true;
+    }
+
+    bool movimientoCorrecto = mover(origenSeleccionado, cursor);
+
+    hayOrigenSeleccionado = false;
+	origenSeleccionado = { -1, -1 };//reiniciamos el origen seleccionado para evitar errores
+
+	movimientosPosibles.clear();//limpiamos los movimientos posibles para que no se sigan mostrando después de mover
+
+    return movimientoCorrecto;
+}
+
+void Tablero::resaltarMovimientoPosible()
+{
+    movimientosPosibles.clear();
+
+    if (!hayOrigenSeleccionado) {
+        return;
+    }
+
+    for (int f = 0; f < TAM; f++) {
+        for (int c = 0; c < TAM; c++) {
+            PosicionMatriz destino_posible{f,c};
+
+            if (movimientoLegal(origenSeleccionado, destino_posible)) {
+                movimientosPosibles.push_back(destino_posible);
+            }
+        }
     }
 }
+
+
+// ----------------- FUNCIONES DEL CURSOR ----------------- END
+
+
+
+
+
+// ----------------- FUNCIONES MISCELÁNEAS ----------------- START
+
+//funcion para camiar de turno, se llama después de mover o terminar la arena
+void Tablero::cambiarTurno()
+{
+    if (turnoActual == Bando::LUZ) {
+        turnoActual = Bando::OSCURIDAD;
+        cursor = { 4 , 8 }; //cursor en el lado de oscuridad
+    }
+    else {
+        turnoActual = Bando::LUZ;
+        cursor = { 4 , 0 }; //cursor en el lado de luz
+    }
+}
+
+//hay que limpiar el flag para que luego no se abra la arena en momentos no deseados
+void Tablero::limpiarCombatePendiente()
+{
+    combatePendiente = false;
+}
+
+// ----------------- FUNCIONES DE MISCELÁNEAS ----------------- END
+
+
+
+
+// ----------- GETTERS ----------- START
+
+//estas dos sirven para colocar las piezas después de la arena
+PosicionMatriz Tablero::getOrigenCombate() const { return origenCombate; }
+PosicionMatriz Tablero::getDestinoCombate() const { return destinoCombate; }
+
+//para saber de quién es el turno, por ejemplo para mostrar en pantalla
+Bando Tablero::getTurnoActual() const {return turnoActual;}
+
+//funcion para saber si hay que cambiar a arena, obtenemos el flag de combate pendiente, para usarla en JUEGO.CPP 
+bool Tablero::hayCombatePendiente() const {return combatePendiente;}
+
+PosicionMatriz Tablero::getCursor() const {return cursor;}
+
+PosicionMatriz Tablero::getOrigenSeleccionado() const { return origenSeleccionado; }
+bool Tablero::getHayOrigenSeleccionado() const {return hayOrigenSeleccionado;}
+
+// ----------- GETTERS ----------- END

@@ -1,36 +1,33 @@
 #pragma once
-
-#include <string>
+#include"Renderer.h"
+#include "Boton.h"
+#include "Config.h"
+#include "Tipos.h"
+#include<string>
 #include <vector>
-
-struct Boton {
-    float x, y, w, h;
-    std::string texto;
-    bool hover;
-};
+using std::vector, std::string;
 
 class Menu {
-private:
-    std::vector<Boton> botones;
-    bool quiere_jugar;
-    bool quiere_salir;
-    bool quiere_ranking;
-
-    bool estaDentro(const Boton& b, int x, int y, int altoVentana) const;
-    void dibujarTexto(float x, float y, const std::string& texto) const;
+    vector<Boton> botones;
+    Color colorFondo{ 0.1f, 0.1f, 0.4f };
+    unsigned int seleccionado{ 0 };
+    string titulo{ "ARCHON" };
 
 public:
-    void inicializa(int anchoVentana, int altoVentana);
-    void dibuja();
+    Menu(const std::vector<std::string>& textos)
+    {
+        for (const auto& texto : textos)
+            botones.emplace_back(texto);//cuando pasas argumentos del constructor:emplace_back (llama constructor sin hacer copia temporal). Cuando ya tienes el objeto creado:push_back
+    }
 
-    void tecla(unsigned char key);
+    void inicializa();
+    void dibuja(const Renderer& renderer);
+    void mueve(float dt);
+  
+    MenuAccion tecla(unsigned char key);
     void teclaEspecial(int key);
-    void raton(int button, int state, int x, int y, int altoVentana);
-    void movimientoRaton(int x, int y, int altoVentana);
+private:
+    Vector2D calcularPosicionBotones(int ordenBoton)const { return { Config::sizeMundo.x * 0.5, (ordenBoton + 1) * Config::sizeMundo.y / (botones.size() + 1.0) }; } //calcula la separecion entre botones Config::sizeMundo.y / (botones.size() + 1.0)
+    Vector2D calcularSizeBotones()const { return{ Config::sizeMundo.x * 0.4, (Config::sizeMundo.x * 0.4) * 0.2 }; }
 
-    bool getQuiereJugar() const;
-    bool getQuiereSalir() const;
-    bool getQuiereRanking() const;
-
-    void resetAcciones();
 };
