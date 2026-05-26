@@ -8,6 +8,7 @@
 #include "Renderer.h"
 #include "Config.h"
 #include "Cursor.h"
+#include"Menu.h"
 
 #include "Arquero.h"
 #include "Banshee.h"
@@ -51,7 +52,6 @@ private:
     //estas son para saber cómo terminan las piezas después de la arena
     PosicionMatriz origenCombate;
     PosicionMatriz destinoCombate;
-
 
 public:
     void dibuja(const Renderer& renderer)const;

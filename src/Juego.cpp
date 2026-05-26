@@ -6,7 +6,7 @@
 void Juego::inicializa()
 {
     estado = EstadoJuego::MENU_PRINCIPAL;
-    menu.inicializa();
+    menuPrincipal.inicializa();
     Tablero.inicializa();
 }
 
@@ -15,7 +15,7 @@ void Juego::dibuja(const Renderer& renderer)
     renderer.dibujaColorFondo({ 0.2f, 0.2f, 0.2f });
     switch (estado) {
     case EstadoJuego::MENU_PRINCIPAL:
-        menu.dibuja(renderer);
+        menuPrincipal.dibuja(renderer);
         break;
 
     case EstadoJuego::TABLERO:
@@ -49,7 +49,7 @@ void Juego::tecla(unsigned char key)
         case EstadoJuego::MENU_PRINCIPAL:
         {
 
-            MenuAccion accion = menu.tecla(key);
+            MenuAccion accion = menuPrincipal.tecla(key);
 
             switch (accion)
             {
@@ -87,9 +87,36 @@ void Juego::tecla(unsigned char key)
                 if (key == 27) { // ESC
                     estado = EstadoJuego::MENU_PRINCIPAL;
                 }
+                if (key == 'h') {
+                    estado = EstadoJuego::MENU_HECHIZOS;
+                }
                 
             }
 			break;
+        }
+        case EstadoJuego::MENU_HECHIZOS:
+        {
+
+            MenuAccion accion = menu.tecla(key);
+
+            switch (accion)
+            {
+            case MenuAccion::JUGAR:
+                estado = EstadoJuego::TABLERO;
+                break;
+
+            case MenuAccion::OPCIONES:
+                estado = EstadoJuego::ARENA;
+                break;
+
+            case MenuAccion::SALIR:
+                exit(0);
+                break;
+
+            default:
+                break;
+            }
+            break;
         }
         case EstadoJuego::ARENA:
         {
@@ -118,7 +145,7 @@ void Juego::tecla(unsigned char key)
     void Juego::teclaEspecial(int key)
     {
         if (estado == EstadoJuego::MENU_PRINCIPAL) {
-            menu.teclaEspecial(key);
+            menuPrincipal.teclaEspecial(key);
         }
         else if (estado == EstadoJuego::TABLERO) { //con esto conseguimos mover el cursor mediante las flechas en el teclado
             switch (key) {
@@ -145,17 +172,17 @@ void Juego::tecla(unsigned char key)
     //void Juego::raton(int button, int state, int x, int y) //ejemplo para probar el menú, a cambiar en futuras versiones
     //{
     //    if (estado == EstadoJuego::MENU_PRINCIPAL) {
-    //        menu.raton(button, state, x, y, 600);
+    //        menuPrincipal.raton(button, state, x, y, 600);
     //
-    //        if (menu.getQuiereJugar()) {
+    //        if (menuPrincipal.getQuiereJugar()) {
     //            estado = EstadoJuego::TABLERO;
-    //            menu.resetAcciones();
+    //            menuPrincipal.resetAcciones();
     //        }
-    //        else if (menu.getQuiereRanking()) {
+    //        else if (menuPrincipal.getQuiereRanking()) {
     //            estado = EstadoJuego::RANKING;
-    //            menu.resetAcciones();
+    //            menuPrincipal.resetAcciones();
     //        }
-    //        else if (menu.getQuiereSalir()) {
+    //        else if (menuPrincipal.getQuiereSalir()) {
     //            exit(0);
     //        }
     //    }
@@ -164,7 +191,7 @@ void Juego::tecla(unsigned char key)
     //void Juego::movimientoRaton(int x, int y)
     //{
     //    if (estado == EstadoJuego::MENU_PRINCIPAL) {
-    //        menu.movimientoRaton(x, y, 600);
+    //        menuPrincipal.movimientoRaton(x, y, 600);
     //    }
     //}
 
