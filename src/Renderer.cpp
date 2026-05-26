@@ -75,17 +75,11 @@ void Renderer::cuadradoParaPruebas() const
 }
 void Renderer::dibujaSprite(const char* rutaPNG, const Vector2D& centro, double ancho, double alto) const {
 
-	glPushMatrix();
-
-	glTranslated(centro.x, centro.y, 0.0);
-	glScaled(1.0, -1.0, 1.0);
-	glTranslated(-centro.x, -centro.y, 0.0);
-
-	ETSIDI::Sprite sprite(rutaPNG, (double)(centro.x - ancho / 2), (double)(centro.y - alto / 2), (double)ancho, (double)alto);
-
+	ETSIDI::Sprite sprite(rutaPNG, (double)(centro.x), (double)(centro.y), (double)ancho, (double)alto);
+	sprite.setAngle(180);
+	sprite.flip(true, false);
 	sprite.draw();
-
-	glPopMatrix();
+	glDisable(GL_LIGHTING); //MIGUEL DESACTIVALO DENTRO DEL DRAW PORFAA
 }
 
 void Renderer::dibujaTexto(const char* texto, const Vector2D& pos, double r, double g, double b, int size) const {
