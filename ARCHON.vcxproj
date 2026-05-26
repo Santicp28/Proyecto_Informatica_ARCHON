@@ -171,6 +171,7 @@
     <ClCompile Include="src\Valquiria.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Graftablero.h" />
     <ClInclude Include="includes\Arena.h" />
     <ClInclude Include="includes\Arquero.h" />
     <ClInclude Include="includes\Banshee.h" />

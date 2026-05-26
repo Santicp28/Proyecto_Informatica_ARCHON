@@ -11,6 +11,6 @@ Valquiria::Valquiria(Bando b) : Pieza(
     TipoMovimiento::VUELA           // Air
 ) {
 }
-void Valquiria::dibuja(const Renderer& renderer, const char* rutaPNG, const Vector2D& centro, double ancho, double alto) const {
+void Valquiria::dibuja(const Renderer& renderer, const Vector2D& centro, double ancho, double alto) const {
     renderer.dibujaSprite(valquiria.graf, centro, ancho, alto);
 }

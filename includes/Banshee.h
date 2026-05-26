@@ -6,6 +6,6 @@ class Banshee : public Pieza
 public:
     Banshee(Bando b = Bando::OSCURIDAD);
 
-    void dibuja(const Renderer& renderer, const char* rutaPNG, const Vector2D& centro, double ancho, double alto) const;
+    void dibuja(const Renderer& renderer, const Vector2D& centro, double ancho, double alto) const;
 };
 
