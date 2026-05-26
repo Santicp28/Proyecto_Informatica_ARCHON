@@ -33,6 +33,7 @@ void Tablero::inicializa()
             casillas[f][c].inicializa(tipoCasillas[f][c], { f, c });
         }
     }
+
     //INICIALIZA CASILLAS
 
 

@@ -6,7 +6,7 @@
 void Juego::inicializa()
 {
     estado = EstadoJuego::MENU_PRINCIPAL;
-    menu.inicializa();
+    menuPrincipal.inicializa();
     Tablero.inicializa();
 }
 
@@ -15,7 +15,7 @@ void Juego::dibuja(const Renderer& renderer)
     renderer.dibujaColorFondo({ 0.2f, 0.2f, 0.2f });
     switch (estado) {
     case EstadoJuego::MENU_PRINCIPAL:
-        menu.dibuja(renderer);
+        menuPrincipal.dibuja(renderer);
         break;
 
     case EstadoJuego::TABLERO:
@@ -49,7 +49,7 @@ void Juego::tecla(unsigned char key)
         case EstadoJuego::MENU_PRINCIPAL:
         {
 
-            MenuAccion accion = menu.tecla(key);
+            MenuAccion accion = menuPrincipal.tecla(key);
 
             switch (accion)
             {
@@ -89,11 +89,45 @@ void Juego::tecla(unsigned char key)
                 }
             }
 
+
+                if (key == 27) { // ESC
+                    estado = EstadoJuego::MENU_PRINCIPAL;
+                }
+                if (key == 'h') {
+                    estado = EstadoJuego::MENU_HECHIZOS;
+                }
+                
+            }
+			break;
             if (key == 9) { // ESC
                 estado = EstadoJuego::ARENA;
             }
             if (key == 27) { // ESC
                 estado = EstadoJuego::MENU_PRINCIPAL;
+            }
+            break;
+        }
+        case EstadoJuego::MENU_HECHIZOS:
+        {
+
+            MenuAccion accion = menu.tecla(key);
+
+            switch (accion)
+            {
+            case MenuAccion::JUGAR:
+                estado = EstadoJuego::TABLERO;
+                break;
+
+            case MenuAccion::OPCIONES:
+                estado = EstadoJuego::ARENA;
+                break;
+
+            case MenuAccion::SALIR:
+                exit(0);
+                break;
+
+            default:
+                break;
             }
             break;
         }
@@ -121,29 +155,58 @@ void Juego::tecla(unsigned char key)
     }
 }
 
-void Juego::teclaEspecial(int key)
-{
-    if (estado == EstadoJuego::MENU_PRINCIPAL) {
-        menu.teclaEspecial(key);
-    }
-    else if (estado == EstadoJuego::TABLERO) { //con esto conseguimos mover el cursor mediante las flechas en el teclado
-        switch (key) {
-        case GLUT_KEY_UP:
-            Tablero.moverCursor(-1, 0);
-            break;
-        case GLUT_KEY_DOWN:
-           Tablero.moverCursor(1, 0);
-           break;
-        case GLUT_KEY_LEFT:
-            Tablero.moverCursor(0, -1);
-            break;
-        case GLUT_KEY_RIGHT:
-            Tablero.moverCursor(0, 1);
-            break;
+    void Juego::teclaEspecial(int key)
+    {
+        if (estado == EstadoJuego::MENU_PRINCIPAL) {
+            menuPrincipal.teclaEspecial(key);
+        }
+        else if (estado == EstadoJuego::TABLERO) { //con esto conseguimos mover el cursor mediante las flechas en el teclado
+            switch (key) {
+            case GLUT_KEY_UP:
+                Tablero.moverCursor(-1, 0);
+                break;
+
+            case GLUT_KEY_DOWN:
+                Tablero.moverCursor(1, 0);
+                break;
+
+            case GLUT_KEY_LEFT:
+                Tablero.moverCursor(0, -1);
+                break;
+
+            case GLUT_KEY_RIGHT:
+                Tablero.moverCursor(0, 1);
+                break;
+            }
         }
     }
-}
 
+
+    //void Juego::raton(int button, int state, int x, int y) //ejemplo para probar el menú, a cambiar en futuras versiones
+    //{
+    //    if (estado == EstadoJuego::MENU_PRINCIPAL) {
+    //        menuPrincipal.raton(button, state, x, y, 600);
+    //
+    //        if (menuPrincipal.getQuiereJugar()) {
+    //            estado = EstadoJuego::TABLERO;
+    //            menuPrincipal.resetAcciones();
+    //        }
+    //        else if (menuPrincipal.getQuiereRanking()) {
+    //            estado = EstadoJuego::RANKING;
+    //            menuPrincipal.resetAcciones();
+    //        }
+    //        else if (menuPrincipal.getQuiereSalir()) {
+    //            exit(0);
+    //        }
+    //    }
+    //}
+
+    //void Juego::movimientoRaton(int x, int y)
+    //{
+    //    if (estado == EstadoJuego::MENU_PRINCIPAL) {
+    //        menuPrincipal.movimientoRaton(x, y, 600);
+    //    }
+    //}
 
 EstadoJuego Juego::getEstado() const
 {

@@ -7,6 +7,7 @@
 #include "Renderer.h"
 #include "Config.h"
 #include "Cursor.h"
+#include"Menu.h"
 
 #include "Arquero.h"
 #include "Banshee.h"
@@ -51,14 +52,7 @@ private:
     PosicionMatriz origenCombate;
     PosicionMatriz destinoCombate;
 
-    int contadorTurnos = 0;
-
-public: 
-
-    void inicializa();
-
-
-    // ----- FUNCIONES DE DIBUJO ------ START
+public:
     void dibuja(const Renderer& renderer)const;
 
     void resaltarMovimientoPosible();

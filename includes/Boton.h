@@ -16,6 +16,7 @@ public:
         : texto(texto)
     {
     }
+    void inicializa() { seleccionado = false; }
     void dibuja(const Renderer& renderer, const Vector2D& posicion, const Vector2D& size)const;
     void cambiarEstado();
 };

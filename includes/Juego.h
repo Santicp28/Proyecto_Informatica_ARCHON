@@ -9,6 +9,7 @@
 enum class EstadoJuego {
     MENU_PRINCIPAL,
     TABLERO,
+    MENU_HECHIZOS,
     ARENA,
     OPCIONES,
     PAUSA,
@@ -19,7 +20,9 @@ class Juego {
 private:
     EstadoJuego estado;
     Tablero Tablero;
-    Menu menu{ { "JUGAR","OPCIONES","SALIR" } };
+    Menu menuPrincipal{ { "JUGAR","OPCIONES","SALIR" },Config::sizeMundo,Config::sizeMundo*0.5, "Archon"};
+    Menu menuHechizos{ { "TP","CURAR","CAMBIAR TIEMPO","INTERCAMBIAR","INVOCAR","REVIVIR","ENCARCELAR","SALIR"},
+        {(Config::sizeMundo.x - longitud) * 0.5}, "HECHIZOS" }; //CAMBIAR
     Arena arena;
 
 public:

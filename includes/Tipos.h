@@ -2,10 +2,20 @@
 enum class MenuAccion
 {
     NINGUNA,
+    SALIR,
+
     JUGAR,
     OPCIONES,
-    SALIR
+    
+    TP,
+    CURAR,
+    CAMBIAR_TIEMPO,
+    INTERCAMBIAR,
+    INVOCAR,
+    REVIVIR,
+    ENCARCELAR
 };
+
 enum class Bando {
     NINGUNO,
     LUZ,
