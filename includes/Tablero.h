@@ -39,7 +39,7 @@ private:
     ListaPiezas listaPiezas;
     Bando turnoActual;
 
-    Cursor cursor;
+    Cursor cursor{ {4, 0} };
 
     PosicionMatriz origenSeleccionado;
     bool hayOrigenSeleccionado = false;

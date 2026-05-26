@@ -98,7 +98,7 @@ void Tablero::dibuja(const Renderer& renderer)const {
     }
 
     cursor.dibuja(renderer, esquinaSuperiorIzda, longitudCasilla);
-	//listaPiezas.dibujarPiezas(renderer, esquinaSuperiorIzda, longitudCasilla);
+	listaPiezas.dibujarPiezas(renderer, esquinaSuperiorIzda, longitudCasilla);
 
 }
 

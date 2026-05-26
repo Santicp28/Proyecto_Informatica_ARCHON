@@ -6,7 +6,7 @@ class Cursor {
 	PosicionMatriz posicion;
 
 public:
-	Cursor() : posicion{ 0, 0 } {}
+	Cursor(PosicionMatriz p) : posicion(p) {}
 
 	//comprueba si se puede mover y luego asigna la nueva posicion al cursor, se llama desde juego cuando se pulsa una flecha
 	void mover(int df, int dc);
