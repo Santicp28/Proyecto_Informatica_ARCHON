@@ -30,7 +30,7 @@ inline constexpr TiposPiezas golem = {
 
 inline constexpr TiposPiezas valquiria = {
 	"bin/Graficos/valquiria.png"
-	"bin/Graficos/lanza.PNG"
+	"bin/Graficos/lanza.png"
 };
 
 inline constexpr TiposPiezas djinni = {

@@ -12,6 +12,6 @@ Manticora::Manticora(Bando b) : Pieza(
     TipoMovimiento::CAMINA   
 ) {
 }
-void Manticora::dibuja(const Renderer& renderer, const char* rutaPNG, const Vector2D& centro, double ancho, double alto) const {
+void Manticora::dibuja(const Renderer& renderer, const Vector2D& centro, double ancho, double alto) const {
     renderer.dibujaSprite(manticora.graf, centro, ancho, alto);
 }

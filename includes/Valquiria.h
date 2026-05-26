@@ -5,5 +5,5 @@ class Valquiria : public Pieza
 {
 public:
     Valquiria(Bando b = Bando::LUZ);
-    void dibuja(const Renderer& renderer, const char* rutaPNG, const Vector2D& centro, double ancho, double alto) const;
+    void dibuja(const Renderer& renderer, const Vector2D& centro, double ancho, double alto) const override;
 };

@@ -12,6 +12,6 @@ Caballero::Caballero(Bando b) : Pieza(
     TipoMovimiento::CAMINA         
 ) {
 }
-void Caballero::dibuja(const Renderer& renderer, const char* rutaPNG, const Vector2D& centro, double ancho, double alto) const {
+void Caballero::dibuja(const Renderer& renderer, const Vector2D& centro, double ancho, double alto) const {
     renderer.dibujaSprite(caballero.graf, centro, ancho, alto);
 }

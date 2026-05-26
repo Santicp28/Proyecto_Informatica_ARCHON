@@ -101,6 +101,8 @@ void Tablero_logica::dibuja(const Renderer& renderer)const {
         }
     }
 
+	listaPiezas.dibujarPiezas(renderer, esquinaSuperiorIzda, longitudCasilla);
+
 
 }
 
