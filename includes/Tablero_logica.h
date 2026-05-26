@@ -98,7 +98,15 @@ private:
 
     //para después de mover o terminar la arena
     //hacer una funcion para cuando se termina el combate y aplicar los resultados
-      void cambiarTurno();
+    void cambiarTurno();
+
+    template <typename T>
+    void agregarPieza(int fila, int columna)
+    {
+        Pieza* p = new T();
+        p->setPosicionMatriz(fila, columna);
+        listaPiezas.agregar(p);
+    }
 
 
 };
