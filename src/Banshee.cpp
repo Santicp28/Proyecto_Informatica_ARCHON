@@ -8,9 +8,9 @@ Banshee::Banshee(Bando b) : Pieza(
     Cadencia::LENTA,            // Average
     Velocidad_ataque::RAPIDO,      // Keen
     b,                             // Bando dinámico
-    TipoMovimiento::VUELA           // Air
+    TipoMovimiento::VUELA
 ) {
 }
-void Banshee::dibuja()
-{
+void Banshee::dibuja(const Renderer& renderer, const char* rutaPNG, const Vector2D& centro, double ancho, double alto) const {
+    renderer.dibujaSprite(banshee.graf, centro, ancho, alto);
 }

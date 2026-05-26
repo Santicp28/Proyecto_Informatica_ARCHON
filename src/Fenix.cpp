@@ -11,4 +11,6 @@ Fenix::Fenix(Bando b) : Pieza(
     TipoMovimiento::VUELA           // Air
 ) {
 }
-void Fenix::dibuja() {}
+void Fenix::dibuja(const Renderer& renderer, const char* rutaPNG, const Vector2D& centro, double ancho, double alto) const {
+    renderer.dibujaSprite(fenix.graf, centro, ancho, alto);
+}

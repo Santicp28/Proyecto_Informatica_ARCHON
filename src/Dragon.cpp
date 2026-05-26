@@ -11,4 +11,6 @@ Dragon::Dragon(Bando b) : Pieza(
     TipoMovimiento::VUELA           // Air
 ) {
 }
-void Dragon::dibuja() {}
+void Dragon::dibuja(const Renderer& renderer, const char* rutaPNG, const Vector2D& centro, double ancho, double alto) const {
+    renderer.dibujaSprite(dragon.graf, centro, ancho, alto);
+}

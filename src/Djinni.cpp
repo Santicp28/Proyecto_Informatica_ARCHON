@@ -11,4 +11,6 @@ Djinni::Djinni(Bando b) : Pieza(
     TipoMovimiento::VUELA           // Air
 ) {
 }
-void Djinni::dibuja() {}
+void Djinni::dibuja(const Renderer& renderer, const char* rutaPNG, const Vector2D& centro, double ancho, double alto) const {
+    renderer.dibujaSprite(djinni.graf, centro, ancho, alto);
+}
