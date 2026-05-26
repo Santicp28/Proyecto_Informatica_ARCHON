@@ -1,7 +1,10 @@
 #pragma once
 #include "Pieza.h"
-class Djinni :
-    public Pieza
+#include "TiposPiezas.h"
+class Djinni : public Pieza
 {
+public:
+    Djinni(Bando b = Bando::LUZ);
+    
+    void dibuja(const Renderer& renderer, const Vector2D& centro, double ancho, double alto) const override;
 };
-
