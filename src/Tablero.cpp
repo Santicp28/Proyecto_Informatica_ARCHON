@@ -11,7 +11,6 @@ void Tablero::inicializa()
 
 
     turnoActual = Bando::LUZ;
-    cursor = { 4, 0 };
 
     combatePendiente = false;
     hayOrigenSeleccionado = false;
@@ -98,7 +97,8 @@ void Tablero::dibuja(const Renderer& renderer)const {
         }
     }
 
-	listaPiezas.dibujarPiezas(renderer, esquinaSuperiorIzda, longitudCasilla);
+    cursor.dibuja(renderer, esquinaSuperiorIzda, longitudCasilla);
+	//listaPiezas.dibujarPiezas(renderer, esquinaSuperiorIzda, longitudCasilla);
 
 }
 
@@ -207,26 +207,21 @@ bool Tablero::caminoLibreEnL(PosicionMatriz origen, PosicionMatriz destino, bool
 
 
 
-// ----------------- FUNCIONES DEL CURSOR ----------------- START
+// ----------------- FUNCIONES DE CURSOR ----------------- START
 
 // MOSTRAR STATS DE LA PIEZA EN LA QUE TENGO EL CURSOR!!!!!!!!!
-
-//comprueba si se puede mover y luego asigna la nueva posicion al cursor, se llama desde juego cuando se pulsa una flecha
 void Tablero::moverCursor(int df, int dc)
 {
-	PosicionMatriz nuevaPosicion{ cursor.fila + df, cursor.columna + dc };
-
-    if (interaccion.posicionValida(nuevaPosicion)) cursor = nuevaPosicion;
+        cursor.mover(df, dc);
 }
-
 
 bool Tablero::seleccionarConCursor()
 {
 
     if (!hayOrigenSeleccionado) {
-		if (interaccion.getBandoOcupante(cursor, listaPiezas) != turnoActual) return false; //solo puedo seleccionar una pieza de mi turno
+		if (Interaccion::getBandoOcupante(cursor.getPosicion(), listaPiezas) != turnoActual) return false; //solo puedo seleccionar una pieza de mi turno
 
-        origenSeleccionado = cursor;
+        origenSeleccionado = cursor.getPosicion();
         hayOrigenSeleccionado = true;
 
 		resaltarMovimientoPosible();//actualizamos los movimientos posibles para el origen seleccionado, para luego mostrarlos en la parte gráfica
@@ -234,7 +229,7 @@ bool Tablero::seleccionarConCursor()
         return true;
     }
 
-    bool movimientoCorrecto = mover(origenSeleccionado, cursor);
+    bool movimientoCorrecto = mover(origenSeleccionado, cursor.getPosicion());
 
     hayOrigenSeleccionado = false;
 	origenSeleccionado = { -1, -1 };//reiniciamos el origen seleccionado para evitar errores
@@ -277,11 +272,11 @@ void Tablero::cambiarTurno()
 {
     if (turnoActual == Bando::LUZ) {
         turnoActual = Bando::OSCURIDAD;
-        cursor = { 4 , 8 }; //cursor en el lado de oscuridad
+        cursor.setPosicion({ 4 , 8 }); //cursor en el lado de oscuridad
     }
     else {
         turnoActual = Bando::LUZ;
-        cursor = { 4 , 0 }; //cursor en el lado de luz
+        cursor.setPosicion({ 4 , 0 }) ; //cursor en el lado de luz
     }
 }
 
@@ -307,8 +302,6 @@ Bando Tablero::getTurnoActual() const {return turnoActual;}
 
 //funcion para saber si hay que cambiar a arena, obtenemos el flag de combate pendiente, para usarla en JUEGO.CPP 
 bool Tablero::hayCombatePendiente() const {return combatePendiente;}
-
-PosicionMatriz Tablero::getCursor() const {return cursor;}
 
 PosicionMatriz Tablero::getOrigenSeleccionado() const { return origenSeleccionado; }
 bool Tablero::getHayOrigenSeleccionado() const {return hayOrigenSeleccionado;}

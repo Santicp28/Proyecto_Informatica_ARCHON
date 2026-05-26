@@ -7,6 +7,7 @@
 #include "Interaccion.h"
 #include "Renderer.h"
 #include "Config.h"
+#include "Cursor.h"
 
 #include "Arquero.h"
 #include "Banshee.h"
@@ -28,17 +29,18 @@
 class Tablero {
 private:
     friend class Interaccion;
+    friend class Cursor;
+
     double longitud;
     Vector2D posicion{ Config::sizeMundo * 0.5 };//en el centro
     static constexpr int TAM = 9;
     Casilla casillas[TAM][TAM];
 
     ListaPiezas listaPiezas;
-    Interaccion interaccion;
     Bando turnoActual;
 
-    // el cursor es una posicion, la cual usaremos para iluminarla en el teclado con la parte gráfica, así como el origen seleccionado
-    PosicionMatriz cursor;
+    Cursor cursor;
+
     PosicionMatriz origenSeleccionado;
     bool hayOrigenSeleccionado = false;
     std::vector<PosicionMatriz> movimientosPosibles;
@@ -81,6 +83,7 @@ public:
     bool caminoLibreEnL(PosicionMatriz origen, PosicionMatriz destino, bool primeroFilas) const;
 
     bool esMovimientoPosible(PosicionMatriz pos) const;
+
 private:
 
     //para después de mover o terminar la arena

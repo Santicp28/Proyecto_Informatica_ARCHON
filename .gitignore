@@ -5,7 +5,7 @@
 *.VC.db
 *.VC.opendb
 
-# Compilación
+# Compilacion
 x64/
 x86/
 Debug/

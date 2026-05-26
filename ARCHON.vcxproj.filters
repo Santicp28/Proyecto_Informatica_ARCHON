@@ -27,9 +27,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\interacción.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
     <ClCompile Include="src\Juego.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
@@ -37,9 +34,6 @@
       <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="src\Menu.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Tablero_logica.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="src\Arena.cpp">
@@ -126,15 +120,18 @@
     <ClCompile Include="src\Trol.cpp">
       <Filter>Archivos de origen\TiposPiezas</Filter>
     </ClCompile>
+    <ClCompile Include="src\Tablero.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Cursor.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="includes\Juego.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="includes\Menu.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="includes\Tablero_logica.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="includes\Arena.h">
@@ -238,6 +235,12 @@
     </ClInclude>
     <ClInclude Include="includes\Trol.h">
       <Filter>Archivos de encabezado\TiposPiezas</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\Tablero.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\Cursor.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
