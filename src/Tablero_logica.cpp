@@ -10,7 +10,7 @@ void Tablero_logica::inicializa()
 
 
     turnoActual = Bando::LUZ;
-    cursor = { 5, 0 };
+    cursor = { 4, 0 };
 
     combatePendiente = false;
     hayOrigenSeleccionado = false;
@@ -92,11 +92,11 @@ void Tablero_logica::inicializa()
 void Tablero_logica::dibuja(const Renderer& renderer)const {
     double longitudCasilla = longitud / TAM;
     Vector2D centro = renderer.obtenerSizeDibujo() * 0.5;
-    Vector2D esquinaSuperiorIzda{ centro.x - longitud / 2.0, centro.y + longitud / 2.0 };
+    Vector2D esquinaSuperiorIzda{ centro.x - longitud / 2.0, centro.y - longitud / 2.0 };
 
     for (unsigned int f = 0; f < TAM; f++) {
         for (unsigned int c = 0; c < TAM; c++) {
-            Vector2D centroCasilla{ esquinaSuperiorIzda.x + (c + 0.5) * longitudCasilla, esquinaSuperiorIzda.y - (f + 0.5) * longitudCasilla };
+            Vector2D centroCasilla{ esquinaSuperiorIzda.x + (c + 0.5) * longitudCasilla, esquinaSuperiorIzda.y + (f + 0.5) * longitudCasilla };
             casillas[f][c].dibuja(renderer, centroCasilla, longitudCasilla);
         }
     }

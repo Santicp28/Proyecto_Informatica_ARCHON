@@ -53,7 +53,7 @@ public:
 
                 Vector2D centroPieza{
                     esquinaSuperiorIzda.x + (pos.columna + 0.5) * longitudCasilla,
-                    esquinaSuperiorIzda.y - (pos.fila + 0.5) * longitudCasilla
+                    esquinaSuperiorIzda.y + (pos.fila + 0.5) * longitudCasilla
                 };
 
                 pieza->dibuja(renderer, centroPieza, longitudCasilla*escalaPieza, longitudCasilla*escalaPieza);
