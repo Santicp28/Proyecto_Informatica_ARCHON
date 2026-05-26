@@ -64,7 +64,7 @@ void Renderer::dibujaSprite(const char* rutaPNG, const Vector2D& centro, double 
 }
 
 void Renderer::dibujaTexto(const char* texto, const Vector2D& pos,
-	float r, float g, float b, int size) const {
+	double r, double g, double b, int size) const {
 	ETSIDI::setTextColor(r, g, b);
 	ETSIDI::setFont("ComicNeue-Regular.ttf", size);
 	ETSIDI::printxy(texto, (int)pos.x, (int)pos.y);
