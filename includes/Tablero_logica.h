@@ -12,7 +12,7 @@ class Tablero_logica {
 private:
     friend class Interaccion;
     double longitud;
-    Vector2D posicion;//en el centro
+    Vector2D posicion{ Config::sizeMundo * 0.5 };//en el centro
     static constexpr int TAM = 9;
     Casilla casillas[TAM][TAM];
 

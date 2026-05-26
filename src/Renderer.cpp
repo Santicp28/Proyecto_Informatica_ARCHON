@@ -1,4 +1,5 @@
 #include "Renderer.h"
+#include "Config.h"
 
 void Renderer::inicializa2D()
 {
@@ -51,4 +52,10 @@ void Renderer::dibujaLinea(const Vector2D& limite1, const Vector2D& limite2, con
 	glBegin(GL_LINES);
 	glVertex2d(limite1.x, limite1.y);
 	glVertex2d(limite2.x, limite2.y);
+	glEnd();
+}
+
+void Renderer::cuadradoParaPruebas() const
+{
+	dibujaCuadrado(Config::sizeMundo * 0.5, { 1.0,1.0,1.0 }, Config::sizeMundo * 0.2);
 }

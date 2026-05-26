@@ -3,7 +3,7 @@
 
 void Pared::dibuja(const Renderer& renderer) const
 {
-    renderer.dibujaLinea(limite1, limite1, color);
+    renderer.dibujaLinea(limite1, limite2, color);
 }
 
 double Pared::distancia(const Vector2D& p, Vector2D* pdir) const

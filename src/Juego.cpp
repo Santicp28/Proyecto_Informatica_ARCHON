@@ -22,10 +22,8 @@ void Juego::dibuja(const Renderer& renderer)
         tablero_logica.dibuja(renderer);
         break;
 
-    case EstadoJuego::ARENA:
-        glClearColor(0.25f, 0.1f, 0.1f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        //arena.dibuja();
+    case EstadoJuego::ARENA:   
+        arena.dibuja(renderer);
         break;
 
     case EstadoJuego::OPCIONES:
@@ -61,7 +59,7 @@ void Juego::tecla(unsigned char key)
             break;
 
         case MenuAccion::OPCIONES:
-            estado = EstadoJuego::OPCIONES;
+            estado = EstadoJuego::ARENA;
             break;
 
         case MenuAccion::SALIR:

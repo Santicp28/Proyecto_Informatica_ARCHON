@@ -16,10 +16,6 @@ void Tablero_logica::inicializa()
     combatePendiente = false;
     hayOrigenSeleccionado = false;
     longitud = std::min(Config::sizeMundo.x, Config::sizeMundo.y);
-    posicion = { Config::sizeMundo * 0.5 };
-
-
-
 
 	//INICIALIZA CASILLAS
     constexpr TipoCasilla tipoCasillas[TAM][TAM] =
@@ -62,7 +58,7 @@ void Tablero_logica::dibuja(const Renderer& renderer)const {
 
     for (unsigned int f = 0; f < TAM; f++) {
         for (unsigned int c = 0; c < TAM; c++) {
-            Vector2D centroCasilla{ esquinaSuperiorIzda.x + (c + 0.5) * longitudCasilla, esquinaSuperiorIzda.y - (f + 0.5) * longitudCasilla };
+            Vector2D centroCasilla{ esquinaSuperiorIzda.x + (c + 0.5) * longitudCasilla, esquinaSuperiorIzda.y + (f + 0.5) * longitudCasilla };
              casillas[f][c].dibuja(renderer, centroCasilla, longitudCasilla);
         }
     }
