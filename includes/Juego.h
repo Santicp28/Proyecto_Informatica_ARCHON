@@ -9,7 +9,8 @@
 enum class EstadoJuego {
     MENU_PRINCIPAL,
     TABLERO,
-    MENU_HECHIZOS,
+    MENU_HECHIZOS_LUZ,
+    MENU_HECHIZOS_OSCURIDAD,
     ARENA,
     OPCIONES,
     PAUSA,
@@ -21,7 +22,8 @@ private:
     EstadoJuego estado;
     Tablero tablero;
     Menu menuPrincipal;
-    Menu menuHechizos;
+    Menu menuHechizosLuz;
+    Menu menuHechizosOscuridad;
     Arena arena;
 
 public:

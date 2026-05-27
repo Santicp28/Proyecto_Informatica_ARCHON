@@ -1,7 +1,7 @@
 #include "Menu.h"
 
-Menu::Menu(const std::vector<std::string>& textos, const Vector2D& sMenu, const Vector2D& c, const string& titu):
-    sizeMenu(sMenu),titulo(titu), centro(c)
+Menu::Menu(const std::vector<std::string>& textos, const Vector2D& sMenu, const Vector2D& c, const string& titu, const Color& colorTit):
+    sizeMenu(sMenu),titulo(titu), centro(c), colorTitulo(colorTit)
 {
     for (const auto& texto : textos)
         botones.emplace_back(texto);//cuando pasas argumentos del constructor:emplace_back (llama constructor sin hacer copia temporal)
@@ -20,6 +20,7 @@ void Menu::dibuja(const Renderer& renderer)const
 {
     renderer.dibujaColorFondo(colorFondo);
     const Vector2D sizeBotones{ calcularSizeBotones() };
+    renderer.dibujaTexto(titulo, calcularPosicionBotones(-1), { 0.0f,0.0f,0.0f }, sizeBotones.y * 0.8);
     for (int i = 0; i < botones.size(); i++) {
         botones[i].dibuja(renderer,calcularPosicionBotones(i), sizeBotones);
     }
@@ -73,4 +74,9 @@ MenuAccion Menu::tecla(unsigned char key)
 
 void Menu::teclaEspecial(int key)
 {
+}
+
+Vector2D Menu::calcularSizeBotones() const
+{
+    return{ sizeMenu.x * 0.6, sizeMenu.y / (botones.size() + 1.0) * 0.6 };
 }
