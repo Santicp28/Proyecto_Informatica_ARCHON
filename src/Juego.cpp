@@ -85,7 +85,7 @@ void Juego::tecla(unsigned char key)
             if (key == 13) { // ENTER
                 tablero.seleccionarConCursor();
 
-                if (Tablero.comprobarFinJuego()) {
+                if (tablero.comprobarFinJuego()) {
                     estado = EstadoJuego::FIN_PARTIDA;
                     break;
                 }
