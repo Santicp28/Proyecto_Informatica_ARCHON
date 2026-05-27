@@ -276,7 +276,11 @@ bool Tablero::seleccionarConCursor()
 {
 
     if (!hayOrigenSeleccionado) {
-		if (listaPiezas.getPiezaEnPosicion(cursor.getPosicion())->getBando() != turnoActual) return false; //solo puedo seleccionar una pieza de mi turno
+
+        Pieza* piezaSeleccionada = listaPiezas.getPiezaEnPosicion(cursor.getPosicion());
+
+        if (piezaSeleccionada == nullptr) return false;
+		if (piezaSeleccionada->getBando() != turnoActual) return false; //solo puedo seleccionar una pieza de mi turno
 
         origenSeleccionado = cursor.getPosicion();
         hayOrigenSeleccionado = true;
@@ -329,14 +333,17 @@ void Tablero::cambiarTurno()
 
 void Tablero::cicloTurno()
 {
-    contadorTurnos++;
-    if (contadorTurnos % 2 == 0) {
-        for (int f = 0; f < TAM; f++) {
-            for (int c = 0; c < TAM; c++) {
-                casillas[f][c].cambiarOscilantes();
-            }
-		}
+    for (int f = 0; f < TAM; f++) {
+        for (int c = 0; c < TAM; c++) {
+            casillas[f][c].cambiarOscilantes(cicloLuz_A_Oscuridad);
+        }
     }
+
+    contadorTurnos++;
+
+    if (contadorTurnos % 5 == 0) {
+        cicloLuz_A_Oscuridad = !cicloLuz_A_Oscuridad; 
+    }   
 }
 
 //hay que limpiar el flag para que luego no se abra la arena en momentos no deseados
@@ -390,13 +397,23 @@ bool Tablero::comprobarFinJuego()
 
 void Tablero::aplicarEfectoTipoCasilla(Pieza* p, const Casilla& c)
 {
+	TipoCasilla tipo = c.getTipo();
+
     if (p->getBando() == Bando::LUZ) {
-        if (c.getTipo() == TipoCasilla::CLARA) p->setDefensa(1.35);
-        else if (c.getTipo() == TipoCasilla::OSCURA) p->setDefensa(1);
+        if (tipo == TipoCasilla::CLARA) p->setDefensa(1.55);
+		else if (tipo == TipoCasilla::BASTANTE_CLARA) p->setDefensa(1.45);
+		else if (tipo == TipoCasilla::LIGERAMENTE_CLARA) p->setDefensa(1.25);
+        else if (tipo == TipoCasilla::LIGERAMENTE_OSCURA) p->setDefensa(1.0);
+        else if (tipo == TipoCasilla::BASTANTE_OSCURA) p->setDefensa(1.0);
+        else if (tipo == TipoCasilla::OSCURA) p->setDefensa(1.0);
     }
     else if (p->getBando() == Bando::OSCURIDAD) {
-        if (c.getTipo() == TipoCasilla::OSCURA) p->setDefensa(1.35);
-        else if (c.getTipo() == TipoCasilla::CLARA) p->setDefensa(1);
+        if (tipo == TipoCasilla::OSCURA) p->setDefensa(1.5);
+        else if (tipo == TipoCasilla::BASTANTE_OSCURA) p->setDefensa(1.45);
+        else if (tipo == TipoCasilla::LIGERAMENTE_OSCURA) p->setDefensa(1.25);
+        else if (tipo == TipoCasilla::LIGERAMENTE_CLARA) p->setDefensa(1.0);
+        else if (tipo == TipoCasilla::BASTANTE_CLARA) p->setDefensa(1.0);
+        else if (tipo == TipoCasilla::CLARA) p->setDefensa(1.0);
     }
 }
 // ----------------- FUNCIONES MISCELÁNEAS ----------------- END
