@@ -29,7 +29,7 @@
 class Tablero {
 private:
 
-    double longitud;
+    double longitud{ Config::sizeMundo.y };
     Vector2D posicion{ Config::sizeMundo * 0.5 };//en el centro
 
     static constexpr int TAM = 9;
@@ -53,6 +53,7 @@ private:
     PosicionMatriz destinoCombate;
 
 public:
+	Tablero(double longit) : longitud(longit) {}
     void dibuja(const Renderer& renderer)const;
 
     void resaltarMovimientoPosible();

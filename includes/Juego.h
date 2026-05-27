@@ -19,13 +19,13 @@ enum class EstadoJuego {
 class Juego {
 private:
     EstadoJuego estado;
-    Tablero Tablero;
-    Menu menuPrincipal{ { "JUGAR","OPCIONES","SALIR" },Config::sizeMundo,Config::sizeMundo*0.5, "Archon"};
-    Menu menuHechizos{ { "TP","CURAR","CAMBIAR TIEMPO","INTERCAMBIAR","INVOCAR","REVIVIR","ENCARCELAR","SALIR"},
-        {(Config::sizeMundo.x - longitud) * 0.5}, "HECHIZOS" }; //CAMBIAR
+    Tablero tablero;
+    Menu menuPrincipal;
+    Menu menuHechizos;
     Arena arena;
 
 public:
+    Juego();
     void inicializa();
     void dibuja(const Renderer& renderer);
     void mueve(float dt);
