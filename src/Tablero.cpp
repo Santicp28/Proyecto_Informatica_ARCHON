@@ -8,8 +8,7 @@ using enum TipoCasilla;
 
 void Tablero::inicializa()
 {
-
-
+	ganador = Bando::NINGUNO;
     turnoActual = Bando::LUZ;
 
     combatePendiente = false;
@@ -86,6 +85,8 @@ void Tablero::inicializa()
     agregarPieza<Banshee>(8, 8);
 }
 
+
+// --------------- FUNCIONES DE DIBUJO ------------------ START
 void Tablero::dibuja(const Renderer& renderer)const {
     double longitudCasilla = longitud / TAM;
     Vector2D esquinaSuperiorIzda{ posicion.x - longitud / 2.0, posicion.y - longitud / 2.0 };
@@ -97,10 +98,58 @@ void Tablero::dibuja(const Renderer& renderer)const {
         }
     }
 
-    cursor.dibuja(renderer, esquinaSuperiorIzda, longitudCasilla);
-	listaPiezas.dibujarPiezas(renderer, esquinaSuperiorIzda, longitudCasilla);
 
+    
+	listaPiezas.dibujarPiezas(renderer, esquinaSuperiorIzda, longitudCasilla);
+    dibujaOrigenSeleccionado(renderer, esquinaSuperiorIzda, longitudCasilla);
+    cursor.dibuja(renderer, esquinaSuperiorIzda, longitudCasilla, turnoActual);
 }
+
+void Tablero::resaltarMovimientoPosible()
+{
+
+    limpiarResaltados();
+
+    if (!hayOrigenSeleccionado) {
+        return;
+    }
+
+    for (int f = 0; f < TAM; f++) {
+        for (int c = 0; c < TAM; c++) {
+            PosicionMatriz destino_posible{ f,c };
+
+            if (movimientoLegal(origenSeleccionado, destino_posible)) {
+                movimientosPosibles.push_back(destino_posible);
+                casillas[f][c].setResaltada(true);
+            }
+        }
+    }
+}
+
+void Tablero::limpiarResaltados() {
+    for (int f = 0; f < TAM; f++) {
+        for (int c = 0; c < TAM; c++) {
+            casillas[f][c].setResaltada(false);
+        }
+    }
+    movimientosPosibles.clear();
+}
+
+void Tablero::dibujaOrigenSeleccionado(const Renderer& renderer, const Vector2D& esquinaSuperiorIzda, double longitud) const
+{
+    Vector2D centro{
+        esquinaSuperiorIzda.x + (origenSeleccionado.columna + 0.5) * longitud,
+        esquinaSuperiorIzda.y + (origenSeleccionado.fila + 0.5) * longitud
+    };
+
+    if (hayOrigenSeleccionado) {
+        renderer.dibujaSprite("bin/Graficos/elegido.png", centro, longitud, longitud);
+    }
+}
+// --------------- FUNCIONES DE DIBUJO ------------------ END
+
+
+
 
 
 // --------------- LOGICA DE MOVIMIENTO ------------------ START
@@ -127,6 +176,7 @@ bool Tablero::mover(PosicionMatriz origen, PosicionMatriz destino)
     //Movimiento normal
 	listaPiezas.moverDeCasilla(origen, destino);
     cambiarTurno();
+    cicloTurno();
 
     return true;
 }
@@ -230,36 +280,19 @@ bool Tablero::seleccionarConCursor()
     }
 
     bool movimientoCorrecto = mover(origenSeleccionado, cursor.getPosicion());
+    
 
     hayOrigenSeleccionado = false;
 	origenSeleccionado = { -1, -1 };//reiniciamos el origen seleccionado para evitar errores
 
-	movimientosPosibles.clear();//limpiamos los movimientos posibles para que no se sigan mostrando después de mover
+	limpiarResaltados();//limpiamos los movimientos posibles para que no se sigan mostrando después de mover
 
     return movimientoCorrecto;
 }
 
-void Tablero::resaltarMovimientoPosible()
-{
-    movimientosPosibles.clear();
-
-    if (!hayOrigenSeleccionado) {
-        return;
-    }
-
-    for (int f = 0; f < TAM; f++) {
-        for (int c = 0; c < TAM; c++) {
-            PosicionMatriz destino_posible{f,c};
-
-            if (movimientoLegal(origenSeleccionado, destino_posible)) {
-                movimientosPosibles.push_back(destino_posible);
-            }
-        }
-    }
-}
-
-
 // ----------------- FUNCIONES DEL CURSOR ----------------- END
+
+
 
 
 
@@ -280,13 +313,69 @@ void Tablero::cambiarTurno()
     }
 }
 
+void Tablero::cicloTurno()
+{
+    contadorTurnos++;
+    if (contadorTurnos % 2 == 0) {
+        for (int f = 0; f < TAM; f++) {
+            for (int c = 0; c < TAM; c++) {
+                casillas[f][c].cambiarOscilantes();
+            }
+		}
+    }
+}
+
 //hay que limpiar el flag para que luego no se abra la arena en momentos no deseados
 void Tablero::limpiarCombatePendiente()
 {
     combatePendiente = false;
 }
 
-// ----------------- FUNCIONES DE MISCELÁNEAS ----------------- END
+
+Bando Tablero::comprobarCasillasDePoder()
+{
+	int contadorLuz = 0;
+	int contadorOscuridad = 0;
+
+    for (int f = 0; f < TAM; f++) {
+        for (int c = 0; c < TAM; c++) {
+            if (casillas[f][c].getTipo() == TipoCasilla::PODER) {
+                Pieza* p = listaPiezas.getPiezaEnPosicion({ f, c });
+
+                if (p != nullptr) {
+                    if (p->getBando() == Bando::LUZ) { contadorLuz++;} 
+                    else if (p->getBando() == Bando::OSCURIDAD) {contadorOscuridad++;}
+                }
+            }
+        }
+    }
+
+    if (contadorLuz == 5) { return Bando::LUZ; }
+	else if (contadorOscuridad == 5) { return Bando::OSCURIDAD; }
+    else return Bando::NINGUNO;
+}   
+
+
+bool Tablero::comprobarFinJuego()
+{
+    if (listaPiezas.noQuedanPiezasDeBando(Bando::LUZ)) {
+		ganador = Bando::OSCURIDAD;
+        return true;
+    }
+    else if (listaPiezas.noQuedanPiezasDeBando(Bando::OSCURIDAD)) {
+        ganador = Bando::LUZ;
+        return true;
+    }
+	else if ((ganador = comprobarCasillasDePoder()) != Bando::NINGUNO) {;
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+// ----------------- FUNCIONES MISCELÁNEAS ----------------- END
+
+
 
 
 
