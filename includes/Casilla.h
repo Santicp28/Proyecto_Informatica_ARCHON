@@ -5,7 +5,7 @@
 
 class Casilla
 {
-	friend class Interaccion;
+	friend class InteraccionTablero;
 	
 	TipoCasilla tipo;
 	PosicionMatriz posicionMatriz;

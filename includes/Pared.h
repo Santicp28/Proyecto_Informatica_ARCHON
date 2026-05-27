@@ -6,7 +6,6 @@ class InteraccionArena;
 
 class Pared
 {
-    friend class Interaccion;
     const Vector2D limite1;
     const Vector2D limite2;
     const Color color;

@@ -8,7 +8,7 @@
 
 class Pieza: public ObjetoMovil
 {
-	friend class Interaccion;
+	friend class InteraccionTablero;
 protected:
 
 	PosicionMatriz posicionMatriz; // Posición en la matriz (fila, columna)
@@ -18,6 +18,7 @@ protected:
     double velocidadMax;
     double cadencia;
     double vida;
+    double defensa;
     double velocidad_ataque;
     Bando bando;      // Bando
     TipoMovimiento tipo_movimiento;
@@ -36,6 +37,7 @@ public:
         velocidadMax(0.0),
         cadencia(0.0),
         vida(0.0),
+        defensa(1.0), //por defecto no reduce daño, pero cuando está en una casilla de su color aumenta y recibe menos daño
         velocidad_ataque(0.0),
         bando(b),
         tipo_movimiento(tm),
@@ -84,6 +86,8 @@ public:
         posicionMatriz.fila = fila;
         posicionMatriz.columna = columna;
     }
+
+	void setDefensa(double def) { defensa = def; }
 
     bool puedeMoverseA(PosicionMatriz destino);
 
