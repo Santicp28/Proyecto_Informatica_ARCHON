@@ -1,16 +1,25 @@
 #include "Menu.h"
 
+Menu::Menu(const std::vector<std::string>& textos, const Vector2D& sMenu, const Vector2D& c, const string& titu):
+    sizeMenu(sMenu),titulo(titu), centro(c)
+{
+    for (const auto& texto : textos)
+        botones.emplace_back(texto);//cuando pasas argumentos del constructor:emplace_back (llama constructor sin hacer copia temporal)
+}
 void Menu::inicializa()
 {
+    for ( auto& boton : botones)
+        boton.inicializa();
     seleccionado = 0;
     botones[seleccionado].cambiarEstado();
+
 }
 
 
-void Menu::dibuja(const Renderer& renderer)
+void Menu::dibuja(const Renderer& renderer)const
 {
     renderer.dibujaColorFondo(colorFondo);
-    Vector2D sizeBotones{ calcularSizeBotones() };
+    const Vector2D sizeBotones{ calcularSizeBotones() };
     for (int i = 0; i < botones.size(); i++) {
         botones[i].dibuja(renderer,calcularPosicionBotones(i), sizeBotones);
     }

@@ -7,6 +7,7 @@
 #include "Renderer.h"
 #include "Config.h"
 #include "Cursor.h"
+#include"Menu.h"
 
 #include "Arquero.h"
 #include "Banshee.h"
@@ -28,7 +29,7 @@
 class Tablero {
 private:
 
-    double longitud;
+    double longitud{ Config::sizeMundo.y };
     Vector2D posicion{ Config::sizeMundo * 0.5 };//en el centro
 
     static constexpr int TAM = 9;
@@ -53,7 +54,8 @@ private:
 
     int contadorTurnos = 0;
 
-public: 
+public:
+	Tablero(double longit) : longitud(longit) {}
 
     void inicializa();
 

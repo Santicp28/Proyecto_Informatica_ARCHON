@@ -3,11 +3,20 @@
 #include <cstdlib>
 #include "Tipos.h"
 
+Juego::Juego() :
+    tablero(Config::sizeMundo.y),
+    menuPrincipal({ "JUGAR","OPCIONES","SALIR" }, Config::sizeMundo, Config::sizeMundo * 0.5, "Archon"),
+    menuHechizos( { "TP","CURAR","CAMBIAR TIEMPO","INTERCAMBIAR","INVOCAR","REVIVIR","ENCARCELAR","SALIR"},
+        { (Config::sizeMundo.x - Config::sizeMundo.y) * 0.5, Config::sizeMundo.y },
+        { (Config::sizeMundo.x - Config::sizeMundo.y) * 0.5*0.5, Config::sizeMundo.y*0.5 }, "HECHIZOS")
+{
+}
+
 void Juego::inicializa()
 {
     estado = EstadoJuego::MENU_PRINCIPAL;
-    menu.inicializa();
-    Tablero.inicializa();
+    menuPrincipal.inicializa();
+    tablero.inicializa();
 }
 
 void Juego::dibuja(const Renderer& renderer)
@@ -15,11 +24,11 @@ void Juego::dibuja(const Renderer& renderer)
     renderer.dibujaColorFondo({ 0.2f, 0.2f, 0.2f });
     switch (estado) {
     case EstadoJuego::MENU_PRINCIPAL:
-        menu.dibuja(renderer);
+        menuPrincipal.dibuja(renderer);
         break;
 
     case EstadoJuego::TABLERO:
-        Tablero.dibuja(renderer);
+        tablero.dibuja(renderer);
         break;
 
     case EstadoJuego::ARENA:   
@@ -49,7 +58,7 @@ void Juego::tecla(unsigned char key)
         case EstadoJuego::MENU_PRINCIPAL:
         {
 
-            MenuAccion accion = menu.tecla(key);
+            MenuAccion accion = menuPrincipal.tecla(key);
 
             switch (accion)
             {
@@ -74,24 +83,49 @@ void Juego::tecla(unsigned char key)
         case EstadoJuego::TABLERO:
         {
             if (key == 13) { // ENTER
-                Tablero.seleccionarConCursor();
+                tablero.seleccionarConCursor();
 
-                if (Tablero.comprobarFinJuego()) {
+                if (tablero.comprobarFinJuego()) {
                     estado = EstadoJuego::FIN_PARTIDA;
                     break;
                 }
 
-                if (Tablero.hayCombatePendiente()) {
-                    estado = EstadoJuego::ARENA;
-                    Tablero.limpiarCombatePendiente();
-                    break;
-                }
+            //tablero avisa de que se he elegido combate, haciendo que juego ponga el estado ARENA y limpiando el flag del combate pendiente para no volver a entrar 
+            if (tablero.hayCombatePendiente()) {
+                estado = EstadoJuego::ARENA;
+                tablero.limpiarCombatePendiente();
             }
-
+        }
             if (key == 27) { // ESC
                 estado = EstadoJuego::MENU_PRINCIPAL;
             }
+            if (key == 'h') {
+                estado = EstadoJuego::MENU_HECHIZOS;
+            }
+		break;
+        }
+        case EstadoJuego::MENU_HECHIZOS:
+        {
 
+            MenuAccion accion = menuHechizos.tecla(key);
+
+            switch (accion)
+            {
+            case MenuAccion::JUGAR:
+                estado = EstadoJuego::TABLERO;
+                break;
+
+            case MenuAccion::OPCIONES:
+                estado = EstadoJuego::ARENA;
+                break;
+
+            case MenuAccion::SALIR:
+                exit(0);
+                break;
+
+            default:
+                break;
+            }
             break;
         }
         case EstadoJuego::ARENA:
@@ -118,28 +152,31 @@ void Juego::tecla(unsigned char key)
     }
 }
 
-void Juego::teclaEspecial(int key)
-{
-    if (estado == EstadoJuego::MENU_PRINCIPAL) {
-        menu.teclaEspecial(key);
-    }
-    else if (estado == EstadoJuego::TABLERO) { //con esto conseguimos mover el cursor mediante las flechas en el teclado
-        switch (key) {
-        case GLUT_KEY_UP:
-            Tablero.moverCursor(-1, 0);
-            break;
-        case GLUT_KEY_DOWN:
-           Tablero.moverCursor(1, 0);
-           break;
-        case GLUT_KEY_LEFT:
-            Tablero.moverCursor(0, -1);
-            break;
-        case GLUT_KEY_RIGHT:
-            Tablero.moverCursor(0, 1);
-            break;
+    void Juego::teclaEspecial(int key)
+    {
+        if (estado == EstadoJuego::MENU_PRINCIPAL) {
+            menuPrincipal.teclaEspecial(key);
+        }
+        else if (estado == EstadoJuego::TABLERO) { //con esto conseguimos mover el cursor mediante las flechas en el teclado
+            switch (key) {
+            case GLUT_KEY_UP:
+                tablero.moverCursor(-1, 0);
+                break;
+
+            case GLUT_KEY_DOWN:
+                tablero.moverCursor(1, 0);
+                break;
+
+            case GLUT_KEY_LEFT:
+                tablero.moverCursor(0, -1);
+                break;
+
+            case GLUT_KEY_RIGHT:
+                tablero.moverCursor(0, 1);
+                break;
+            }
         }
     }
-}
 
 
 EstadoJuego Juego::getEstado() const
