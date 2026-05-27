@@ -24,6 +24,8 @@ private:
     Menu menuPrincipal;
     Menu menuHechizosLuz;
     Menu menuHechizosOscuridad;
+    Menu menuPausa;
+	Menu menuFinPartida;
     Arena arena;
 
 public:

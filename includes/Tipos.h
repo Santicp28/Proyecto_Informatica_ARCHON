@@ -12,7 +12,11 @@ enum class MenuAccion
     CAMBIAR_TIEMPO,
     INTERCAMBIAR,
     ENCARCELAR,
-    TIJERAS
+    TIJERAS,
+
+    CONTINUAR,
+
+	IR_MENU_PRINCIPAL
 };
 
 enum class Bando {
