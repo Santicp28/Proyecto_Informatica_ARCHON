@@ -100,5 +100,5 @@ public:
     //double getArmadura() const { return armadura; }
     double getDanio() const { return ataque; }
     void setVida(double nuevaVida) { vida = nuevaVida; }
-
+    double getDistanciaCadencia() const {return cadencia;}
 };

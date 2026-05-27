@@ -29,4 +29,4 @@ bool Pieza::puedeMoverseA(PosicionMatriz destino) {
     default:
         return false;
     }
-}   
+}    

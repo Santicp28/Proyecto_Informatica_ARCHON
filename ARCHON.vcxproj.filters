@@ -126,7 +126,7 @@
     <ClCompile Include="src\Cursor.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="ListaPiezas.cpp">
+    <ClCompile Include="src\ListaPiezas.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
@@ -184,9 +184,6 @@
     </ClInclude>
     <ClInclude Include="includes\Vector2D.h">
       <Filter>Archivos de encabezado\ClasesAuxiliares</Filter>
-    </ClInclude>
-    <ClInclude Include="includes\Interaccion.h">
-      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="includes\ListaPiezas.h">
       <Filter>Archivos de encabezado</Filter>

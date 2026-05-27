@@ -150,7 +150,6 @@ xcopy "$(ProjectDir)assets\Graficos" "$(OutDir)Graficos" /E /I /Y</Command>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ListaPiezas.cpp" />
     <ClCompile Include="src\ARCHON.cpp" />
     <ClCompile Include="src\Arena.cpp" />
     <ClCompile Include="src\Arquero.cpp" />
@@ -167,6 +166,7 @@ xcopy "$(ProjectDir)assets\Graficos" "$(OutDir)Graficos" /E /I /Y</Command>
     <ClCompile Include="src\Duende.cpp" />
     <ClCompile Include="src\Hechicero.cpp" />
     <ClCompile Include="src\ListaDisparos.cpp" />
+    <ClCompile Include="src\ListaPiezas.cpp" />
     <ClCompile Include="src\Manticora.cpp" />
     <ClCompile Include="src\ObjetoMovil.cpp" />
     <ClCompile Include="src\Renderer.cpp" />
