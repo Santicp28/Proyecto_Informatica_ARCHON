@@ -1,6 +1,5 @@
 #include "Tablero.h"
 #include "Renderer.h"
-#include <algorithm>
 #include <iostream>
 
 
@@ -11,9 +10,8 @@ void Tablero::inicializa()
 	ganador = Bando::NINGUNO;
     turnoActual = Bando::LUZ;
 
-    combatePendiente = false;
+	combatePendiente = false;
     hayOrigenSeleccionado = false;
-    longitud = std::min(Config::sizeMundo.x, Config::sizeMundo.y);
 
 	//INICIALIZA CASILLAS
     constexpr TipoCasilla tipoCasillas[TAM][TAM] =
@@ -33,6 +31,7 @@ void Tablero::inicializa()
             casillas[f][c].inicializa(tipoCasillas[f][c], { f, c });
         }
     }
+
     //INICIALIZA CASILLAS
 
 

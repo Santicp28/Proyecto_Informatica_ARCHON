@@ -9,6 +9,7 @@
 enum class EstadoJuego {
     MENU_PRINCIPAL,
     TABLERO,
+    MENU_HECHIZOS,
     ARENA,
     OPCIONES,
     PAUSA,
@@ -18,11 +19,13 @@ enum class EstadoJuego {
 class Juego {
 private:
     EstadoJuego estado;
-    Tablero Tablero;
-    Menu menu{ { "JUGAR","OPCIONES","SALIR" } };
+    Tablero tablero;
+    Menu menuPrincipal;
+    Menu menuHechizos;
     Arena arena;
 
 public:
+    Juego();
     void inicializa();
     void dibuja(const Renderer& renderer);
     void mueve(float dt);

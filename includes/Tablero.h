@@ -8,6 +8,7 @@
 #include "Renderer.h"
 #include "Config.h"
 #include "Cursor.h"
+#include"Menu.h"
 
 #include "Arquero.h"
 #include "Banshee.h"
@@ -31,7 +32,7 @@ private:
     friend class Interaccion;
     friend class Cursor;
 
-    double longitud;
+    double longitud{ Config::sizeMundo.y };
     Vector2D posicion{ Config::sizeMundo * 0.5 };//en el centro
     static constexpr int TAM = 9;
     Casilla casillas[TAM][TAM];
@@ -56,6 +57,7 @@ private:
     int contadorTurnos = 0;
 
 public:
+	Tablero(double longit) : longitud(longit) {}
 
     void inicializa();
 
