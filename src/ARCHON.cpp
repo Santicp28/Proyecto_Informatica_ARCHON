@@ -10,6 +10,8 @@ void OnDraw(void);
 void OnTimer(int value);
 void OnKeyboardDown(unsigned char key, int x, int y);
 void OnSpecialKeyboardDown(int key, int x, int y);
+void OnKeyboardUp(unsigned char key, int x, int y);
+void OnSpecialKeyboardUp(int key, int x, int y);
 
 int main(int argc, char* argv[])
 {
@@ -28,7 +30,8 @@ int main(int argc, char* argv[])
     glutTimerFunc(25, OnTimer, 0);
     glutKeyboardFunc(OnKeyboardDown);
     glutSpecialFunc(OnSpecialKeyboardDown);
-
+	glutKeyboardUpFunc(OnKeyboardUp);
+    glutSpecialUpFunc(OnSpecialKeyboardUp);
     glutMainLoop();
     return 0;
 }
@@ -62,4 +65,16 @@ void OnTimer(int value)
 
     glutTimerFunc(25, OnTimer, 0);
     glutPostRedisplay();
+}
+
+void OnKeyboardUp(unsigned char key, int x, int y)
+{
+	juego.teclaUP(key);
+	glutPostRedisplay();
+}
+
+void OnSpecialKeyboardUp(int key, int x, int y)
+{
+	juego.teclaEspecialUP(key);
+	glutPostRedisplay();
 }

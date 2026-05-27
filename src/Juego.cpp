@@ -49,7 +49,8 @@ void Juego::dibuja(const Renderer& renderer)
 
 void Juego::mueve(float dt)
 {
-
+    if(estado==EstadoJuego::ARENA)
+		arena.mueve(dt);
 }
 
 void Juego::tecla(unsigned char key)
@@ -133,6 +134,9 @@ void Juego::tecla(unsigned char key)
             if (key == 27) { //también para ir probando como cambia, revisar en siguientes versiones cuando desarrollemos la arena
                 estado = EstadoJuego::TABLERO;
             }
+            else {
+                arena.tecla(key);
+            }
             break;
         }
         case EstadoJuego::OPCIONES:
@@ -176,7 +180,10 @@ void Juego::tecla(unsigned char key)
                 break;
             }
         }
-    }
+        else if (estado == EstadoJuego::ARENA) {
+            arena.teclaEspecial(key);
+        }
+    } 
 
 
 EstadoJuego Juego::getEstado() const
@@ -187,4 +194,15 @@ EstadoJuego Juego::getEstado() const
 void Juego::setEstado(EstadoJuego nuevoEstado)
 {
     estado = nuevoEstado;
+}
+
+void Juego::teclaUP(unsigned char key) {
+	if (estado == EstadoJuego::ARENA) {
+		arena.teclaUP(key);
+	}
+}
+void Juego::teclaEspecialUP(int key) {
+    if (estado == EstadoJuego::ARENA) {
+        arena.teclaEspecialUP(key);
+    }
 }

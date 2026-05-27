@@ -18,6 +18,10 @@ class Arena
 
 	bool combateTerminado; //si empate o uno muerto
 	int  ganadorBando;     // 1 = LUZ, 2 = OSCURIDAD, 0 = en curso
+
+	bool teclas[256]{false};
+	bool teclasEspeciales[256]{ false };
+
 public:
 	void inicializa(Pieza * p1, Pieza * p2);
 	void mueve(float dt);
@@ -28,7 +32,7 @@ public:
 	void teclaEspecialUP(int key);
 
 	bool terminado() const { return combateTerminado; };
-	int ganador() const { return ganadorBando; };
+
 	void resetPosiciones();
 
 	Pieza* getGanador() const;

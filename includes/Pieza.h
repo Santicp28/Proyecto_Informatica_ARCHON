@@ -6,6 +6,7 @@
 #include "Tipos.h"
 #include "ObjetoMovil.h"
 
+class Disparo;
 class Pieza: public ObjetoMovil
 {
 protected:
@@ -23,6 +24,7 @@ protected:
     TipoMovimiento tipo_movimiento;
     int rango_movimiento;
     Color color;
+	Disparo* ultimoDisparo= nullptr; 
 public:
     bool atacar{ false };
 
@@ -101,4 +103,6 @@ public:
     double getDanio() const { return ataque; }
     void setVida(double nuevaVida) { vida = nuevaVida; }
     double getDistanciaCadencia() const {return cadencia;}
+	Disparo* getUltimoDisparo() const { return ultimoDisparo; }
+	void setUltimoDisparo(Disparo* disparo) { ultimoDisparo = disparo; }
 };
