@@ -11,9 +11,10 @@ class Pieza: public ObjetoMovil
 protected:
 
 	PosicionMatriz posicionMatriz; // Posición en la matriz (fila, columna)
-    Vector2D posicionArena;
+    //Vector2D posicionArena;
     double ataque;
-    double velocidad;
+    //double velocidad;
+    double velocidadMax;
     double cadencia;
     double vida;
     double defensa;
@@ -23,13 +24,15 @@ protected:
     int rango_movimiento;
     Color color;
 public:
+    bool atacar{ false };
+
     virtual void dibuja(const Renderer& renderer, const Vector2D& centro, double ancho, double alto) const = 0;
 
     Pieza(Ataque at, Vida vi, Velocidad vel, Cadencia cad, Velocidad_ataque vel_at, Rango ra, Bando b, TipoMovimiento tm)
         :
         posicionMatriz{ 0, 0 },
         ataque(0.0),
-        velocidad(0.0),
+        velocidadMax(0.0),
         cadencia(0.0),
         vida(0.0),
         defensa(1.0), //por defecto no reduce daño, pero cuando está en una casilla de su color aumenta y recibe menos daño
@@ -53,9 +56,9 @@ public:
         else if (vi == Vida::VARIABLE) vida = 100.0;
 
         // --- VELOCIDAD (Desplazamiento) ---
-        if (vel == Velocidad::BAJA) velocidad = 4.0;
-        else if (vel == Velocidad::NORMAL) velocidad = 6.0;
-        else if (vel == Velocidad::VARIABLE) velocidad = 6.0;
+        if (vel == Velocidad::BAJA) velocidadMax = 4.0;
+        else if (vel == Velocidad::NORMAL) velocidadMax = 6.0;
+        else if (vel == Velocidad::VARIABLE) velocidadMax = 6.0;
 
         // --- CADENCIA (Tiempo entre disparos) ---
         if (cad == Cadencia::MUYRAPIDA) cadencia = 0.2;
@@ -91,5 +94,11 @@ public:
 
     Bando getBando() const { return bando; }
 
-    virtual void setPosicionArena(const Vector2D& posicion) { posicionArena = posicion; }
+    virtual void setPosicionArena(const Vector2D& posicion) { posicion_ = posicion; }
+    double getVelocidadMovimiento() const { return velocidadMax; }
+
+    //double getArmadura() const { return armadura; }
+    double getDanio() const { return ataque; }
+    void setVida(double nuevaVida) { vida = nuevaVida; }
+
 };

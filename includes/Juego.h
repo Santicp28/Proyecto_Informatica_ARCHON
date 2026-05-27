@@ -32,6 +32,9 @@ public:
 
     void tecla(unsigned char key);
     void teclaEspecial(int key);
+    void teclaUP(unsigned char key);
+    void teclaEspecialUP(int key);
+
 
     EstadoJuego getEstado() const;
     void setEstado(EstadoJuego nuevoEstado);
