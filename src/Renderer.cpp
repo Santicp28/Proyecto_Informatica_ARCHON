@@ -87,3 +87,4 @@ void Renderer::dibujaTexto(const char* texto, const Vector2D& pos, double r, dou
 	ETSIDI::setFont("ComicNeue-Regular.ttf", size);
 	ETSIDI::printxy(texto, (int)pos.x, (int)pos.y);
 }
+

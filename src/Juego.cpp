@@ -83,15 +83,18 @@ void Juego::tecla(unsigned char key)
 
                 if (Tablero.hayCombatePendiente()) {
                     estado = EstadoJuego::ARENA;
+                    arena.inicializa(tablero.getAtacante(), tablero.getDefensor());
                     Tablero.limpiarCombatePendiente();
                     break;
                 }
             }
 
+            if (key == 9) { // ESC
+                estado = EstadoJuego::ARENA;
+            }
             if (key == 27) { // ESC
                 estado = EstadoJuego::MENU_PRINCIPAL;
             }
-
             break;
         }
         case EstadoJuego::ARENA:
@@ -150,4 +153,15 @@ EstadoJuego Juego::getEstado() const
 void Juego::setEstado(EstadoJuego nuevoEstado)
 {
     estado = nuevoEstado;
+}
+void Juego::teclaUP(unsigned char key)
+{
+    if (estado == EstadoJuego::ARENA)
+        arena.teclaUP(key);
+}
+
+void Juego::teclaEspecialUP(int key)
+{
+    if (estado == EstadoJuego::ARENA)
+        arena.teclaEspecialUP(key);
 }

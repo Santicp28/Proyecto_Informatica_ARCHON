@@ -12,9 +12,10 @@ class Pieza: public ObjetoMovil
 protected:
 
 	PosicionMatriz posicionMatriz; // Posición en la matriz (fila, columna)
-    Vector2D posicionArena;
+    //Vector2D posicionArena;
     double ataque;
-    double velocidad;
+    //double velocidad;
+    double velocidadMax;
     double cadencia;
     double vida;
     double velocidad_ataque;
@@ -23,13 +24,16 @@ protected:
     int rango_movimiento;
     Color color;
 public:
+    bool atacar{ false };
+
     virtual void dibuja(const Renderer& renderer, const Vector2D& centro, double ancho, double alto) const = 0;
 
     Pieza(Ataque at, Vida vi, Velocidad vel, Cadencia cad, Velocidad_ataque vel_at, Rango ra, Bando b, TipoMovimiento tm)
-        :
+        :ObjetoMovil({}, {}, {}, 1.0),
         posicionMatriz{ 0, 0 },
         ataque(0.0),
-        velocidad(0.0),
+        //velocidad(0.0),
+        velocidadMax(0.0),
         cadencia(0.0),
         vida(0.0),
         velocidad_ataque(0.0),
@@ -52,9 +56,9 @@ public:
         else if (vi == Vida::VARIABLE) vida = 100.0;
 
         // --- VELOCIDAD (Desplazamiento) ---
-        if (vel == Velocidad::BAJA) velocidad = 4.0;
-        else if (vel == Velocidad::NORMAL) velocidad = 6.0;
-        else if (vel == Velocidad::VARIABLE) velocidad = 6.0;
+        if (vel == Velocidad::BAJA) velocidadMax = 4.0;
+        else if (vel == Velocidad::NORMAL) velocidadMax = 6.0;
+        else if (vel == Velocidad::VARIABLE) velocidadMax = 6.0;
 
         // --- CADENCIA (Tiempo entre disparos) ---
         if (cad == Cadencia::MUYRAPIDA) cadencia = 0.2;
@@ -88,9 +92,11 @@ public:
 
     Bando getBando() const { return bando; }
 
+    virtual void setPosicionArena(const Vector2D& posicion) { posicion_ = posicion; }
+    
+    double getVelocidadMovimiento() const { return velocidadMax; }
 
-
-
-    virtual void setPosicionArena(const Vector2D& posicion) { posicionArena = posicion; }
-    //Pieza(double sizeradio = 1.0, Vector2D pos = {}, Vector2D vel = {}, Vector2D acel = {}): ObjetoMovil(pos, vel, acel, sizeradio) {}
+    double getArmadura() const { return armadura; }
+    double getDanio() const { return ataque; }
+    void setVida(double nuevaVida) { vida = nuevaVida; }
 };

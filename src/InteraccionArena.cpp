@@ -1,8 +1,6 @@
 #include "InteraccionArena.h"
 #include <cmath>
 
-
-
 //void InteraccionArena::colision(Pieza& p, const BordesArena& b)
 //{
 //    Vector2D dir;
