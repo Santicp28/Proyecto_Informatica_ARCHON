@@ -14,6 +14,8 @@ class Casilla
 	bool esOscilante = false;
 	bool resaltada = false;
 
+	int varianteGrafico{ 0 };//asinga aleatoriamente
+
 public:
 	void inicializa(const TipoCasilla& nuevoTipo, PosicionMatriz nuevaPosicion);
 	void dibuja(const Renderer& renderer, const Vector2D& posicion, double longitud)const;

@@ -77,10 +77,18 @@ void Renderer::cuadradoParaPruebas() const
 void Renderer::dibujaSprite(const char* rutaPNG, const Vector2D& centro, double ancho, double alto) const {
 
 	ETSIDI::Sprite sprite(rutaPNG, (double)(centro.x), (double)(centro.y), (double)ancho, (double)alto);
-	sprite.setAngle(180);
-	sprite.flip(true, false);
+	sprite.flip(false, true);
 	sprite.draw();
 	glDisable(GL_LIGHTING); //MIGUEL DESACTIVALO DENTRO DEL DRAW PORFAA
+}
+
+void Renderer::dibujaSprite(const ETSIDI::Sprite& sprite, const Vector2D& centro, double ancho, double alto) const {
+	ETSIDI::Sprite s = sprite; // copia el sprite ya cargado
+	s.setPos(centro.x - (ancho / 2.0), centro.y + (alto / 2.0));
+	s.setSize(ancho, alto);
+	s.flip(false, true);
+	s.draw();
+	glDisable(GL_LIGHTING);
 }
 
 void Renderer::dibujaTexto(const char* texto, const Vector2D& pos, double r, double g, double b, int size) const {

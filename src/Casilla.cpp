@@ -1,10 +1,15 @@
 #include "Casilla.h"
+#include "Graftablero.h"
+#include <cstdlib> 
 
 
 void Casilla::inicializa(const TipoCasilla& nuevoTipo, PosicionMatriz nuevaPosicion)
 {
     tipo = nuevoTipo;
     posicionMatriz = nuevaPosicion;
+    
+    varianteGrafico = rand() % 3;
+
     switch (tipo)
     {
     case TipoCasilla::OSCURA:
@@ -28,21 +33,32 @@ void Casilla::inicializa(const TipoCasilla& nuevoTipo, PosicionMatriz nuevaPosic
 
 void Casilla::dibuja(const Renderer& renderer, const Vector2D& posicion, double longitud) const
 {
-    renderer.dibujaCuadrado(posicion, color, { longitud,longitud });
-    renderer.dibujaContornoCuadrado(posicion, { 0.5f, 0.5f, 0.5f }, { longitud,longitud });
+    //renderer.dibujaCuadrado(posicion, color, { longitud,longitud });
+    //renderer.dibujaContornoCuadrado(posicion, { 0.5f, 0.5f, 0.5f }, { longitud,longitud });
+    double escalaPieza = 1.3;
 
     if (tipo == TipoCasilla::CLARA) {
-		//renderer.dibujaSprite("bin/Graficos/clara.png", posicion, longitud, longitud);
+        const ETSIDI::Sprite* variantes[] = {
+            &luz1.sprite,
+            &luz2.sprite,
+            &luz3.sprite
+        };
+        renderer.dibujaSprite(*variantes[varianteGrafico], posicion, longitud * escalaPieza, longitud * escalaPieza);
     }
     else if (tipo == TipoCasilla::PODER) {
-        //renderer.dibujaSprite("bin/Graficos/poder.png", posicion, longitud, longitud);
+        renderer.dibujaSprite(casillaespecial.sprite, posicion, longitud * escalaPieza, longitud * escalaPieza);
     }
     else {
-		//renderer.dibujaSprite("bin/Graficos/oscura.png", posicion, longitud, longitud);
+        const ETSIDI::Sprite* variantes[] = {
+            &oscuro1.sprite,
+            &oscuro2.sprite,
+            &oscuro3.sprite
+        };
+        renderer.dibujaSprite(*variantes[varianteGrafico], posicion, longitud * escalaPieza, longitud * escalaPieza);
     }
 
     if (resaltada) {
-        renderer.dibujaSprite("bin/Graficos/posiciones.png", posicion, longitud, longitud);
+        renderer.dibujaSprite(posiciones.sprite, posicion, longitud, longitud);
     }
 
     
