@@ -138,7 +138,7 @@ using namespace std;
 	class SpriteSequence: public Sprite
 	{
 	public:
-		ETSIDI_API SpriteSequence(const char *texturePath, int cols, int rows=1, int ms_step = 50, bool repeat = true, float x=0, float y=0, float w=-1.0F, float h=-1.0F, int initState=0);
+		ETSIDI_API SpriteSequence(const char *texturePath, int cols, int rows=1, int ms_step = 50000, bool repeat = true, float x=0, float y=0, float w=-1.0F, float h=-1.0F, int initState=0);
 		ETSIDI_API ~SpriteSequence();
 		ETSIDI_API virtual void draw();
 		ETSIDI_API virtual void loop();

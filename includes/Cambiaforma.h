@@ -1,6 +1,6 @@
 #pragma once
 #include "Pieza.h"
-#include "TiposPiezas.h"
+#include "Grafpiezas.h"
 class Cambiaforma : public Pieza
 {
 public:
