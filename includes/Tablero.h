@@ -53,6 +53,7 @@ private:
     PosicionMatriz destinoCombate;
 
     int contadorTurnos = 0;
+	bool cicloLuz_A_Oscuridad = true; //para controlar el cambio de las casillas oscilantes
 
 public:
 	Tablero(double longit) : longitud(longit) {}

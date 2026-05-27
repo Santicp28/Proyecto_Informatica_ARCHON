@@ -18,7 +18,7 @@ public:
 	void inicializa(const TipoCasilla& nuevoTipo, PosicionMatriz nuevaPosicion);
 	void dibuja(const Renderer& renderer, const Vector2D& posicion, double longitud)const;
 	void setResaltada(bool estado) { resaltada = estado; }
-	void cambiarOscilantes();
+	void cambiarOscilantes(int cicloLuz_A_Oscuridad);
 
 
 	PosicionMatriz getPosicionMatriz() const { return posicionMatriz; }

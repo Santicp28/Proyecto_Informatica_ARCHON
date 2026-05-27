@@ -4,11 +4,15 @@
 #include "Tipos.h"
 
 Juego::Juego() :
+    estado(EstadoJuego::MENU_PRINCIPAL),
     tablero(Config::sizeMundo.y),
-    menuPrincipal({ "JUGAR","OPCIONES","SALIR" }, Config::sizeMundo, Config::sizeMundo * 0.5, "Archon"),
-    menuHechizos( { "TP","CURAR","CAMBIAR TIEMPO","INTERCAMBIAR","INVOCAR","REVIVIR","ENCARCELAR","SALIR"},
+    menuPrincipal({ "JUGAR","OPCIONES","SALIR" }, Config::sizeMundo, Config::sizeMundo * 0.5, "ARCHON", { 0.0f, 0.0f, 0.0f }),
+    menuHechizosLuz( { "TP","CURAR","TIEMPO","SWITCH","SPAWN","1UP","CARCEL","SALIR"},
         { (Config::sizeMundo.x - Config::sizeMundo.y) * 0.5, Config::sizeMundo.y },
-        { (Config::sizeMundo.x - Config::sizeMundo.y) * 0.5*0.5, Config::sizeMundo.y*0.5 }, "HECHIZOS")
+        { (Config::sizeMundo.x - Config::sizeMundo.y) * 0.5*0.5, Config::sizeMundo.y*0.5 }, "LUZ", { 1.0f, 0.0f, 0.0f }),
+    menuHechizosOscuridad( { "TP","CURAR","TIEMPO","SWITCH","SPAWN","1UP","CARCEL","SALIR" },
+        { (Config::sizeMundo.x - Config::sizeMundo.y) * 0.5, Config::sizeMundo.y },
+        { (Config::sizeMundo.x - Config::sizeMundo.y) * 0.5*0.5, Config::sizeMundo.y*0.5 }, "OSC", { 0.0f, 1.0f, 0.0f })
 {
 }
 
@@ -16,6 +20,8 @@ void Juego::inicializa()
 {
     estado = EstadoJuego::MENU_PRINCIPAL;
     menuPrincipal.inicializa();
+	menuHechizosLuz.inicializa();
+	menuHechizosOscuridad.inicializa();
     tablero.inicializa();
 }
 
@@ -30,6 +36,16 @@ void Juego::dibuja(const Renderer& renderer)
     case EstadoJuego::TABLERO:
         tablero.dibuja(renderer);
         break;
+
+	case EstadoJuego::MENU_HECHIZOS_LUZ:
+        tablero.dibuja(renderer);
+		menuHechizosLuz.dibuja(renderer);
+		break;
+
+	case EstadoJuego::MENU_HECHIZOS_OSCURIDAD:
+        tablero.dibuja(renderer);
+		menuHechizosOscuridad.dibuja(renderer);
+		break;
 
     case EstadoJuego::ARENA:   
         arena.dibuja(renderer);
@@ -100,14 +116,18 @@ void Juego::tecla(unsigned char key)
                 estado = EstadoJuego::MENU_PRINCIPAL;
             }
             if (key == 'h') {
-                estado = EstadoJuego::MENU_HECHIZOS;
+				Bando turno = tablero.getTurnoActual();
+                if (turno == Bando::LUZ)
+                    estado = EstadoJuego::MENU_HECHIZOS_LUZ;
+                else
+                    estado = EstadoJuego::MENU_HECHIZOS_OSCURIDAD;
             }
 		break;
         }
-        case EstadoJuego::MENU_HECHIZOS:
+        case EstadoJuego::MENU_HECHIZOS_LUZ:
         {
 
-            MenuAccion accion = menuHechizos.tecla(key);
+            MenuAccion accion = menuHechizosLuz.tecla(key);
 
             switch (accion)
             {
@@ -128,6 +148,25 @@ void Juego::tecla(unsigned char key)
             }
             break;
         }
+		case EstadoJuego::MENU_HECHIZOS_OSCURIDAD:
+		{
+			MenuAccion accion = menuHechizosOscuridad.tecla(key);
+			switch (accion)
+			{
+			case MenuAccion::JUGAR:
+				estado = EstadoJuego::TABLERO;
+				break;
+			case MenuAccion::OPCIONES:
+				estado = EstadoJuego::ARENA;
+				break;
+			case MenuAccion::SALIR:
+				exit(0);
+				break;
+			default:
+				break;
+			}
+			break;
+		}
         case EstadoJuego::ARENA:
         {
             if (key == 27) { //también para ir probando como cambia, revisar en siguientes versiones cuando desarrollemos la arena
