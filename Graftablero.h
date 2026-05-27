@@ -13,4 +13,6 @@ inline constexpr graftablero oscuro3 = { "assets/Graficos/tablero3.png" };
 inline constexpr graftablero elegido = { "assets/Graficos/elegido.png" };
 inline constexpr graftablero posiciones = { "assets/Graficos/posiciones.png" };
 inline constexpr graftablero cursor = { "assets/Graficos/Cursor.png" };
+inline constexpr graftablero cursor_luz = { "assets/Graficos/cursor_luz.PNG" };
+inline constexpr graftablero cursor_oscuro = { "assets/Graficos/cursor_osc.PNG" };
 inline constexpr graftablero casillaespecial = { "assets/Graficos/casillas especial.PNG" };
