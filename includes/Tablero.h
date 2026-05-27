@@ -54,6 +54,11 @@ private:
 
 public:
 	Tablero(double longit) : longitud(longit) {}
+
+    void inicializa();
+
+
+    // ----- FUNCIONES DE DIBUJO ------ START
     void dibuja(const Renderer& renderer)const;
 
     void resaltarMovimientoPosible();
