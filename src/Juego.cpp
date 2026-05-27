@@ -76,20 +76,23 @@ void Juego::tecla(unsigned char key)
             if (key == 13) { // ENTER
                 Tablero.seleccionarConCursor();
 
+                if (Tablero.comprobarFinJuego()) {
+                    estado = EstadoJuego::FIN_PARTIDA;
+                    break;
+                }
 
-                //tablero avisa de que se he elegido combate, haciendo que juego ponga el estado ARENA y limpiando el flag del combate pendiente para no volver a entrar 
                 if (Tablero.hayCombatePendiente()) {
                     estado = EstadoJuego::ARENA;
                     Tablero.limpiarCombatePendiente();
+                    break;
                 }
-
-
-                if (key == 27) { // ESC
-                    estado = EstadoJuego::MENU_PRINCIPAL;
-                }
-                
             }
-			break;
+
+            if (key == 27) { // ESC
+                estado = EstadoJuego::MENU_PRINCIPAL;
+            }
+
+            break;
         }
         case EstadoJuego::ARENA:
         {
@@ -115,65 +118,36 @@ void Juego::tecla(unsigned char key)
     }
 }
 
-    void Juego::teclaEspecial(int key)
-    {
-        if (estado == EstadoJuego::MENU_PRINCIPAL) {
-            menu.teclaEspecial(key);
-        }
-        else if (estado == EstadoJuego::TABLERO) { //con esto conseguimos mover el cursor mediante las flechas en el teclado
-            switch (key) {
-            case GLUT_KEY_UP:
-                Tablero.moverCursor(-1, 0);
-                break;
-
-            case GLUT_KEY_DOWN:
-                Tablero.moverCursor(1, 0);
-                break;
-
-            case GLUT_KEY_LEFT:
-                Tablero.moverCursor(0, -1);
-                break;
-
-            case GLUT_KEY_RIGHT:
-                Tablero.moverCursor(0, 1);
-                break;
-            }
+void Juego::teclaEspecial(int key)
+{
+    if (estado == EstadoJuego::MENU_PRINCIPAL) {
+        menu.teclaEspecial(key);
+    }
+    else if (estado == EstadoJuego::TABLERO) { //con esto conseguimos mover el cursor mediante las flechas en el teclado
+        switch (key) {
+        case GLUT_KEY_UP:
+            Tablero.moverCursor(-1, 0);
+            break;
+        case GLUT_KEY_DOWN:
+           Tablero.moverCursor(1, 0);
+           break;
+        case GLUT_KEY_LEFT:
+            Tablero.moverCursor(0, -1);
+            break;
+        case GLUT_KEY_RIGHT:
+            Tablero.moverCursor(0, 1);
+            break;
         }
     }
+}
 
 
-    //void Juego::raton(int button, int state, int x, int y) //ejemplo para probar el menú, a cambiar en futuras versiones
-    //{
-    //    if (estado == EstadoJuego::MENU_PRINCIPAL) {
-    //        menu.raton(button, state, x, y, 600);
-    //
-    //        if (menu.getQuiereJugar()) {
-    //            estado = EstadoJuego::TABLERO;
-    //            menu.resetAcciones();
-    //        }
-    //        else if (menu.getQuiereRanking()) {
-    //            estado = EstadoJuego::RANKING;
-    //            menu.resetAcciones();
-    //        }
-    //        else if (menu.getQuiereSalir()) {
-    //            exit(0);
-    //        }
-    //    }
-    //}
+EstadoJuego Juego::getEstado() const
+{
+    return estado;
+} //geters para interacciones con otras partes
 
-    //void Juego::movimientoRaton(int x, int y)
-    //{
-    //    if (estado == EstadoJuego::MENU_PRINCIPAL) {
-    //        menu.movimientoRaton(x, y, 600);
-    //    }
-    //}
-
-    EstadoJuego Juego::getEstado() const
-    {
-        return estado;
-    } //geters para interacciones con otras partes
-
-    void Juego::setEstado(EstadoJuego nuevoEstado)
-    {
-        estado = nuevoEstado;
-    }
+void Juego::setEstado(EstadoJuego nuevoEstado)
+{
+    estado = nuevoEstado;
+}
