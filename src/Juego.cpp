@@ -85,28 +85,24 @@ void Juego::tecla(unsigned char key)
             if (key == 13) { // ENTER
                 tablero.seleccionarConCursor();
 
-                if (Tablero.comprobarFinJuego()) {
+                if (tablero.comprobarFinJuego()) {
                     estado = EstadoJuego::FIN_PARTIDA;
                     break;
                 }
 
-                //tablero avisa de que se he elegido combate, haciendo que juego ponga el estado ARENA y limpiando el flag del combate pendiente para no volver a entrar 
-                if (tablero.hayCombatePendiente()) {
-                    estado = EstadoJuego::ARENA;
-                    tablero.limpiarCombatePendiente();
-                }
+            //tablero avisa de que se he elegido combate, haciendo que juego ponga el estado ARENA y limpiando el flag del combate pendiente para no volver a entrar 
+            if (tablero.hayCombatePendiente()) {
+                estado = EstadoJuego::ARENA;
+                tablero.limpiarCombatePendiente();
             }
-
-
-                if (key == 27) { // ESC
-                    estado = EstadoJuego::MENU_PRINCIPAL;
-                }
-                if (key == 'h') {
-                    estado = EstadoJuego::MENU_HECHIZOS;
-                }
-                
+        }
+            if (key == 27) { // ESC
+                estado = EstadoJuego::MENU_PRINCIPAL;
             }
-			break;
+            if (key == 'h') {
+                estado = EstadoJuego::MENU_HECHIZOS;
+            }
+		break;
         }
         case EstadoJuego::MENU_HECHIZOS:
         {
