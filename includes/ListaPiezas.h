@@ -30,6 +30,13 @@ public:
         return nullptr;
     }
 
+    //para saber cuando pierde un bando
+    bool noQuedanPiezasDeBando(Bando b) const {
+        for (auto p : listaPiezas)
+            if (p != nullptr && p->getBando() == b) {return false;}
+        return true;
+	}
+
     bool hayPiezaEn(PosicionMatriz pos) const { return getPiezaEnPosicion(pos) != nullptr; }
 
     ~ListaPiezas() { destruirPiezas(); }
