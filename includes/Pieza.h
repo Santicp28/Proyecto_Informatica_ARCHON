@@ -8,7 +8,6 @@
 
 class Pieza: public ObjetoMovil
 {
-	friend class InteraccionTablero;
 protected:
 
 	PosicionMatriz posicionMatriz; // Posición en la matriz (fila, columna)
