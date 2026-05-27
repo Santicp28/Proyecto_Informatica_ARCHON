@@ -4,7 +4,6 @@
 #include <vector>
 #include "Tipos.h"
 #include "ListaPiezas.h"
-#include "Interaccion.h"
 #include "Renderer.h"
 #include "Config.h"
 #include "Cursor.h"
@@ -28,8 +27,6 @@
 
 class Tablero {
 private:
-    friend class Interaccion;
-    friend class Cursor;
 
     double longitud;
     Vector2D posicion{ Config::sizeMundo * 0.5 };//en el centro
@@ -55,7 +52,7 @@ private:
 
     int contadorTurnos = 0;
 
-public:
+public: 
 
     void inicializa();
 
@@ -85,6 +82,8 @@ public:
 	// ----- FUNCIONES DE CURSOR Y SELECCIÓN ------ START
     void moverCursor(int df, int dc);
     bool seleccionarConCursor();
+
+    bool posicionValida(PosicionMatriz pos) const;   //para asegurarnos que no nos salimos del tablero
 	// ----- FUNCIONES DE CURSOR Y SELECCIÓN ------ END
 
 
@@ -92,6 +91,8 @@ public:
 	// ----- FUNCIONES MISCELÁNEAS ------ START
     bool hayCombatePendiente() const;
     void limpiarCombatePendiente(); //cuando empieza la arena se limpia el flag de combate pendiente
+
+    void aplicarEfectoTipoCasilla(Pieza* p, const Casilla& c);
 
     bool comprobarFinJuego();
 	// ------ FUNCIONES MISCELÁNEAS ------ END
@@ -102,6 +103,9 @@ public:
     //para saber donde está cada pieza después de que se resuelve la arena
     PosicionMatriz getOrigenCombate() const;
     PosicionMatriz getDestinoCombate() const;
+
+	Pieza* getAtacante() const { return listaPiezas.getPiezaEnPosicion(origenCombate); }
+    Pieza* getDefensor() const { return listaPiezas.getPiezaEnPosicion(destinoCombate); }
 
     //para saber de quién es el turno, por ejemplo para mostrar en pantalla
     Bando getTurnoActual() const;
@@ -129,6 +133,8 @@ private:
         Pieza* p = new T();
         p->setPosicionMatriz(fila, columna);
         listaPiezas.agregar(p);
+
+		aplicarEfectoTipoCasilla(p, casillas[fila][columna]);
     }
 
     Bando comprobarCasillasDePoder();
