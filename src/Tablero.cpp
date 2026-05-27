@@ -1,6 +1,5 @@
 #include "Tablero.h"
 #include "Renderer.h"
-#include <algorithm>
 #include <iostream>
 
 
@@ -11,9 +10,8 @@ void Tablero::inicializa()
 	ganador = Bando::NINGUNO;
     turnoActual = Bando::LUZ;
 
-    combatePendiente = false;
+	combatePendiente = false;
     hayOrigenSeleccionado = false;
-    longitud = std::min(Config::sizeMundo.x, Config::sizeMundo.y);
 
 	//INICIALIZA CASILLAS
     constexpr TipoCasilla tipoCasillas[TAM][TAM] =
@@ -33,6 +31,7 @@ void Tablero::inicializa()
             casillas[f][c].inicializa(tipoCasillas[f][c], { f, c });
         }
     }
+
     //INICIALIZA CASILLAS
 
 
@@ -166,6 +165,10 @@ bool Tablero::mover(PosicionMatriz origen, PosicionMatriz destino)
     //Si hay enemigo, no movemos todavía
     //Dejamos marcado que tiene que abrirse la arena
     if (defensor != nullptr && defensor->getBando() != Bando::NINGUNO) {
+		aplicarEfectoTipoCasilla(atacante, casillas[destino.fila][destino.columna]); 
+        //Se actualizan los valores antes de entrar a la arena, ya que pelean en la casilla destino y esa es la que aplica.
+		//haciendo que si el atacante gana, se queda con la misma defensa con la que entraba (la de destino) y si el defensor gana se queda con la misma ya que no se mueve de casilla.
+
         combatePendiente = true; //FLAG PARA CAMBIAR A ARENA
         origenCombate = origen;
         destinoCombate = destino;
@@ -175,6 +178,8 @@ bool Tablero::mover(PosicionMatriz origen, PosicionMatriz destino)
 
     //Movimiento normal
 	listaPiezas.moverDeCasilla(origen, destino);
+    aplicarEfectoTipoCasilla(listaPiezas.getPiezaEnPosicion(destino), casillas[destino.fila][destino.columna]); //para que se actualicen los valores de defensa y poder verlos en tiempo real, a efectos prácticos solo necesitamos aplicarlos antes de arena
+
     cambiarTurno();
     cicloTurno();
 
@@ -262,14 +267,16 @@ bool Tablero::caminoLibreEnL(PosicionMatriz origen, PosicionMatriz destino, bool
 // MOSTRAR STATS DE LA PIEZA EN LA QUE TENGO EL CURSOR!!!!!!!!!
 void Tablero::moverCursor(int df, int dc)
 {
-        cursor.mover(df, dc);
+	PosicionMatriz nuevaPosicion = { cursor.getPosicion().fila + df, cursor.getPosicion().columna + dc };
+
+    if (posicionValida(nuevaPosicion)) cursor.mover(df, dc);
 }
 
 bool Tablero::seleccionarConCursor()
 {
 
     if (!hayOrigenSeleccionado) {
-		if (Interaccion::getBandoOcupante(cursor.getPosicion(), listaPiezas) != turnoActual) return false; //solo puedo seleccionar una pieza de mi turno
+		if (listaPiezas.getPiezaEnPosicion(cursor.getPosicion())->getBando() != turnoActual) return false; //solo puedo seleccionar una pieza de mi turno
 
         origenSeleccionado = cursor.getPosicion();
         hayOrigenSeleccionado = true;
@@ -290,6 +297,13 @@ bool Tablero::seleccionarConCursor()
     return movimientoCorrecto;
 }
 
+
+bool Tablero::posicionValida(PosicionMatriz pos) const
+{
+    int fila = pos.fila;
+    int col = pos.columna;
+    return fila >= 0 && fila < TAM && col >= 0 && col < TAM;
+}
 // ----------------- FUNCIONES DEL CURSOR ----------------- END
 
 
@@ -371,6 +385,18 @@ bool Tablero::comprobarFinJuego()
     }
     else {
         return false;
+    }
+}
+
+void Tablero::aplicarEfectoTipoCasilla(Pieza* p, const Casilla& c)
+{
+    if (p->getBando() == Bando::LUZ) {
+        if (c.getTipo() == TipoCasilla::CLARA) p->setDefensa(1.35);
+        else if (c.getTipo() == TipoCasilla::OSCURA) p->setDefensa(1);
+    }
+    else if (p->getBando() == Bando::OSCURIDAD) {
+        if (c.getTipo() == TipoCasilla::OSCURA) p->setDefensa(1.35);
+        else if (c.getTipo() == TipoCasilla::CLARA) p->setDefensa(1);
     }
 }
 // ----------------- FUNCIONES MISCELÁNEAS ----------------- END

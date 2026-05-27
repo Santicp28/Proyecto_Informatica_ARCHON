@@ -8,7 +8,6 @@
 
 class Pieza: public ObjetoMovil
 {
-	friend class Interaccion;
 protected:
 
 	PosicionMatriz posicionMatriz; // Posición en la matriz (fila, columna)
@@ -17,6 +16,7 @@ protected:
     double velocidad;
     double cadencia;
     double vida;
+    double defensa;
     double velocidad_ataque;
     Bando bando;      // Bando
     TipoMovimiento tipo_movimiento;
@@ -32,6 +32,7 @@ public:
         velocidad(0.0),
         cadencia(0.0),
         vida(0.0),
+        defensa(1.0), //por defecto no reduce daño, pero cuando está en una casilla de su color aumenta y recibe menos daño
         velocidad_ataque(0.0),
         bando(b),
         tipo_movimiento(tm),
@@ -81,6 +82,8 @@ public:
         posicionMatriz.columna = columna;
     }
 
+	void setDefensa(double def) { defensa = def; }
+
     bool puedeMoverseA(PosicionMatriz destino);
 
     PosicionMatriz getPosicionMatriz() const { return posicionMatriz; }
@@ -88,9 +91,5 @@ public:
 
     Bando getBando() const { return bando; }
 
-
-
-
     virtual void setPosicionArena(const Vector2D& posicion) { posicionArena = posicion; }
-    //Pieza(double sizeradio = 1.0, Vector2D pos = {}, Vector2D vel = {}, Vector2D acel = {}): ObjetoMovil(pos, vel, acel, sizeradio) {}
 };

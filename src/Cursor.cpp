@@ -3,9 +3,7 @@
 
 void Cursor::mover(int df, int dc)
 {
-	PosicionMatriz nuevaPosicion{ posicion.fila + df, posicion.columna + dc };
-
-	if (Interaccion::posicionValida(nuevaPosicion)) posicion = nuevaPosicion;
+	posicion = { posicion.fila + df, posicion.columna + dc };
 }
 
 void Cursor::dibuja(const Renderer& renderer, const Vector2D& esquinaSuperiorIzda, double longitudCasilla, Bando b) const {

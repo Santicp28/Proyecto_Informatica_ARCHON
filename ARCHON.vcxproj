@@ -197,7 +197,6 @@ xcopy "$(ProjectDir)assets\Graficos" "$(OutDir)Graficos" /E /I /Y</Command>
     <ClInclude Include="includes\Cambiaforma.h" />
     <ClInclude Include="includes\Casilla.h" />
     <ClInclude Include="includes\Config.h" />
-    <ClInclude Include="includes\coordinadorSprites.h" />
     <ClInclude Include="includes\Cursor.h" />
     <ClInclude Include="includes\Disparo.h" />
     <ClInclude Include="includes\Dragon.h" />
@@ -214,7 +213,6 @@ xcopy "$(ProjectDir)assets\Graficos" "$(OutDir)Graficos" /E /I /Y</Command>
     <ClInclude Include="includes\Fenix.h" />
     <ClInclude Include="includes\freeglut.h" />
     <ClInclude Include="includes\Golem.h" />
-    <ClInclude Include="includes\Interaccion.h" />
     <ClInclude Include="includes\InteraccionArena.h" />
     <ClInclude Include="includes\Juego.h" />
     <ClInclude Include="includes\ListaPiezas.h" />

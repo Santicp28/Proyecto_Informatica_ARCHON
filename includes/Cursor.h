@@ -1,6 +1,6 @@
 #pragma once
 #include "Tipos.h"
-#include "Interaccion.h"
+#include "Renderer.h"
 
 
 class Cursor {

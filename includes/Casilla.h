@@ -4,9 +4,7 @@
 #include "Tipos.h"
 
 class Casilla
-{
-	friend class Interaccion;
-	
+{	
 	TipoCasilla tipo;
 	PosicionMatriz posicionMatriz;
 	Color color;
