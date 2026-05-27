@@ -1,7 +1,7 @@
 #include "Menu.h"
 
-Menu::Menu(const std::vector<std::string>& textos, const Vector2D& sMenu, const Vector2D& c, const string& titu, const Color& colorTit):
-    sizeMenu(sMenu),titulo(titu), centro(c), colorTitulo(colorTit)
+Menu::Menu(const vector<string>& textos, const vector<MenuAccion>& acc, const Vector2D& sMenu, const Vector2D& c, const string& titu, const Color& colorTit):
+    sizeMenu(sMenu),titulo(titu), centro(c), colorTitulo(colorTit), acciones(acc)
 {
     for (const auto& texto : textos)
         botones.emplace_back(texto);//cuando pasas argumentos del constructor:emplace_back (llama constructor sin hacer copia temporal)
@@ -60,14 +60,9 @@ MenuAccion Menu::tecla(unsigned char key)
             botones[seleccionado].cambiarEstado();
         }
     }
-    if (key == ' ')
-    {
-        switch (seleccionado)
-        {
-        case 0: return MenuAccion::JUGAR;
-        case 1: return MenuAccion::OPCIONES;
-        case 2: return MenuAccion::SALIR;
-        }
+    if (key == ' ') {
+
+        return acciones[seleccionado];
     }
     return MenuAccion::NINGUNA;
 }
