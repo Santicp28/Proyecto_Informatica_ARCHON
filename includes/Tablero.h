@@ -7,7 +7,7 @@
 #include "Renderer.h"
 #include "Config.h"
 #include "Cursor.h"
-#include"Menu.h"
+#include "Menu.h"
 
 #include "Arquero.h"
 #include "Banshee.h"
@@ -96,11 +96,21 @@ public:
     bool hayCombatePendiente() const;
     void limpiarCombatePendiente(); //cuando empieza la arena se limpia el flag de combate pendiente
 
-    void aplicarEfectoTipoCasilla(Pieza* p, const Casilla& c);
 
     bool comprobarFinJuego();
 	// ------ FUNCIONES MISCELÁNEAS ------ END
     
+
+
+
+	// ------- EFECTOS DE CASILLAS Y OTROS ------- START
+    void aplicarEfectoTipoCasilla(Pieza* p, const Casilla& c);
+
+    void curaPasiva();
+	// ------- EFECTOS DE CASILLAS Y OTROS ------- END
+
+
+
 
 
 	// ------- GETTERS ------ START
@@ -139,7 +149,9 @@ private:
         listaPiezas.agregar(p);
 
 		aplicarEfectoTipoCasilla(p, casillas[fila][columna]);
+
     }
+
 
     Bando comprobarCasillasDePoder();
 	// ------- FUNCIONES MISCELANEAS 2 ------- END

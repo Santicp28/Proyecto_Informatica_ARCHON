@@ -52,7 +52,7 @@ enum class Velocidad {
     NORMAL,
     BAJA
 };
-enum class Vida {
+enum class Vida_maxima {
     VARIABLE,
     MUYALTA,
     ALTA,

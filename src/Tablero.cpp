@@ -329,6 +329,9 @@ void Tablero::cambiarTurno()
         turnoActual = Bando::LUZ;
         cursor.setPosicion({ 4 , 0 }) ; //cursor en el lado de luz
     }
+
+    cicloTurno();
+    curaPasiva();
 }
 
 void Tablero::cicloTurno()
@@ -395,14 +398,24 @@ bool Tablero::comprobarFinJuego()
     }
 }
 
+
+// ----------------- FUNCIONES MISCELÁNEAS ----------------- END
+
+
+
+
+
+
+// ---------------- EFECTOS DE CASILLAS Y OTROS ----------------- START
+
 void Tablero::aplicarEfectoTipoCasilla(Pieza* p, const Casilla& c)
 {
-	TipoCasilla tipo = c.getTipo();
+    TipoCasilla tipo = c.getTipo();
 
     if (p->getBando() == Bando::LUZ) {
         if (tipo == TipoCasilla::CLARA) p->setDefensa(1.55);
-		else if (tipo == TipoCasilla::BASTANTE_CLARA) p->setDefensa(1.45);
-		else if (tipo == TipoCasilla::LIGERAMENTE_CLARA) p->setDefensa(1.25);
+        else if (tipo == TipoCasilla::BASTANTE_CLARA) p->setDefensa(1.45);
+        else if (tipo == TipoCasilla::LIGERAMENTE_CLARA) p->setDefensa(1.25);
         else if (tipo == TipoCasilla::LIGERAMENTE_OSCURA) p->setDefensa(1.0);
         else if (tipo == TipoCasilla::BASTANTE_OSCURA) p->setDefensa(1.0);
         else if (tipo == TipoCasilla::OSCURA) p->setDefensa(1.0);
@@ -415,9 +428,26 @@ void Tablero::aplicarEfectoTipoCasilla(Pieza* p, const Casilla& c)
         else if (tipo == TipoCasilla::BASTANTE_CLARA) p->setDefensa(1.0);
         else if (tipo == TipoCasilla::CLARA) p->setDefensa(1.0);
     }
-}
-// ----------------- FUNCIONES MISCELÁNEAS ----------------- END
 
+    //aplicar proteccion de hechizo
+    if (c.getTipo() == TipoCasilla::PODER) p->setProteccionContraHechizos(true);
+    else p->setProteccionContraHechizos(false);
+}
+
+
+void Tablero::curaPasiva()
+{
+    for (int f = 0; f < TAM; f++) {
+        for (int c = 0; c < TAM; c++) {
+            Pieza* p = listaPiezas.getPiezaEnPosicion({ f,c });
+            if (p != nullptr) {
+                if (casillas[f][c].getTipo() == TipoCasilla::PODER) p->curar(10.0);
+                else p->curar(5.0);
+            }
+        }
+    }
+}
+// ---------------- EFECTOS DE CASILLAS Y OTROS ----------------- END
 
 
 
