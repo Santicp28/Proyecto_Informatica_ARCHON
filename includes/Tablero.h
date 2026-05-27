@@ -32,7 +32,7 @@ private:
     friend class Interaccion;
     friend class Cursor;
 
-    double longitud;
+    double longitud{ Config::sizeMundo.y };
     Vector2D posicion{ Config::sizeMundo * 0.5 };//en el centro
     static constexpr int TAM = 9;
     Casilla casillas[TAM][TAM];
@@ -54,6 +54,7 @@ private:
     PosicionMatriz destinoCombate;
 
 public:
+	Tablero(double longit) : longitud(longit) {}
     void dibuja(const Renderer& renderer)const;
     void inicializa();
 
