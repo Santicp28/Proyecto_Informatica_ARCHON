@@ -105,18 +105,18 @@ void Renderer::dibujaSprite(const char* rutaPNG, const Vector2D& centro, double 
 }
 
 void Renderer::dibujaSprite(const ETSIDI::Sprite& sprite, const Vector2D& centro, double ancho, double alto) const {
+	glDisable(GL_LIGHTING);
+	glDisable(GL_DEPTH_TEST);
+	glMatrixMode(GL_MODELVIEW);
 	ETSIDI::Sprite s = sprite; // copia el sprite ya cargado
 	s.setPos(centro.x - (ancho / 2.0), centro.y + (alto / 2.0));
 	s.setSize(ancho, alto);
 	s.flip(false, true);
 	s.draw();
-	glDisable(GL_LIGHTING);
+	glEnable(GL_LIGHTING);
+	glEnable(GL_DEPTH_TEST);
 }
 
-void Renderer::dibujaTexto(const char* texto, const Vector2D& pos, double r, double g, double b, int size) const {
-	ETSIDI::setTextColor(r, g, b);
-	ETSIDI::setFont("ComicNeue-Regular.ttf", size);
-	ETSIDI::printxy(texto, (int)pos.x, (int)pos.y);
 void Renderer::dibujaTexto(const std::string& texto, const Vector2D& pos, const Color& color, int size) const {
 	glDisable(GL_LIGHTING);
 	glDisable(GL_DEPTH_TEST);
