@@ -23,11 +23,14 @@ enum class Bando {
 };
 
 enum class TipoCasilla {
-    OSCURA,
     CLARA,
+    BASTANTE_CLARA,
+    LIGERAMENTE_CLARA,
+    LIGERAMENTE_OSCURA,
+    BASTANTE_OSCURA,
+    OSCURA,
     OSCILANTE,
     PODER,
-    INVALIDA
 };
 
 enum class TipoMovimiento {
