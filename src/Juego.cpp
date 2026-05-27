@@ -5,12 +5,19 @@
 
 Juego::Juego() :
     estado(EstadoJuego::MENU_PRINCIPAL),
+
     tablero(Config::sizeMundo.y),
-    menuPrincipal({ "JUGAR","OPCIONES","SALIR" }, Config::sizeMundo, Config::sizeMundo * 0.5, "ARCHON", { 0.0f, 0.0f, 0.0f }),
+
+    menuPrincipal({ "JUGAR","OPCIONES","SALIR" }, { MenuAccion::JUGAR, MenuAccion::OPCIONES, MenuAccion::SALIR },
+        Config::sizeMundo, Config::sizeMundo * 0.5, "ARCHON", { 0.0f, 0.0f, 0.0f }),
+
     menuHechizosLuz( { "TP","CURAR","TIEMPO","SWITCH","SPAWN","1UP","CARCEL","SALIR"},
+        { MenuAccion::TP, MenuAccion::CURAR, MenuAccion::CAMBIAR_TIEMPO, MenuAccion::INTERCAMBIAR, MenuAccion::ENCARCELAR, MenuAccion::TIJERAS },
         { (Config::sizeMundo.x - Config::sizeMundo.y) * 0.5, Config::sizeMundo.y },
         { (Config::sizeMundo.x - Config::sizeMundo.y) * 0.5*0.5, Config::sizeMundo.y*0.5 }, "LUZ", { 1.0f, 0.0f, 0.0f }),
+
     menuHechizosOscuridad( { "TP","CURAR","TIEMPO","SWITCH","SPAWN","1UP","CARCEL","SALIR" },
+        { MenuAccion::TP, MenuAccion::CURAR, MenuAccion::CAMBIAR_TIEMPO, MenuAccion::INTERCAMBIAR, MenuAccion::ENCARCELAR, MenuAccion::TIJERAS },
         { (Config::sizeMundo.x - Config::sizeMundo.y) * 0.5, Config::sizeMundo.y },
         { (Config::sizeMundo.x - Config::sizeMundo.y) * 0.5*0.5, Config::sizeMundo.y*0.5 }, "OSC", { 0.0f, 1.0f, 0.0f })
 {
@@ -95,7 +102,6 @@ void Juego::tecla(unsigned char key)
             }
             break;
         }
-
         case EstadoJuego::TABLERO:
         {
             if (key == 13) { // ENTER
@@ -126,21 +132,30 @@ void Juego::tecla(unsigned char key)
         }
         case EstadoJuego::MENU_HECHIZOS_LUZ:
         {
-
             MenuAccion accion = menuHechizosLuz.tecla(key);
 
             switch (accion)
             {
-            case MenuAccion::JUGAR:
-                estado = EstadoJuego::TABLERO;
+            case MenuAccion::TP:
                 break;
 
-            case MenuAccion::OPCIONES:
-                estado = EstadoJuego::ARENA;
+            case MenuAccion::CURAR:
+                break;
+
+            case MenuAccion::CAMBIAR_TIEMPO:
+                break;
+
+            case MenuAccion::INTERCAMBIAR:
+                break;
+
+            case MenuAccion::ENCARCELAR:
+                break;
+
+            case MenuAccion::TIJERAS:
                 break;
 
             case MenuAccion::SALIR:
-                exit(0);
+				estado = EstadoJuego::TABLERO;
                 break;
 
             default:
@@ -151,21 +166,34 @@ void Juego::tecla(unsigned char key)
 		case EstadoJuego::MENU_HECHIZOS_OSCURIDAD:
 		{
 			MenuAccion accion = menuHechizosOscuridad.tecla(key);
-			switch (accion)
-			{
-			case MenuAccion::JUGAR:
-				estado = EstadoJuego::TABLERO;
-				break;
-			case MenuAccion::OPCIONES:
-				estado = EstadoJuego::ARENA;
-				break;
-			case MenuAccion::SALIR:
-				exit(0);
-				break;
-			default:
-				break;
-			}
-			break;
+            switch (accion)
+            {
+            case MenuAccion::TP:
+                break;
+
+            case MenuAccion::CURAR:
+                break;
+
+            case MenuAccion::CAMBIAR_TIEMPO:
+                break;
+
+            case MenuAccion::INTERCAMBIAR:
+                break;
+
+            case MenuAccion::ENCARCELAR:
+                break;
+
+            case MenuAccion::TIJERAS:
+                break;
+
+            case MenuAccion::SALIR:
+                estado = EstadoJuego::TABLERO;
+                break;
+
+            default:
+                break;
+            }
+            break;
 		}
         case EstadoJuego::ARENA:
         {
@@ -191,31 +219,31 @@ void Juego::tecla(unsigned char key)
     }
 }
 
-    void Juego::teclaEspecial(int key)
-    {
-        if (estado == EstadoJuego::MENU_PRINCIPAL) {
-            menuPrincipal.teclaEspecial(key);
-        }
-        else if (estado == EstadoJuego::TABLERO) { //con esto conseguimos mover el cursor mediante las flechas en el teclado
-            switch (key) {
-            case GLUT_KEY_UP:
-                tablero.moverCursor(-1, 0);
-                break;
+void Juego::teclaEspecial(int key)
+{
+    if (estado == EstadoJuego::MENU_PRINCIPAL) {
+        menuPrincipal.teclaEspecial(key);
+    }
+    else if (estado == EstadoJuego::TABLERO) { //con esto conseguimos mover el cursor mediante las flechas en el teclado
+        switch (key) {
+        case GLUT_KEY_UP:
+            tablero.moverCursor(-1, 0);
+            break;
 
-            case GLUT_KEY_DOWN:
-                tablero.moverCursor(1, 0);
-                break;
+        case GLUT_KEY_DOWN:
+            tablero.moverCursor(1, 0);
+            break;
 
-            case GLUT_KEY_LEFT:
-                tablero.moverCursor(0, -1);
-                break;
+        case GLUT_KEY_LEFT:
+            tablero.moverCursor(0, -1);
+            break;
 
-            case GLUT_KEY_RIGHT:
-                tablero.moverCursor(0, 1);
-                break;
-            }
+        case GLUT_KEY_RIGHT:
+            tablero.moverCursor(0, 1);
+            break;
         }
     }
+}
 
 
 EstadoJuego Juego::getEstado() const

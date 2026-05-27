@@ -11,9 +11,8 @@ enum class MenuAccion
     CURAR,
     CAMBIAR_TIEMPO,
     INTERCAMBIAR,
-    INVOCAR,
-    REVIVIR,
-    ENCARCELAR
+    ENCARCELAR,
+    TIJERAS
 };
 
 enum class Bando {
