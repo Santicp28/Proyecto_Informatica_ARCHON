@@ -272,7 +272,7 @@ void Tablero::moverCursor(int df, int dc)
     if (posicionValida(nuevaPosicion)) cursor.mover(df, dc);
 }
 
-bool Tablero::seleccionarConCursor()
+bool Tablero::seleccionarPiezasConCursor()
 {
 
     if (!hayOrigenSeleccionado) {

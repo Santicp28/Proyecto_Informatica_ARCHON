@@ -85,7 +85,7 @@ public:
 
 	// ----- FUNCIONES DE CURSOR Y SELECCIÓN ------ START
     void moverCursor(int df, int dc);
-    bool seleccionarConCursor();
+    bool seleccionarPiezasConCursor();
 
     bool posicionValida(PosicionMatriz pos) const;   //para asegurarnos que no nos salimos del tablero
 	// ----- FUNCIONES DE CURSOR Y SELECCIÓN ------ END

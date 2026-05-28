@@ -117,7 +117,7 @@ void Juego::tecla(unsigned char key)
     case EstadoJuego::TABLERO:
     {
         if (key == 13) { // ENTER
-            tablero.seleccionarConCursor();
+            tablero.seleccionarPiezasConCursor();
 
             if (tablero.comprobarFinJuego()) {
                 estado = EstadoJuego::FIN_PARTIDA;
