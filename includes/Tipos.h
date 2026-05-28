@@ -11,9 +11,12 @@ enum class MenuAccion
     CURAR,
     CAMBIAR_TIEMPO,
     INTERCAMBIAR,
-    INVOCAR,
-    REVIVIR,
-    ENCARCELAR
+    ENCARCELAR,
+    TIJERAS,
+
+    CONTINUAR,
+
+	IR_MENU_PRINCIPAL
 };
 
 enum class Bando {

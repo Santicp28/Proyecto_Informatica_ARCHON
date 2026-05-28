@@ -1,6 +1,6 @@
 #include "Hechicero.h"
 #include "Pieza.h"
-#include "TiposPiezas.h"
+
 
 Hechicero::Hechicero(Bando b) : Pieza(
     Ataque::MODERADO,              

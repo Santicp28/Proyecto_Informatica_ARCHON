@@ -1,6 +1,6 @@
 #include "Mago.h"
 #include "Pieza.h"
-#include "TiposPiezas.h"
+
 
 Mago::Mago(Bando b) : Pieza(
     Ataque::ALTO,               
