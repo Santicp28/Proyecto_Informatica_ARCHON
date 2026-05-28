@@ -6,6 +6,7 @@
 #include "InteraccionArena.h"
 #include "Config.h"
 #include "ListaDisparos.h"
+
 using std::vector;
 class Arena
 {

@@ -20,6 +20,8 @@ public:
 	{
 		posicion_ = posicion_ + velocidad_ * t + 0.5 * aceleracion_ * t * t;
 		velocidad_ = velocidad_ + aceleracion_ * t;
+		if (velocidad_.modulo() > 0.001)
+			direccion = velocidad_.unitario();
 	}
 
 	// lectura

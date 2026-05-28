@@ -24,9 +24,7 @@ protected:
     TipoMovimiento tipo_movimiento;
     int rango_movimiento;
     Color color;
-	Disparo* ultimoDisparo= nullptr; 
-    double distanciaRecorrida = 0.0;
-    Vector2D posicionUltimoDisparo{};
+    double tiempoDesdeUltimoDisparo = 999.0;
 public:
     bool atacar{ false };
 
@@ -109,5 +107,9 @@ public:
     bool puedeDisparar();
     const Vector2D& getDireccion() const { return direccion; }
 	
-	
+    void mueve(double t) override {
+        ObjetoMovil::mueve(t);
+        tiempoDesdeUltimoDisparo += t;
+    }
 };
+
