@@ -1,4 +1,6 @@
 #include "Menu.h"
+#include "Renderer.h"
+#include "Grafmenu.h"
 
 Menu::Menu(const vector<string>& textos, const vector<MenuAccion>& acc, const Vector2D& sMenu, const Vector2D& c, const string& titu, const Color& colorTit):
     sizeMenu(sMenu),titulo(titu), centro(c), colorTitulo(colorTit), acciones(acc)
@@ -19,10 +21,11 @@ void Menu::inicializa()
 void Menu::dibuja(const Renderer& renderer)const
 {
     renderer.dibujaColorFondo(colorFondo);
+    renderer.dibujaSprite(menu.sprite, centro , Config::sizeMundo.x, Config::sizeMundo.y);
     const Vector2D sizeBotones{ calcularSizeBotones() };
     renderer.dibujaTexto(titulo, calcularPosicionBotones(-1), { 0.0f,0.0f,0.0f }, sizeBotones.y * 0.8);
     for (int i = 0; i < botones.size(); i++) {
-        botones[i].dibuja(renderer,calcularPosicionBotones(i), sizeBotones);
+        botones[i].dibuja(renderer,calcularPosicionBotones(i), sizeBotones * 0.5);
     }
 }
 

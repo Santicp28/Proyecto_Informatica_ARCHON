@@ -88,7 +88,9 @@ void Tablero::inicializa()
 
 // --------------- FUNCIONES DE DIBUJO ------------------ START
 void Tablero::dibuja(const Renderer& renderer)const {
-    renderer.dibujaSprite(fondotablero.sprite, posicion, Config::sizeMundo.x, Config::sizeMundo.y);
+    renderer.dibujaSprite(mesa.sprite, posicion, Config::sizeMundo.x, Config::sizeMundo.y);
+    renderer.dibujaSprite(hoja.sprite, posicion, Config::sizeMundo.x * 0.6, Config::sizeMundo.y * 0.8);
+
     double longitudCasilla = longitud / TAM;
     Vector2D esquinaSuperiorIzda{ posicion.x - longitud / 2.0, posicion.y - longitud / 2.0 };
 

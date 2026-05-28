@@ -27,7 +27,7 @@ public:
     MenuAccion tecla(unsigned char key);
     void teclaEspecial(int key);
 private:
-    Vector2D calcularPosicionBotones(int ordenBoton)const { return { sizeMenu.x * 0.5, (ordenBoton + 2) * sizeMenu.y / (botones.size() + 2.0) }; } //calcula la separecion entre botones Config::sizeMundo.y / (botones.size() + 1.0)
+    Vector2D calcularPosicionBotones(int ordenBoton)const { return { sizeMenu.x * 0.5, (ordenBoton + 1.5) * sizeMenu.y / (botones.size() + 3) }; } //calcula la separecion entre botones Config::sizeMundo.y / (botones.size() + 1.0)
     Vector2D calcularSizeBotones()const;
 
 };
