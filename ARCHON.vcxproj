@@ -186,6 +186,7 @@ xcopy "$(ProjectDir)assets\Graficos" "$(OutDir)Graficos" /E /I /Y</Command>
     <ClCompile Include="src\Valquiria.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="assets\ETSIDI.h" />
     <ClInclude Include="includes\Arena.h" />
     <ClInclude Include="includes\Arquero.h" />
     <ClInclude Include="includes\Banshee.h" />
@@ -200,6 +201,10 @@ xcopy "$(ProjectDir)assets\Graficos" "$(OutDir)Graficos" /E /I /Y</Command>
     <ClInclude Include="includes\Disparo.h" />
     <ClInclude Include="includes\Dragon.h" />
     <ClInclude Include="includes\Duende.h" />
+    <ClInclude Include="includes\Grafarena.h" />
+    <ClInclude Include="includes\Grafhechizos.h" />
+    <ClInclude Include="includes\Grafmenu.h" />
+    <ClInclude Include="includes\Graftablero.h" />
     <ClInclude Include="includes\Hechicero.h" />
     <ClInclude Include="includes\ListaDisparos.h" />
     <ClInclude Include="includes\Manticora.h" />
@@ -218,7 +223,7 @@ xcopy "$(ProjectDir)assets\Graficos" "$(OutDir)Graficos" /E /I /Y</Command>
     <ClInclude Include="includes\Pieza.h" />
     <ClInclude Include="includes\Tablero.h" />
     <ClInclude Include="includes\Tipos.h" />
-    <ClInclude Include="includes\TiposPiezas.h" />
+    <ClInclude Include="includes\Grafpiezas.h" />
     <ClInclude Include="includes\Trol.h" />
     <ClInclude Include="includes\Unicornio.h" />
     <ClInclude Include="includes\Valquiria.h" />

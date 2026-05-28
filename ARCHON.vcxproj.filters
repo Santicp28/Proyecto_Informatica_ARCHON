@@ -25,6 +25,9 @@
     <Filter Include="Archivos de origen\ClasesAuxiliares">
       <UniqueIdentifier>{68cac1a4-68d8-46d3-9c05-274c8abae864}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Archivos de encabezado\Graficos">
+      <UniqueIdentifier>{d500e45f-b6b1-47af-b745-0fb895b84dda}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Juego.cpp">
@@ -143,9 +146,6 @@
     <ClInclude Include="includes\Pieza.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="includes\TiposPiezas.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="includes\InteraccionArena.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
@@ -241,6 +241,24 @@
     </ClInclude>
     <ClInclude Include="includes\Cursor.h">
       <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="assets\ETSIDI.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\Grafarena.h">
+      <Filter>Archivos de encabezado\Graficos</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\Grafhechizos.h">
+      <Filter>Archivos de encabezado\Graficos</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\Grafmenu.h">
+      <Filter>Archivos de encabezado\Graficos</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\Grafpiezas.h">
+      <Filter>Archivos de encabezado\Graficos</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\Graftablero.h">
+      <Filter>Archivos de encabezado\Graficos</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -9,6 +9,7 @@ class Boton
     string texto;
     Color colorArea{ 0.2f, 0.25f, 0.4f };
     Color colorPerimetro{ 1.0f,1.0f,1.0f };
+	Color colorTexto{ 0.0f,0.0f,0.0f };
     double escala{ 1.0 };
     bool seleccionado{ false };
 public:

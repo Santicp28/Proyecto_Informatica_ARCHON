@@ -22,7 +22,7 @@ void ListaPiezas::piezaPierde(Pieza* p)
 
 void ListaPiezas::dibujarPiezas(const Renderer& renderer, const Vector2D& esquinaSuperiorIzda, double longitudCasilla) const
 {
-    double escalaPieza = 0.65;
+    double escalaPieza = 1.8;
 
     for (const auto& pieza : listaPiezas) {
         if (pieza != nullptr) {

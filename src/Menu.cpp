@@ -1,7 +1,9 @@
 #include "Menu.h"
+#include "Renderer.h"
+#include "Grafmenu.h"
 
-Menu::Menu(const std::vector<std::string>& textos, const Vector2D& sMenu, const Vector2D& c, const string& titu):
-    sizeMenu(sMenu),titulo(titu), centro(c)
+Menu::Menu(const vector<string>& textos, const vector<MenuAccion>& acc, const Vector2D& sMenu, const Vector2D& c, const string& titu, const Color& colorTit):
+    sizeMenu(sMenu),titulo(titu), centro(c), colorTitulo(colorTit), acciones(acc)
 {
     for (const auto& texto : textos)
         botones.emplace_back(texto);//cuando pasas argumentos del constructor:emplace_back (llama constructor sin hacer copia temporal)
@@ -19,9 +21,11 @@ void Menu::inicializa()
 void Menu::dibuja(const Renderer& renderer)const
 {
     renderer.dibujaColorFondo(colorFondo);
+    renderer.dibujaSprite(menu.sprite, centro , Config::sizeMundo.x, Config::sizeMundo.y);
     const Vector2D sizeBotones{ calcularSizeBotones() };
+    renderer.dibujaTexto(titulo, calcularPosicionBotones(-1), { 0.0f,0.0f,0.0f }, sizeBotones.y * 0.8);
     for (int i = 0; i < botones.size(); i++) {
-        botones[i].dibuja(renderer,calcularPosicionBotones(i), sizeBotones);
+        botones[i].dibuja(renderer,calcularPosicionBotones(i), sizeBotones * 0.5);
     }
 }
 
@@ -59,18 +63,18 @@ MenuAccion Menu::tecla(unsigned char key)
             botones[seleccionado].cambiarEstado();
         }
     }
-    if (key == ' ')
-    {
-        switch (seleccionado)
-        {
-        case 0: return MenuAccion::JUGAR;
-        case 1: return MenuAccion::OPCIONES;
-        case 2: return MenuAccion::SALIR;
-        }
+    if (key == ' ') {
+
+        return acciones[seleccionado];
     }
     return MenuAccion::NINGUNA;
 }
 
 void Menu::teclaEspecial(int key)
 {
+}
+
+Vector2D Menu::calcularSizeBotones() const
+{
+    return{ sizeMenu.x * 0.6, sizeMenu.y / (botones.size() + 1.0) * 0.6 };
 }
