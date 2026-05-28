@@ -5,6 +5,8 @@ struct graftablero {
 };
 
 inline graftablero fondotablero { "assets/Graficos/fondo.png" };
+inline graftablero mesa{ "assets/Graficos/mesa.png" };
+inline graftablero hoja{ "assets/Graficos/hoja.png" };
 inline graftablero clara { "assets/Graficos/casilla_azul.png" };
 inline graftablero bastante_clara { "assets/Graficos/casilla_turquesa.png" };
 inline graftablero ligeramente_clara { "assets/Graficos/casilla_verde.png" };
@@ -17,3 +19,4 @@ inline graftablero cursor { "assets/Graficos/Cursor.png" };
 inline graftablero cursor_luz { "assets/Graficos/cursor_luz.PNG" };
 inline graftablero cursor_oscuro { "assets/Graficos/cursor_osc.PNG" };
 inline graftablero casillaespecial { "assets/Graficos/casillas especial.PNG" };
+

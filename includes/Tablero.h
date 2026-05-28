@@ -1,6 +1,13 @@
 #pragma once
 #include "Casilla.h"
+#include "Config.h"
+#include "Cursor.h"
+#include "ListaPiezas.h"
+#include "Menu.h"
 #include "Pieza.h"
+#include "Renderer.h"
+#include "Tipos.h"
+
 #include <vector>
 #include "Tipos.h"
 #include "ListaPiezas.h"
@@ -27,6 +34,11 @@
 #include "Valquiria.h"
 #include "PanelStats.h"
 #include "PanelHechizo.h"
+
+enum class EstadoTablero {
+    TABLERO,
+    MENU_HECHIZOS
+};
 
 class Tablero {
 private:
@@ -66,11 +78,15 @@ private:
     PosicionMatriz origenCombate;
     PosicionMatriz destinoCombate;
 
+	EstadoTablero estadoTablero;
+	Menu menuHechizosLuz;
+	Menu menuHechizosOscuridad;
+
     int contadorTurnos = 0;
 	bool cicloLuz_A_Oscuridad = true; //para controlar el cambio de las casillas oscilantes
 
 public:
-	Tablero(double longit) : longitud(longit) {}
+    Tablero(double longit);
 
     void inicializa();
 
@@ -97,6 +113,7 @@ public:
 
 
 	// ----- FUNCIONES DE CURSOR Y SELECCIÓN ------ START
+    TableroAccion tecla(unsigned char key);
     void moverCursor(int df, int dc);
     bool seleccionarPiezasConCursor();
 

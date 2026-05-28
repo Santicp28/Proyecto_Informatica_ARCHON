@@ -1,12 +1,39 @@
 #include "Tablero.h"
 #include "Renderer.h"
 #include <iostream>
+#include "Graftablero.h"
 
 
 using enum TipoCasilla;
 
+Tablero::Tablero(double longit):
+	longitud(longit), estadoTablero(EstadoTablero::TABLERO),
+	turnoActual(Bando::LUZ),
+	ganador(Bando::NINGUNO),
+	combatePendiente(false),
+	hayOrigenSeleccionado(false),
+	contadorTurnos(0),
+	cicloLuz_A_Oscuridad(true),
+    menuHechizosLuz({ "SALIR","TP","CURAR","TIEMPO","SWITCH","CARCEL","TIJ" },
+        { MenuAccion::SALIR, MenuAccion::TP, MenuAccion::CURAR, MenuAccion::CAMBIAR_TIEMPO, MenuAccion::INTERCAMBIAR, MenuAccion::ENCARCELAR, MenuAccion::TIJERAS },
+        { (Config::sizeMundo.x - Config::sizeMundo.y) * 0.5, Config::sizeMundo.y },
+        { (Config::sizeMundo.x - Config::sizeMundo.y) * 0.5 * 0.5, Config::sizeMundo.y * 0.5 }, "LUZ", { 1.0f, 0.0f, 0.0f }),
+
+    menuHechizosOscuridad({ "SALIR","TP","CURAR","TIEMPO","SWITCH","CARCEL","TIJ" },
+        { MenuAccion::SALIR, MenuAccion::TP, MenuAccion::CURAR, MenuAccion::CAMBIAR_TIEMPO, MenuAccion::INTERCAMBIAR, MenuAccion::ENCARCELAR, MenuAccion::TIJERAS },
+        { (Config::sizeMundo.x - Config::sizeMundo.y) * 0.5, Config::sizeMundo.y },
+        { (Config::sizeMundo.x - Config::sizeMundo.y) * 0.5 * 0.5, Config::sizeMundo.y * 0.5 }, "OSC", { 0.0f, 1.0f, 0.0f })
+{
+}
+
+
 void Tablero::inicializa()
 {
+	estadoTablero = EstadoTablero::TABLERO;
+
+	menuHechizosLuz.inicializa();
+	menuHechizosOscuridad.inicializa();
+
 	ganador = Bando::NINGUNO;
     turnoActual = Bando::LUZ;
 
@@ -103,9 +130,11 @@ void Tablero::inicializa()
     else actualizarPanelStats(panelStatsOscuridad, listaPiezas.getPiezaEnPosicion(cursor.getPosicion()));
 }
 
-
 // --------------- FUNCIONES DE DIBUJO ------------------ START
 void Tablero::dibuja(const Renderer& renderer)const {
+    renderer.dibujaSprite(mesa.sprite, posicion, Config::sizeMundo.x, Config::sizeMundo.y);
+    renderer.dibujaSprite(hoja.sprite, posicion, Config::sizeMundo.x * 0.6, Config::sizeMundo.y * 0.8);
+
     double longitudCasilla = longitud / TAM;
     Vector2D esquinaSuperiorIzda{ posicion.x - longitud / 2.0, posicion.y - longitud / 2.0 };
     for (unsigned int f = 0; f < TAM; f++) {
@@ -120,8 +149,17 @@ void Tablero::dibuja(const Renderer& renderer)const {
     dibujaOrigenSeleccionado(renderer, esquinaSuperiorIzda, longitudCasilla);
     cursor.dibuja(renderer, esquinaSuperiorIzda, longitudCasilla, turnoActual);
 
+	if (estadoTablero == EstadoTablero::MENU_HECHIZOS && turnoActual == Bando::LUZ) {
+		menuHechizosLuz.dibuja(renderer);
+	}
+	else if (estadoTablero == EstadoTablero::MENU_HECHIZOS && turnoActual == Bando::OSCURIDAD) {
+		menuHechizosOscuridad.dibuja(renderer);
+	}
+
 	panelStatsLuz->dibuja(renderer);
 	panelStatsOscuridad->dibuja(renderer);
+}
+
 }
 
 void Tablero::resaltarMovimientoPosible()
@@ -162,7 +200,7 @@ void Tablero::dibujaOrigenSeleccionado(const Renderer& renderer, const Vector2D&
     };
 
     if (hayOrigenSeleccionado) {
-        renderer.dibujaSprite("bin/Graficos/elegido.png", centro, longitud, longitud);
+        renderer.dibujaSprite(elegido.sprite, centro, longitud, longitud);
     }
 }
 
@@ -284,6 +322,81 @@ bool Tablero::caminoLibreEnL(PosicionMatriz origen, PosicionMatriz destino, bool
 
 
 // ----------------- FUNCIONES DE CURSOR ----------------- START
+
+
+TableroAccion Tablero::tecla(unsigned char key)
+{
+    switch (estadoTablero)
+    {
+    case EstadoTablero::TABLERO:
+    {
+        switch (key)
+        {
+        case '\r':// ENTER
+        {
+            seleccionarConCursor();
+            if (comprobarFinJuego()) {
+                return  TableroAccion::IR_FIN_PARTIDA;
+            }
+            //tablero avisa de que se he elegido combate, haciendo que juego ponga el estado ARENA y limpiando el flag del combate pendiente para no volver a entrar 
+            else if (hayCombatePendiente()) {
+                limpiarCombatePendiente();
+                return TableroAccion::IR_ARENA;
+            }
+            break;
+        }
+        //case '\x1B': case 'P': case 'p':// '\x1B'==ESC
+        //    return  TableroAccion::IR_PAUSA;
+
+        case 'h':
+        {
+            estadoTablero = EstadoTablero::MENU_HECHIZOS;
+            break;
+        }
+        case'f':
+            return TableroAccion::IR_FIN_PARTIDA;
+        default:
+            return TableroAccion::NINGUNA;
+        }
+        break;
+    }
+    case EstadoTablero::MENU_HECHIZOS:
+    {
+        MenuAccion accion= MenuAccion::NINGUNA;
+        if (turnoActual == Bando::LUZ)
+            accion = menuHechizosLuz.tecla(key);
+		else if (turnoActual == Bando::OSCURIDAD)
+            accion = menuHechizosOscuridad.tecla(key);
+        switch (accion)
+        {
+        case MenuAccion::TP:
+        case MenuAccion::CURAR:
+        case MenuAccion::CAMBIAR_TIEMPO:
+        case MenuAccion::INTERCAMBIAR:
+        case MenuAccion::ENCARCELAR:
+        case MenuAccion::TIJERAS:
+        {
+            estadoTablero = EstadoTablero::TABLERO; //PROVISIONAL
+            break;
+        }
+        case MenuAccion::SALIR:
+        {
+            estadoTablero = EstadoTablero::TABLERO;
+            break;
+        }
+        default: 
+        {
+            estadoTablero = EstadoTablero::MENU_HECHIZOS;
+            break;
+        }
+        break;
+        }
+        return TableroAccion::NINGUNA;
+    }
+    default:
+        return TableroAccion::NINGUNA;
+    }
+}
 
 // MOSTRAR STATS DE LA PIEZA EN LA QUE TENGO EL CURSOR!!!!!!!!!
 void Tablero::moverCursor(int df, int dc)
