@@ -1,7 +1,8 @@
 #include "Caballero.h"
 #include "Pieza.h"
 
-Caballero::Caballero(Bando b) : Pieza(
+Caballero::Caballero(std::string nombre, Bando b) : Pieza(
+    nombre,
     Ataque::BAJO,                  
     Vida_maxima::CORTA,                
     Velocidad::NORMAL,             

@@ -1,7 +1,8 @@
 #include "Manticora.h"
 #include "Pieza.h"
 
-Manticora::Manticora(Bando b) : Pieza(
+Manticora::Manticora(std::string nombre, Bando b) : Pieza(
+    nombre,
     Ataque::BAJO,           
     Vida_maxima::MODERADA,          
     Velocidad::NORMAL,           

@@ -126,7 +126,10 @@
     <ClCompile Include="src\Cursor.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="ListaPiezas.cpp">
+    <ClCompile Include="src\ListaPiezas.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PanelStats.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
@@ -141,9 +144,6 @@
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="includes\Pieza.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="includes\TiposPiezas.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="includes\InteraccionArena.h">
@@ -184,9 +184,6 @@
     </ClInclude>
     <ClInclude Include="includes\Vector2D.h">
       <Filter>Archivos de encabezado\ClasesAuxiliares</Filter>
-    </ClInclude>
-    <ClInclude Include="includes\Interaccion.h">
-      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="includes\ListaPiezas.h">
       <Filter>Archivos de encabezado</Filter>
@@ -243,6 +240,30 @@
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="includes\Cursor.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="assets\ETSIDI.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\Grafarena.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\Grafhechizos.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\Graftablero.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\Grafpiezas.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\Panel.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\PanelStats.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\PanelHechizo.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>

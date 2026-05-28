@@ -25,10 +25,6 @@ public:
     
 
 
-
-
-
-
     //sirve para obtener la pieza que hay en una posición dada
     Pieza* getPiezaEnPosicion(PosicionMatriz pos) const {
         for (auto p : listaPiezas)

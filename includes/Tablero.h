@@ -25,6 +25,8 @@
 #include "Trol.h"
 #include "Unicornio.h"
 #include "Valquiria.h"
+#include "PanelStats.h"
+#include "PanelHechizo.h"
 
 class Tablero {
 private:
@@ -40,6 +42,18 @@ private:
     Bando ganador;
 
     Cursor cursor{ {4, 0} };
+
+	Color colorFondoPanel{ 0.3f, 0.3f, 0.3f };
+	Color colorBordePanel{ 0.9f, 0.9f, 0.9f };
+	Color colorTextoPanel{ 0.9f, 0.9f, 0.9f };
+	Color colorTituloPanelLuz{ 0.0f, 0.0f, 1.0f };
+	Color colorTituloPanelOscuridad{ 1.0f, 0.0f, 0.0f };
+   
+
+    PanelStats* panelStatsLuz;
+	PanelStats* panelStatsOscuridad;
+    
+        
 
     PosicionMatriz origenSeleccionado;
     bool hayOrigenSeleccionado = false;
@@ -68,6 +82,7 @@ public:
     void limpiarResaltados();
 
     void dibujaOrigenSeleccionado(const Renderer& renderer, const Vector2D& posicion, double longitud) const;
+    
     // ----- FUNCIONES DE DIBUJO ------ END
 
 
@@ -75,7 +90,7 @@ public:
 	// ----- FUNCIONES DE MOVIMIENTO Y COMBATE ------ START
     bool mover(PosicionMatriz origen, PosicionMatriz destino);
 
-    bool movimientoLegal(PosicionMatriz origen, PosicionMatriz destino) const;
+    bool movimientoLegal(PosicionMatriz origen, PosicionMatriz destino);
     bool caminoLibreEnL(PosicionMatriz origen, PosicionMatriz destino, bool primeroFilas) const;
 
     bool esMovimientoPosible(PosicionMatriz pos) const;
@@ -96,6 +111,7 @@ public:
     bool hayCombatePendiente() const;
     void limpiarCombatePendiente(); //cuando empieza la arena se limpia el flag de combate pendiente
 
+	void actualizarPanelStats(PanelStats* panel, const Pieza* pieza);
 
     bool comprobarFinJuego();
 	// ------ FUNCIONES MISCELÁNEAS ------ END

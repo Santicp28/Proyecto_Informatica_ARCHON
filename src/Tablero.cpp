@@ -82,6 +82,25 @@ void Tablero::inicializa()
     agregarPieza<Basilisco>(6, 8);
     agregarPieza<Trol>(7, 8);
     agregarPieza<Banshee>(8, 8);
+
+
+
+
+    panelStatsLuz = new PanelStats{
+        {Config::sizeMundo.x * 0.12, Config::sizeMundo.y * 0.42},
+        { posicion.x + longitud / 1.975, posicion.y - longitud/2.2},
+        colorFondoPanel, colorTextoPanel, colorTituloPanelLuz, colorBordePanel, "Luz", static_cast<int>(Config::sizeMundo.x * 0.02), static_cast<int>(Config::sizeMundo.x * 0.02)
+    };
+
+    panelStatsOscuridad = new PanelStats{
+        {Config::sizeMundo.x * 0.12, Config::sizeMundo.y * 0.42},
+        { posicion.x + longitud / 1.975, posicion.y - longitud / 2.5 + Config::sizeMundo.y * 0.42},
+        colorFondoPanel, colorTextoPanel, colorTituloPanelOscuridad, colorBordePanel, "Oscuridad", static_cast<int>(Config::sizeMundo.x * 0.02), static_cast<int>(Config::sizeMundo.x * 0.02)
+    };
+
+	//inicializo panel de stats con la pieza que está debajo del cursor al inicio
+	if (turnoActual == Bando::LUZ) actualizarPanelStats(panelStatsLuz, listaPiezas.getPiezaEnPosicion(cursor.getPosicion()));
+    else actualizarPanelStats(panelStatsOscuridad, listaPiezas.getPiezaEnPosicion(cursor.getPosicion()));
 }
 
 
@@ -89,7 +108,6 @@ void Tablero::inicializa()
 void Tablero::dibuja(const Renderer& renderer)const {
     double longitudCasilla = longitud / TAM;
     Vector2D esquinaSuperiorIzda{ posicion.x - longitud / 2.0, posicion.y - longitud / 2.0 };
-
     for (unsigned int f = 0; f < TAM; f++) {
         for (unsigned int c = 0; c < TAM; c++) {
             Vector2D centroCasilla{ esquinaSuperiorIzda.x + (c + 0.5) * longitudCasilla, esquinaSuperiorIzda.y + (f + 0.5) * longitudCasilla };
@@ -97,11 +115,13 @@ void Tablero::dibuja(const Renderer& renderer)const {
         }
     }
 
-
     
 	listaPiezas.dibujarPiezas(renderer, esquinaSuperiorIzda, longitudCasilla);
     dibujaOrigenSeleccionado(renderer, esquinaSuperiorIzda, longitudCasilla);
     cursor.dibuja(renderer, esquinaSuperiorIzda, longitudCasilla, turnoActual);
+
+	panelStatsLuz->dibuja(renderer);
+	panelStatsOscuridad->dibuja(renderer);
 }
 
 void Tablero::resaltarMovimientoPosible()
@@ -145,6 +165,7 @@ void Tablero::dibujaOrigenSeleccionado(const Renderer& renderer, const Vector2D&
         renderer.dibujaSprite("bin/Graficos/elegido.png", centro, longitud, longitud);
     }
 }
+
 // --------------- FUNCIONES DE DIBUJO ------------------ END
 
 
@@ -187,7 +208,7 @@ bool Tablero::mover(PosicionMatriz origen, PosicionMatriz destino)
 }
 
 
-bool Tablero::movimientoLegal(PosicionMatriz origen, PosicionMatriz destino) const
+bool Tablero::movimientoLegal(PosicionMatriz origen, PosicionMatriz destino) 
 {
 
     Pieza* atacante = listaPiezas.getPiezaEnPosicion(origen);
@@ -270,6 +291,32 @@ void Tablero::moverCursor(int df, int dc)
 	PosicionMatriz nuevaPosicion = { cursor.getPosicion().fila + df, cursor.getPosicion().columna + dc };
 
     if (posicionValida(nuevaPosicion)) cursor.mover(df, dc);
+    
+	Pieza* piezaEnCursor = listaPiezas.getPiezaEnPosicion(cursor.getPosicion());
+	Bando bandoPiezaEnCursor = (piezaEnCursor != nullptr) ? piezaEnCursor->getBando() : Bando::NINGUNO;
+
+    if (!hayOrigenSeleccionado) {
+         if (bandoPiezaEnCursor == Bando::LUZ) {
+             actualizarPanelStats(panelStatsLuz, listaPiezas.getPiezaEnPosicion(cursor.getPosicion()));
+             actualizarPanelStats(panelStatsOscuridad, nullptr);
+         }
+         else if (bandoPiezaEnCursor == Bando::OSCURIDAD) {
+             actualizarPanelStats(panelStatsLuz, nullptr);
+             actualizarPanelStats(panelStatsOscuridad, listaPiezas.getPiezaEnPosicion(cursor.getPosicion()));
+         }
+         else {
+             actualizarPanelStats(panelStatsOscuridad, nullptr);
+			 actualizarPanelStats(panelStatsLuz, nullptr);
+         }
+    }
+    else {
+        if (turnoActual == Bando::LUZ) {
+            actualizarPanelStats(panelStatsOscuridad, listaPiezas.getPiezaEnPosicion(cursor.getPosicion()));
+        }
+        else {
+            actualizarPanelStats(panelStatsLuz, listaPiezas.getPiezaEnPosicion(cursor.getPosicion()));
+		}
+    }
 }
 
 bool Tablero::seleccionarPiezasConCursor()
@@ -285,10 +332,19 @@ bool Tablero::seleccionarPiezasConCursor()
         origenSeleccionado = cursor.getPosicion();
         hayOrigenSeleccionado = true;
 
+        if (turnoActual == Bando::LUZ) {
+            actualizarPanelStats(panelStatsLuz, listaPiezas.getPiezaEnPosicion(origenSeleccionado));
+        }
+        else {
+            actualizarPanelStats(panelStatsOscuridad, listaPiezas.getPiezaEnPosicion(origenSeleccionado));
+        }
+
 		resaltarMovimientoPosible();//actualizamos los movimientos posibles para el origen seleccionado, para luego mostrarlos en la parte gráfica
 
         return true;
     }
+
+	
 
     bool movimientoCorrecto = mover(origenSeleccionado, cursor.getPosicion());
     
@@ -332,6 +388,15 @@ void Tablero::cambiarTurno()
 
     cicloTurno();
     curaPasiva();
+
+    if (turnoActual == Bando::LUZ) {
+        actualizarPanelStats(panelStatsLuz, listaPiezas.getPiezaEnPosicion(cursor.getPosicion()));
+        actualizarPanelStats(panelStatsOscuridad, nullptr);
+    }
+    else {
+        actualizarPanelStats(panelStatsLuz, nullptr);
+        actualizarPanelStats(panelStatsOscuridad, listaPiezas.getPiezaEnPosicion(cursor.getPosicion()));
+	}
 }
 
 void Tablero::cicloTurno()
@@ -354,6 +419,14 @@ void Tablero::limpiarCombatePendiente()
 {
     combatePendiente = false;
 }
+
+
+void Tablero::actualizarPanelStats(PanelStats* panel, const Pieza* pieza)
+{
+	panel->setPieza(pieza);
+}
+
+
 
 
 Bando Tablero::comprobarCasillasDePoder()

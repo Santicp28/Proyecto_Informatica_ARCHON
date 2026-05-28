@@ -1,7 +1,8 @@
 #include "Unicornio.h"
 #include "Pieza.h"
 
-Unicornio::Unicornio(Bando b) : Pieza(
+Unicornio::Unicornio(std::string nombre, Bando b) : Pieza(
+    nombre,
     Ataque::MODERADO,      
     Vida_maxima::MODERADA,        
     Velocidad::NORMAL,      

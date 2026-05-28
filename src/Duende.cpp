@@ -1,7 +1,8 @@
 #include "Duende.h"
 #include "Pieza.h"
 
-Duende::Duende(Bando b) : Pieza(
+Duende::Duende(std::string nombre, Bando b) : Pieza(
+    nombre,
     Ataque::BAJO,                  
     Vida_maxima::CORTA,                   
     Velocidad::NORMAL,             

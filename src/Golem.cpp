@@ -1,7 +1,8 @@
 #include "Golem.h"
 #include "Pieza.h"
 
-Golem::Golem(Bando b) : Pieza(
+Golem::Golem(std::string nombre, Bando b) : Pieza(
+    nombre,
     Ataque::ALTO,               
     Vida_maxima::ALTA,              
     Velocidad::BAJA,         

@@ -3,7 +3,7 @@ void Boton::dibuja(const Renderer& renderer, const Vector2D& posicion, const Vec
 {
     renderer.dibujaCuadrado(posicion, colorArea, size * escala);
     renderer.dibujaContornoCuadrado(posicion, colorPerimetro, size * escala);
-	renderer.dibujaTexto(texto, posicion, colorTexto, size.y*escala*0.4);
+	renderer.dibujaTexto(texto, posicion, colorTexto, size.y*escala*0.4, AlineacionTexto::CENTRADO);
 }
 
 void Boton::cambiarEstado()

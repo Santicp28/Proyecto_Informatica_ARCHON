@@ -99,3 +99,8 @@ enum class TipoAtaque {
     AREA,       // daño continuo en radio alrededor (banshee, phoenix)
     PROYECTIL   // dispara un objeto que viaja (wizard, archer, unicorn)
 };
+
+enum class AlineacionTexto {
+	CENTRADO,
+	IZQUIERDA
+};

@@ -1,7 +1,8 @@
 #include "Dragon.h"
 #include "Pieza.h"
 
-Dragon::Dragon(Bando b) : Pieza(
+Dragon::Dragon(std::string nombre, Bando b) : Pieza(
+    nombre,
     Ataque::MUYALTO,               
     Vida_maxima::MUYALTA,                 
     Velocidad::NORMAL,             

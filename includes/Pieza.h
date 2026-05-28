@@ -5,11 +5,13 @@
 #include"Vector2D.h"
 #include "Tipos.h"
 #include "ObjetoMovil.h"
+#include <string>
 
 class Pieza: public ObjetoMovil
 {
 protected:
 
+	std::string nombre;
 	PosicionMatriz posicionMatriz; // Posición en la matriz (fila, columna)
     Vector2D posicionArena;
     double ataque;
@@ -29,8 +31,9 @@ protected:
 public:
     virtual void dibuja(const Renderer& renderer, const Vector2D& centro, double ancho, double alto) const = 0;
 
-    Pieza(Ataque at, Vida_maxima vi, Velocidad vel, Cadencia cad, Velocidad_ataque vel_at, Rango ra, Bando b, TipoMovimiento tm)
+    Pieza(std::string nom, Ataque at, Vida_maxima vi, Velocidad vel, Cadencia cad, Velocidad_ataque vel_at, Rango ra, Bando b, TipoMovimiento tm)
         :
+        nombre(nom),
         posicionMatriz{ 0, 0 },
         ataque(0.0),
         velocidad(0.0),
@@ -104,10 +107,25 @@ public:
 
     // --- GETTERS ----
     PosicionMatriz getPosicionMatriz() const { return posicionMatriz; }
-    TipoMovimiento getTipoMovimiento() const { return tipo_movimiento; }
     Bando getBando() const { return bando; }
 	bool estaProtegidoContraHechizos() const { return protegidoContraHechizos; }
 
+	std::string getNombre() const { return nombre; }
+	double getVidaMax() const { return vida_maxima; }
+	double getVidaActual() const { return vida_actual; }
+	double getAtaque() const { return ataque; }
+	double getDefensa() const { return defensa; }
+	double getVelocidad() const { return velocidad; }
+    double getCadencia() const { return cadencia; }
+    double getVelocidadAtaque() const { return velocidad_ataque; }
+	int getRangoMovimiento() const { return rango_movimiento; }
+    TipoMovimiento getTipoMovimiento() const { return tipo_movimiento; }
+
+    std::string getTipoMovimientoString() const {
+		if (tipo_movimiento == TipoMovimiento::CAMINA) return "Camina";
+        else if(tipo_movimiento == TipoMovimiento::VUELA) return "Vuela";
+        else return "Teletransporte";
+	}
 
     // --- FLAGS ----
     bool puedeMoverseA(PosicionMatriz destino);

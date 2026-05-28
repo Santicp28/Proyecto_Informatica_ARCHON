@@ -1,7 +1,8 @@
 #include "Fenix.h"
 #include "Pieza.h"
 
-Fenix::Fenix(Bando b) : Pieza(
+Fenix::Fenix(std::string nombre, Bando b) : Pieza(
+    nombre,
     Ataque::ALTO,                  
     Vida_maxima::ALTA,                    
     Velocidad::NORMAL,             

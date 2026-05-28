@@ -117,17 +117,27 @@ void Renderer::dibujaSprite(const ETSIDI::Sprite& sprite, const Vector2D& centro
 	glEnable(GL_DEPTH_TEST);
 }
 
-void Renderer::dibujaTexto(const std::string& texto, const Vector2D& pos, const Color& color, int size) const {
+void Renderer::dibujaTexto(const std::string& texto, const Vector2D& pos, const Color& color, int size, AlineacionTexto alineacion) const {
 	glDisable(GL_LIGHTING);
 	glDisable(GL_DEPTH_TEST);
 	glMatrixMode(GL_MODELVIEW);
 	const char* p = texto.c_str();//convierte el string a un puntero a char para que lo acepte la función printxy
-	float correccionAncho = (texto.size()-1.0) * size * 0.5f;//el -1 es porque el \0 descentra el texo
+
 	float correccionAlto = size * 0.5f;//corrección para que el texto quede centrado porque printxy dibuja el texto a partir de la esquina superior izquierda
 
-	ETSIDI::setTextColor(color.r, color.g, color.b);
-	ETSIDI::setFont("assets/fuentes/ComicNeue-Regular.ttf", size);
-	ETSIDI::printxy(p, (int)(pos.x - correccionAncho), (int)(pos.y + correccionAlto));//conversion tipo cast
+	if (alineacion == AlineacionTexto::IZQUIERDA) {
+		ETSIDI::setTextColor(color.r, color.g, color.b);
+		ETSIDI::setFont("assets/fuentes/ComicNeue-Regular.ttf", size);
+		ETSIDI::printxy(p, (int)(pos.x), (int)(pos.y + correccionAlto));//conversion tipo cast
+	}  
+	else if (alineacion == AlineacionTexto::CENTRADO) {
+		float correccionAncho = (texto.size() - 1.0) * size * 0.5f;//el -1 es porque el \0 descentra el texo
+
+		ETSIDI::setTextColor(color.r, color.g, color.b);
+		ETSIDI::setFont("assets/fuentes/ComicNeue-Regular.ttf", size);
+		ETSIDI::printxy(p, (int)(pos.x - correccionAncho), (int)(pos.y + correccionAlto));
+	}
+
 	glEnable(GL_LIGHTING);
 	glEnable(GL_DEPTH_TEST);
 }

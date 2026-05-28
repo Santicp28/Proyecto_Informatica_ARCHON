@@ -1,7 +1,8 @@
 #include "Trol.h"
 #include "Pieza.h"
 
-Trol::Trol(Bando b) : Pieza(
+Trol::Trol(std::string nombre, Bando b) : Pieza(
+    nombre,
     Ataque::ALTO,                
     Vida_maxima::ALTA,      
     Velocidad::BAJA,        
