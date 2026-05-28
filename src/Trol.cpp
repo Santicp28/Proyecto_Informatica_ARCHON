@@ -3,7 +3,7 @@
 
 Trol::Trol(Bando b) : Pieza(
     Ataque::ALTO,                
-    Vida::ALTA,      
+    Vida_maxima::ALTA,      
     Velocidad::BAJA,        
     Cadencia::LENTA, 
     Velocidad_ataque::LENTO,  

@@ -3,7 +3,7 @@
 
 Fenix::Fenix(Bando b) : Pieza(
     Ataque::ALTO,                  
-    Vida::ALTA,                    
+    Vida_maxima::ALTA,                    
     Velocidad::NORMAL,             
     Cadencia::LENTA,            
     Velocidad_ataque::LENTO,      

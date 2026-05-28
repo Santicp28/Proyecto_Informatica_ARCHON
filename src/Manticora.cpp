@@ -3,7 +3,7 @@
 
 Manticora::Manticora(Bando b) : Pieza(
     Ataque::BAJO,           
-    Vida::MODERADA,          
+    Vida_maxima::MODERADA,          
     Velocidad::NORMAL,           
     Cadencia::PROMEDIO,       
     Velocidad_ataque::LENTO,   

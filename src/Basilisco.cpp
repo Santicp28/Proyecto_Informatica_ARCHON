@@ -3,7 +3,7 @@
 
 Basilisco::Basilisco(Bando b) : Pieza(
     Ataque::ALTO,                  
-    Vida::CORTA,                   
+    Vida_maxima::CORTA,                   
     Velocidad::NORMAL,             
     Cadencia::RAPIDA,           
     Velocidad_ataque::RAPIDO,   

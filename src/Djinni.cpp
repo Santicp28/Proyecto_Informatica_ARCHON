@@ -3,7 +3,7 @@
 
 Djinni::Djinni(Bando b) : Pieza(
     Ataque::MODERADO,              
-    Vida::ALTA,                
+    Vida_maxima::ALTA,                
     Velocidad::NORMAL,             
     Cadencia::PROMEDIO,            
     Velocidad_ataque::NORMAL,      

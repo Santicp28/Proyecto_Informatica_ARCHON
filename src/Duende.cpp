@@ -3,7 +3,7 @@
 
 Duende::Duende(Bando b) : Pieza(
     Ataque::BAJO,                  
-    Vida::CORTA,                   
+    Vida_maxima::CORTA,                   
     Velocidad::NORMAL,             
     Cadencia::MUYRAPIDA,           
     Velocidad_ataque::INSTANTANEO, 

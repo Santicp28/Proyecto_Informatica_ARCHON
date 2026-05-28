@@ -3,7 +3,7 @@
 
 Banshee::Banshee(Bando b) : Pieza(
     Ataque::MODERADO,              
-    Vida::MODERADA,                
+    Vida_maxima::MODERADA,                
     Velocidad::NORMAL,             
     Cadencia::LENTA,            
     Velocidad_ataque::RAPIDO, 

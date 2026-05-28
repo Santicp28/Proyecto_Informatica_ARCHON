@@ -3,7 +3,7 @@
 
 Cambiaforma::Cambiaforma(Bando b) : Pieza(
     Ataque::VARIABLE,              
-    Vida::VARIABLE,                
+    Vida_maxima::VARIABLE,                
     Velocidad::VARIABLE,           
     Cadencia::VARIABLE,            
     Velocidad_ataque::VARIABLE,    

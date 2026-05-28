@@ -4,7 +4,7 @@
 
 Mago::Mago(Bando b) : Pieza(
     Ataque::ALTO,               
-    Vida::MODERADA,        
+    Vida_maxima::MODERADA,        
     Velocidad::NORMAL,  
     Cadencia::PROMEDIO,    
     Velocidad_ataque::NORMAL,

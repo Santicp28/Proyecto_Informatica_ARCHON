@@ -3,7 +3,7 @@
 
 Valquiria::Valquiria(Bando b) : Pieza(
     Ataque::MODERADO,    
-    Vida::MODERADA,     
+    Vida_maxima::MODERADA,     
     Velocidad::NORMAL,  
     Cadencia::PROMEDIO,         
     Velocidad_ataque::LENTO,   

@@ -3,7 +3,7 @@
 
 Arquero::Arquero(Bando b) : Pieza(
     Ataque::BAJO,                   
-    Vida::CORTA,                    
+    Vida_maxima::CORTA,                    
     Velocidad::NORMAL,              
     Cadencia::PROMEDIO,             
     Velocidad_ataque::NORMAL,       

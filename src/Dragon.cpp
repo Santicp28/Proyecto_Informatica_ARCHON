@@ -3,7 +3,7 @@
 
 Dragon::Dragon(Bando b) : Pieza(
     Ataque::MUYALTO,               
-    Vida::MUYALTA,                 
+    Vida_maxima::MUYALTA,                 
     Velocidad::NORMAL,             
     Cadencia::LENTA,               
     Velocidad_ataque::NORMAL,      

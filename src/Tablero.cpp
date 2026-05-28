@@ -181,7 +181,7 @@ bool Tablero::mover(PosicionMatriz origen, PosicionMatriz destino)
     aplicarEfectoTipoCasilla(listaPiezas.getPiezaEnPosicion(destino), casillas[destino.fila][destino.columna]); //para que se actualicen los valores de defensa y poder verlos en tiempo real, a efectos prácticos solo necesitamos aplicarlos antes de arena
 
     cambiarTurno();
-    cicloTurno();
+
 
     return true;
 }
