@@ -38,6 +38,7 @@ private:
     Casilla casillas[TAM][TAM];
 
     ListaPiezas listaPiezas;
+
     Bando turnoActual;
     Bando ganador;
 
@@ -49,7 +50,6 @@ private:
 	Color colorTituloPanelLuz{ 0.0f, 0.0f, 1.0f };
 	Color colorTituloPanelOscuridad{ 1.0f, 0.0f, 0.0f };
    
-
     PanelStats* panelStatsLuz;
 	PanelStats* panelStatsOscuridad;
     
@@ -88,12 +88,10 @@ public:
 
 
 	// ----- FUNCIONES DE MOVIMIENTO Y COMBATE ------ START
-    bool mover(PosicionMatriz origen, PosicionMatriz destino);
+    bool moverPieza(PosicionMatriz origen, PosicionMatriz destino);
 
     bool movimientoLegal(PosicionMatriz origen, PosicionMatriz destino);
     bool caminoLibreEnL(PosicionMatriz origen, PosicionMatriz destino, bool primeroFilas) const;
-
-    bool esMovimientoPosible(PosicionMatriz pos) const;
 	// ----- FUNCIONES DE MOVIMIENTO Y COMBATE ------ END
 
 

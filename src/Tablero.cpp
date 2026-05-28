@@ -174,7 +174,7 @@ void Tablero::dibujaOrigenSeleccionado(const Renderer& renderer, const Vector2D&
 
 // --------------- LOGICA DE MOVIMIENTO ------------------ START
 
-bool Tablero::mover(PosicionMatriz origen, PosicionMatriz destino) 
+bool Tablero::moverPieza(PosicionMatriz origen, PosicionMatriz destino) 
 {
     if (!movimientoLegal(origen, destino)) return false;
         
@@ -346,7 +346,7 @@ bool Tablero::seleccionarPiezasConCursor()
 
 	
 
-    bool movimientoCorrecto = mover(origenSeleccionado, cursor.getPosicion());
+    bool movimientoCorrecto = moverPieza(origenSeleccionado, cursor.getPosicion());
     
 
     hayOrigenSeleccionado = false;
