@@ -10,8 +10,8 @@
 using std::vector;
 class Arena
 {
-	Pieza* jugador1; //Bando luz (atacante)
-	Pieza* jugador2; //Bando oscuridad (defensor)
+	Pieza* jugador1=nullptr; //Bando luz (atacante)
+	Pieza* jugador2=nullptr; //Bando oscuridad (defensor)
 	const Vector2D centro{ Config::sizeMundo * 0.5 };
 	const Vector2D posicionInicialJugador1{ {Config::sizeMundo.x * 0.2},{Config::sizeMundo.y * 0.5} };//centro izda
 	const Vector2D posicionInicialJugador2{ {Config::sizeMundo.x - posicionInicialJugador1.x},posicionInicialJugador1.y };//centro drcha
@@ -23,7 +23,7 @@ class Arena
 	int  ganadorBando;     // 1 = LUZ, 2 = OSCURIDAD, 0 = en curso
 
 	bool teclas[256]{false};
-	bool teclasEspeciales[256]{ false };
+	bool teclasEspeciales[512]{ false };
 
 public:
 	void inicializa(Pieza * p1, Pieza * p2);

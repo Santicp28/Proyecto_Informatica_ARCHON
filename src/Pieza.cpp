@@ -30,8 +30,6 @@ bool Pieza::puedeMoverseA(PosicionMatriz destino) {
         return false;
     }
 }    
-
-
 bool Pieza::puedeDisparar() {
 
 	if (!atacar) return false; 

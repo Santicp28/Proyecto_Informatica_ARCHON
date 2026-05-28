@@ -126,6 +126,8 @@ void Juego::tecla(unsigned char key)
 
             //tablero avisa de que se he elegido combate, haciendo que juego ponga el estado ARENA y limpiando el flag del combate pendiente para no volver a entrar 
             if (tablero.hayCombatePendiente()) {
+
+				arena.inicializa(tablero.getAtacante(), tablero.getDefensor());
                 estado = EstadoJuego::ARENA;
                 tablero.limpiarCombatePendiente();
             }
