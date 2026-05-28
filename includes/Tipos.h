@@ -1,4 +1,5 @@
 #pragma once
+
 enum class MenuAccion
 {
     NINGUNA,
@@ -17,6 +18,14 @@ enum class MenuAccion
     CONTINUAR,
 
 	IR_MENU_PRINCIPAL
+};
+
+enum class TableroAccion {
+	NINGUNA,
+
+    IR_PAUSA,
+    IR_ARENA,
+	IR_FIN_PARTIDA
 };
 
 enum class Bando {

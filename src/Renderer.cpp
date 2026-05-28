@@ -97,9 +97,9 @@ void Renderer::dibujaSprite(const char* rutaPNG, const Vector2D& centro, double 
 	glDisable(GL_LIGHTING);
 	glDisable(GL_DEPTH_TEST);
 	glMatrixMode(GL_MODELVIEW);
-	ETSIDI::Sprite sprite(rutaPNG, (double)(centro.x), (double)(centro.y), (double)ancho, (double)alto);
+	/*ETSIDI::Sprite sprite(rutaPNG, (double)(centro.x), (double)(centro.y), (double)ancho, (double)alto);
 	sprite.flip(false, true);
-	sprite.draw();
+	sprite.draw();*/
 	glEnable(GL_LIGHTING);
 	glEnable(GL_DEPTH_TEST);
 }

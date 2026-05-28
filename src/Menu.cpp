@@ -38,43 +38,55 @@ MenuAccion Menu::tecla(unsigned char key)
 {
     if (key == 'w')
     {
-        if (seleccionado == 0) {
-            botones[seleccionado].cambiarEstado();
-            seleccionado = botones.size() - 1;
-            botones[seleccionado].cambiarEstado();
-        }
-        else {
-            botones[seleccionado].cambiarEstado();
-            seleccionado = seleccionado - 1;
-            botones[seleccionado].cambiarEstado();
-        }
+        botones[seleccionado].cambiarEstado();
+        do {
+            if (seleccionado == 0) 
+                seleccionado = botones.size() - 1;
+            else 
+                seleccionado--;
+        } while (botones[seleccionado].estaDesactivo());
+        botones[seleccionado].cambiarEstado();
     }
         
     if (key == 's')
     {
-        if (seleccionado == botones.size() - 1) {
-            botones[seleccionado].cambiarEstado();
-            seleccionado = 0;
-            botones[seleccionado].cambiarEstado();
-        }
-        else {
-            botones[seleccionado].cambiarEstado();
-            seleccionado = seleccionado + 1;
-            botones[seleccionado].cambiarEstado();
-        }
+        botones[seleccionado].cambiarEstado();
+        do {
+            if (seleccionado == botones.size() - 1) {
+                seleccionado = 0;
+            }
+            else {
+                seleccionado++;
+            }
+        } while (botones[seleccionado].estaDesactivo());
+        botones[seleccionado].cambiarEstado();
     }
-    if (key == ' ') {
-
+    if (key == ' ') 
+    {
+        if(esHechizo(acciones[seleccionado]))
+			botones[seleccionado].desactivarBoton(); //desactivamos el hechizo para que no se pueda volver a usar
         return acciones[seleccionado];
     }
     return MenuAccion::NINGUNA;
 }
 
-void Menu::teclaEspecial(int key)
+bool Menu::esHechizo(MenuAccion accion)
 {
+    switch (accion)
+    {
+    case MenuAccion::TP:
+    case MenuAccion::CURAR:
+    case MenuAccion::CAMBIAR_TIEMPO:
+    case MenuAccion::INTERCAMBIAR:
+    case MenuAccion::ENCARCELAR:
+    case MenuAccion::TIJERAS:
+        return true;
+
+    default:
+        return false;
+    }
 }
 
-Vector2D Menu::calcularSizeBotones() const
+void Menu::teclaEspecial(int key)
 {
-    return{ sizeMenu.x * 0.6, sizeMenu.y / (botones.size() + 1.0) * 0.6 };
 }

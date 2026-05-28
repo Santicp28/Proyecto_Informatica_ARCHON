@@ -6,8 +6,34 @@
 
 using enum TipoCasilla;
 
+Tablero::Tablero(double longit):
+	longitud(longit), estadoTablero(EstadoTablero::TABLERO),
+	turnoActual(Bando::LUZ),
+	ganador(Bando::NINGUNO),
+	combatePendiente(false),
+	hayOrigenSeleccionado(false),
+	contadorTurnos(0),
+	cicloLuz_A_Oscuridad(true),
+    menuHechizosLuz({ "TP","CURAR","TIEMPO","SWITCH","CARCEL","TIJ","SALIR" },
+        { MenuAccion::TP, MenuAccion::CURAR, MenuAccion::CAMBIAR_TIEMPO, MenuAccion::INTERCAMBIAR, MenuAccion::ENCARCELAR, MenuAccion::TIJERAS, MenuAccion::SALIR },
+        { (Config::sizeMundo.x - Config::sizeMundo.y) * 0.5, Config::sizeMundo.y },
+        { (Config::sizeMundo.x - Config::sizeMundo.y) * 0.5 * 0.5, Config::sizeMundo.y * 0.5 }, "LUZ", { 1.0f, 0.0f, 0.0f }),
+
+    menuHechizosOscuridad({ "TP","CURAR","TIEMPO","SWITCH","CARCEL","TIJ","SALIR" },
+        { MenuAccion::TP, MenuAccion::CURAR, MenuAccion::CAMBIAR_TIEMPO, MenuAccion::INTERCAMBIAR, MenuAccion::ENCARCELAR, MenuAccion::TIJERAS, MenuAccion::SALIR },
+        { (Config::sizeMundo.x - Config::sizeMundo.y) * 0.5, Config::sizeMundo.y },
+        { (Config::sizeMundo.x - Config::sizeMundo.y) * 0.5 * 0.5, Config::sizeMundo.y * 0.5 }, "OSC", { 0.0f, 1.0f, 0.0f })
+{
+}
+
+
 void Tablero::inicializa()
 {
+	estadoTablero = EstadoTablero::TABLERO;
+
+	menuHechizosLuz.inicializa();
+	menuHechizosOscuridad.inicializa();
+
 	ganador = Bando::NINGUNO;
     turnoActual = Bando::LUZ;
 
@@ -85,7 +111,6 @@ void Tablero::inicializa()
     agregarPieza<Banshee>(8, 8);
 }
 
-
 // --------------- FUNCIONES DE DIBUJO ------------------ START
 void Tablero::dibuja(const Renderer& renderer)const {
     renderer.dibujaSprite(mesa.sprite, posicion, Config::sizeMundo.x, Config::sizeMundo.y);
@@ -100,12 +125,18 @@ void Tablero::dibuja(const Renderer& renderer)const {
              casillas[f][c].dibuja(renderer, centroCasilla, longitudCasilla);
         }
     }
-
-
     
 	listaPiezas.dibujarPiezas(renderer, esquinaSuperiorIzda, longitudCasilla);
     dibujaOrigenSeleccionado(renderer, esquinaSuperiorIzda, longitudCasilla);
     cursor.dibuja(renderer, esquinaSuperiorIzda, longitudCasilla, turnoActual);
+
+	if (estadoTablero == EstadoTablero::MENU_HECHIZOS && turnoActual == Bando::LUZ) {
+		menuHechizosLuz.dibuja(renderer);
+	}
+	else if (estadoTablero == EstadoTablero::MENU_HECHIZOS && turnoActual == Bando::OSCURIDAD) {
+		menuHechizosOscuridad.dibuja(renderer);
+	}
+
 }
 
 void Tablero::resaltarMovimientoPosible()
@@ -267,6 +298,81 @@ bool Tablero::caminoLibreEnL(PosicionMatriz origen, PosicionMatriz destino, bool
 
 
 // ----------------- FUNCIONES DE CURSOR ----------------- START
+
+
+TableroAccion Tablero::tecla(unsigned char key)
+{
+    switch (estadoTablero)
+    {
+    case EstadoTablero::TABLERO:
+    {
+        switch (key)
+        {
+        case '\r':// ENTER
+        {
+            seleccionarConCursor();
+            if (comprobarFinJuego()) {
+                return  TableroAccion::IR_FIN_PARTIDA;
+            }
+            //tablero avisa de que se he elegido combate, haciendo que juego ponga el estado ARENA y limpiando el flag del combate pendiente para no volver a entrar 
+            else if (hayCombatePendiente()) {
+                limpiarCombatePendiente();
+                return TableroAccion::IR_ARENA;
+            }
+            break;
+        }
+        //case '\x1B': case 'P': case 'p':// '\x1B'==ESC
+        //    return  TableroAccion::IR_PAUSA;
+
+        case 'h':
+        {
+            estadoTablero = EstadoTablero::MENU_HECHIZOS;
+            break;
+        }
+        case'f':
+            return TableroAccion::IR_FIN_PARTIDA;
+        default:
+            return TableroAccion::NINGUNA;
+        }
+        break;
+    }
+    case EstadoTablero::MENU_HECHIZOS:
+    {
+        MenuAccion accion= MenuAccion::NINGUNA;
+        if (turnoActual == Bando::LUZ)
+            accion = menuHechizosLuz.tecla(key);
+		else if (turnoActual == Bando::OSCURIDAD)
+            accion = menuHechizosOscuridad.tecla(key);
+        switch (accion)
+        {
+        case MenuAccion::TP:
+        case MenuAccion::CURAR:
+        case MenuAccion::CAMBIAR_TIEMPO:
+        case MenuAccion::INTERCAMBIAR:
+        case MenuAccion::ENCARCELAR:
+        case MenuAccion::TIJERAS:
+        {
+            estadoTablero = EstadoTablero::TABLERO; //PROVISIONAL
+            break;
+        }
+        case MenuAccion::SALIR:
+        {
+            estadoTablero = EstadoTablero::TABLERO;
+            break;
+        }
+        default: 
+        {
+            estadoTablero = EstadoTablero::MENU_HECHIZOS;
+            break;
+        }
+        break;
+        }
+        return TableroAccion::NINGUNA;
+    }
+    default:
+        return TableroAccion::NINGUNA;
+    }
+}
 
 // MOSTRAR STATS DE LA PIEZA EN LA QUE TENGO EL CURSOR!!!!!!!!!
 void Tablero::moverCursor(int df, int dc)
