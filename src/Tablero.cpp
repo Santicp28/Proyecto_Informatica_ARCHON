@@ -14,13 +14,13 @@ Tablero::Tablero(double longit):
 	hayOrigenSeleccionado(false),
 	contadorTurnos(0),
 	cicloLuz_A_Oscuridad(true),
-    menuHechizosLuz({ "TP","CURAR","TIEMPO","SWITCH","CARCEL","TIJ","SALIR" },
-        { MenuAccion::TP, MenuAccion::CURAR, MenuAccion::CAMBIAR_TIEMPO, MenuAccion::INTERCAMBIAR, MenuAccion::ENCARCELAR, MenuAccion::TIJERAS, MenuAccion::SALIR },
+    menuHechizosLuz({ "SALIR","TP","CURAR","TIEMPO","SWITCH","CARCEL","TIJ" },
+        { MenuAccion::SALIR, MenuAccion::TP, MenuAccion::CURAR, MenuAccion::CAMBIAR_TIEMPO, MenuAccion::INTERCAMBIAR, MenuAccion::ENCARCELAR, MenuAccion::TIJERAS },
         { (Config::sizeMundo.x - Config::sizeMundo.y) * 0.5, Config::sizeMundo.y },
         { (Config::sizeMundo.x - Config::sizeMundo.y) * 0.5 * 0.5, Config::sizeMundo.y * 0.5 }, "LUZ", { 1.0f, 0.0f, 0.0f }),
 
-    menuHechizosOscuridad({ "TP","CURAR","TIEMPO","SWITCH","CARCEL","TIJ","SALIR" },
-        { MenuAccion::TP, MenuAccion::CURAR, MenuAccion::CAMBIAR_TIEMPO, MenuAccion::INTERCAMBIAR, MenuAccion::ENCARCELAR, MenuAccion::TIJERAS, MenuAccion::SALIR },
+    menuHechizosOscuridad({ "SALIR","TP","CURAR","TIEMPO","SWITCH","CARCEL","TIJ" },
+        { MenuAccion::SALIR, MenuAccion::TP, MenuAccion::CURAR, MenuAccion::CAMBIAR_TIEMPO, MenuAccion::INTERCAMBIAR, MenuAccion::ENCARCELAR, MenuAccion::TIJERAS },
         { (Config::sizeMundo.x - Config::sizeMundo.y) * 0.5, Config::sizeMundo.y },
         { (Config::sizeMundo.x - Config::sizeMundo.y) * 0.5 * 0.5, Config::sizeMundo.y * 0.5 }, "OSC", { 0.0f, 1.0f, 0.0f })
 {

@@ -1,5 +1,6 @@
 #include "Juego.h"
 #include "freeglut.h"
+#include "Grafmenu.h"
 #include <cstdlib>
 #include "Tipos.h"
 
@@ -32,7 +33,7 @@ void Juego::dibuja(const Renderer& renderer)
     renderer.dibujaColorFondo({ 0.2f, 0.2f, 0.2f });
     switch (estado) {
     case EstadoJuego::MENU_PRINCIPAL:
-        menuPrincipal.dibuja(renderer);
+        menuPrincipal.dibuja(grafmenu, renderer);
         break;
 
     case EstadoJuego::TABLERO:
