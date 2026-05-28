@@ -407,6 +407,15 @@ void Tablero::cicloTurno()
         }
     }
 
+    for (int f = 0; f < TAM; f++) {
+        for (int c = 0; c < TAM; c++) {
+            Pieza* p = listaPiezas.getPiezaEnPosicion({ f,c });
+            if (p != nullptr) {
+                aplicarEfectoTipoCasilla(p, casillas[f][c]);
+            }
+        }
+	}
+
     contadorTurnos++;
 
     if (contadorTurnos % 5 == 0) {
