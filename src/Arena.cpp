@@ -45,11 +45,28 @@ void Arena::mueve(float dt)
 
     jugador1->mueve(dt);
     jugador2->mueve(dt);
+
+    listaDisparos.mueve(dt);
+	for (int i = listaDisparos.size() - 1; i >= 0; --i) {
+		if (InteraccionArena::colision(*listaDisparos[i], bordes)) {
+			listaDisparos.eliminar(i);
+		}
+	}   
+
+    if (jugador1->puedeDisparar()) {
+		listaDisparos.agregar(new Disparo(jugador1->posicion(), jugador1->getDireccion() * jugador1->getVelocidadAtaque()));
+    }
+
+    if (jugador2->puedeDisparar()) {
+        listaDisparos.agregar(new Disparo(jugador2->posicion(), jugador2->getDireccion() * jugador2->getVelocidadAtaque()));
+    }
+
 }
 
 void Arena::dibuja(const Renderer& renderer) const
 {
     bordes.dibuja(renderer);
+    listaDisparos.dibuja(renderer);
 }
 
 Pieza* Arena::getGanador() const

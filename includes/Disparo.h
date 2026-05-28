@@ -9,9 +9,6 @@ class Disparo :public ObjetoMovil
 protected:
 	Vector2D origen_{};
 public:
-	inline static constexpr double DANIO_DISPARO = 15.0;
-	inline static constexpr float  CADENCIA_DISPARO = 1.0f;
-	inline static constexpr float  VELOCIDAD_DISPARO = 350.0f;
 
 	Disparo() = default;
 

@@ -5,6 +5,7 @@
 #include "Bordes.h"
 #include "InteraccionArena.h"
 #include "Config.h"
+#include "ListaDisparos.h"
 using std::vector;
 class Arena
 {
@@ -15,6 +16,7 @@ class Arena
 	const Vector2D posicionInicialJugador2{ {Config::sizeMundo.x - posicionInicialJugador1.x},posicionInicialJugador1.y };//centro drcha
 	const Vector2D size{ Config::sizeMundo };
 	const Bordes bordes{ size * 0.9, centro };
+	ListaDisparos listaDisparos;
 
 	bool combateTerminado; //si empate o uno muerto
 	int  ganadorBando;     // 1 = LUZ, 2 = OSCURIDAD, 0 = en curso
@@ -34,7 +36,7 @@ public:
 	bool terminado() const { return combateTerminado; };
 
 	void resetPosiciones();
-
+	
 	Pieza* getGanador() const;
 	Pieza* getJugador1() const { return jugador1; }
 	Pieza* getJugador2() const { return jugador2; }

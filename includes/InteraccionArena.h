@@ -17,5 +17,5 @@ public:
   // static double distancia(const Vector2D& pos1, const Vector2D& pos2);
   // static bool fueraArena(const Disparo& d);
   // static void  procesarAtaque(Pieza& atacante, double& cooldown, Pieza& defensor);
-  
+ 
 };

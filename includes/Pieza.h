@@ -25,6 +25,8 @@ protected:
     int rango_movimiento;
     Color color;
 	Disparo* ultimoDisparo= nullptr; 
+    double distanciaRecorrida = 0.0;
+    Vector2D posicionUltimoDisparo{};
 public:
     bool atacar{ false };
 
@@ -103,6 +105,9 @@ public:
     double getDanio() const { return ataque; }
     void setVida(double nuevaVida) { vida = nuevaVida; }
     double getDistanciaCadencia() const {return cadencia;}
-	Disparo* getUltimoDisparo() const { return ultimoDisparo; }
-	void setUltimoDisparo(Disparo* disparo) { ultimoDisparo = disparo; }
+    double getVelocidadAtaque() const { return velocidad_ataque; }
+    bool puedeDisparar();
+    const Vector2D& getDireccion() const { return direccion; }
+	
+	
 };

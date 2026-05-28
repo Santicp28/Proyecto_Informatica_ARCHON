@@ -35,9 +35,6 @@ bool InteraccionArena::colision(Disparo& d, const Bordes& b)
 }
 
 
-
-
-
 //double InteraccionArena::distancia(const Vector2D& a, const Vector2D& b)
 //{
 //    double dx = b.x-a.x;

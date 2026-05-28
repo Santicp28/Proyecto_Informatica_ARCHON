@@ -26,6 +26,7 @@ public:
 	void colision(const Bordes& b);
 	auto begin() const { return lista.begin(); }
 	auto end()   const { return lista.end(); }
+	~ListaDisparos() { destruir_contenido(); }
 	
 };
 

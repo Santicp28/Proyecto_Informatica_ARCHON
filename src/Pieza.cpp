@@ -30,3 +30,17 @@ bool Pieza::puedeMoverseA(PosicionMatriz destino) {
         return false;
     }
 }    
+
+
+bool Pieza::puedeDisparar() {
+
+	if (!atacar) return false; 
+
+    double distanciaMinima = velocidad_ataque*cadencia;
+    double distancia = (posicion_ - posicionUltimoDisparo).modulo();
+	if (distancia>=distanciaMinima) {
+        posicionUltimoDisparo = posicion_;
+		return true;
+	}
+	return false;
+}
