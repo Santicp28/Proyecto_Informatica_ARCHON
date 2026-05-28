@@ -1,6 +1,7 @@
 #include "Tablero.h"
 #include "Renderer.h"
 #include <iostream>
+#include "Graftablero.h"
 
 
 using enum TipoCasilla;
@@ -87,6 +88,7 @@ void Tablero::inicializa()
 
 // --------------- FUNCIONES DE DIBUJO ------------------ START
 void Tablero::dibuja(const Renderer& renderer)const {
+    renderer.dibujaSprite(fondotablero.sprite, posicion, Config::sizeMundo.x, Config::sizeMundo.y);
     double longitudCasilla = longitud / TAM;
     Vector2D esquinaSuperiorIzda{ posicion.x - longitud / 2.0, posicion.y - longitud / 2.0 };
 
@@ -142,7 +144,7 @@ void Tablero::dibujaOrigenSeleccionado(const Renderer& renderer, const Vector2D&
     };
 
     if (hayOrigenSeleccionado) {
-        renderer.dibujaSprite("bin/Graficos/elegido.png", centro, longitud, longitud);
+        renderer.dibujaSprite(elegido.sprite, centro, longitud, longitud);
     }
 }
 // --------------- FUNCIONES DE DIBUJO ------------------ END

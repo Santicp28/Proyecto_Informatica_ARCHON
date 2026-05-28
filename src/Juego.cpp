@@ -5,13 +5,15 @@
 
 Juego::Juego() :
     estado(EstadoJuego::MENU_PRINCIPAL),
-    tablero(Config::sizeMundo.y),
+    tablero(Config::sizeMundo.y*0.75),
     menuPrincipal({ "JUGAR","OPCIONES","SALIR" }, Config::sizeMundo, Config::sizeMundo * 0.5, "ARCHON", { 0.0f, 0.0f, 0.0f }),
-    menuHechizosLuz( { "TP","CURAR","TIEMPO","SWITCH","SPAWN","1UP","CARCEL","SALIR"},
-        { (Config::sizeMundo.x - Config::sizeMundo.y) * 0.5, Config::sizeMundo.y },
+   
+    menuHechizosLuz( { "TP","CURAR","TIEMPO","SWITCH","1UP","CARCEL","SALIR"},
+        { (Config::sizeMundo.x - Config::sizeMundo.y) * 0.6, Config::sizeMundo.y },
         { (Config::sizeMundo.x - Config::sizeMundo.y) * 0.5*0.5, Config::sizeMundo.y*0.5 }, "LUZ", { 1.0f, 0.0f, 0.0f }),
-    menuHechizosOscuridad( { "TP","CURAR","TIEMPO","SWITCH","SPAWN","1UP","CARCEL","SALIR" },
-        { (Config::sizeMundo.x - Config::sizeMundo.y) * 0.5, Config::sizeMundo.y },
+    
+    menuHechizosOscuridad( { "TP","CURAR","TIEMPO","SWITCH","1UP","CARCEL","SALIR" },
+        { (Config::sizeMundo.x - Config::sizeMundo.y) * 0.6, Config::sizeMundo.y },
         { (Config::sizeMundo.x - Config::sizeMundo.y) * 0.5*0.5, Config::sizeMundo.y*0.5 }, "OSC", { 0.0f, 1.0f, 0.0f })
 {
 }
