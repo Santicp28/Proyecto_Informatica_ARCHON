@@ -1,22 +1,22 @@
 #pragma once
 #include "ETSIDI.h"
-struct graftablero {
+struct Graftablero {
     ETSIDI::Sprite sprite;
 };
 
-inline graftablero fondotablero { "assets/Graficos/fondo.png" };
-inline graftablero mesa{ "assets/Graficos/mesa.png" };
-inline graftablero hoja{ "assets/Graficos/hoja.png" };
-inline graftablero luz1 { "assets/Graficos/tablero4.png" };
-inline graftablero luz2 { "assets/Graficos/tablero5.png" };
-inline graftablero luz3 { "assets/Graficos/tablero6.png" };
-inline graftablero oscuro1 { "assets/Graficos/tablero1.png" };
-inline graftablero oscuro2 { "assets/Graficos/tablero2.png" };
-inline graftablero oscuro3 { "assets/Graficos/tablero3.png" };
-inline graftablero elegido  { "assets/Graficos/elegido.png" };
-inline graftablero posiciones { "assets/Graficos/posiciones.png" };
-inline graftablero cursor { "assets/Graficos/Cursor.png" };
-inline graftablero cursor_luz { "assets/Graficos/cursor_luz.PNG" };
-inline graftablero cursor_oscuro { "assets/Graficos/cursor_osc.PNG" };
-inline graftablero casillaespecial { "assets/Graficos/casillas especial.PNG" };
+inline Graftablero fondotablero { "assets/Graficos/fondo.png" };
+inline Graftablero mesa{ "assets/Graficos/mesa.png" };
+inline Graftablero hoja{ "assets/Graficos/hoja.png" };
+inline Graftablero luz1 { "assets/Graficos/tablero4.png" };
+inline Graftablero luz2 { "assets/Graficos/tablero5.png" };
+inline Graftablero luz3 { "assets/Graficos/tablero6.png" };
+inline Graftablero oscuro1 { "assets/Graficos/tablero1.png" };
+inline Graftablero oscuro2 { "assets/Graficos/tablero2.png" };
+inline Graftablero oscuro3 { "assets/Graficos/tablero3.png" };
+inline Graftablero elegido  { "assets/Graficos/elegido.png" };
+inline Graftablero posiciones { "assets/Graficos/posiciones.png" };
+inline Graftablero cursor { "assets/Graficos/Cursor.png" };
+inline Graftablero cursor_luz { "assets/Graficos/cursor_luz.PNG" };
+inline Graftablero cursor_oscuro { "assets/Graficos/cursor_osc.PNG" };
+inline Graftablero casillaespecial { "assets/Graficos/casillas especial.PNG" };
 

@@ -1,11 +1,16 @@
 #pragma once
 
 #include <vector>
+#include <cstdlib>
+#include <ctime>
 #include "Pieza.h"
 #include "Bordes.h"
 #include "InteraccionArena.h"
 #include "Config.h"
+#include "Grafarena.h"
+
 using std::vector;
+
 class Arena
 {
 	Pieza* jugador1; //Bando luz (Jugador 1 o IA)
@@ -18,6 +23,16 @@ class Arena
 
 	bool combateTerminado; //si empate o uno muerto
 	int  ganadorBando;     // 1 = LUZ, 2 = OSCURIDAD, 0 = en curso
+
+	struct Obstaculo {
+		Vector2D posicion;
+		Vector2D size;
+	};
+	vector<Obstaculo> obstaculos;
+
+	void generaObstaculos(int cantidad = 8, unsigned int semilla = 0);
+	bool esPosicionReservada(const Vector2D& pos, float margen) const;
+
 public:
 	void inicializa(Pieza * p1, Pieza * p2);
 	void mueve(float dt);
@@ -30,5 +45,6 @@ public:
 	bool terminado() const { return combateTerminado; };
 	int ganador() const { return ganadorBando; };
 	
+	const vector<Obstaculo>& getObstaculos() const { return obstaculos; }
 };
 

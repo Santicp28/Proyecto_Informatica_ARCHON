@@ -1,8 +1,8 @@
 #pragma once
 #pragma once
 #include "ETSIDI.h"
-struct grafmenu {
+struct Grafmenu {
     ETSIDI::Sprite sprite;
 };
 
-inline grafmenu menu{ "assets/Graficos/menu.png" };
+inline Grafmenu menu{ "assets/Graficos/menu.png" };
