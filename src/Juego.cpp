@@ -209,6 +209,10 @@ void Juego::tecla(unsigned char key)
         if (key == 27) { //también para ir probando como cambia, revisar en siguientes versiones cuando desarrollemos la arena
             estado = EstadoJuego::TABLERO;
         }
+        else {
+            arena.tecla(key);
+        }
+
         break;
     }
     case EstadoJuego::OPCIONES:
