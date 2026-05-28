@@ -160,7 +160,7 @@ void Tablero::dibuja(const Renderer& renderer)const {
 	panelStatsOscuridad->dibuja(renderer);
 }
 
-}
+
 
 void Tablero::resaltarMovimientoPosible()
 {
@@ -334,7 +334,7 @@ TableroAccion Tablero::tecla(unsigned char key)
         {
         case '\r':// ENTER
         {
-            seleccionarConCursor();
+            seleccionarPiezasConCursor();
             if (comprobarFinJuego()) {
                 return  TableroAccion::IR_FIN_PARTIDA;
             }

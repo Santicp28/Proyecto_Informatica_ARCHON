@@ -31,7 +31,7 @@ void Menu::dibuja(const Renderer& renderer) const
 {
 	renderer.dibujaColorFondo(colorFondo);
 	const Vector2D sizeBotones{ calcularSizeBotones() };
-	renderer.dibujaTexto(titulo, calcularPosicionBotones(-1), colorTitulo, sizeBotones.y * 0.8);
+	renderer.dibujaTexto(titulo, calcularPosicionBotones(-1), colorTitulo, sizeBotones.y * 0.8, AlineacionTexto::CENTRADO);
 	for (int i = 0; i < botones.size(); i++) {
 		botones[i].dibuja(renderer, calcularPosicionBotones(i), sizeBotones * 0.5);
 	}
