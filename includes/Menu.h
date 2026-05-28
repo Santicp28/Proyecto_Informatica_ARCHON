@@ -9,6 +9,7 @@ using std::vector, std::string;
 
 class Menu {
     vector<Boton> botones;
+    vector<MenuAccion> acciones;
     Color colorFondo{ 0.1f, 0.1f, 0.4f };
 	Color colorTitulo{ 0.0f, 0.0f, 0.0f };
     unsigned int seleccionado{ 0 };
@@ -17,7 +18,7 @@ class Menu {
     Vector2D centro;
 
 public:
-    Menu(const std::vector<std::string>& textos, const Vector2D& sMenu, const Vector2D& c, const string& titu, const Color& colorTit);
+    Menu(const vector<string>& textos,const vector<MenuAccion>& acc, const Vector2D& sMenu, const Vector2D& c, const string& titu, const Color& colorTit);
 
     void inicializa();
     void dibuja(const Renderer& renderer)const;
