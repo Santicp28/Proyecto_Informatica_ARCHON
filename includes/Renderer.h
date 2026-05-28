@@ -4,6 +4,7 @@
 #include "Vector2D.h"
 #include "Config.h"
 #include <string>
+#include "Tipos.h"
 
 struct Color
 {
@@ -27,7 +28,7 @@ public:
 
 	void dibujaSprite(const char* rutaPNG, const Vector2D& centro, double ancho, double alto) const;
 	void dibujaSprite(const ETSIDI::Sprite& sprite, const Vector2D& centro, double ancho, double alto) const;
-	void dibujaTexto(const std::string& texto, const Vector2D& pos, const Color& color, int size) const;
+	void dibujaTexto(const std::string& texto, const Vector2D& pos, const Color& color, int size, AlineacionTexto alineacion) const;
 
 private:
 	void dibujaColor(const Color& color)const { glColor3f(color.r, color.g, color.b); }

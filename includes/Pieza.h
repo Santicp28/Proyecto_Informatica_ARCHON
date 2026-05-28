@@ -5,38 +5,45 @@
 #include"Vector2D.h"
 #include "Tipos.h"
 #include "ObjetoMovil.h"
+#include <string>
 
 class Disparo;
 class Pieza: public ObjetoMovil
 {
 protected:
 
+	std::string nombre;
 	PosicionMatriz posicionMatriz; // Posición en la matriz (fila, columna)
     //Vector2D posicionArena;
     double ataque;
     //double velocidad;
     double velocidadMax;
     double cadencia;
-    double vida;
+    double vida_maxima;
+	double vida_actual;
     double defensa;
     double velocidad_ataque;
     Bando bando;      // Bando
     TipoMovimiento tipo_movimiento;
     int rango_movimiento;
     Color color;
+
+	bool protegidoContraHechizos = false; 
+
     double tiempoDesdeUltimoDisparo = 999.0;
 public:
     bool atacar{ false };
 
     virtual void dibuja(const Renderer& renderer, const Vector2D& centro, double ancho, double alto) const = 0;
 
-    Pieza(Ataque at, Vida vi, Velocidad vel, Cadencia cad, Velocidad_ataque vel_at, Rango ra, Bando b, TipoMovimiento tm)
+    Pieza(std::string nom, Ataque at, Vida_maxima vi, Velocidad vel, Cadencia cad, Velocidad_ataque vel_at, Rango ra, Bando b, TipoMovimiento tm)
         :
+        nombre(nom),
         posicionMatriz{ 0, 0 },
         ataque(0.0),
         velocidadMax(0.0),
         cadencia(0.0),
-        vida(0.0),
+        vida_maxima(0.0),
         defensa(1.0), //por defecto no reduce daño, pero cuando está en una casilla de su color aumenta y recibe menos daño
         velocidad_ataque(0.0),
         bando(b),
@@ -50,12 +57,14 @@ public:
         else if (at == Ataque::MUYALTO) ataque = 100.0;
         else if (at == Ataque::VARIABLE) ataque = 50.0; // Valor base
 
-        // --- VIDA ---
-        if (vi == Vida::CORTA) vida = 50.0;
-        else if (vi == Vida::MODERADA) vida = 100.0;
-        else if (vi == Vida::ALTA) vida = 150.0;
-        else if (vi == Vida::MUYALTA) vida = 200.0;
-        else if (vi == Vida::VARIABLE) vida = 100.0;
+        // --- VIDA MAXIMA ---
+        if (vi == Vida_maxima::CORTA) vida_maxima = 50.0;
+        else if (vi == Vida_maxima::MODERADA) vida_maxima = 100.0;
+        else if (vi == Vida_maxima::ALTA) vida_maxima = 150.0;
+        else if (vi == Vida_maxima::MUYALTA) vida_maxima = 200.0;
+        else if (vi == Vida_maxima::VARIABLE) vida_maxima = 100.0;
+
+		vida_actual = vida_maxima; 
 
         // --- VELOCIDAD (Desplazamiento) ---
         if (vel == Velocidad::BAJA) velocidadMax = 4.0;
@@ -82,17 +91,53 @@ public:
         else if (ra == Rango::LARGO) rango_movimiento = 5;
     }
 
+    
+
+
+    // --- SETTERS ----
+    void setDefensa(double def) { defensa = def; }
+    virtual void setPosicionArena(const Vector2D& posicion) { posicionArena = posicion; }
+	void setProteccionContraHechizos(bool protegido) { protegidoContraHechizos = protegido;}
+
+	void curar(double cantidad) { 
+        if ((vida_actual + cantidad) > vida_maxima) vida_actual = vida_maxima; 
+		else vida_actual += cantidad;
+    }
+
     void setPosicionMatriz(unsigned int fila, unsigned int columna) {
         posicionMatriz.fila = fila;
         posicionMatriz.columna = columna;
     }
 
-	void setDefensa(double def) { defensa = def; }
 
+    // --- GETTERS ----
+    PosicionMatriz getPosicionMatriz() const { return posicionMatriz; }
+    Bando getBando() const { return bando; }
+	bool estaProtegidoContraHechizos() const { return protegidoContraHechizos; }
+
+	std::string getNombre() const { return nombre; }
+	double getVidaMax() const { return vida_maxima; }
+	double getVidaActual() const { return vida_actual; }
+	double getAtaque() const { return ataque; }
+	double getDefensa() const { return defensa; }
+	double getVelocidad() const { return velocidad; }
+    double getCadencia() const { return cadencia; }
+    double getVelocidadAtaque() const { return velocidad_ataque; }
+	int getRangoMovimiento() const { return rango_movimiento; }
+    TipoMovimiento getTipoMovimiento() const { return tipo_movimiento; }
+
+    std::string getTipoMovimientoString() const {
+		if (tipo_movimiento == TipoMovimiento::CAMINA) return "Camina";
+        else if(tipo_movimiento == TipoMovimiento::VUELA) return "Vuela";
+        else return "Teletransporte";
+	}
+
+    // --- FLAGS ----
     bool puedeMoverseA(PosicionMatriz destino);
 
-    PosicionMatriz getPosicionMatriz() const { return posicionMatriz; }
-    TipoMovimiento getTipoMovimiento() const { return tipo_movimiento; }
+    
+
+   
 
     Bando getBando() const { return bando; }
 

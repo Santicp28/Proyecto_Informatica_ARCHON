@@ -1,9 +1,10 @@
 #include "Djinni.h"
 #include "Pieza.h"
 
-Djinni::Djinni(Bando b) : Pieza(
+Djinni::Djinni(std::string nombre, Bando b) : Pieza(
+    nombre,
     Ataque::MODERADO,              
-    Vida::ALTA,                
+    Vida_maxima::ALTA,                
     Velocidad::NORMAL,             
     Cadencia::PROMEDIO,            
     Velocidad_ataque::NORMAL,      

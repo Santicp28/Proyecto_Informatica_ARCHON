@@ -2,6 +2,7 @@
 #include"Vector2D.h"
 #include"Renderer.h"
 #include "Tipos.h"
+#include "Graftablero.h"
 
 class Casilla
 {	
@@ -12,7 +13,16 @@ class Casilla
 	bool esOscilante = false;
 	bool resaltada = false;
 
-	int varianteGrafico{ 0 };//asinga aleatoriamente
+
+	const ETSIDI::Sprite* variantes[7] = {
+			&clara.sprite,
+			&bastante_clara.sprite,
+			&ligeramente_clara.sprite,
+			&ligeramente_oscura.sprite,
+			&bastante_oscura.sprite,
+			&oscura.sprite,
+			&casillaespecial.sprite
+	};
 
 public:
 	void inicializa(const TipoCasilla& nuevoTipo, PosicionMatriz nuevaPosicion);

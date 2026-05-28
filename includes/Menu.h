@@ -2,6 +2,7 @@
 #include"Renderer.h"
 #include "Boton.h"
 #include "Config.h"
+#include "Grafmenu.h"
 #include "Tipos.h"
 #include<string>
 #include <vector>
@@ -21,13 +22,15 @@ public:
     Menu(const vector<string>& textos,const vector<MenuAccion>& acc, const Vector2D& sMenu, const Vector2D& c, const string& titu, const Color& colorTit);
 
     void inicializa();
+    void dibuja(const Grafmenu& grafmenu, const Renderer& renderer)const;
     void dibuja(const Renderer& renderer)const;
     void mueve(float dt);
   
     MenuAccion tecla(unsigned char key);
+    bool esHechizo(MenuAccion accion);
     void teclaEspecial(int key);
 private:
-    Vector2D calcularPosicionBotones(int ordenBoton)const { return { sizeMenu.x * 0.5, (ordenBoton + 1.5) * sizeMenu.y / (botones.size() + 3) }; } //calcula la separecion entre botones Config::sizeMundo.y / (botones.size() + 1.0)
-    Vector2D calcularSizeBotones()const;
+    Vector2D calcularPosicionBotones(int ordenBoton)const { return { sizeMenu.x * 0.5, (ordenBoton + 2) * sizeMenu.y / (botones.size() + 2.0) }; } //calcula la separecion entre botones Config::sizeMundo.y / (botones.size() + 1.0)
+    Vector2D calcularSizeBotones()const{ return{ sizeMenu.x * 0.6, sizeMenu.y / (botones.size() + 1.0) * 0.6 }; }
 
 };

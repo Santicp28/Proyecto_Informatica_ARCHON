@@ -7,12 +7,12 @@ struct graftablero {
 inline graftablero fondotablero { "assets/Graficos/fondo.png" };
 inline graftablero mesa{ "assets/Graficos/mesa.png" };
 inline graftablero hoja{ "assets/Graficos/hoja.png" };
-inline graftablero luz1 { "assets/Graficos/tablero4.png" };
-inline graftablero luz2 { "assets/Graficos/tablero5.png" };
-inline graftablero luz3 { "assets/Graficos/tablero6.png" };
-inline graftablero oscuro1 { "assets/Graficos/tablero1.png" };
-inline graftablero oscuro2 { "assets/Graficos/tablero2.png" };
-inline graftablero oscuro3 { "assets/Graficos/tablero3.png" };
+inline graftablero clara { "assets/Graficos/casilla_azul.png" };
+inline graftablero bastante_clara { "assets/Graficos/casilla_turquesa.png" };
+inline graftablero ligeramente_clara { "assets/Graficos/casilla_verde.png" };
+inline graftablero ligeramente_oscura { "assets/Graficos/casilla_amarilla.png" };
+inline graftablero bastante_oscura { "assets/Graficos/casilla_naranja.png" };
+inline graftablero oscura { "assets/Graficos/casilla_roja.png" };
 inline graftablero elegido  { "assets/Graficos/elegido.png" };
 inline graftablero posiciones { "assets/Graficos/posiciones.png" };
 inline graftablero cursor { "assets/Graficos/Cursor.png" };

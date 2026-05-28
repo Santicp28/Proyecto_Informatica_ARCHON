@@ -1,9 +1,10 @@
 #include "Banshee.h"
 #include "Pieza.h"
 
-Banshee::Banshee(Bando b) : Pieza(
+Banshee::Banshee(std::string nombre, Bando b) : Pieza(
+    nombre,
     Ataque::MODERADO,              
-    Vida::MODERADA,                
+    Vida_maxima::MODERADA,                
     Velocidad::NORMAL,             
     Cadencia::LENTA,            
     Velocidad_ataque::RAPIDO, 

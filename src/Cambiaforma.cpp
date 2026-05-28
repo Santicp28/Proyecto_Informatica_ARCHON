@@ -1,9 +1,10 @@
 #include "Cambiaforma.h"
 #include "Pieza.h"
 
-Cambiaforma::Cambiaforma(Bando b) : Pieza(
+Cambiaforma::Cambiaforma(std::string nombre, Bando b) : Pieza(
+    nombre,
     Ataque::VARIABLE,              
-    Vida::VARIABLE,                
+    Vida_maxima::VARIABLE,                
     Velocidad::VARIABLE,           
     Cadencia::VARIABLE,            
     Velocidad_ataque::VARIABLE,    
