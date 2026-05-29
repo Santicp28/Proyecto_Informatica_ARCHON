@@ -103,7 +103,7 @@ public:
     // --- SETTERS ----
     void setDefensa(double def) { defensa = def; }
     void setAtaque(double at) { ataque = at; }
-    void setVelocidad(double vel) { velocidad = vel; }
+    void setVelocidad(double vel) { velocidadMax = vel; }
     void setCadencia(double cad) { cadencia = cad; }
     void setVidaMaxima(double vida) { vida_maxima = vida; }
     void setVidaActual(double vida) { vida_actual = vida; }
@@ -141,7 +141,7 @@ public:
 	double getVidaActual() const { return vida_actual; }
 	double getAtaque() const { return ataque; }
 	double getDefensa() const { return defensa; }
-	double getVelocidad() const { return velocidad; }
+	double getVelocidad() const { return velocidadMax; }
     double getCadencia() const { return cadencia; }
     double getVelocidadAtaque() const { return velocidad_ataque; }
 	int getRangoMovimiento() const { return rango_movimiento; }
