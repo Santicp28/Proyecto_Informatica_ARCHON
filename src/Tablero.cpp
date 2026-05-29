@@ -495,6 +495,8 @@ void Tablero::seleccionarPiezasConCursor()
         }
 
 		resaltarMovimientoPosible();//actualizamos los movimientos posibles para el origen seleccionado, para luego mostrarlos en la parte gráfica
+
+        return;
     }
 
 	
@@ -665,6 +667,11 @@ void Tablero::cicloTurno()
 
                 if (contadorTurnosParaCiclo == 0) {
                     p->setMojada(false); //si las oscilantes son claras, (momento de luz) se seca y pierde los efectos de mojado
+                    if (p->getBando() == Bando::LUZ) p->setEncarcelada(false);
+                }
+
+                if (contadorTurnosParaCiclo == 5) {
+                    if (p->getBando() == Bando::OSCURIDAD) p->setEncarcelada(false);
                 }
             }
         }
@@ -749,10 +756,7 @@ void Tablero::aplicarEfectoTipoCasilla(Pieza* p, const Casilla& c)
     TipoCasilla tipo = c.getTipo();
 
     if (p->getBando() == Bando::LUZ) {
-        if (tipo == TipoCasilla::CLARA) {
-            if(!p->estaMojada()) p->setDefensa(1.55);
-			p->setEncarcelada(false);
-        }
+        if (tipo == TipoCasilla::CLARA) if(!p->estaMojada()) p->setDefensa(1.55);
         else if (tipo == TipoCasilla::BASTANTE_CLARA && !p->estaMojada()) p->setDefensa(1.45);
         else if (tipo == TipoCasilla::LIGERAMENTE_CLARA && !p->estaMojada()) p->setDefensa(1.25);
         else if (tipo == TipoCasilla::LIGERAMENTE_OSCURA && !p->estaMojada()) p->setDefensa(1.0);
@@ -760,10 +764,7 @@ void Tablero::aplicarEfectoTipoCasilla(Pieza* p, const Casilla& c)
         else if (tipo == TipoCasilla::OSCURA && !p->estaMojada()) p->setDefensa(1.0);
     }
     else if (p->getBando() == Bando::OSCURIDAD) {
-        if (tipo == TipoCasilla::OSCURA) {
-            if(!p->estaMojada()) p->setDefensa(1.55);
-			p->setEncarcelada(false);
-        }
+        if (tipo == TipoCasilla::OSCURA) if(!p->estaMojada()) p->setDefensa(1.55);
         else if (tipo == TipoCasilla::BASTANTE_OSCURA && !p->estaMojada()) p->setDefensa(1.45);
         else if (tipo == TipoCasilla::LIGERAMENTE_OSCURA && !p->estaMojada()) p->setDefensa(1.25);
         else if (tipo == TipoCasilla::LIGERAMENTE_CLARA && !p->estaMojada()) p->setDefensa(1.0);

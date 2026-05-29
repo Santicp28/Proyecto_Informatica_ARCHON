@@ -34,10 +34,12 @@ void Hechizos::intercambiar(const PosicionMatriz& origen, const PosicionMatriz& 
 	Pieza* p1 = lista.getPiezaEnPosicion(origen);
 	Pieza* p2 = lista.getPiezaEnPosicion(destino);
 
-	if (!(p1->estaProtegidoContraHechizos() || p2->estaProtegidoContraHechizos())) 
-	lista.moverDeCasilla(origen, posicionPivote);
-	lista.moverDeCasilla(destino, origen);
-	lista.moverDeCasilla(posicionPivote, destino);
+	if (!(p1->estaProtegidoContraHechizos() || p2->estaProtegidoContraHechizos())) { 
+		lista.moverDeCasilla(origen, posicionPivote);
+		lista.moverDeCasilla(destino, origen);
+		lista.moverDeCasilla(posicionPivote, destino);
+	}
+	
 }
 
 
