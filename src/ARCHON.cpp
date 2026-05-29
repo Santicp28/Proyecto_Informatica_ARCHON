@@ -12,6 +12,7 @@ void OnKeyboardDown(unsigned char key, int x, int y);
 void OnSpecialKeyboardDown(int key, int x, int y);
 void OnKeyboardUp(unsigned char key, int x, int y);
 void OnSpecialKeyboardUp(int key, int x, int y);
+void OnResize(int nuevoAncho, int nuevoAlto);
 
 int main(int argc, char* argv[])
 {
@@ -32,6 +33,7 @@ int main(int argc, char* argv[])
     glutSpecialFunc(OnSpecialKeyboardDown);
 	glutKeyboardUpFunc(OnKeyboardUp);
     glutSpecialUpFunc(OnSpecialKeyboardUp);
+    glutReshapeFunc(OnResize);
     glutMainLoop();
     return 0;
 }
@@ -77,4 +79,11 @@ void OnSpecialKeyboardUp(int key, int x, int y)
 {
 	juego.teclaEspecialUP(key);
 	glutPostRedisplay();
+}
+
+void OnResize(int nuevoAncho, int nuevoAlto)
+{
+    Config::anchoVentana = nuevoAncho;
+    Config::altoVentana = nuevoAlto;
+    glViewport(0, 0, nuevoAncho, nuevoAlto);
 }

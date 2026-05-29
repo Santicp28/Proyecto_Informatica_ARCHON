@@ -19,5 +19,7 @@ public:
 
 private:
 	void dibujaLineaStat(const Renderer& renderer, const char* nombre, double valor, Vector2D posicionTexto) const;
+	mutable int tamTexto = 11;
+	mutable int tamTitulo = 18;
 };
 	
