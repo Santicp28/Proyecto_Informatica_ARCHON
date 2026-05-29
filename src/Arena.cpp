@@ -15,7 +15,7 @@ bool Arena::esPosicionReservada(const Vector2D& pos, float margen) const
 
 void Arena::generaObstaculos(int cantidad, unsigned int semilla)
 {
-    obstaculos.clear();
+    listaObstaculos.limpiar();
     std::srand(semilla == 0 ? static_cast<unsigned>(std::time(nullptr)) : semilla);
 
     const float margenBorde = size.x * 0.08f;
@@ -42,7 +42,7 @@ void Arena::generaObstaculos(int cantidad, unsigned int semilla)
             continue;
 
         bool solapa = false;
-        for (const auto& obs : obstaculos)
+        for (const auto& obs : listaObstaculos)
         {
             float dx = candidato.x - obs.posicion.x;
             float dy = candidato.y - obs.posicion.y;
@@ -54,7 +54,7 @@ void Arena::generaObstaculos(int cantidad, unsigned int semilla)
         }
         if (solapa) continue;
 
-        obstaculos.push_back({ candidato, obsSize });
+		listaObstaculos.agregar( candidato, obsSize, arbolverde.sprite );
         ++colocados;
     }
 }
@@ -109,7 +109,7 @@ void Arena::teclaUP(unsigned char key) {
 }
 void Arena::teclaEspecial(int key) { 
     teclasEspeciales[key] = true; 
-	Vector2D vel{ 0, 0 };
+	Vector2D vel{ 0.0, 0.0 };
 	double speed = jugador2->getVelocidad();
 	if (teclasEspeciales[GLUT_KEY_UP]) vel.y = -speed;
 	if (teclasEspeciales[GLUT_KEY_DOWN]) vel.y = speed;
@@ -143,8 +143,12 @@ void Arena::mueve(float dt)
 	InteraccionArena::colision(*jugador1, bordes);
 	InteraccionArena::colision(*jugador2, bordes);
 	InteraccionArena::colision(*jugador1, *jugador2);
-
-
+	//---------obstaculos---------
+	for (const auto& obs : listaObstaculos) {
+		InteraccionArena::colision(*jugador1, obs);
+		InteraccionArena::colision(*jugador2, obs);
+	}
+	//---------disparos---------
 	listaDisparos.mueve(dt);
 	for (int i = listaDisparos.size() - 1; i >= 0; --i) {
 
@@ -152,6 +156,15 @@ void Arena::mueve(float dt)
 			listaDisparos.eliminar(i);
 			continue;
 		}
+		bool destruido = false;
+		for (const auto& obs : listaObstaculos) {
+			if (InteraccionArena::colision(*listaDisparos[i], obs)) {
+				listaDisparos.eliminar(i);
+				destruido = true;
+				break;
+			}
+		}
+		if (destruido) continue;
 		if (InteraccionArena::colision(*listaDisparos[i], *jugador2) &&
 			listaDisparos[i]->getPropietario() != jugador2) {
 			jugador2->recibirDanio(jugador1->getAtaque());
@@ -183,6 +196,53 @@ void Arena::mueve(float dt)
 		));
 	}
 
+	//--------vida----------
+	if (jugador1->getVidaActual() <= 0) {
+		combateTerminado = true;
+		ganadorBando = 2;
+	}
+	else if (jugador2->getVidaActual() <= 0) {
+		combateTerminado = true;
+		ganadorBando = 1;
+	}
+
+	//-------ataque cuerpo a cuerpo ------
+	if (jugador1->esAtaqueMelee()) jugador1->actualizarGolpe(dt);
+	if (jugador2->esAtaqueMelee()) jugador2->actualizarGolpe(dt);
+
+	/*if (jugador1->esAtaqueMelee() && jugador1->golpeActivo() && !jugador1->golpeYaConecto) {
+		if (InteraccionArena::colision(jugador1->getGolpe(), jugador1->posicion(),
+			jugador1->getDireccion(), *jugador2)) {
+			jugador2->recibirDanio(jugador1->getAtaque());
+			jugador1->golpeYaConecto = true;
+		}
+	}*/
+
+	if (jugador1->esAtaqueMelee() && jugador1->golpeActivo()) {
+		printf("[MELEE J1] golpeActivo=true, golpeYaConecto=%d\n", jugador1->golpeYaConecto);
+		if (InteraccionArena::colision(jugador1->getGolpe(), jugador1->posicion(),
+			jugador1->getDireccion(), *jugador2)) {
+			printf("[MELEE J1] COLISION DETECTADA\n");
+			if (!jugador1->golpeYaConecto) {
+				jugador2->recibirDanio(jugador1->getAtaque());
+				jugador1->golpeYaConecto = true;
+				printf("[MELEE J1] DANIO APLICADO\n");
+			}
+		}
+	}
+
+
+
+
+
+
+	if (jugador2->esAtaqueMelee() && jugador2->golpeActivo() && !jugador2->golpeYaConecto) {
+		if (InteraccionArena::colision(jugador2->getGolpe(), jugador2->posicion(),
+			jugador2->getDireccion(), *jugador1)) {
+			jugador1->recibirDanio(jugador2->getAtaque());
+			jugador2->golpeYaConecto = true;
+		}
+	}
 }
 
 void Arena::dibuja(const Renderer& renderer) const
@@ -191,12 +251,15 @@ void Arena::dibuja(const Renderer& renderer) const
     bordes.dibuja(renderer);
     renderer.dibujaSprite(fondoarena.sprite, centro, size.x, size.y);
 
-
-    for (const auto& obs : obstaculos)
-        renderer.dibujaSprite(arbolverde.sprite, obs.posicion, obs.size.x, obs.size.y);
-    listaDisparos.dibuja(renderer);
+	listaObstaculos.dibuja(renderer);
+	listaDisparos.dibuja(renderer);
 	if (jugador1) jugador1->dibuja(renderer, jugador1->posicion(), 175.0, 175.0);
 	if (jugador2) jugador2->dibuja(renderer, jugador2->posicion(), 175.0, 175.0);
+	if (jugador1 && jugador1->esAtaqueMelee())
+		jugador1->getGolpe().dibuja(renderer, jugador1->posicion(), jugador1->getDireccion());
+	if (jugador2 && jugador2->esAtaqueMelee())
+		jugador2->getGolpe().dibuja(renderer, jugador2->posicion(), jugador2->getDireccion());
+
 }
 
 Pieza* Arena::getGanador() const

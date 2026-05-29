@@ -5,6 +5,7 @@
 #include"Vector2D.h"
 #include "Tipos.h"
 #include "ObjetoMovil.h"
+#include"GolpeAtaque.h"
 #include <string>
 
 class Disparo;
@@ -27,9 +28,9 @@ protected:
     TipoMovimiento tipo_movimiento;
     int rango_movimiento;
     Color color;
-
+    GolpeAtaque* golpe = nullptr;
 	bool protegidoContraHechizos = false; 
-
+    bool golpeConectado = false;
     double tiempoDesdeUltimoDisparo = 999.0;
 public:
     bool atacar{ false };
@@ -143,17 +144,18 @@ public:
     bool puedeMoverseA(PosicionMatriz destino);
     bool puedeDisparar();
     bool estaMuerto() const { return vida_actual <= 0; }
-
+    bool esAtaqueMelee() const { return golpe != nullptr; };
+    bool golpeActivo() const { return golpeConectado; }
+    bool golpeYaConecto = false; //un golpe por swing
 
     //double getArmadura() const { return armadura; }    //double getDanio() const { return ataque; }
    
-    
- 
     const Vector2D& getDireccion() const { return direccion; }
-	
+    const GolpeAtaque& getGolpe() const { return *golpe; }
     void mueve(double t) override {
         ObjetoMovil::mueve(t);
         tiempoDesdeUltimoDisparo += t;
     }
+    void               actualizarGolpe(double dt);
 };
 

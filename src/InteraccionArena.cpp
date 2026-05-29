@@ -24,7 +24,7 @@ void InteraccionArena::colision(Pieza& p, const Bordes& b)
 
 
 
-bool InteraccionArena::colision(Disparo& d, const Bordes& b)
+bool InteraccionArena::colision(const Disparo& d, const Bordes& b)
 {
     const Pared* paredes[] = { &b.suelo, &b.techo, &b.izq, &b.dcha };
     for (const Pared* pared : paredes) {
@@ -42,14 +42,6 @@ bool InteraccionArena::colision(const Disparo& d, const Pieza& p)
 	return dist < (d.sizeradio_ + p.sizeradio_);
 }
 
-
-//double InteraccionArena::distancia(const Vector2D& a, const Vector2D& b)
-//{
-//    double dx = b.x-a.x;
-//    double dy = b.y-a.y;
-//    return std::sqrt(dx * dx + dy * dy);
-//}
-//
 void InteraccionArena::resolverColision(ObjetoMovil& obj1, ObjetoMovil& obj2)
 {
     Vector2D diff = obj1.posicion_ - obj2.posicion_;
@@ -68,3 +60,29 @@ void InteraccionArena::colision(Pieza& p1, Pieza& p2)
     resolverColision(p1, p2);
 }
 
+
+void InteraccionArena::colision(Pieza& p, const Obstaculo& obs)
+{
+    Vector2D diff = p.posicion_ - obs.posicion;
+    double dist = diff.modulo();
+    double sumRadios = p.sizeradio_ + obs.size.x * 0.5;
+    if (dist >= sumRadios) return;
+
+    Vector2D dir = diff.unitario();
+    double solape = sumRadios - dist;
+    p.posicion_ = p.posicion_ + dir * solape; // solo mueve la pieza, el obstáculo es estático
+}
+
+bool InteraccionArena::colision(const Disparo& d, const Obstaculo& obs)
+{
+    Vector2D diff = d.posicion_ - obs.posicion;
+    double dist = diff.modulo();
+    double sumRadios = d.sizeradio_ + obs.size.x * 0.5;
+    return dist < sumRadios;
+}
+
+bool InteraccionArena::colision(const GolpeAtaque& golpe, const Vector2D& posAtacante,
+    const Vector2D& dir, const Pieza& defensor)
+{
+    return golpe.colisiona(posAtacante, dir, defensor.posicion_, defensor.sizeradio_);
+}

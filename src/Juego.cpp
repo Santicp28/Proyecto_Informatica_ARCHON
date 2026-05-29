@@ -61,8 +61,13 @@ void Juego::dibuja(const Renderer& renderer)
 
 void Juego::mueve(float dt)
 {
-    if(estado==EstadoJuego::ARENA)
-		arena.mueve(dt);
+    if(estado==EstadoJuego::ARENA) {
+        arena.mueve(dt);
+
+        if (arena.terminado()) {
+            estado = EstadoJuego::TABLERO;
+        }
+    }
 }
 
 void Juego::tecla(unsigned char key)

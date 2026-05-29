@@ -8,4 +8,5 @@ public:
 
     void dibuja(const Renderer& renderer, const Vector2D& centro, double ancho, double alto) const override;
 
+    ~Duende() { delete golpe; golpe = nullptr; }
 };

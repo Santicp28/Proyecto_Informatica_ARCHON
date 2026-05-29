@@ -9,7 +9,7 @@
 #include "InteraccionArena.h"
 #include "Config.h"
 #include "ListaDisparos.h"
-
+#include "ListaObstaculos.h"
 #include "Grafarena.h"
 
 using std::vector;
@@ -24,15 +24,10 @@ class Arena
 	const Vector2D size{ Config::sizeMundo };
 	const Bordes bordes{ size * 0.9, centro };
 	ListaDisparos listaDisparos;
+	ListaObstaculos listaObstaculos;
 
 	bool combateTerminado; //si empate o uno muerto
 	int  ganadorBando;     // 1 = LUZ, 2 = OSCURIDAD, 0 = en curso
-
-	struct Obstaculo {
-		Vector2D posicion;
-		Vector2D size;
-	};
-	vector<Obstaculo> obstaculos;
 
 	void generaObstaculos(int cantidad = 8, unsigned int semilla = 0);
 	bool esPosicionReservada(const Vector2D& pos, float margen) const;
@@ -58,7 +53,5 @@ public:
 	Pieza* getJugador1() const { return jugador1; }
 	Pieza* getJugador2() const { return jugador2; }
 
-	
-	const vector<Obstaculo>& getObstaculos() const { return obstaculos; }
 };
 
