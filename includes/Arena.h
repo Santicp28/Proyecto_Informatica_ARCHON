@@ -22,7 +22,7 @@ class Arena
 	const Vector2D posicionInicialJugador1{ {Config::sizeMundo.x * 0.2},{Config::sizeMundo.y * 0.5} };//centro izda
 	const Vector2D posicionInicialJugador2{ {Config::sizeMundo.x - posicionInicialJugador1.x},posicionInicialJugador1.y };//centro drcha
 	const Vector2D size{ Config::sizeMundo };
-	const Bordes bordes{ size * 0.9, centro };
+	const Bordes bordes{ size * 0.7, centro };
 	ListaDisparos listaDisparos;
 	ListaObstaculos listaObstaculos;
 
