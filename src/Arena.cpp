@@ -2,8 +2,14 @@
 
 void Arena::inicializa(Pieza* p1, Pieza* p2)
 {
-    jugador1 = p1;
-    jugador2 = p2;
+	if (p1->getBando() == Bando::LUZ) {
+		jugador1 = p1;
+		jugador2 = p2;
+	}
+	else {
+		jugador1 = p2;
+		jugador2 = p1;
+	}
     jugador1->setPosicionArena(posicionInicialJugador1);
     jugador2->setPosicionArena(posicionInicialJugador2);
 
@@ -16,7 +22,7 @@ void Arena::tecla(unsigned char key) {
 	jugador1->atacar = teclas[' '];
 	jugador2->atacar = teclas[13];
 
-	Vector2D vel(0, 0);
+	Vector2D vel{ 0, 0 };
 	double speed = jugador1->getVelocidad();
 	if (teclas['w'] || teclas['W']) vel.y = -speed;
 	if (teclas['s'] || teclas['S']) vel.y = speed;
@@ -42,8 +48,8 @@ void Arena::teclaUP(unsigned char key) {
 }
 void Arena::teclaEspecial(int key) { 
     teclasEspeciales[key] = true; 
-	Vector2D vel(0, 0);
-	double speed = jugador1->getVelocidad();
+	Vector2D vel{ 0, 0 };
+	double speed = jugador2->getVelocidad();
 	if (teclasEspeciales[GLUT_KEY_UP]) vel.y = -speed;
 	if (teclasEspeciales[GLUT_KEY_DOWN]) vel.y = speed;
 	if (teclasEspeciales[GLUT_KEY_LEFT]) vel.x = -speed;
@@ -56,8 +62,8 @@ void Arena::teclaEspecial(int key) {
 }
 void Arena::teclaEspecialUP(int key) { 
     teclasEspeciales[key] = false; 
-	Vector2D vel(0, 0);
-	double speed = jugador1->getVelocidad();
+	Vector2D vel{ 0, 0 };
+	double speed = jugador2->getVelocidad();
 	if (teclasEspeciales[GLUT_KEY_UP]) vel.y = -speed;
 	if (teclasEspeciales[GLUT_KEY_DOWN]) vel.y = speed;
 	if (teclasEspeciales[GLUT_KEY_LEFT]) vel.x = -speed;
@@ -75,49 +81,55 @@ void Arena::mueve(float dt)
 
 	InteraccionArena::colision(*jugador1, bordes);
 	InteraccionArena::colision(*jugador2, bordes);
-	
+	InteraccionArena::colision(*jugador1, *jugador2);
 
 
 	listaDisparos.mueve(dt);
 	for (int i = listaDisparos.size() - 1; i >= 0; --i) {
+
 		if (InteraccionArena::colision(*listaDisparos[i], bordes)) {
 			listaDisparos.eliminar(i);
+			continue;
+		}
+		if (InteraccionArena::colision(*listaDisparos[i], *jugador2) &&
+			listaDisparos[i]->getPropietario() != jugador2) {
+			jugador2->recibirDanio(jugador1->getAtaque());
+			listaDisparos.eliminar(i);
+			continue;
+		}
+		if (InteraccionArena::colision(*listaDisparos[i], *jugador1) &&
+			listaDisparos[i]->getPropietario() != jugador1) {
+			jugador1->recibirDanio(jugador2->getAtaque());
+			listaDisparos.eliminar(i);
+			continue;
 		}
 	}
 
-	//  if (jugador1->puedeDisparar()) {
-		  //printf("jugador1 dispara, sprite: %s\n", jugador1->getSpriteAtaque() ? jugador1->getSpriteAtaque() : "NULL");
-		  //printf("lista disparos size: %d\n", listaDisparos.size());
-		  //listaDisparos.agregar(new Disparo(jugador1->posicion(), 
-		  //	jugador1->getDireccion() * jugador1->getVelocidadAtaque(),
-		  //	jugador1->getSpriteAtaque()));
-	//  }
-
 	if (jugador1->puedeDisparar()) {
-		Vector2D dir = jugador1->getDireccion();
-		Vector2D vel = dir * jugador1->getVelocidadAtaque();
-		
 		listaDisparos.agregar(new Disparo(
 			jugador1->posicion(),
-			vel,
-			jugador1->getSpriteAtaque()
+			jugador1->getDireccion() * jugador1->getVelocidadAtaque(),
+			jugador1->getSpriteAtaque(),
+			jugador1
 		));
 	}
 	if (jugador2->puedeDisparar()) {
-		listaDisparos.agregar(new Disparo(jugador2->posicion(),
+		listaDisparos.agregar(new Disparo(
+			jugador2->posicion(),
 			jugador2->getDireccion() * jugador2->getVelocidadAtaque(),
-			jugador2->getSpriteAtaque()));
-		}
+			jugador2->getSpriteAtaque(),
+			jugador2
+		));
+	}
 
-	
 }
 
 void Arena::dibuja(const Renderer& renderer) const
 {
     bordes.dibuja(renderer);
     listaDisparos.dibuja(renderer);
-	if (jugador1) jugador1->dibuja(renderer, jugador1->posicion(), size.x, size.y);
-	if (jugador2) jugador2->dibuja(renderer, jugador2->posicion(), size.x, size.y);
+	if (jugador1) jugador1->dibuja(renderer, jugador1->posicion(), 175.0, 175.0);
+	if (jugador2) jugador2->dibuja(renderer, jugador2->posicion(), 175.0, 175.0);
 }
 
 Pieza* Arena::getGanador() const

@@ -10,6 +10,7 @@
 class Disparo;
 class Pieza: public ObjetoMovil
 {
+    friend class InteraccionArena;
 protected:
 
 	std::string nombre;
@@ -38,7 +39,7 @@ public:
     virtual const char* getSpriteAtaque() const { return nullptr; }
 
     Pieza(std::string nom, Ataque at, Vida_maxima vi, Velocidad vel, Cadencia cad, Velocidad_ataque vel_at, Rango ra, Bando b, TipoMovimiento tm)
-        :ObjetoMovil({}, {}, {}, 20.0)
+        :ObjetoMovil({}, {}, {}, 30.0)
        ,nombre(nom),
         posicionMatriz{ 0, 0 },
         ataque(0.0),
@@ -68,9 +69,9 @@ public:
 		vida_actual = vida_maxima; 
 
         // --- VELOCIDAD (Desplazamiento) ---
-        if (vel == Velocidad::BAJA) velocidadMax = 40.0;
-        else if (vel == Velocidad::NORMAL) velocidadMax = 60.0;
-        else if (vel == Velocidad::VARIABLE) velocidadMax = 60.0;
+        if (vel == Velocidad::BAJA) velocidadMax = 60.0;
+        else if (vel == Velocidad::NORMAL) velocidadMax = 80.0;
+        else if (vel == Velocidad::VARIABLE) velocidadMax = 80.0;
 
         // --- CADENCIA (Tiempo entre disparos) ---
         if (cad == Cadencia::MUYRAPIDA) cadencia = 0.2;
@@ -109,7 +110,11 @@ public:
         posicionMatriz.fila = fila;
         posicionMatriz.columna = columna;
     }
-
+    void recibirDanio(double cantidad) {
+        vida_actual -= cantidad / defensa;
+        if (vida_actual < 0) vida_actual = 0;
+        printf("vida actual: %f\n", vida_actual);
+    }
 
     // --- GETTERS ----
     PosicionMatriz getPosicionMatriz() const { return posicionMatriz; }
@@ -137,7 +142,7 @@ public:
     // --- FLAGS ----
     bool puedeMoverseA(PosicionMatriz destino);
     bool puedeDisparar();
-    
+    bool estaMuerto() const { return vida_actual <= 0; }
 
 
     //double getArmadura() const { return armadura; }    //double getDanio() const { return ataque; }
