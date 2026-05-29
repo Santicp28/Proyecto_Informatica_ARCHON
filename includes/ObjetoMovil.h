@@ -32,7 +32,7 @@ public:
 	// escritura
 	void posicion(const Vector2D& p) { posicion_ = p; }
 	void velocidad(const Vector2D& v) { velocidad_ = v; }
-
+	double getSizeRadio() const { return sizeradio_; }
 };
 
  

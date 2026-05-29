@@ -1,22 +1,22 @@
 #pragma once
 #include "ETSIDI.h"
-struct graftablero {
+struct Graftablero {
     ETSIDI::Sprite sprite;
 };
 
-inline graftablero fondotablero { "assets/Graficos/fondo.png" };
-inline graftablero mesa{ "assets/Graficos/mesa.png" };
-inline graftablero hoja{ "assets/Graficos/hoja.png" };
-inline graftablero clara { "assets/Graficos/casilla_azul.png" };
-inline graftablero bastante_clara { "assets/Graficos/casilla_turquesa.png" };
-inline graftablero ligeramente_clara { "assets/Graficos/casilla_verde.png" };
-inline graftablero ligeramente_oscura { "assets/Graficos/casilla_amarilla.png" };
-inline graftablero bastante_oscura { "assets/Graficos/casilla_naranja.png" };
-inline graftablero oscura { "assets/Graficos/casilla_roja.png" };
-inline graftablero elegido  { "assets/Graficos/elegido.png" };
-inline graftablero posiciones { "assets/Graficos/posiciones.png" };
-inline graftablero cursor { "assets/Graficos/Cursor.png" };
-inline graftablero cursor_luz { "assets/Graficos/cursor_luz.PNG" };
-inline graftablero cursor_oscuro { "assets/Graficos/cursor_osc.PNG" };
-inline graftablero casillaespecial { "assets/Graficos/casillas especial.PNG" };
+inline Graftablero fondotablero { "assets/Graficos/fondo.png" };
+inline Graftablero mesa{ "assets/Graficos/mesa.png" };
+inline Graftablero hoja{ "assets/Graficos/hoja.png" };
+inline Graftablero clara { "assets/Graficos/casilla_azul.png" };
+inline Graftablero bastante_clara { "assets/Graficos/casilla_turquesa.png" };
+inline Graftablero ligeramente_clara { "assets/Graficos/casilla_verde.png" };
+inline Graftablero ligeramente_oscura { "assets/Graficos/casilla_amarilla.png" };
+inline Graftablero bastante_oscura { "assets/Graficos/casilla_naranja.png" };
+inline Graftablero oscura { "assets/Graficos/casilla_roja.png" };
+inline Graftablero elegido  { "assets/Graficos/elegido.png" };
+inline Graftablero posiciones { "assets/Graficos/posiciones.png" };
+inline Graftablero cursor { "assets/Graficos/Cursor.png" };
+inline Graftablero cursor_luz { "assets/Graficos/cursor_luz.PNG" };
+inline Graftablero cursor_oscuro { "assets/Graficos/cursor_osc.PNG" };
+inline Graftablero casillaespecial { "assets/Graficos/casillas especial.PNG" };
 

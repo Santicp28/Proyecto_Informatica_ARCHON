@@ -12,6 +12,7 @@ Caballero::Caballero(std::string nombre, Bando b) : Pieza(
     b,                             
     TipoMovimiento::CAMINA         
 ) {
+    golpe = new GolpeAtaque();
 }
 void Caballero::dibuja(const Renderer& renderer, const Vector2D& centro, double ancho, double alto) const {
     renderer.dibujaSprite(caballero.graf, centro, ancho, alto);

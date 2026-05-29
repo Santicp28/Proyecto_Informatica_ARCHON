@@ -5,18 +5,20 @@
 #include"Vector2D.h"
 #include "Tipos.h"
 #include "ObjetoMovil.h"
+#include"GolpeAtaque.h"
 #include <string>
 
 class Disparo;
 class Pieza: public ObjetoMovil
 {
+    friend class InteraccionArena;
 protected:
 
 	std::string nombre;
 	PosicionMatriz posicionMatriz; 
     Vector2D posicionArena;
     double ataque;
-    double velocidad;
+    double velocidadMax;
     double cadencia;
     double vida_maxima;
 	double vida_actual;
@@ -26,11 +28,12 @@ protected:
     TipoMovimiento tipo_movimiento;
     int rango_movimiento;
     Color color;
-
+    GolpeAtaque* golpe = nullptr;
 	bool protegidoContraHechizos = false; 
 	bool encarcelada = false; 
     bool mojada = false;
 
+    bool golpeConectado = false;
     double tiempoDesdeUltimoDisparo = 999.0;
 public:
     bool atacar{ false };
@@ -40,11 +43,11 @@ public:
     virtual const char* getSpriteAtaque() const { return nullptr; }
 
     Pieza(std::string nom, Ataque at, Vida_maxima vi, Velocidad vel, Cadencia cad, Velocidad_ataque vel_at, Rango ra, Bando b, TipoMovimiento tm)
-        :ObjetoMovil({}, {}, {}, 20.0)
+        :ObjetoMovil({}, {}, {}, 30.0)
        ,nombre(nom),
         posicionMatriz{ 0, 0 },
         ataque(0.0),
-        velocidad(0.0),
+        velocidadMax(0.0),
         cadencia(0.0),
         vida_maxima(0.0),
         defensa(1.0), //por defecto no reduce daño, pero cuando está en una casilla de su color aumenta y recibe menos daño
@@ -70,9 +73,9 @@ public:
 		vida_actual = vida_maxima; 
 
         // --- VELOCIDAD (Desplazamiento) ---
-        if (vel == Velocidad::BAJA) velocidad = 40.0;
-        else if (vel == Velocidad::NORMAL) velocidad = 60.0;
-        else if (vel == Velocidad::VARIABLE) velocidad = 60.0;
+        if (vel == Velocidad::BAJA) velocidadMax = 60.0;
+        else if (vel == Velocidad::NORMAL) velocidadMax = 80.0;
+        else if (vel == Velocidad::VARIABLE) velocidadMax = 80.0;
 
         // --- CADENCIA (Tiempo entre disparos) ---
         if (cad == Cadencia::MUYRAPIDA) cadencia = 0.2;
@@ -120,7 +123,11 @@ public:
     void setPosicionMatriz(PosicionMatriz nuevaPosicion) {
         posicionMatriz = nuevaPosicion;
     }
-
+    void recibirDanio(double cantidad) {
+        vida_actual -= cantidad / defensa;
+        if (vida_actual < 0) vida_actual = 0;
+        printf("vida actual: %f\n", vida_actual);
+    }
 
     // --- GETTERS ----
     PosicionMatriz getPosicionMatriz() const { return posicionMatriz; }
@@ -150,18 +157,19 @@ public:
     // --- FLAGS ----
     bool puedeMoverseA(PosicionMatriz destino);
     bool puedeDisparar();
-    
-
+    bool estaMuerto() const { return vida_actual <= 0; }
+    bool esAtaqueMelee() const { return golpe != nullptr; };
+    bool golpeActivo() const { return golpeConectado; }
+    bool golpeYaConecto = false; //un golpe por swing
 
     //double getArmadura() const { return armadura; }    //double getDanio() const { return ataque; }
    
-    
- 
     const Vector2D& getDireccion() const { return direccion; }
-	
+    const GolpeAtaque& getGolpe() const { return *golpe; }
     void mueve(double t) override {
         ObjetoMovil::mueve(t);
         tiempoDesdeUltimoDisparo += t;
     }
+    void               actualizarGolpe(double dt);
 };
 
