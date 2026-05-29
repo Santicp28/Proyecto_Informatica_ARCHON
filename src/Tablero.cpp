@@ -43,15 +43,15 @@ void Tablero::inicializa()
 	//INICIALIZA CASILLAS
     constexpr TipoCasilla tipoCasillas[TAM][TAM] =
     {
-     { OSCURA,     CLARA,     OSCURA,     OSCILANTE,  PODER,      OSCILANTE,  OSCURA,     CLARA,     OSCURA     },
-     { CLARA,      OSCURA,    OSCILANTE,  CLARA,      OSCILANTE,  CLARA,      OSCILANTE,  OSCURA,    CLARA      },
-     { OSCURA,     OSCILANTE, CLARA,      OSCURA,     OSCILANTE,  OSCURA,     CLARA,      OSCILANTE, OSCURA     },
-     { OSCILANTE,  CLARA,     OSCURA,     CLARA,      OSCILANTE,  CLARA,      OSCURA,     CLARA,     OSCILANTE  },
+     { OSCURA,     CLARA,     OSCURA,     OSCILANTE,  PODER,      OSCILANTE,  CLARA,     OSCURA,     CLARA     },
+     { CLARA,      OSCURA,    OSCILANTE,  CLARA,      OSCILANTE,  OSCURA,      OSCILANTE,  CLARA,    OSCURA      },
+     { OSCURA,     OSCILANTE, CLARA,      OSCURA,     OSCILANTE,  CLARA,     OSCURA,      OSCILANTE, CLARA     },
+     { OSCILANTE,  CLARA,     OSCURA,     CLARA,      OSCILANTE,  OSCURA,      CLARA,     OSCURA,     OSCILANTE  },
      { PODER,      OSCILANTE, OSCILANTE,  OSCILANTE,  PODER,      OSCILANTE,  OSCILANTE,  OSCILANTE, PODER      },
-     { OSCILANTE,  CLARA,     OSCURA,     CLARA,      OSCILANTE,  CLARA,      OSCURA,     CLARA,     OSCILANTE  },
-     { OSCURA,     OSCILANTE, CLARA,      OSCURA,     OSCILANTE,  OSCURA,     CLARA,      OSCILANTE, OSCURA     },
-     { CLARA,      OSCURA,    OSCILANTE,  CLARA,      OSCILANTE,  CLARA,      OSCILANTE,  OSCURA,    CLARA      },
-     { OSCURA,     CLARA,     OSCURA,     OSCILANTE,  PODER,      OSCILANTE,  OSCURA,     CLARA,     OSCURA     }
+     { OSCILANTE,  CLARA,     OSCURA,     CLARA,      OSCILANTE,  OSCURA,      CLARA,     OSCURA,     OSCILANTE  },
+     { OSCURA,     OSCILANTE, CLARA,      OSCURA,     OSCILANTE,  CLARA,     OSCURA,      OSCILANTE, CLARA     },
+     { CLARA,      OSCURA,    OSCILANTE,  CLARA,      OSCILANTE,  OSCURA,      OSCILANTE,  CLARA,    OSCURA      },
+     { OSCURA,     CLARA,     OSCURA,     OSCILANTE,  PODER,      OSCILANTE,  CLARA,     OSCURA,     CLARA     }
     };
     for (int f = 0; f < TAM; f++) {
         for (int c = 0; c < TAM; c++) {
@@ -110,19 +110,20 @@ void Tablero::inicializa()
     agregarPieza<Trol>(7, 8);
     agregarPieza<Banshee>(8, 8);
 
-
-
+    float referencia = (Config::anchoVentana + Config::altoVentana) * 0.5f;
+    int tam_texto_escalado = static_cast<int>(referencia * 0.018f);
+    int tam_titulo_escalado = static_cast<int>(referencia * 0.025f);
 
     panelStatsLuz = new PanelStats{
         {Config::sizeMundo.x * 0.12, Config::sizeMundo.y * 0.42},
-        { posicion.x + longitud / 1.975, posicion.y - longitud/2.2},
-        colorFondoPanel, colorTextoPanel, colorTituloPanelLuz, colorBordePanel, "Luz", static_cast<int>(Config::sizeMundo.x * 0.02), static_cast<int>(Config::sizeMundo.x * 0.02)
+        { posicion.x + longitud / 1.7, posicion.y - longitud / 1.7},
+        colorFondoPanel, colorTextoPanel, colorTituloPanelLuz, colorBordePanel, "LUZ", tam_texto_escalado, tam_titulo_escalado
     };
 
     panelStatsOscuridad = new PanelStats{
         {Config::sizeMundo.x * 0.12, Config::sizeMundo.y * 0.42},
-        { posicion.x + longitud / 1.975, posicion.y - longitud / 2.5 + Config::sizeMundo.y * 0.42},
-        colorFondoPanel, colorTextoPanel, colorTituloPanelOscuridad, colorBordePanel, "Oscuridad", static_cast<int>(Config::sizeMundo.x * 0.02), static_cast<int>(Config::sizeMundo.x * 0.02)
+        { posicion.x + longitud / 1.7, posicion.y - longitud / 1.9 + Config::sizeMundo.y * 0.42},
+		colorFondoPanel, colorTextoPanel, colorTituloPanelOscuridad, colorBordePanel, "OSCURIDAD",  tam_texto_escalado, tam_titulo_escalado
     };
 
 	//inicializo panel de stats con la pieza que está debajo del cursor al inicio

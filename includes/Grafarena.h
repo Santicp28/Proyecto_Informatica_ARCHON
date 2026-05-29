@@ -1,6 +1,8 @@
 #pragma once
-struct grafarena {
-    const char* graf;
+struct Grafarena {
+    ETSIDI::Sprite sprite;
 };
 
-inline constexpr grafarena fondoarena = { "assets/Graficos/arena.png" };
+inline Grafarena pizarra { "assets/Graficos/pizarra.png" };
+inline Grafarena arbolmarron{ "assets/Graficos/arbolmarron.png" };
+inline Grafarena arbolverde{ "assets/Graficos/arbolverde.png" };
