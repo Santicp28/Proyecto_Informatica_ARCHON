@@ -1,4 +1,5 @@
 #pragma once
+
 enum class MenuAccion
 {
     NINGUNA,
@@ -17,6 +18,14 @@ enum class MenuAccion
     CONTINUAR,
 
 	IR_MENU_PRINCIPAL
+};
+
+enum class TableroAccion {
+	NINGUNA,
+
+    IR_PAUSA,
+    IR_ARENA,
+	IR_FIN_PARTIDA
 };
 
 enum class Bando {
@@ -55,7 +64,7 @@ enum class Velocidad {
     NORMAL,
     BAJA
 };
-enum class Vida {
+enum class Vida_maxima {
     VARIABLE,
     MUYALTA,
     ALTA,
@@ -98,4 +107,9 @@ enum class TipoAtaque {
     MELEE,      // daño puntual al tocar (knight, goblin)
     AREA,       // daño continuo en radio alrededor (banshee, phoenix)
     PROYECTIL   // dispara un objeto que viaja (wizard, archer, unicorn)
+};
+
+enum class AlineacionTexto {
+	CENTRADO,
+	IZQUIERDA
 };

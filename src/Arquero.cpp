@@ -1,9 +1,10 @@
 #include "Arquero.h"
 #include "Pieza.h"
 
-Arquero::Arquero(Bando b) : Pieza(
+Arquero::Arquero(std::string nombre, Bando b) : Pieza(
+    nombre,
     Ataque::BAJO,                   
-    Vida::CORTA,                    
+    Vida_maxima::CORTA,                    
     Velocidad::NORMAL,              
     Cadencia::PROMEDIO,             
     Velocidad_ataque::NORMAL,       

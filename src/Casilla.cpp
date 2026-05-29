@@ -1,5 +1,5 @@
 #include "Casilla.h"
-#include "Graftablero.h"
+
 #include <cstdlib> 
 
 
@@ -7,8 +7,6 @@ void Casilla::inicializa(const TipoCasilla& nuevoTipo, PosicionMatriz nuevaPosic
 {
     tipo = nuevoTipo;
     posicionMatriz = nuevaPosicion;
-    
-    varianteGrafico = rand() % 3;
 
     switch (tipo)
     {
@@ -37,26 +35,15 @@ void Casilla::dibuja(const Renderer& renderer, const Vector2D& posicion, double 
     //renderer.dibujaContornoCuadrado(posicion, { 0.5f, 0.5f, 0.5f }, { longitud,longitud });
     double escalaPieza = 1.3;
 
-    if (tipo == TipoCasilla::CLARA) {
-        const ETSIDI::Sprite* variantes[] = {
-            &luz1.sprite,
-            &luz2.sprite,
-            &luz3.sprite
-        };
-        renderer.dibujaSprite(*variantes[varianteGrafico], posicion, longitud * escalaPieza, longitud * escalaPieza);
-    }
-    else if (tipo == TipoCasilla::PODER) {
-        renderer.dibujaSprite(casillaespecial.sprite, posicion, longitud * escalaPieza, longitud * escalaPieza);
-    }
-    else {
-        const ETSIDI::Sprite* variantes[] = {
-            &oscuro1.sprite,
-            &oscuro2.sprite,
-            &oscuro3.sprite
-        };
-        renderer.dibujaSprite(*variantes[varianteGrafico], posicion, longitud * escalaPieza, longitud * escalaPieza);
-    }
 
+    if (tipo == TipoCasilla::CLARA) renderer.dibujaSprite(*variantes[0], posicion, longitud * escalaPieza, longitud * escalaPieza);
+    else if (tipo == TipoCasilla::BASTANTE_CLARA) renderer.dibujaSprite(*variantes[1], posicion, longitud * escalaPieza, longitud * escalaPieza);
+    else if (tipo == TipoCasilla::LIGERAMENTE_CLARA) renderer.dibujaSprite(*variantes[2], posicion, longitud * escalaPieza, longitud * escalaPieza);
+    else if (tipo == TipoCasilla::LIGERAMENTE_OSCURA) renderer.dibujaSprite(*variantes[3], posicion, longitud * escalaPieza, longitud * escalaPieza);
+    else if (tipo == TipoCasilla::BASTANTE_OSCURA) renderer.dibujaSprite(*variantes[4], posicion, longitud * escalaPieza, longitud * escalaPieza);
+    else if (tipo == TipoCasilla::OSCURA) renderer.dibujaSprite(*variantes[5], posicion, longitud * escalaPieza, longitud * escalaPieza);
+	else if (tipo == TipoCasilla::PODER) renderer.dibujaSprite(*variantes[6], posicion, longitud * escalaPieza, longitud * escalaPieza);
+    
     if (resaltada) {
         renderer.dibujaSprite(posiciones.sprite, posicion, longitud, longitud);
     }
@@ -68,49 +55,18 @@ void Casilla::dibuja(const Renderer& renderer, const Vector2D& posicion, double 
 void Casilla::cambiarOscilantes(int cicloLuz_A_Oscuridad) {
     if (esOscilante) {
         if (cicloLuz_A_Oscuridad) {
-            if (tipo == TipoCasilla::CLARA) {
-                tipo = TipoCasilla::BASTANTE_CLARA;
-                color = { 0.10f, 0.80f, 0.76f };//por ahora mientras no hay sprites
-            }
-            else if (tipo == TipoCasilla::BASTANTE_CLARA) {
-                tipo = TipoCasilla::LIGERAMENTE_CLARA;
-                color = { 0.00f, 0.65f, 0.07f };
-            }
-            else if (tipo == TipoCasilla::LIGERAMENTE_CLARA) {
-                tipo = TipoCasilla::LIGERAMENTE_OSCURA;
-                color = { 0.55f, 0.25f, 0.60f };
-            }
-            else if (tipo == TipoCasilla::LIGERAMENTE_OSCURA) {
-                tipo = TipoCasilla::BASTANTE_OSCURA;
-                color = { 0.15f, 0.00f, 0.60f };
-            }
-            else if (tipo == TipoCasilla::BASTANTE_OSCURA) {
-                tipo = TipoCasilla::OSCURA;
-                color = { 0.f, 0.f, 0.f };
-            }
+            if (tipo == TipoCasilla::CLARA) tipo = TipoCasilla::BASTANTE_CLARA;
+            else if (tipo == TipoCasilla::BASTANTE_CLARA) tipo = TipoCasilla::LIGERAMENTE_CLARA;
+            else if (tipo == TipoCasilla::LIGERAMENTE_CLARA) tipo = TipoCasilla::LIGERAMENTE_OSCURA;
+            else if (tipo == TipoCasilla::LIGERAMENTE_OSCURA) tipo = TipoCasilla::BASTANTE_OSCURA;
+            else if (tipo == TipoCasilla::BASTANTE_OSCURA)tipo = TipoCasilla::OSCURA;
         }
         else {
-            if (tipo == TipoCasilla::OSCURA) {
-                tipo = TipoCasilla::BASTANTE_OSCURA;
-                color = { 0.15f, 0.00f, 0.60f };
-            }
-            else if (tipo == TipoCasilla::BASTANTE_OSCURA) {
-                tipo = TipoCasilla::LIGERAMENTE_OSCURA;
-                color = { 0.55f, 0.25f, 0.60f };
-            }
-            else if (tipo == TipoCasilla::LIGERAMENTE_OSCURA) {
-                tipo = TipoCasilla::LIGERAMENTE_CLARA;
-                color = { 0.00f, 0.65f, 0.07f };
-            }
-            else if (tipo == TipoCasilla::LIGERAMENTE_CLARA) {
-                tipo = TipoCasilla::BASTANTE_CLARA;
-                color = { 0.10f, 0.80f, 0.76f };
-            }
-            else if (tipo == TipoCasilla::BASTANTE_CLARA) {
-                tipo = TipoCasilla::CLARA;
-                color = { 1.f, 1.f, 1.f };
-            }
-
+            if (tipo == TipoCasilla::OSCURA) tipo = TipoCasilla::BASTANTE_OSCURA;
+            else if (tipo == TipoCasilla::BASTANTE_OSCURA) tipo = TipoCasilla::LIGERAMENTE_OSCURA;
+            else if (tipo == TipoCasilla::LIGERAMENTE_OSCURA) tipo = TipoCasilla::LIGERAMENTE_CLARA;
+            else if (tipo == TipoCasilla::LIGERAMENTE_CLARA) tipo = TipoCasilla::BASTANTE_CLARA;
+            else if (tipo == TipoCasilla::BASTANTE_CLARA) tipo = TipoCasilla::CLARA;
         }
     }
 }

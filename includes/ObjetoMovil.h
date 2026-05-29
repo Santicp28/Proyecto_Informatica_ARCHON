@@ -9,6 +9,7 @@ protected:
 	Vector2D aceleracion_;
 	double sizeradio_;
 	Vector2D direccion = { 1, 0 };  // última dirección de movimiento, usado para disparo 
+	
 public:
 	ObjetoMovil(Vector2D pos = {}, Vector2D vel = {}, Vector2D acel = {}, double sizeradio = 1.0) :
 		posicion_{ pos }, velocidad_{ vel }, aceleracion_{ acel }, sizeradio_{ sizeradio } {
@@ -20,6 +21,8 @@ public:
 	{
 		posicion_ = posicion_ + velocidad_ * t + 0.5 * aceleracion_ * t * t;
 		velocidad_ = velocidad_ + aceleracion_ * t;
+		if (velocidad_.modulo() > 0.001)
+			direccion = velocidad_.unitario();
 	}
 
 	// lectura

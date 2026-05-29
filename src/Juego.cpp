@@ -1,5 +1,6 @@
 #include "Juego.h"
 #include "freeglut.h"
+#include "Grafmenu.h"
 #include <cstdlib>
 #include "Tipos.h"
 
@@ -9,16 +10,6 @@ Juego::Juego() :
 
     menuPrincipal({ "JUGAR","OPCIONES","SALIR" }, { MenuAccion::JUGAR, MenuAccion::OPCIONES, MenuAccion::SALIR },
         Config::sizeMundo, Config::sizeMundo * 0.5, "ARCHON", { 0.0f, 0.0f, 0.0f }),
-
-    menuHechizosLuz( { "TP","CURAR","TIEMPO","SWITCH","SPAWN","1UP","CARCEL","SALIR"},
-        { MenuAccion::TP, MenuAccion::CURAR, MenuAccion::CAMBIAR_TIEMPO, MenuAccion::INTERCAMBIAR, MenuAccion::ENCARCELAR, MenuAccion::TIJERAS },
-        { (Config::sizeMundo.x - Config::sizeMundo.y) * 0.5, Config::sizeMundo.y },
-        { (Config::sizeMundo.x - Config::sizeMundo.y) * 0.5*0.5, Config::sizeMundo.y*0.5 }, "LUZ", { 1.0f, 0.0f, 0.0f }),
-
-    menuHechizosOscuridad( { "TP","CURAR","TIEMPO","SWITCH","SPAWN","1UP","CARCEL","SALIR" },
-        { MenuAccion::TP, MenuAccion::CURAR, MenuAccion::CAMBIAR_TIEMPO, MenuAccion::INTERCAMBIAR, MenuAccion::ENCARCELAR, MenuAccion::TIJERAS },
-        { (Config::sizeMundo.x - Config::sizeMundo.y) * 0.5, Config::sizeMundo.y },
-        { (Config::sizeMundo.x - Config::sizeMundo.y) * 0.5*0.5, Config::sizeMundo.y*0.5 }, "OSC", { 0.0f, 1.0f, 0.0f }),
 	
 	menuPausa({ "CONTINUAR","OPCIONES","SALIR" }, { MenuAccion::CONTINUAR, MenuAccion::OPCIONES, MenuAccion::SALIR },
 		Config::sizeMundo, Config::sizeMundo * 0.5, "PAUSA", { 0.0f, 0.0f, 0.0f }),
@@ -32,8 +23,6 @@ void Juego::inicializa()
 {
     estado = EstadoJuego::MENU_PRINCIPAL;
     menuPrincipal.inicializa();
-	menuHechizosLuz.inicializa();
-	menuHechizosOscuridad.inicializa();
 	menuPausa.inicializa();
 	menuFinPartida.inicializa();
     tablero.inicializa();
@@ -44,22 +33,12 @@ void Juego::dibuja(const Renderer& renderer)
     renderer.dibujaColorFondo({ 0.2f, 0.2f, 0.2f });
     switch (estado) {
     case EstadoJuego::MENU_PRINCIPAL:
-        menuPrincipal.dibuja(renderer);
+        menuPrincipal.dibuja(grafmenu, renderer);
         break;
 
     case EstadoJuego::TABLERO:
         tablero.dibuja(renderer);
         break;
-
-	case EstadoJuego::MENU_HECHIZOS_LUZ:
-        tablero.dibuja(renderer);
-		menuHechizosLuz.dibuja(renderer);
-		break;
-
-	case EstadoJuego::MENU_HECHIZOS_OSCURIDAD:
-        tablero.dibuja(renderer);
-		menuHechizosOscuridad.dibuja(renderer);
-		break;
 
 	case EstadoJuego::PAUSA:
 		menuPausa.dibuja(renderer);
@@ -82,7 +61,8 @@ void Juego::dibuja(const Renderer& renderer)
 
 void Juego::mueve(float dt)
 {
-
+    if(estado==EstadoJuego::ARENA)
+		arena.mueve(dt);
 }
 
 void Juego::tecla(unsigned char key)
@@ -115,87 +95,16 @@ void Juego::tecla(unsigned char key)
     }
     case EstadoJuego::TABLERO:
     {
-        if (key == 13) { // ENTER
-            tablero.seleccionarConCursor();
-
-            if (tablero.comprobarFinJuego()) {
-                estado = EstadoJuego::FIN_PARTIDA;
-                break;
-            }
-
-            //tablero avisa de que se he elegido combate, haciendo que juego ponga el estado ARENA y limpiando el flag del combate pendiente para no volver a entrar 
-            if (tablero.hayCombatePendiente()) {
-                estado = EstadoJuego::ARENA;
-                tablero.limpiarCombatePendiente();
-            }
-        }
-        if (key == 27 || key == 'p') { // ESC or P
-            estado = EstadoJuego::PAUSA;
-        }
-        if (key == 'h') {
-            Bando turno = tablero.getTurnoActual();
-            if (turno == Bando::LUZ)
-                estado = EstadoJuego::MENU_HECHIZOS_LUZ;
-            else
-                estado = EstadoJuego::MENU_HECHIZOS_OSCURIDAD;
-        }
-        if (key == 'f') {
-            estado = EstadoJuego::FIN_PARTIDA;
-        }
-        break;
-    }
-    case EstadoJuego::MENU_HECHIZOS_LUZ:
-    {
-        MenuAccion accion = menuHechizosLuz.tecla(key);
+        TableroAccion accion = tablero.tecla(key);
         switch (accion)
         {
-        case MenuAccion::TP:
-            break;
-        case MenuAccion::CURAR:
-            break;
-        case MenuAccion::CAMBIAR_TIEMPO:
-            break;
-        case MenuAccion::INTERCAMBIAR:
-            break;
-        case MenuAccion::ENCARCELAR:
-            break;
-        case MenuAccion::TIJERAS:
-            break;
-        case MenuAccion::SALIR:
-            estado = EstadoJuego::TABLERO;
-            break;
-        default:
-            break;
-        }
-        break;
-    }
-    case EstadoJuego::MENU_HECHIZOS_OSCURIDAD:
-    {
-        MenuAccion accion = menuHechizosOscuridad.tecla(key);
-        switch (accion)
-        {
-        case MenuAccion::TP:
-            break;
-
-        case MenuAccion::CURAR:
-            break;
-
-        case MenuAccion::CAMBIAR_TIEMPO:
-            break;
-
-        case MenuAccion::INTERCAMBIAR:
-            break;
-
-        case MenuAccion::ENCARCELAR:
-            break;
-
-        case MenuAccion::TIJERAS:
-            break;
-
-        case MenuAccion::SALIR:
-            estado = EstadoJuego::TABLERO;
-            break;
-
+		case TableroAccion::IR_PAUSA:
+			estado = EstadoJuego::PAUSA;
+			break;
+		case TableroAccion::IR_ARENA:
+            arena.inicializa(tablero.getAtacante(), tablero.getDefensor());
+			estado = EstadoJuego::ARENA;
+			break;
         default:
             break;
         }
@@ -206,6 +115,10 @@ void Juego::tecla(unsigned char key)
         if (key == 27) { //también para ir probando como cambia, revisar en siguientes versiones cuando desarrollemos la arena
             estado = EstadoJuego::TABLERO;
         }
+        else {
+            arena.tecla(key);
+        }
+
         break;
     }
     case EstadoJuego::OPCIONES:
@@ -268,12 +181,15 @@ void Juego::teclaEspecial(int key)
             tablero.moverCursor(0, -1);
             break;
 
-        case GLUT_KEY_RIGHT:
-            tablero.moverCursor(0, 1);
-            break;
+            case GLUT_KEY_RIGHT:
+                tablero.moverCursor(0, 1);
+                break;
+            }
         }
-    }
-}
+        else if (estado == EstadoJuego::ARENA) {
+            arena.teclaEspecial(key);
+        }
+    } 
 
 
 EstadoJuego Juego::getEstado() const
@@ -284,4 +200,15 @@ EstadoJuego Juego::getEstado() const
 void Juego::setEstado(EstadoJuego nuevoEstado)
 {
     estado = nuevoEstado;
+}
+
+void Juego::teclaUP(unsigned char key) {
+	if (estado == EstadoJuego::ARENA) {
+		arena.teclaUP(key);
+	}
+}
+void Juego::teclaEspecialUP(int key) {
+    if (estado == EstadoJuego::ARENA) {
+        arena.teclaEspecialUP(key);
+    }
 }

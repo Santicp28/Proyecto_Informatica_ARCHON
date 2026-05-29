@@ -29,4 +29,14 @@ bool Pieza::puedeMoverseA(PosicionMatriz destino) {
     default:
         return false;
     }
-}   
+}    
+bool Pieza::puedeDisparar() {
+
+	if (!atacar) return false; 
+    if (tiempoDesdeUltimoDisparo >= cadencia) {
+		tiempoDesdeUltimoDisparo = 0.0; 
+		return true;
+    }
+
+	return false;
+}

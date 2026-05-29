@@ -150,7 +150,6 @@ xcopy "$(ProjectDir)assets\Graficos" "$(OutDir)Graficos" /E /I /Y</Command>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ListaPiezas.cpp" />
     <ClCompile Include="src\ARCHON.cpp" />
     <ClCompile Include="src\Arena.cpp" />
     <ClCompile Include="src\Arquero.cpp" />
@@ -167,8 +166,10 @@ xcopy "$(ProjectDir)assets\Graficos" "$(OutDir)Graficos" /E /I /Y</Command>
     <ClCompile Include="src\Duende.cpp" />
     <ClCompile Include="src\Hechicero.cpp" />
     <ClCompile Include="src\ListaDisparos.cpp" />
+    <ClCompile Include="src\ListaPiezas.cpp" />
     <ClCompile Include="src\Manticora.cpp" />
     <ClCompile Include="src\ObjetoMovil.cpp" />
+    <ClCompile Include="src\PanelStats.cpp" />
     <ClCompile Include="src\Renderer.cpp" />
     <ClCompile Include="src\Djinni.cpp" />
     <ClCompile Include="src\Fenix.cpp" />
@@ -209,6 +210,9 @@ xcopy "$(ProjectDir)assets\Graficos" "$(OutDir)Graficos" /E /I /Y</Command>
     <ClInclude Include="includes\ListaDisparos.h" />
     <ClInclude Include="includes\Manticora.h" />
     <ClInclude Include="includes\ObjetoMovil.h" />
+    <ClInclude Include="includes\Panel.h" />
+    <ClInclude Include="includes\PanelHechizo.h" />
+    <ClInclude Include="includes\PanelStats.h" />
     <ClInclude Include="includes\Renderer.h" />
     <ClInclude Include="includes\Djinni.h" />
     <ClInclude Include="includes\Fenix.h" />

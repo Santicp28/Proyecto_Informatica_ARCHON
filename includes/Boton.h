@@ -11,14 +11,18 @@ class Boton
     Color colorPerimetro{ 1.0f,1.0f,1.0f };
 	Color colorTexto{ 0.0f,0.0f,0.0f };
     double escala{ 1.0 };
+    bool activo{ true };
     bool seleccionado{ false };
 public:
     Boton(const string& texto)
         : texto(texto)
     {
     }
-    void inicializa() { seleccionado = false; }
+    void inicializa() { seleccionado = false; activo = true; }
     void dibuja(const Renderer& renderer, const Vector2D& posicion, const Vector2D& size)const;
     void cambiarEstado();
+	void desactivarBoton() { activo = false; }
+	void activarBoton() { activo = true; }
+	bool estaDesactivo() const { return !activo; }
 };
 

@@ -1,13 +1,20 @@
 #pragma once
 #include "Casilla.h"
+#include "Config.h"
+#include "Cursor.h"
+#include "ListaPiezas.h"
+#include "Menu.h"
 #include "Pieza.h"
+#include "Renderer.h"
+#include "Tipos.h"
+
 #include <vector>
 #include "Tipos.h"
 #include "ListaPiezas.h"
 #include "Renderer.h"
 #include "Config.h"
 #include "Cursor.h"
-#include"Menu.h"
+#include "Menu.h"
 
 #include "Arquero.h"
 #include "Banshee.h"
@@ -25,6 +32,13 @@
 #include "Trol.h"
 #include "Unicornio.h"
 #include "Valquiria.h"
+#include "PanelStats.h"
+#include "PanelHechizo.h"
+
+enum class EstadoTablero {
+    TABLERO,
+    MENU_HECHIZOS
+};
 
 class Tablero {
 private:
@@ -36,10 +50,22 @@ private:
     Casilla casillas[TAM][TAM];
 
     ListaPiezas listaPiezas;
+
     Bando turnoActual;
     Bando ganador;
 
     Cursor cursor{ {4, 0} };
+
+	Color colorFondoPanel{ 0.3f, 0.3f, 0.3f };
+	Color colorBordePanel{ 0.9f, 0.9f, 0.9f };
+	Color colorTextoPanel{ 0.9f, 0.9f, 0.9f };
+	Color colorTituloPanelLuz{ 0.0f, 0.0f, 1.0f };
+	Color colorTituloPanelOscuridad{ 1.0f, 0.0f, 0.0f };
+   
+    PanelStats* panelStatsLuz;
+	PanelStats* panelStatsOscuridad;
+    
+        
 
     PosicionMatriz origenSeleccionado;
     bool hayOrigenSeleccionado = false;
@@ -52,11 +78,15 @@ private:
     PosicionMatriz origenCombate;
     PosicionMatriz destinoCombate;
 
+	EstadoTablero estadoTablero;
+	Menu menuHechizosLuz;
+	Menu menuHechizosOscuridad;
+
     int contadorTurnos = 0;
 	bool cicloLuz_A_Oscuridad = true; //para controlar el cambio de las casillas oscilantes
 
 public:
-	Tablero(double longit) : longitud(longit) {}
+    Tablero(double longit);
 
     void inicializa();
 
@@ -68,24 +98,24 @@ public:
     void limpiarResaltados();
 
     void dibujaOrigenSeleccionado(const Renderer& renderer, const Vector2D& posicion, double longitud) const;
+    
     // ----- FUNCIONES DE DIBUJO ------ END
 
 
 
 	// ----- FUNCIONES DE MOVIMIENTO Y COMBATE ------ START
-    bool mover(PosicionMatriz origen, PosicionMatriz destino);
+    bool moverPieza(PosicionMatriz origen, PosicionMatriz destino);
 
-    bool movimientoLegal(PosicionMatriz origen, PosicionMatriz destino) const;
+    bool movimientoLegal(PosicionMatriz origen, PosicionMatriz destino);
     bool caminoLibreEnL(PosicionMatriz origen, PosicionMatriz destino, bool primeroFilas) const;
-
-    bool esMovimientoPosible(PosicionMatriz pos) const;
 	// ----- FUNCIONES DE MOVIMIENTO Y COMBATE ------ END
 
 
 
 	// ----- FUNCIONES DE CURSOR Y SELECCIÓN ------ START
+    TableroAccion tecla(unsigned char key);
     void moverCursor(int df, int dc);
-    bool seleccionarConCursor();
+    bool seleccionarPiezasConCursor();
 
     bool posicionValida(PosicionMatriz pos) const;   //para asegurarnos que no nos salimos del tablero
 	// ----- FUNCIONES DE CURSOR Y SELECCIÓN ------ END
@@ -96,11 +126,22 @@ public:
     bool hayCombatePendiente() const;
     void limpiarCombatePendiente(); //cuando empieza la arena se limpia el flag de combate pendiente
 
-    void aplicarEfectoTipoCasilla(Pieza* p, const Casilla& c);
+	void actualizarPanelStats(PanelStats* panel, const Pieza* pieza);
 
     bool comprobarFinJuego();
 	// ------ FUNCIONES MISCELÁNEAS ------ END
     
+
+
+
+	// ------- EFECTOS DE CASILLAS Y OTROS ------- START
+    void aplicarEfectoTipoCasilla(Pieza* p, const Casilla& c);
+
+    void curaPasiva();
+	// ------- EFECTOS DE CASILLAS Y OTROS ------- END
+
+
+
 
 
 	// ------- GETTERS ------ START
@@ -139,7 +180,9 @@ private:
         listaPiezas.agregar(p);
 
 		aplicarEfectoTipoCasilla(p, casillas[fila][columna]);
+
     }
+
 
     Bando comprobarCasillasDePoder();
 	// ------- FUNCIONES MISCELANEAS 2 ------- END

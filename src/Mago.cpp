@@ -2,9 +2,10 @@
 #include "Pieza.h"
 
 
-Mago::Mago(Bando b) : Pieza(
+Mago::Mago(std::string nombre, Bando b) : Pieza(
+    nombre,
     Ataque::ALTO,               
-    Vida::MODERADA,        
+    Vida_maxima::MODERADA,        
     Velocidad::NORMAL,  
     Cadencia::PROMEDIO,    
     Velocidad_ataque::NORMAL,

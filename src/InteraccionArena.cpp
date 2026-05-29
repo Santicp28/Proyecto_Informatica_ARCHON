@@ -2,90 +2,40 @@
 #include <cmath>
 
 
+void InteraccionArena::resolverBorde(ObjetoMovil& obj, const Pared& pared) {
+    Vector2D dir;
+    double dif = pared.distancia(obj.posicion_, &dir) - obj.sizeradio_;
+    if (dif > 0) return;
 
-//void InteraccionArena::colision(Pieza& p, const BordesArena& b)
-//{
-//    Vector2D dir;
-//    double radio = p.sizeradio_;
-//    double dif;
-//
-//    // Abajo
-//    dif = b.suelo.distancia(p.posicion_, &dir) - radio;
-//    if (dif <= 0)
-//    {
-//        Vector2D pos = p.posicion_;
-//        pos.x -= (dir.x * dif);
-//        pos.y -= (dir.y * dif);
-//        p.posicion_ = pos;
-//
-//        Vector2D vel = p.velocidad_;
-//        double vn = vel.x * dir.x + vel.y * dir.y;
-//        if (vn < 0)
-//        {
-//            vel.x -= vn * dir.x;
-//            vel.y -= vn * dir.y;
-//        }
-//        p.velocidad_= vel;
-//    }
-//
-//    // Arriba
-//    dif = b.techo.distancia(p.posicion_, &dir) - radio;
-//    if (dif <= 0)
-//    {
-//        Vector2D pos = p.posicion_;
-//        pos.x -= (dir.x * dif);
-//        pos.y -= (dir.y * dif);
-//        p.posicion_ = pos;
-//
-//        Vector2D vel = p.velocidad_;
-//        double vn = vel.x * dir.x + vel.y *dir.y;
-//        if (vn < 0)
-//        {
-//            vel.x -= vn * dir.x;
-//            vel.y -= vn * dir.y;
-//        }
-//        p.velocidad_ = vel;
-//    }
-//
-//    // Izquierda
-//    dif = b.izq.distancia(p.posicion_, &dir) - radio;
-//    if (dif <= 0)
-//    {
-//        Vector2D pos = p.posicion_;
-//        pos.x -= (dir.x * dif);
-//        pos.y -= (dir.y * dif);
-//        p.posicion_ = pos;
-//
-//        Vector2D vel = p.velocidad_;
-//        double vn = vel.x * dir.x + vel.y * dir.y;
-//        if (vn < 0)
-//        {
-//            vel.x -= vn *dir.x;
-//            vel.y -= vn * dir.y;
-//        }
-//        p.velocidad_ = vel;
-//    }
-//
-//    // Derecha
-//    dif = b.dcha.distancia(p.posicion_, &dir) - radio;
-//    if (dif <= 0)
-//    {
-//        Vector2D pos = p.posicion_;
-//        pos.x -= (dir.x * dif);
-//        pos.y -= (dir.y * dif);
-//        p.posicion_ = pos;
-//
-//        Vector2D vel = p.velocidad_;
-//        double vn = vel.x * dir.x + vel.y * dir.y;
-//        if (vn < 0)
-//        {
-//            vel.x -= vn * dir.x;
-//            vel.y -= vn * dir.y;
-//        }
-//        p.velocidad_ = vel;
-//    }
-//}
-//
+    obj.posicion_ = obj.posicion_-dir * dif;
+
+    double vn = obj.velocidad_*(dir);
+    if (vn < 0)
+        obj.velocidad_ = obj.velocidad_- dir * vn;
+}
+void InteraccionArena::colision(Pieza& p, const Bordes& b)
+{
+    resolverBorde(p, b.suelo);
+    resolverBorde(p, b.techo);
+    resolverBorde(p, b.izq);
+    resolverBorde(p, b.dcha);
+}
+
+
+
+bool InteraccionArena::colision(Disparo& d, const Bordes& b)
+{
+    const Pared* paredes[] = { &b.suelo, &b.techo, &b.izq, &b.dcha };
+    for (const Pared* pared : paredes) {
+        Vector2D dir;
+        double dif = pared->distancia(d.posicion_, &dir) - d.sizeradio_;
+        printf("dif: %f\n", dif);
+        if (dif <= 0) return true;
+    }
+    return false;
+}
+
+
 //double InteraccionArena::distancia(const Vector2D& a, const Vector2D& b)
 //{
 //    double dx = b.x-a.x;
@@ -103,66 +53,3 @@
 //    return distancia(d.posicion_, p.posicion_)< (d.sizeradio_ + p.sizeradio_);
 //}
 //
-//bool InteraccionArena::colision(Disparo& d, const BordesArena& b)
-//{
-//    Vector2D dir;
-//    double dif;
-//
-//    // Suelo
-//    dif = b.suelo.distancia(d.posicion_, &dir)- d.sizeradio_;
-//
-//    if (dif <= 0)
-//    {
-//        d.posicion_ =
-//        d.posicion_ - dir * dif;
-//
-//        d.velocidad_ = { 0,0 };
-//        d.aceleracion_ = { 0,0 };
-//
-//        return true;
-//    }
-//
-//    // Techo
-//    dif = b.techo.distancia(d.posicion_, &dir)- d.sizeradio_;
-//
-//    if (dif <= 0)
-//    {
-//        d.posicion_ =
-//            d.posicion_ - dir * dif;
-//
-//        d.velocidad_ = { 0,0 };
-//        d.aceleracion_ = { 0,0 };
-//
-//        return true;
-//    }
-//
-//    // Izquierda
-//    dif = b.izq.distancia(d.posicion_, &dir)- d.sizeradio_;
-//
-//    if (dif <= 0)
-//    {
-//        d.posicion_ =
-//            d.posicion_ - dir * dif;
-//
-//        d.velocidad_ = { 0,0 };
-//        d.aceleracion_ = { 0,0 };
-//
-//        return true;
-//    }
-//
-//    // Derecha
-//    dif = b.dcha.distancia(d.posicion_, &dir)- d.sizeradio_;
-//
-//    if (dif <= 0)
-//    {
-//        d.posicion_ =
-//            d.posicion_ - dir * dif;
-//
-//        d.velocidad_ = { 0,0 };
-//        d.aceleracion_ = { 0,0 };
-//
-//        return true;
-//    }
-//
-//    return false;
-//}

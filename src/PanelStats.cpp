@@ -1,0 +1,41 @@
+#pragma once
+#include "PanelStats.h"
+
+void PanelStats::dibuja(const Renderer& renderer) const
+{
+	Vector2D centro = { posicion.x + size.x / 2.0, posicion.y + size.y / 2.0 };
+
+    double salto = 20;
+
+    double x_texto = posicion.x + 5;
+    double y_texto_inicio = posicion.y + 30;
+
+    renderer.dibujaCuadrado(centro, colorFondo, size); //Fondo
+    renderer.dibujaContornoCuadrado(centro, colorBorde, size); //Bordes
+    renderer.dibujaTexto(titulo,{x_texto, posicion.y*1.1 }, colorTitulo, tam_titulo_escalado, AlineacionTexto::IZQUIERDA); //Título
+
+    double y_stats = y_texto_inicio + 10;
+    
+	if (pieza != nullptr) {
+        renderer.dibujaTexto(pieza->getNombre(), {x_texto, y_texto_inicio}, colorTexto, tam_texto_escalado, AlineacionTexto::IZQUIERDA);
+        dibujaLineaStat(renderer, "Vida Actual", pieza->getVidaActual(), { x_texto, y_stats + salto });
+		dibujaLineaStat(renderer, "Vida Max.", pieza->getVidaMax(), { x_texto, y_stats + 2 * salto });
+        dibujaLineaStat(renderer, "Ataque", pieza->getAtaque(), { x_texto, y_stats + 3 * salto });
+        dibujaLineaStat(renderer, "Defensa", pieza->getDefensa(), { x_texto, y_stats + 4 * salto });
+        dibujaLineaStat(renderer, "Velocidad", pieza->getVelocidad(), { x_texto, y_stats + 5 * salto });
+		dibujaLineaStat(renderer, "Cadencia", pieza->getCadencia(), { x_texto, y_stats + 6 * salto });
+		dibujaLineaStat(renderer, "Vel. At.", pieza->getVelocidadAtaque(), { x_texto, y_stats + 7 * salto });
+		renderer.dibujaTexto("Tipo Mov.: " + pieza->getTipoMovimientoString(), { x_texto, y_stats + 8 * salto }, colorTexto, tam_texto_escalado, AlineacionTexto::IZQUIERDA);
+        dibujaLineaStat(renderer, "Rango", pieza->getRangoMovimiento(), { x_texto, y_stats + 9 * salto });
+    }
+    
+}
+
+void PanelStats::dibujaLineaStat(const Renderer& renderer, const char* nombre, double valor, Vector2D posicionTexto) const
+{
+    char texto[30];
+
+    std::snprintf(texto, sizeof(texto), "%s: %.2f", nombre, valor);
+
+	renderer.dibujaTexto(texto, posicionTexto, colorTexto, tam_texto_escalado, AlineacionTexto::IZQUIERDA);
+}

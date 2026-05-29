@@ -5,12 +5,9 @@
 #include"Vector2D.h"
 #include "Renderer.h"
 #include "Tipos.h"
-
 enum class EstadoJuego {
     MENU_PRINCIPAL,
     TABLERO,
-    MENU_HECHIZOS_LUZ,
-    MENU_HECHIZOS_OSCURIDAD,
     ARENA,
     OPCIONES,
     PAUSA,
@@ -22,8 +19,6 @@ private:
     EstadoJuego estado;
     Tablero tablero;
     Menu menuPrincipal;
-    Menu menuHechizosLuz;
-    Menu menuHechizosOscuridad;
     Menu menuPausa;
 	Menu menuFinPartida;
     Arena arena;
@@ -36,6 +31,9 @@ public:
 
     void tecla(unsigned char key);
     void teclaEspecial(int key);
+    void teclaUP(unsigned char key);
+    void teclaEspecialUP(int key);
+
 
     EstadoJuego getEstado() const;
     void setEstado(EstadoJuego nuevoEstado);

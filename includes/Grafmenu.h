@@ -5,4 +5,4 @@ struct Grafmenu {
     ETSIDI::Sprite sprite;
 };
 
-inline Grafmenu menu{ "assets/Graficos/menu.png" };
+inline Grafmenu grafmenu{ "assets/Graficos/menu.png" };
