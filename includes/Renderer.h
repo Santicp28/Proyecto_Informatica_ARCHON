@@ -6,14 +6,17 @@
 #include <string>
 #include "Tipos.h"
 
-struct Color
+enum class EstadoRender
 {
-	float r{ 1.0f }, g{ 1.0f }, b{ 1.0f };
-
+	SIMPLE,
+	SPRITES
 };
+
 class Renderer
 {
+	EstadoRender estadoRender{ EstadoRender::SIMPLE };
 public:
+	void tecla(unsigned char key);
 	void inicializa2D();
 
 	void iniciaFrame() { glClear(GL_COLOR_BUFFER_BIT); glMatrixMode(GL_MODELVIEW); glLoadIdentity(); }//Primero dibuja en memoria (buffer), luego se muestra todo junto. Esto la borra
@@ -32,5 +35,6 @@ public:
 
 private:
 	void dibujaColor(const Color& color)const { glColor3f(color.r, color.g, color.b); }
-	
+	void empiezaUI() const;
+	void terminaUI() const;
 };

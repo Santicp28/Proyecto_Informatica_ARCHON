@@ -19,6 +19,7 @@ private:
     EstadoJuego estado;
     Tablero tablero;
     Menu menuPrincipal;
+	Menu menuOpciones;
     Menu menuPausa;
 	Menu menuFinPartida;
     Arena arena;
@@ -29,7 +30,7 @@ public:
     void dibuja(const Renderer& renderer);
     void mueve(float dt);
 
-    void tecla(unsigned char key);
+    void tecla(unsigned char key, Renderer& renderer);
     void teclaEspecial(int key);
     void teclaUP(unsigned char key);
     void teclaEspecialUP(int key);

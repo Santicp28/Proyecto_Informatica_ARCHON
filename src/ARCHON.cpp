@@ -49,7 +49,7 @@ void OnDraw(void)
 
 void OnKeyboardDown(unsigned char key, int x, int y)
 {
-    juego.tecla(key);
+    juego.tecla(key, renderer);
     glutPostRedisplay();
 }
 

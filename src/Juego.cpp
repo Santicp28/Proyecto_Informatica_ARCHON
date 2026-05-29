@@ -10,8 +10,12 @@ Juego::Juego() :
 
     menuPrincipal({ "JUGAR","OPCIONES","SALIR" }, { MenuAccion::JUGAR, MenuAccion::OPCIONES, MenuAccion::SALIR },
         Config::sizeMundo, Config::sizeMundo * 0.5, "ARCHON", { 0.0f, 0.0f, 0.0f }),
+
+	menuOpciones({ "REGLAS","CAMBIAR RESOLUCION","MODO SPRITES||SIMPLE","VOLVER" },
+        { MenuAccion::REGLAS, MenuAccion::CAMBIAR_RESOLUCION, MenuAccion::MODO_SPRITES_SIMPLE, MenuAccion::VOLVER },
+		Config::sizeMundo, Config::sizeMundo * 0.5, "OPCIONES", { 0.0f, 0.0f, 0.0f }),
 	
-	menuPausa({ "CONTINUAR","OPCIONES","SALIR" }, { MenuAccion::CONTINUAR, MenuAccion::OPCIONES, MenuAccion::SALIR },
+	menuPausa({ "CONTINUAR","OPCIONES","FINALIZAR PARTIDA" }, { MenuAccion::CONTINUAR, MenuAccion::OPCIONES, MenuAccion::IR_MENU_PRINCIPAL },
 		Config::sizeMundo, Config::sizeMundo * 0.5, "PAUSA", { 0.0f, 0.0f, 0.0f }),
 
 	menuFinPartida({ "JUGAR DE NUEVO","MENU","SALIR" }, { MenuAccion::JUGAR, MenuAccion::IR_MENU_PRINCIPAL, MenuAccion::SALIR },
@@ -23,6 +27,7 @@ void Juego::inicializa()
 {
     estado = EstadoJuego::MENU_PRINCIPAL;
     menuPrincipal.inicializa();
+    menuOpciones.inicializa();
 	menuPausa.inicializa();
 	menuFinPartida.inicializa();
     tablero.inicializa();
@@ -49,8 +54,7 @@ void Juego::dibuja(const Renderer& renderer)
         break;
 
     case EstadoJuego::OPCIONES:
-        glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		menuOpciones.dibuja(renderer);
         break;
 
 	case EstadoJuego::FIN_PARTIDA:
@@ -65,7 +69,7 @@ void Juego::mueve(float dt)
 		arena.mueve(dt);
 }
 
-void Juego::tecla(unsigned char key)
+void Juego::tecla(unsigned char key, Renderer& renderer)
 {
     switch (estado)
     {
@@ -81,7 +85,7 @@ void Juego::tecla(unsigned char key)
             break;
 
         case MenuAccion::OPCIONES:
-            estado = EstadoJuego::ARENA;
+            estado = EstadoJuego::OPCIONES;
             break;
 
         case MenuAccion::SALIR:
@@ -123,8 +127,23 @@ void Juego::tecla(unsigned char key)
     }
     case EstadoJuego::OPCIONES:
     {
-        if (key == 27) { //desarrollar esto al final
+        MenuAccion accion = menuOpciones.tecla(key);
+        switch (accion)
+        {
+        case MenuAccion::REGLAS:
+			estado = EstadoJuego::OPCIONES;//CAMBIAR POR ESTADO REGLAS CUANDO LO TENGAMOS
+            break;
+        case MenuAccion::CAMBIAR_RESOLUCION:
+            estado = EstadoJuego::OPCIONES;
+            break;
+        case MenuAccion::MODO_SPRITES_SIMPLE:
+            renderer.tecla(key);
+            break;
+        case MenuAccion::VOLVER:
             estado = EstadoJuego::MENU_PRINCIPAL;
+            break;
+        default:
+            break;
         }
         break;
     }
@@ -139,8 +158,8 @@ void Juego::tecla(unsigned char key)
         case MenuAccion::OPCIONES:
             estado = EstadoJuego::OPCIONES;
             break;
-        case MenuAccion::SALIR:
-            exit(0);
+        case MenuAccion::IR_MENU_PRINCIPAL:
+            estado = EstadoJuego::MENU_PRINCIPAL;
             break;
         default:
             break;

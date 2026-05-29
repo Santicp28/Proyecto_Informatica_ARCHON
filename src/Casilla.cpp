@@ -47,8 +47,6 @@ void Casilla::dibuja(const Renderer& renderer, const Vector2D& posicion, double 
     if (resaltada) {
         renderer.dibujaSprite(posiciones.sprite, posicion, longitud, longitud);
     }
-
-    
 }
 
 

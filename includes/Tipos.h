@@ -17,6 +17,10 @@ enum class MenuAccion
 
     CONTINUAR,
 
+    MODO_SPRITES_SIMPLE,
+    REGLAS,
+	CAMBIAR_RESOLUCION,
+    VOLVER,
 	IR_MENU_PRINCIPAL
 };
 
@@ -112,4 +116,10 @@ enum class TipoAtaque {
 enum class AlineacionTexto {
 	CENTRADO,
 	IZQUIERDA
+};
+
+struct Color
+{
+    float r, g, b;
+
 };
