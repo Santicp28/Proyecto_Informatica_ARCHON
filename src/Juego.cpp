@@ -102,6 +102,7 @@ void Juego::tecla(unsigned char key)
 			estado = EstadoJuego::PAUSA;
 			break;
 		case TableroAccion::IR_ARENA:
+            arena.inicializa(tablero.getAtacante(), tablero.getDefensor());
 			estado = EstadoJuego::ARENA;
 			break;
         default:

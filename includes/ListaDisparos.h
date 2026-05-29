@@ -23,6 +23,7 @@ public:
 	//void colision(const Barrera& b) { for (auto d : lista) InteraccionArena::colision(*d, b); }
 
 	//void colision(const Pieza& p) { for (auto d : lista) InteraccionArena::colision(*d, p); }
+	void limpiar() { destruir_contenido(); }
 	void colision(const Bordes& b);
 	auto begin() const { return lista.begin(); }
 	auto end()   const { return lista.end(); }

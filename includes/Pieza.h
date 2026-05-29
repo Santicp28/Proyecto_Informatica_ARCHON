@@ -14,9 +14,8 @@ protected:
 
 	std::string nombre;
 	PosicionMatriz posicionMatriz; // Posición en la matriz (fila, columna)
-    //Vector2D posicionArena;
+    Vector2D posicionArena;
     double ataque;
-    //double velocidad;
     double velocidadMax;
     double cadencia;
     double vida_maxima;
@@ -36,9 +35,11 @@ public:
 
     virtual void dibuja(const Renderer& renderer, const Vector2D& centro, double ancho, double alto) const = 0;
 
+    virtual const char* getSpriteAtaque() const { return nullptr; }
+
     Pieza(std::string nom, Ataque at, Vida_maxima vi, Velocidad vel, Cadencia cad, Velocidad_ataque vel_at, Rango ra, Bando b, TipoMovimiento tm)
-        :
-        nombre(nom),
+        :ObjetoMovil({}, {}, {}, 20.0)
+       ,nombre(nom),
         posicionMatriz{ 0, 0 },
         ataque(0.0),
         velocidadMax(0.0),
@@ -67,9 +68,9 @@ public:
 		vida_actual = vida_maxima; 
 
         // --- VELOCIDAD (Desplazamiento) ---
-        if (vel == Velocidad::BAJA) velocidadMax = 4.0;
-        else if (vel == Velocidad::NORMAL) velocidadMax = 6.0;
-        else if (vel == Velocidad::VARIABLE) velocidadMax = 6.0;
+        if (vel == Velocidad::BAJA) velocidadMax = 40.0;
+        else if (vel == Velocidad::NORMAL) velocidadMax = 60.0;
+        else if (vel == Velocidad::VARIABLE) velocidadMax = 60.0;
 
         // --- CADENCIA (Tiempo entre disparos) ---
         if (cad == Cadencia::MUYRAPIDA) cadencia = 0.2;
@@ -79,9 +80,9 @@ public:
         else if (cad == Cadencia::VARIABLE) cadencia = 1.5;
 
         // --- VELOCIDAD_ATAQUE (Movimiento del proyectil) ---
-        if (vel_at == Velocidad_ataque::LENTO) velocidad_ataque = 5.0;
-        else if (vel_at == Velocidad_ataque::NORMAL) velocidad_ataque = 8.0;
-        else if (vel_at == Velocidad_ataque::RAPIDO) velocidad_ataque = 12.0;
+        if (vel_at == Velocidad_ataque::LENTO) velocidad_ataque = 50.0; //5
+        else if (vel_at == Velocidad_ataque::NORMAL) velocidad_ataque = 150.0;//8
+        else if (vel_at == Velocidad_ataque::RAPIDO) velocidad_ataque = 250.0;//12
         else if (vel_at == Velocidad_ataque::INSTANTANEO) velocidad_ataque = 25.0;
         else if (vel_at == Velocidad_ataque::VARIABLE) velocidad_ataque = 8.0;
 
@@ -96,7 +97,7 @@ public:
 
     // --- SETTERS ----
     void setDefensa(double def) { defensa = def; }
-    virtual void setPosicionArena(const Vector2D& posicion) { posicionArena = posicion; }
+    virtual void setPosicionArena(const Vector2D& posicion) { posicion_ = posicion; }
 	void setProteccionContraHechizos(bool protegido) { protegidoContraHechizos = protegido;}
 
 	void curar(double cantidad) { 
@@ -120,11 +121,12 @@ public:
 	double getVidaActual() const { return vida_actual; }
 	double getAtaque() const { return ataque; }
 	double getDefensa() const { return defensa; }
-	double getVelocidad() const { return velocidad; }
+	double getVelocidad() const { return velocidadMax; }
     double getCadencia() const { return cadencia; }
     double getVelocidadAtaque() const { return velocidad_ataque; }
 	int getRangoMovimiento() const { return rango_movimiento; }
     TipoMovimiento getTipoMovimiento() const { return tipo_movimiento; }
+    double getDistanciaCadencia() const { return cadencia; }
 
     std::string getTipoMovimientoString() const {
 		if (tipo_movimiento == TipoMovimiento::CAMINA) return "Camina";
@@ -134,22 +136,14 @@ public:
 
     // --- FLAGS ----
     bool puedeMoverseA(PosicionMatriz destino);
-
+    bool puedeDisparar();
     
 
+
+    //double getArmadura() const { return armadura; }    //double getDanio() const { return ataque; }
    
-
-    Bando getBando() const { return bando; }
-
-    virtual void setPosicionArena(const Vector2D& posicion) { posicion_ = posicion; }
-    double getVelocidadMovimiento() const { return velocidadMax; }
-
-    //double getArmadura() const { return armadura; }
-    double getDanio() const { return ataque; }
-    void setVida(double nuevaVida) { vida = nuevaVida; }
-    double getDistanciaCadencia() const {return cadencia;}
-    double getVelocidadAtaque() const { return velocidad_ataque; }
-    bool puedeDisparar();
+    
+ 
     const Vector2D& getDireccion() const { return direccion; }
 	
     void mueve(double t) override {
