@@ -18,7 +18,7 @@ void Arena::generaObstaculos(int cantidad, unsigned int semilla)
     obstaculos.clear();
     std::srand(semilla == 0 ? static_cast<unsigned>(std::time(nullptr)) : semilla);
 
-    const float margenBorde = size.x * 0.08f;
+    const float margenBorde = size.x * 0.13f;
     const float xMin = margenBorde;
     const float xMax = size.x - margenBorde;
     const float yMin = margenBorde;
@@ -26,7 +26,7 @@ void Arena::generaObstaculos(int cantidad, unsigned int semilla)
     const Vector2D obsSize{ size.x * 0.04f, size.y * 0.04f };
     const float margenReservado = size.x * 0.15f;
 
-    const int maxIntentos = 20;
+    const int maxIntentos = 500;
     int colocados = 0;
     int intentos = 0;
 
@@ -175,15 +175,15 @@ void Arena::mueve(float dt)
 
 void Arena::dibuja(const Renderer& renderer) const
 {
-   
+	renderer.dibujaSprite(pizarra.sprite, centro, size.x, size.y);
     bordes.dibuja(renderer);
-    renderer.dibujaSprite(fondoarena.sprite, centro, size.x, size.y);
+    
 
 
     for (const auto& obs : obstaculos)
         renderer.dibujaSprite(arbolverde.sprite, obs.posicion, obs.size.x, obs.size.y);
     listaDisparos.dibuja(renderer);
-	if (jugador1) jugador1->dibuja(renderer, jugador1->posicion(), size.x, size.y);
+	if (jugador1) jugador1->dibuja(renderer, jugador1->posicion(), size.x * 0.1, size.y * 0.1);
 	if (jugador2) jugador2->dibuja(renderer, jugador2->posicion(), size.x, size.y);
 }
 

@@ -115,14 +115,14 @@ void Tablero::inicializa()
 
     panelStatsLuz = new PanelStats{
         {Config::sizeMundo.x * 0.12, Config::sizeMundo.y * 0.42},
-        { posicion.x + longitud / 1.975, posicion.y - longitud/2.2},
-        colorFondoPanel, colorTextoPanel, colorTituloPanelLuz, colorBordePanel, "Luz", static_cast<int>(Config::sizeMundo.x * 0.02), static_cast<int>(Config::sizeMundo.x * 0.02)
+        { posicion.x + longitud / 1.7, posicion.y - longitud/1.7},
+        colorFondoPanel, colorTextoPanel, colorTituloPanelLuz, colorBordePanel, "LUZ", static_cast<int>(Config::sizeMundo.x * 0.02), static_cast<int>(Config::sizeMundo.x * 0.02)
     };
 
     panelStatsOscuridad = new PanelStats{
         {Config::sizeMundo.x * 0.12, Config::sizeMundo.y * 0.42},
-        { posicion.x + longitud / 1.975, posicion.y - longitud / 2.5 + Config::sizeMundo.y * 0.42},
-        colorFondoPanel, colorTextoPanel, colorTituloPanelOscuridad, colorBordePanel, "Oscuridad", static_cast<int>(Config::sizeMundo.x * 0.02), static_cast<int>(Config::sizeMundo.x * 0.02)
+        { posicion.x + longitud / 1.7, posicion.y - longitud / 1.9 + Config::sizeMundo.y * 0.42},
+        colorFondoPanel, colorTextoPanel, colorTituloPanelOscuridad, colorBordePanel, "OSCURIDAD", static_cast<int>(Config::sizeMundo.x * 0.02), static_cast<int>(Config::sizeMundo.x * 0.02)
     };
 
 	//inicializo panel de stats con la pieza que está debajo del cursor al inicio

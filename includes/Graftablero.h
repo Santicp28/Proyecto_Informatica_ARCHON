@@ -19,4 +19,4 @@ inline Graftablero cursor { "assets/Graficos/Cursor.png" };
 inline Graftablero cursor_luz { "assets/Graficos/cursor_luz.PNG" };
 inline Graftablero cursor_oscuro { "assets/Graficos/cursor_osc.PNG" };
 inline Graftablero casillaespecial { "assets/Graficos/casillas especial.PNG" };
-
+inline Graftablero panel{ "assets/Graficos/panel.PNG" };
