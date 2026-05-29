@@ -13,10 +13,10 @@ class Pieza: public ObjetoMovil
 protected:
 
 	std::string nombre;
-	PosicionMatriz posicionMatriz; // Posición en la matriz (fila, columna)
+	PosicionMatriz posicionMatriz; 
     Vector2D posicionArena;
     double ataque;
-    double velocidadMax;
+    double velocidad;
     double cadencia;
     double vida_maxima;
 	double vida_actual;
@@ -28,6 +28,8 @@ protected:
     Color color;
 
 	bool protegidoContraHechizos = false; 
+	bool encarcelada = false; 
+    bool mojada = false;
 
     double tiempoDesdeUltimoDisparo = 999.0;
 public:
@@ -42,7 +44,7 @@ public:
        ,nombre(nom),
         posicionMatriz{ 0, 0 },
         ataque(0.0),
-        velocidadMax(0.0),
+        velocidad(0.0),
         cadencia(0.0),
         vida_maxima(0.0),
         defensa(1.0), //por defecto no reduce daño, pero cuando está en una casilla de su color aumenta y recibe menos daño
@@ -68,9 +70,9 @@ public:
 		vida_actual = vida_maxima; 
 
         // --- VELOCIDAD (Desplazamiento) ---
-        if (vel == Velocidad::BAJA) velocidadMax = 40.0;
-        else if (vel == Velocidad::NORMAL) velocidadMax = 60.0;
-        else if (vel == Velocidad::VARIABLE) velocidadMax = 60.0;
+        if (vel == Velocidad::BAJA) velocidad = 40.0;
+        else if (vel == Velocidad::NORMAL) velocidad = 60.0;
+        else if (vel == Velocidad::VARIABLE) velocidad = 60.0;
 
         // --- CADENCIA (Tiempo entre disparos) ---
         if (cad == Cadencia::MUYRAPIDA) cadencia = 0.2;
@@ -97,17 +99,26 @@ public:
 
     // --- SETTERS ----
     void setDefensa(double def) { defensa = def; }
+    void setAtaque(double at) { ataque = at; }
+    void setVelocidad(double vel) { velocidad = vel; }
+    void setCadencia(double cad) { cadencia = cad; }
+    void setVidaMaxima(double vida) { vida_maxima = vida; }
+    void setVidaActual(double vida) { vida_actual = vida; }
+    void setVelocidadAtaque(double vel) { velocidad_ataque = vel; }
+
     virtual void setPosicionArena(const Vector2D& posicion) { posicion_ = posicion; }
+
 	void setProteccionContraHechizos(bool protegido) { protegidoContraHechizos = protegido;}
+	void setEncarcelada(bool encarcelada) { this->encarcelada = encarcelada; }
+	void setMojada(bool mojada) { this->mojada = mojada; }
 
 	void curar(double cantidad) { 
         if ((vida_actual + cantidad) > vida_maxima) vida_actual = vida_maxima; 
 		else vida_actual += cantidad;
     }
 
-    void setPosicionMatriz(unsigned int fila, unsigned int columna) {
-        posicionMatriz.fila = fila;
-        posicionMatriz.columna = columna;
+    void setPosicionMatriz(PosicionMatriz nuevaPosicion) {
+        posicionMatriz = nuevaPosicion;
     }
 
 
@@ -115,13 +126,15 @@ public:
     PosicionMatriz getPosicionMatriz() const { return posicionMatriz; }
     Bando getBando() const { return bando; }
 	bool estaProtegidoContraHechizos() const { return protegidoContraHechizos; }
+	bool estaEncarcelada() const { return encarcelada; }
+	bool estaMojada() const { return mojada; }
 
 	std::string getNombre() const { return nombre; }
 	double getVidaMax() const { return vida_maxima; }
 	double getVidaActual() const { return vida_actual; }
 	double getAtaque() const { return ataque; }
 	double getDefensa() const { return defensa; }
-	double getVelocidad() const { return velocidadMax; }
+	double getVelocidad() const { return velocidad; }
     double getCadencia() const { return cadencia; }
     double getVelocidadAtaque() const { return velocidad_ataque; }
 	int getRangoMovimiento() const { return rango_movimiento; }

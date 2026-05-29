@@ -13,14 +13,15 @@ Tablero::Tablero(double longit):
 	combatePendiente(false),
 	hayOrigenSeleccionado(false),
 	contadorTurnos(0),
-	cicloLuz_A_Oscuridad(true),
-    menuHechizosLuz({ "SALIR","TP","CURAR","TIEMPO","SWITCH","CARCEL","TIJ" },
-        { MenuAccion::SALIR, MenuAccion::TP, MenuAccion::CURAR, MenuAccion::CAMBIAR_TIEMPO, MenuAccion::INTERCAMBIAR, MenuAccion::ENCARCELAR, MenuAccion::TIJERAS },
+    contadorTurnosParaCiclo(0),
+	ciclo({false}),
+    menuHechizosLuz({ "SALIR","TP","CURAR","TIEMPO","SWITCH","CARCEL","VASO_DE_AGUA" },
+        { MenuAccion::SALIR, MenuAccion::TP, MenuAccion::CURAR, MenuAccion::CAMBIAR_TIEMPO, MenuAccion::INTERCAMBIAR, MenuAccion::ENCARCELAR, MenuAccion::VASO_DE_AGUA },
         { (Config::sizeMundo.x - Config::sizeMundo.y) * 0.5, Config::sizeMundo.y },
         { (Config::sizeMundo.x - Config::sizeMundo.y) * 0.5 * 0.5, Config::sizeMundo.y * 0.5 }, "LUZ", { 1.0f, 0.0f, 0.0f }),
 
-    menuHechizosOscuridad({ "SALIR","TP","CURAR","TIEMPO","SWITCH","CARCEL","TIJ" },
-        { MenuAccion::SALIR, MenuAccion::TP, MenuAccion::CURAR, MenuAccion::CAMBIAR_TIEMPO, MenuAccion::INTERCAMBIAR, MenuAccion::ENCARCELAR, MenuAccion::TIJERAS },
+    menuHechizosOscuridad({ "SALIR","TP","CURAR","TIEMPO","SWITCH","CARCEL","VASO_DE_AGUA" },
+        { MenuAccion::SALIR, MenuAccion::TP, MenuAccion::CURAR, MenuAccion::CAMBIAR_TIEMPO, MenuAccion::INTERCAMBIAR, MenuAccion::ENCARCELAR, MenuAccion::VASO_DE_AGUA },
         { (Config::sizeMundo.x - Config::sizeMundo.y) * 0.5, Config::sizeMundo.y },
         { (Config::sizeMundo.x - Config::sizeMundo.y) * 0.5 * 0.5, Config::sizeMundo.y * 0.5 }, "OSC", { 0.0f, 1.0f, 0.0f })
 {
@@ -64,51 +65,51 @@ void Tablero::inicializa()
 
     // ------------- INICIALIZA PIEZAS --------- PONER SU POSICION INICIAL
     // ------COLUMNA 0
-    agregarPieza<Valquiria>(0, 0);
-    agregarPieza<Golem>(1, 0);
-    agregarPieza<Unicornio>(2, 0);
-    agregarPieza<Djinni>(3, 0);
-    agregarPieza<Mago>(4, 0);
-    agregarPieza<Fenix>(5, 0);
-    agregarPieza<Unicornio>(6, 0);
-    agregarPieza<Golem>(7, 0);
-    agregarPieza<Valquiria>(8, 0);
+    agregarPieza<Valquiria>({ 0, 0 });
+    agregarPieza<Golem>({ 1, 0 });
+    agregarPieza<Unicornio>({ 2, 0 });
+    agregarPieza<Djinni>({ 3, 0 });
+    agregarPieza<Mago>({ 4, 0 });
+    agregarPieza<Fenix>({ 5, 0 });
+    agregarPieza<Unicornio>({ 6, 0 });
+    agregarPieza<Golem>({ 7, 0 });
+    agregarPieza<Valquiria>({ 8, 0 });
 
 
     //------COLUMNA 1
-    agregarPieza<Arquero>(0, 1);
-    agregarPieza<Caballero>(1, 1);
-    agregarPieza<Caballero>(2, 1);
-    agregarPieza<Caballero>(3, 1);
-    agregarPieza<Caballero>(4, 1);
-    agregarPieza<Caballero>(5, 1);
-    agregarPieza<Caballero>(6, 1);
-    agregarPieza<Caballero>(7, 1);
-    agregarPieza<Arquero>(8, 1);
+    agregarPieza<Arquero>({ 0, 1 });
+    agregarPieza<Caballero>({ 1, 1 });
+    agregarPieza<Caballero>({ 2, 1 });
+    agregarPieza<Caballero>({ 3, 1 });
+    agregarPieza<Caballero>({ 4, 1 });
+    agregarPieza<Caballero>({ 5, 1 });
+    agregarPieza<Caballero>({ 6, 1 });
+    agregarPieza<Caballero>({ 7, 1 });
+    agregarPieza<Arquero>({ 8, 1 });
 
 
     //------COLUMNA 7
-    agregarPieza<Manticora>(0, 7);
-    agregarPieza<Duende>(1, 7);
-    agregarPieza<Duende>(2, 7);
-    agregarPieza<Duende>(3, 7);
-    agregarPieza<Duende>(4, 7);
-    agregarPieza<Duende>(5, 7);
-    agregarPieza<Duende>(6, 7);
-    agregarPieza<Duende>(7, 7);
-    agregarPieza<Manticora>(8, 7);
+    agregarPieza<Manticora>({ 0, 7 });
+    agregarPieza<Duende>({ 1, 7 });
+    agregarPieza<Duende>({ 2, 7 });
+    agregarPieza<Duende>({ 3, 7 });
+    agregarPieza<Duende>({ 4, 7 });
+    agregarPieza<Duende>({ 5, 7 });
+    agregarPieza<Duende>({ 6, 7 });
+    agregarPieza<Duende>({ 7, 7 });
+    agregarPieza<Manticora>({ 8, 7 });
 
 
     // ------COLUMNA 8
-    agregarPieza<Banshee>(0, 8);
-    agregarPieza<Trol>(1, 8);
-    agregarPieza<Basilisco>(2, 8);
-    agregarPieza<Cambiaforma>(3, 8);
-    agregarPieza<Hechicero>(4, 8);
-    agregarPieza<Dragon>(5, 8);
-    agregarPieza<Basilisco>(6, 8);
-    agregarPieza<Trol>(7, 8);
-    agregarPieza<Banshee>(8, 8);
+    agregarPieza<Banshee>({ 0, 8 });
+    agregarPieza<Trol>({ 1, 8 });
+    agregarPieza<Basilisco>({ 2, 8 });
+    agregarPieza<Cambiaforma>({ 3, 8 });
+    agregarPieza<Hechicero>({ 4, 8 });
+    agregarPieza<Dragon>({ 5, 8 });
+    agregarPieza<Basilisco>({ 6, 8 });
+    agregarPieza<Trol>({ 7, 8 });
+    agregarPieza<Banshee>({ 8, 8 });
 
 
 
@@ -129,6 +130,114 @@ void Tablero::inicializa()
 	if (turnoActual == Bando::LUZ) actualizarPanelStats(panelStatsLuz, listaPiezas.getPiezaEnPosicion(cursor.getPosicion()));
     else actualizarPanelStats(panelStatsOscuridad, listaPiezas.getPiezaEnPosicion(cursor.getPosicion()));
 }
+
+
+TableroAccion Tablero::tecla(unsigned char key)
+{
+    switch (estadoTablero)
+    {
+    case EstadoTablero::TABLERO:
+    {
+        switch (key)
+        {
+        case '\r':// ENTER
+        {
+            if (vamosUsarHechizo) {
+				if (hechizoSeleccionado.cambiarCiclo) seleccionar0CasillaHechizos();
+                if (hechizoSeleccionado.curar || hechizoSeleccionado.encarcelar || hechizoSeleccionado.vasoDeAgua) seleccionar1CasillaHechizos();
+                if (hechizoSeleccionado.tp || hechizoSeleccionado.intercambiar) seleccionar2CasillasHechizos();
+            }
+            else seleccionarPiezasConCursor();
+
+
+            if (comprobarFinJuego()) {
+                return  TableroAccion::IR_FIN_PARTIDA;
+            }
+            //tablero avisa de que se he elegido combate, haciendo que juego ponga el estado ARENA y limpiando el flag del combate pendiente para no volver a entrar 
+            else if (hayCombatePendiente()) {
+                limpiarCombatePendiente();
+                return TableroAccion::IR_ARENA;
+            }
+            break;
+        }
+        //case '\x1B': case 'P': case 'p':// '\x1B'==ESC
+        //    return  TableroAccion::IR_PAUSA;
+
+        case 'h':
+        {
+            if(!hayOrigenSeleccionado) estadoTablero = EstadoTablero::MENU_HECHIZOS;
+            break;
+        }
+        case'f':
+            return TableroAccion::IR_FIN_PARTIDA;
+        default:
+            return TableroAccion::NINGUNA;
+        }
+        break;
+    }
+    case EstadoTablero::MENU_HECHIZOS:
+    {
+        MenuAccion accion = MenuAccion::NINGUNA;
+        if (turnoActual == Bando::LUZ)
+            accion = menuHechizosLuz.tecla(key);
+        else if (turnoActual == Bando::OSCURIDAD)
+            accion = menuHechizosOscuridad.tecla(key);
+        switch (accion)
+        {
+        case MenuAccion::TP: {
+            vamosUsarHechizo = true;
+			hechizoSeleccionado.tp = true;
+            estadoTablero = EstadoTablero::TABLERO; 
+		    break;
+        }
+        case MenuAccion::CURAR: {
+            vamosUsarHechizo = true;
+            hechizoSeleccionado.curar = true;
+            estadoTablero = EstadoTablero::TABLERO;
+        }
+        case MenuAccion::CAMBIAR_TIEMPO: {
+            vamosUsarHechizo = true;
+            hechizoSeleccionado.cambiarCiclo = true;
+            estadoTablero = EstadoTablero::TABLERO;
+            break;
+		}
+        case MenuAccion::INTERCAMBIAR: {
+            vamosUsarHechizo = true;
+            hechizoSeleccionado.intercambiar = true;
+            estadoTablero = EstadoTablero::TABLERO;
+			break;
+        }
+        case MenuAccion::ENCARCELAR: {
+            vamosUsarHechizo = true;
+            hechizoSeleccionado.encarcelar = true;
+            estadoTablero = EstadoTablero::TABLERO;
+			break;
+        }
+        case MenuAccion::VASO_DE_AGUA: {
+            vamosUsarHechizo = true;
+			hechizoSeleccionado.vasoDeAgua = true;
+            estadoTablero = EstadoTablero::TABLERO; 
+            break;
+        }
+        case MenuAccion::SALIR:
+        {
+            estadoTablero = EstadoTablero::TABLERO;
+            break;
+        }
+        default:
+        {
+            estadoTablero = EstadoTablero::MENU_HECHIZOS;
+            break;
+        }
+        break;
+        }
+        return TableroAccion::NINGUNA;
+    }
+    default:
+        return TableroAccion::NINGUNA;
+    }
+}
+
 
 // --------------- FUNCIONES DE DIBUJO ------------------ START
 void Tablero::dibuja(const Renderer& renderer)const {
@@ -166,21 +275,26 @@ void Tablero::resaltarMovimientoPosible()
 {
 
     limpiarResaltados();
+    if (estadoTablero == EstadoTablero::TABLERO) {
+        if (!hayOrigenSeleccionado) {
+            return;
+        }
 
-    if (!hayOrigenSeleccionado) {
-        return;
-    }
+        for (int f = 0; f < TAM; f++) {
+            for (int c = 0; c < TAM; c++) {
+                PosicionMatriz destino_posible{ f,c };
 
-    for (int f = 0; f < TAM; f++) {
-        for (int c = 0; c < TAM; c++) {
-            PosicionMatriz destino_posible{ f,c };
-
-            if (movimientoLegal(origenSeleccionado, destino_posible)) {
-                movimientosPosibles.push_back(destino_posible);
-                casillas[f][c].setResaltada(true);
+                if (movimientoLegal(origenSeleccionado, destino_posible)) {
+                    movimientosPosibles.push_back(destino_posible);
+                    casillas[f][c].setResaltada(true);
+                }
             }
         }
     }
+    else if (estadoTablero == EstadoTablero::MENU_HECHIZOS) {
+        //aquí habría que resaltar las casillas a las que se podría aplicar el hechizo seleccionado, pero como no hay hechizos implementados no se hace nada
+	}
+    
 }
 
 void Tablero::limpiarResaltados() {
@@ -323,81 +437,6 @@ bool Tablero::caminoLibreEnL(PosicionMatriz origen, PosicionMatriz destino, bool
 
 // ----------------- FUNCIONES DE CURSOR ----------------- START
 
-
-TableroAccion Tablero::tecla(unsigned char key)
-{
-    switch (estadoTablero)
-    {
-    case EstadoTablero::TABLERO:
-    {
-        switch (key)
-        {
-        case '\r':// ENTER
-        {
-            seleccionarPiezasConCursor();
-            if (comprobarFinJuego()) {
-                return  TableroAccion::IR_FIN_PARTIDA;
-            }
-            //tablero avisa de que se he elegido combate, haciendo que juego ponga el estado ARENA y limpiando el flag del combate pendiente para no volver a entrar 
-            else if (hayCombatePendiente()) {
-                limpiarCombatePendiente();
-                return TableroAccion::IR_ARENA;
-            }
-            break;
-        }
-        //case '\x1B': case 'P': case 'p':// '\x1B'==ESC
-        //    return  TableroAccion::IR_PAUSA;
-
-        case 'h':
-        {
-            estadoTablero = EstadoTablero::MENU_HECHIZOS;
-            break;
-        }
-        case'f':
-            return TableroAccion::IR_FIN_PARTIDA;
-        default:
-            return TableroAccion::NINGUNA;
-        }
-        break;
-    }
-    case EstadoTablero::MENU_HECHIZOS:
-    {
-        MenuAccion accion= MenuAccion::NINGUNA;
-        if (turnoActual == Bando::LUZ)
-            accion = menuHechizosLuz.tecla(key);
-		else if (turnoActual == Bando::OSCURIDAD)
-            accion = menuHechizosOscuridad.tecla(key);
-        switch (accion)
-        {
-        case MenuAccion::TP:
-        case MenuAccion::CURAR:
-        case MenuAccion::CAMBIAR_TIEMPO:
-        case MenuAccion::INTERCAMBIAR:
-        case MenuAccion::ENCARCELAR:
-        case MenuAccion::TIJERAS:
-        {
-            estadoTablero = EstadoTablero::TABLERO; //PROVISIONAL
-            break;
-        }
-        case MenuAccion::SALIR:
-        {
-            estadoTablero = EstadoTablero::TABLERO;
-            break;
-        }
-        default: 
-        {
-            estadoTablero = EstadoTablero::MENU_HECHIZOS;
-            break;
-        }
-        break;
-        }
-        return TableroAccion::NINGUNA;
-    }
-    default:
-        return TableroAccion::NINGUNA;
-    }
-}
-
 // MOSTRAR STATS DE LA PIEZA EN LA QUE TENGO EL CURSOR!!!!!!!!!
 void Tablero::moverCursor(int df, int dc)
 {
@@ -424,23 +463,26 @@ void Tablero::moverCursor(int df, int dc)
     }
     else {
         if (turnoActual == Bando::LUZ) {
-            actualizarPanelStats(panelStatsOscuridad, listaPiezas.getPiezaEnPosicion(cursor.getPosicion()));
+            if (bandoPiezaEnCursor == Bando::OSCURIDAD) actualizarPanelStats(panelStatsOscuridad, listaPiezas.getPiezaEnPosicion(cursor.getPosicion()));
+			else actualizarPanelStats(panelStatsOscuridad, nullptr);
         }
         else {
-            actualizarPanelStats(panelStatsLuz, listaPiezas.getPiezaEnPosicion(cursor.getPosicion()));
+            if (bandoPiezaEnCursor == Bando::LUZ) actualizarPanelStats(panelStatsLuz, listaPiezas.getPiezaEnPosicion(cursor.getPosicion()));
+			else actualizarPanelStats(panelStatsLuz, nullptr);
 		}
     }
 }
 
-bool Tablero::seleccionarPiezasConCursor()
+void Tablero::seleccionarPiezasConCursor()
 {
 
     if (!hayOrigenSeleccionado) {
 
         Pieza* piezaSeleccionada = listaPiezas.getPiezaEnPosicion(cursor.getPosicion());
 
-        if (piezaSeleccionada == nullptr) return false;
-		if (piezaSeleccionada->getBando() != turnoActual) return false; //solo puedo seleccionar una pieza de mi turno
+        if (piezaSeleccionada == nullptr) return;
+		if (piezaSeleccionada->getBando() != turnoActual) return; //solo puedo seleccionar una pieza de mi turno
+        if (piezaSeleccionada->estaEncarcelada()) return; //no puedo seleccionar una pieza encarcelada
 
         origenSeleccionado = cursor.getPosicion();
         hayOrigenSeleccionado = true;
@@ -453,13 +495,11 @@ bool Tablero::seleccionarPiezasConCursor()
         }
 
 		resaltarMovimientoPosible();//actualizamos los movimientos posibles para el origen seleccionado, para luego mostrarlos en la parte gráfica
-
-        return true;
     }
 
 	
 
-    bool movimientoCorrecto = moverPieza(origenSeleccionado, cursor.getPosicion());
+    moverPieza(origenSeleccionado, cursor.getPosicion());
     
 
     hayOrigenSeleccionado = false;
@@ -467,7 +507,7 @@ bool Tablero::seleccionarPiezasConCursor()
 
 	limpiarResaltados();//limpiamos los movimientos posibles para que no se sigan mostrando después de mover
 
-    return movimientoCorrecto;
+    return;
 }
 
 
@@ -481,6 +521,102 @@ bool Tablero::posicionValida(PosicionMatriz pos) const
 
 
 
+
+
+// ----------------- FUNCIONES DE HECHIZOS ----------------- START
+void Tablero::seleccionar0CasillaHechizos()
+{
+    if (hechizoSeleccionado.cambiarCiclo) {
+        Hechizos::cambiarCiclo(ciclo);
+        hechizoSeleccionado.cambiarCiclo = false;
+    }
+    vamosUsarHechizo = false;
+
+    cambiarTurno();
+
+    return;
+}
+
+void Tablero::seleccionar1CasillaHechizos()
+{
+    Pieza* piezaSeleccionada = listaPiezas.getPiezaEnPosicion(cursor.getPosicion());
+
+    if (hechizoSeleccionado.curar) {
+        if (piezaSeleccionada == nullptr) return; //hechizo de curar solo se puede aplicar sobre una pieza
+        if (piezaSeleccionada->getBando() != turnoActual) return; //solo puedo curar una pieza de mi bando
+
+        Hechizos::curar(*piezaSeleccionada);
+
+        hechizoSeleccionado.curar = false;
+    }
+    else if (hechizoSeleccionado.encarcelar) {
+        if (piezaSeleccionada == nullptr) return; //hechizo de encarcelar solo se puede aplicar sobre una pieza
+        if (piezaSeleccionada->getBando() == turnoActual) return; //solo puedo encarcelar una pieza del bando contrario
+
+        Hechizos::encarcelar(*piezaSeleccionada);
+
+        hechizoSeleccionado.encarcelar = false;
+
+    }
+    else if (hechizoSeleccionado.vasoDeAgua) {
+        if (piezaSeleccionada == nullptr) return; //hechizo de vasoDeAgua solo se puede aplicar sobre una pieza
+        if (piezaSeleccionada->getBando() == turnoActual) return; //solo puedo usar vasoDeAgua sobre una pieza del bando contrario
+
+        Hechizos::vasoDeAgua(*piezaSeleccionada);
+
+        hechizoSeleccionado.vasoDeAgua = false;
+    }
+    vamosUsarHechizo = false;
+
+    cambiarTurno();
+
+    return;
+}
+
+void Tablero::seleccionar2CasillasHechizos()
+{
+    Pieza* piezaSeleccionada = listaPiezas.getPiezaEnPosicion(cursor.getPosicion());
+
+    if (!hayPrimeraCasillaHechizo) {
+
+        if (piezaSeleccionada == nullptr) return;
+        if (piezaSeleccionada->getBando() != turnoActual) return; //solo puedo seleccionar una pieza de mi turno
+        if (piezaSeleccionada->estaEncarcelada()) return; //no puedo seleccionar una pieza encarcelada
+
+        primeraCasillaHechizo = cursor.getPosicion();
+        hayPrimeraCasillaHechizo = true;
+
+        return;
+    }
+
+    destinoHechizoSeleccionado = cursor.getPosicion();
+    Pieza* piezaDestino = listaPiezas.getPiezaEnPosicion(destinoHechizoSeleccionado);
+
+
+    if (hechizoSeleccionado.tp) {
+        if (piezaDestino != nullptr) return; //la casilla de destino del tp tiene que estar vacía
+
+        Hechizos::tp(primeraCasillaHechizo, destinoHechizoSeleccionado, listaPiezas);
+
+        hechizoSeleccionado.tp = false;
+    }
+    else if (hechizoSeleccionado.intercambiar) {
+        if (piezaDestino == nullptr) return; //la casilla de destino del intercambiar tiene que tener una pieza de mi bando
+        if (piezaDestino->getBando() != turnoActual) return; //no puedo intercambiar con una pieza del bando contrario
+
+        Hechizos::intercambiar(primeraCasillaHechizo, destinoHechizoSeleccionado, listaPiezas);
+
+        hechizoSeleccionado.intercambiar = false;
+    }
+
+    hayPrimeraCasillaHechizo = false;
+    vamosUsarHechizo = false;
+
+    cambiarTurno();
+
+    return;
+}
+// ------------------ FUNCIONES DE HECHIZOS ----------------- END
 
 
 
@@ -499,6 +635,7 @@ void Tablero::cambiarTurno()
         cursor.setPosicion({ 4 , 0 }) ; //cursor en el lado de luz
     }
 
+    contadorTurnos++;
     cicloTurno();
     curaPasiva();
 
@@ -516,7 +653,7 @@ void Tablero::cicloTurno()
 {
     for (int f = 0; f < TAM; f++) {
         for (int c = 0; c < TAM; c++) {
-            casillas[f][c].cambiarOscilantes(cicloLuz_A_Oscuridad);
+            casillas[f][c].cambiarOscilantes(ciclo.valor);
         }
     }
 
@@ -525,14 +662,19 @@ void Tablero::cicloTurno()
             Pieza* p = listaPiezas.getPiezaEnPosicion({ f,c });
             if (p != nullptr) {
                 aplicarEfectoTipoCasilla(p, casillas[f][c]);
+
+                if (contadorTurnosParaCiclo == 0) {
+                    p->setMojada(false); //si las oscilantes son claras, (momento de luz) se seca y pierde los efectos de mojado
+                }
             }
         }
 	}
+    
+    if (ciclo.valor) contadorTurnosParaCiclo++;
+    else contadorTurnosParaCiclo--;
 
-    contadorTurnos++;
-
-    if (contadorTurnos % 5 == 0) {
-        cicloLuz_A_Oscuridad = !cicloLuz_A_Oscuridad; 
+    if (contadorTurnosParaCiclo % 5 == 0) {
+        ciclo.valor = !ciclo.valor; 
     }   
 }
 
@@ -593,7 +735,6 @@ bool Tablero::comprobarFinJuego()
     }
 }
 
-
 // ----------------- FUNCIONES MISCELÁNEAS ----------------- END
 
 
@@ -608,25 +749,35 @@ void Tablero::aplicarEfectoTipoCasilla(Pieza* p, const Casilla& c)
     TipoCasilla tipo = c.getTipo();
 
     if (p->getBando() == Bando::LUZ) {
-        if (tipo == TipoCasilla::CLARA) p->setDefensa(1.55);
-        else if (tipo == TipoCasilla::BASTANTE_CLARA) p->setDefensa(1.45);
-        else if (tipo == TipoCasilla::LIGERAMENTE_CLARA) p->setDefensa(1.25);
-        else if (tipo == TipoCasilla::LIGERAMENTE_OSCURA) p->setDefensa(1.0);
-        else if (tipo == TipoCasilla::BASTANTE_OSCURA) p->setDefensa(1.0);
-        else if (tipo == TipoCasilla::OSCURA) p->setDefensa(1.0);
+        if (tipo == TipoCasilla::CLARA) {
+            if(!p->estaMojada()) p->setDefensa(1.55);
+			p->setEncarcelada(false);
+        }
+        else if (tipo == TipoCasilla::BASTANTE_CLARA && !p->estaMojada()) p->setDefensa(1.45);
+        else if (tipo == TipoCasilla::LIGERAMENTE_CLARA && !p->estaMojada()) p->setDefensa(1.25);
+        else if (tipo == TipoCasilla::LIGERAMENTE_OSCURA && !p->estaMojada()) p->setDefensa(1.0);
+        else if (tipo == TipoCasilla::BASTANTE_OSCURA && !p->estaMojada()) p->setDefensa(1.0);
+        else if (tipo == TipoCasilla::OSCURA && !p->estaMojada()) p->setDefensa(1.0);
     }
     else if (p->getBando() == Bando::OSCURIDAD) {
-        if (tipo == TipoCasilla::OSCURA) p->setDefensa(1.5);
-        else if (tipo == TipoCasilla::BASTANTE_OSCURA) p->setDefensa(1.45);
-        else if (tipo == TipoCasilla::LIGERAMENTE_OSCURA) p->setDefensa(1.25);
-        else if (tipo == TipoCasilla::LIGERAMENTE_CLARA) p->setDefensa(1.0);
-        else if (tipo == TipoCasilla::BASTANTE_CLARA) p->setDefensa(1.0);
-        else if (tipo == TipoCasilla::CLARA) p->setDefensa(1.0);
+        if (tipo == TipoCasilla::OSCURA) {
+            if(!p->estaMojada()) p->setDefensa(1.55);
+			p->setEncarcelada(false);
+        }
+        else if (tipo == TipoCasilla::BASTANTE_OSCURA && !p->estaMojada()) p->setDefensa(1.45);
+        else if (tipo == TipoCasilla::LIGERAMENTE_OSCURA && !p->estaMojada()) p->setDefensa(1.25);
+        else if (tipo == TipoCasilla::LIGERAMENTE_CLARA && !p->estaMojada()) p->setDefensa(1.0);
+        else if (tipo == TipoCasilla::BASTANTE_CLARA && !p->estaMojada()) p->setDefensa(1.0);
+        else if (tipo == TipoCasilla::CLARA && !p->estaMojada()) p->setDefensa(1.0);
     }
 
     //aplicar proteccion de hechizo
     if (c.getTipo() == TipoCasilla::PODER) p->setProteccionContraHechizos(true);
     else p->setProteccionContraHechizos(false);
+
+
+
+
 }
 
 
@@ -642,6 +793,7 @@ void Tablero::curaPasiva()
         }
     }
 }
+
 // ---------------- EFECTOS DE CASILLAS Y OTROS ----------------- END
 
 
@@ -659,8 +811,5 @@ Bando Tablero::getTurnoActual() const {return turnoActual;}
 
 //funcion para saber si hay que cambiar a arena, obtenemos el flag de combate pendiente, para usarla en JUEGO.CPP 
 bool Tablero::hayCombatePendiente() const {return combatePendiente;}
-
-PosicionMatriz Tablero::getOrigenSeleccionado() const { return origenSeleccionado; }
-bool Tablero::getHayOrigenSeleccionado() const {return hayOrigenSeleccionado;}
 
 // ----------- GETTERS ----------- END
