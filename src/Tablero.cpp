@@ -14,7 +14,7 @@ Tablero::Tablero(double longit):
 	hayOrigenSeleccionado(false),
 	contadorTurnos(0),
     contadorTurnosParaCiclo(0),
-	ciclo({false}),
+	ciclo({true}),
     menuHechizosLuz({ "SALIR","TP","CURAR","TIEMPO","SWITCH","CARCEL","VASO_DE_AGUA" },
         { MenuAccion::SALIR, MenuAccion::TP, MenuAccion::CURAR, MenuAccion::CAMBIAR_TIEMPO, MenuAccion::INTERCAMBIAR, MenuAccion::ENCARCELAR, MenuAccion::VASO_DE_AGUA },
         { (Config::sizeMundo.x - Config::sizeMundo.y) * 0.5, Config::sizeMundo.y },
@@ -112,24 +112,25 @@ void Tablero::inicializa()
     agregarPieza<Banshee>({ 8, 8 });
 
     float referencia = (Config::anchoVentana + Config::altoVentana) * 0.5f;
-    int tam_texto_escalado = static_cast<int>(referencia * 0.018f);
-    int tam_titulo_escalado = static_cast<int>(referencia * 0.025f);
 
     panelStatsLuz = new PanelStats{
         {Config::sizeMundo.x * 0.12, Config::sizeMundo.y * 0.42},
         { posicion.x + longitud / 1.7, posicion.y - longitud / 1.7},
-        colorFondoPanel, colorTextoPanel, colorTituloPanelLuz, colorBordePanel, "LUZ", tam_texto_escalado, tam_titulo_escalado
+        colorFondoPanel, colorTextoPanel, colorTituloPanelLuz, colorBordePanel, "LUZ"
     };
 
     panelStatsOscuridad = new PanelStats{
         {Config::sizeMundo.x * 0.12, Config::sizeMundo.y * 0.42},
         { posicion.x + longitud / 1.7, posicion.y - longitud / 1.9 + Config::sizeMundo.y * 0.42},
-		colorFondoPanel, colorTextoPanel, colorTituloPanelOscuridad, colorBordePanel, "OSCURIDAD",  tam_texto_escalado, tam_titulo_escalado
+		colorFondoPanel, colorTextoPanel, colorTituloPanelOscuridad, colorBordePanel, "OSCURIDAD"
     };
 
 	//inicializo panel de stats con la pieza que está debajo del cursor al inicio
 	if (turnoActual == Bando::LUZ) actualizarPanelStats(panelStatsLuz, listaPiezas.getPiezaEnPosicion(cursor.getPosicion()));
     else actualizarPanelStats(panelStatsOscuridad, listaPiezas.getPiezaEnPosicion(cursor.getPosicion()));
+
+    vamosUsarHechizo = false;
+    limpiarHechizoSeleccionado();
 }
 
 
@@ -144,9 +145,8 @@ TableroAccion Tablero::tecla(unsigned char key)
         case '\r':// ENTER
         {
             if (vamosUsarHechizo) {
-				if (hechizoSeleccionado.cambiarCiclo) seleccionar0CasillaHechizos();
-                if (hechizoSeleccionado.curar || hechizoSeleccionado.encarcelar || hechizoSeleccionado.vasoDeAgua) seleccionar1CasillaHechizos();
-                if (hechizoSeleccionado.tp || hechizoSeleccionado.intercambiar) seleccionar2CasillasHechizos();
+				if (hechizoSeleccionado.curar || hechizoSeleccionado.encarcelar || hechizoSeleccionado.vasoDeAgua) seleccionar1CasillaHechizos();
+                else if (hechizoSeleccionado.tp || hechizoSeleccionado.intercambiar) seleccionar2CasillasHechizos();
             }
             else seleccionarPiezasConCursor();
 
@@ -186,35 +186,43 @@ TableroAccion Tablero::tecla(unsigned char key)
         switch (accion)
         {
         case MenuAccion::TP: {
+            limpiarHechizoSeleccionado();
             vamosUsarHechizo = true;
 			hechizoSeleccionado.tp = true;
             estadoTablero = EstadoTablero::TABLERO; 
 		    break;
         }
         case MenuAccion::CURAR: {
+            limpiarHechizoSeleccionado();
             vamosUsarHechizo = true;
             hechizoSeleccionado.curar = true;
-            estadoTablero = EstadoTablero::TABLERO;
+            estadoTablero = EstadoTablero::TABLERO; //no se por qué pone error 
+            break;
         }
         case MenuAccion::CAMBIAR_TIEMPO: {
-            vamosUsarHechizo = true;
-            hechizoSeleccionado.cambiarCiclo = true;
+            limpiarHechizoSeleccionado();
+            Hechizos::cambiarCiclo(ciclo, contadorTurnosParaCiclo, casillas);
+            vamosUsarHechizo = false;
             estadoTablero = EstadoTablero::TABLERO;
+            cambiarTurno();
             break;
 		}
         case MenuAccion::INTERCAMBIAR: {
+            limpiarHechizoSeleccionado();
             vamosUsarHechizo = true;
             hechizoSeleccionado.intercambiar = true;
             estadoTablero = EstadoTablero::TABLERO;
 			break;
         }
         case MenuAccion::ENCARCELAR: {
+            limpiarHechizoSeleccionado();
             vamosUsarHechizo = true;
             hechizoSeleccionado.encarcelar = true;
             estadoTablero = EstadoTablero::TABLERO;
 			break;
         }
         case MenuAccion::VASO_DE_AGUA: {
+            limpiarHechizoSeleccionado();
             vamosUsarHechizo = true;
 			hechizoSeleccionado.vasoDeAgua = true;
             estadoTablero = EstadoTablero::TABLERO; 
@@ -222,6 +230,8 @@ TableroAccion Tablero::tecla(unsigned char key)
         }
         case MenuAccion::SALIR:
         {
+            limpiarHechizoSeleccionado();
+            vamosUsarHechizo = false;
             estadoTablero = EstadoTablero::TABLERO;
             break;
         }
@@ -527,18 +537,17 @@ bool Tablero::posicionValida(PosicionMatriz pos) const
 
 
 // ----------------- FUNCIONES DE HECHIZOS ----------------- START
-void Tablero::seleccionar0CasillaHechizos()
-{
-    if (hechizoSeleccionado.cambiarCiclo) {
-        Hechizos::cambiarCiclo(ciclo);
-        hechizoSeleccionado.cambiarCiclo = false;
-    }
-    vamosUsarHechizo = false;
-
-    cambiarTurno();
-
-    return;
-}
+//void Tablero::seleccionar0CasillaHechizos()
+//{
+//    if (hechizoSeleccionado.cambiarCiclo) {
+//        Hechizos::cambiarCiclo(ciclo);
+//    }
+//    limpiarHechizoSeleccionado();
+//
+//    vamosUsarHechizo = false;
+//    cambiarTurno();
+//    return;
+//}
 
 void Tablero::seleccionar1CasillaHechizos()
 {
@@ -549,29 +558,25 @@ void Tablero::seleccionar1CasillaHechizos()
         if (piezaSeleccionada->getBando() != turnoActual) return; //solo puedo curar una pieza de mi bando
 
         Hechizos::curar(*piezaSeleccionada);
-
-        hechizoSeleccionado.curar = false;
     }
     else if (hechizoSeleccionado.encarcelar) {
         if (piezaSeleccionada == nullptr) return; //hechizo de encarcelar solo se puede aplicar sobre una pieza
         if (piezaSeleccionada->getBando() == turnoActual) return; //solo puedo encarcelar una pieza del bando contrario
 
         Hechizos::encarcelar(*piezaSeleccionada);
-
-        hechizoSeleccionado.encarcelar = false;
-
     }
     else if (hechizoSeleccionado.vasoDeAgua) {
         if (piezaSeleccionada == nullptr) return; //hechizo de vasoDeAgua solo se puede aplicar sobre una pieza
         if (piezaSeleccionada->getBando() == turnoActual) return; //solo puedo usar vasoDeAgua sobre una pieza del bando contrario
 
         Hechizos::vasoDeAgua(*piezaSeleccionada);
-
-        hechizoSeleccionado.vasoDeAgua = false;
     }
-    vamosUsarHechizo = false;
 
+    vamosUsarHechizo = false;
+    limpiarHechizoSeleccionado();
     cambiarTurno();
+
+
 
     return;
 }
@@ -600,24 +605,33 @@ void Tablero::seleccionar2CasillasHechizos()
         if (piezaDestino != nullptr) return; //la casilla de destino del tp tiene que estar vacía
 
         Hechizos::tp(primeraCasillaHechizo, destinoHechizoSeleccionado, listaPiezas);
-
-        hechizoSeleccionado.tp = false;
     }
     else if (hechizoSeleccionado.intercambiar) {
         if (piezaDestino == nullptr) return; //la casilla de destino del intercambiar tiene que tener una pieza de mi bando
         if (piezaDestino->getBando() != turnoActual) return; //no puedo intercambiar con una pieza del bando contrario
 
         Hechizos::intercambiar(primeraCasillaHechizo, destinoHechizoSeleccionado, listaPiezas);
-
-        hechizoSeleccionado.intercambiar = false;
     }
 
-    hayPrimeraCasillaHechizo = false;
     vamosUsarHechizo = false;
-
+    limpiarHechizoSeleccionado();
     cambiarTurno();
 
     return;
+}
+
+void Tablero::limpiarHechizoSeleccionado()
+{
+    hechizoSeleccionado.tp = false;
+    hechizoSeleccionado.curar = false;
+    hechizoSeleccionado.cambiarCiclo = false;
+    hechizoSeleccionado.intercambiar = false;
+    hechizoSeleccionado.encarcelar = false;
+    hechizoSeleccionado.vasoDeAgua = false;
+
+    hayPrimeraCasillaHechizo = false;
+    primeraCasillaHechizo = { -1, -1 };
+    destinoHechizoSeleccionado = { -1, -1 };
 }
 // ------------------ FUNCIONES DE HECHIZOS ----------------- END
 
@@ -657,33 +671,34 @@ void Tablero::cicloTurno()
     for (int f = 0; f < TAM; f++) {
         for (int c = 0; c < TAM; c++) {
             casillas[f][c].cambiarOscilantes(ciclo.valor);
+            Pieza* p = listaPiezas.getPiezaEnPosicion({ f,c });
+            if (p != nullptr) {
+                aplicarEfectoTipoCasilla(p, casillas[f][c]);
+            }
         }
     }
+    if (ciclo.valor) contadorTurnosParaCiclo++;
+    else contadorTurnosParaCiclo--;
+
+    if (contadorTurnosParaCiclo % 5 == 0) {
+        ciclo.valor = !ciclo.valor;
+    }
+
 
     for (int f = 0; f < TAM; f++) {
         for (int c = 0; c < TAM; c++) {
             Pieza* p = listaPiezas.getPiezaEnPosicion({ f,c });
             if (p != nullptr) {
-                aplicarEfectoTipoCasilla(p, casillas[f][c]);
-
                 if (contadorTurnosParaCiclo == 0) {
                     p->setMojada(false); //si las oscilantes son claras, (momento de luz) se seca y pierde los efectos de mojado
                     if (p->getBando() == Bando::LUZ) p->setEncarcelada(false);
                 }
-
                 if (contadorTurnosParaCiclo == 5) {
                     if (p->getBando() == Bando::OSCURIDAD) p->setEncarcelada(false);
                 }
             }
         }
-	}
-    
-    if (ciclo.valor) contadorTurnosParaCiclo++;
-    else contadorTurnosParaCiclo--;
-
-    if (contadorTurnosParaCiclo % 5 == 0) {
-        ciclo.valor = !ciclo.valor; 
-    }   
+    }
 }
 
 //hay que limpiar el flag para que luego no se abra la arena en momentos no deseados
@@ -757,20 +772,20 @@ void Tablero::aplicarEfectoTipoCasilla(Pieza* p, const Casilla& c)
     TipoCasilla tipo = c.getTipo();
 
     if (p->getBando() == Bando::LUZ) {
-        if (tipo == TipoCasilla::CLARA) if(!p->estaMojada()) p->setDefensa(1.55);
-        else if (tipo == TipoCasilla::BASTANTE_CLARA && !p->estaMojada()) p->setDefensa(1.45);
-        else if (tipo == TipoCasilla::LIGERAMENTE_CLARA && !p->estaMojada()) p->setDefensa(1.25);
-        else if (tipo == TipoCasilla::LIGERAMENTE_OSCURA && !p->estaMojada()) p->setDefensa(1.0);
-        else if (tipo == TipoCasilla::BASTANTE_OSCURA && !p->estaMojada()) p->setDefensa(1.0);
-        else if (tipo == TipoCasilla::OSCURA && !p->estaMojada()) p->setDefensa(1.0);
+        if (tipo == TipoCasilla::CLARA) {if(!p->estaMojada()) p->setDefensa(1.55);}
+        else if ((tipo == TipoCasilla::BASTANTE_CLARA) && !p->estaMojada()) p->setDefensa(1.45);
+        else if ((tipo == TipoCasilla::LIGERAMENTE_CLARA) && !p->estaMojada()) p->setDefensa(1.25);
+        else if ((tipo == TipoCasilla::LIGERAMENTE_OSCURA) && !p->estaMojada()) p->setDefensa(1.0);
+        else if ((tipo == TipoCasilla::BASTANTE_OSCURA) && !p->estaMojada()) p->setDefensa(1.0);
+        else if ((tipo == TipoCasilla::OSCURA) && !p->estaMojada()) p->setDefensa(1.0);
     }
     else if (p->getBando() == Bando::OSCURIDAD) {
-        if (tipo == TipoCasilla::OSCURA) if(!p->estaMojada()) p->setDefensa(1.55);
-        else if (tipo == TipoCasilla::BASTANTE_OSCURA && !p->estaMojada()) p->setDefensa(1.45);
-        else if (tipo == TipoCasilla::LIGERAMENTE_OSCURA && !p->estaMojada()) p->setDefensa(1.25);
-        else if (tipo == TipoCasilla::LIGERAMENTE_CLARA && !p->estaMojada()) p->setDefensa(1.0);
-        else if (tipo == TipoCasilla::BASTANTE_CLARA && !p->estaMojada()) p->setDefensa(1.0);
-        else if (tipo == TipoCasilla::CLARA && !p->estaMojada()) p->setDefensa(1.0);
+        if (tipo == TipoCasilla::OSCURA) {if(!p->estaMojada()) p->setDefensa(1.55);}
+        else if ((tipo == TipoCasilla::BASTANTE_OSCURA) && !p->estaMojada()) p->setDefensa(1.45);
+        else if ((tipo == TipoCasilla::LIGERAMENTE_OSCURA) && !p->estaMojada()) p->setDefensa(1.25);
+        else if ((tipo == TipoCasilla::LIGERAMENTE_CLARA) && !p->estaMojada()) p->setDefensa(1.0);
+        else if ((tipo == TipoCasilla::BASTANTE_CLARA) && !p->estaMojada()) p->setDefensa(1.0);
+        else if ((tipo == TipoCasilla::CLARA) && !p->estaMojada()) p->setDefensa(1.0);
     }
 
     //aplicar proteccion de hechizo

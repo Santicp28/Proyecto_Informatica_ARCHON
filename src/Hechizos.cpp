@@ -2,7 +2,34 @@
 
 
 //hechizos sin casilla
-void Hechizos::cambiarCiclo(CicloLuz_A_Oscuridad& ciclo) { ciclo.valor = !ciclo.valor; } //para cambiar el ciclo de turno
+void Hechizos::cambiarCiclo(CicloLuz_A_Oscuridad& ciclo, int& contador, Casilla casillas[9][9])
+{
+    if (contador == 0) {
+        for (int i = 0; i < 5; i++) {
+            for (int f = 0; f < 9; f++) {
+                for (int c = 0; c < 9; c++) {
+                    casillas[f][c].cambiarOscilantes(true);
+                }
+            }
+        }
+
+        contador = 4;
+    }
+    else if (contador == 5) {
+        for (int i = 0; i < 5; i++) {
+            for (int f = 0; f < 9; f++) {
+                for (int c = 0; c < 9; c++) {
+                    casillas[f][c].cambiarOscilantes(false); 
+                }
+            }
+        }
+
+        contador = 1;
+    }
+    else {
+        ciclo.valor = !ciclo.valor;
+    }
+}
 
 
 //hechizos de 1 casilla

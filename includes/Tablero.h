@@ -156,9 +156,12 @@ private:
 
 
     // ----- FUNCIONES PARA HECHIZOS ----- START
-    void seleccionar0CasillaHechizos(); 
+   /* void seleccionar0CasillaHechizos(); */
     void seleccionar1CasillaHechizos();
 	void seleccionar2CasillasHechizos();
+
+
+    void limpiarHechizoSeleccionado();
 	// ----- FUNCIONES PARA HECHIZOS ----- END
 
 
