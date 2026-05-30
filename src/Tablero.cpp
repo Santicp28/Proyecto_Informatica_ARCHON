@@ -157,6 +157,7 @@ TableroAccion Tablero::tecla(unsigned char key)
             //tablero avisa de que se he elegido combate, haciendo que juego ponga el estado ARENA y limpiando el flag del combate pendiente para no volver a entrar 
             else if (hayCombatePendiente()) {
                 limpiarCombatePendiente();
+                printf("hayCombatePendiente: %d\n", hayCombatePendiente());
                 return TableroAccion::IR_ARENA;
             }
             break;
@@ -354,6 +355,8 @@ bool Tablero::moverPieza(PosicionMatriz origen, PosicionMatriz destino)
 		//haciendo que si el atacante gana, se queda con la misma defensa con la que entraba (la de destino) y si el defensor gana se queda con la misma ya que no se mueve de casilla.
 
         combatePendiente = true; //FLAG PARA CAMBIAR A ARENA
+        printf("combate pendiente activado, origen=(%d,%d) destino=(%d,%d)\n",
+            origen.fila, origen.columna, destino.fila, destino.columna);
         origenCombate = origen;
         destinoCombate = destino;
 

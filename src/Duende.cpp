@@ -12,7 +12,7 @@ Duende::Duende(std::string nombre, Bando b) : Pieza(
     b,
     TipoMovimiento::CAMINA         
 ) {
-    golpe = new GolpeAtaque();
+    golpe = new GolpeAtaque(duende.grafAtaque, 80.0);
 }
 void Duende::dibuja(const Renderer& renderer,const Vector2D& centro, double ancho, double alto) const {
     renderer.dibujaSprite(duende.graf, centro, ancho, alto);

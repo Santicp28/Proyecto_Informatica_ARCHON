@@ -108,8 +108,9 @@ void Juego::tecla(unsigned char key)
 			estado = EstadoJuego::PAUSA;
 			break;
 		case TableroAccion::IR_ARENA:
+            printf("atacante: %p, defensor: %p\n", tablero.getAtacante(), tablero.getDefensor());
             arena.inicializa(tablero.getAtacante(), tablero.getDefensor());
-			estado = EstadoJuego::ARENA;
+            estado = EstadoJuego::ARENA;
 			break;
         default:
             break;
