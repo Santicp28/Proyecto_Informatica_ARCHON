@@ -124,6 +124,8 @@ public:
     Bando getTurnoActual() const;
 
 	Bando getGanador() const { return ganador; }
+
+    void resultadoCombate(Pieza* ganador);
 	// ------- GETTERS ------ END
 
 
@@ -152,29 +154,7 @@ private:
 
     bool posicionValida(PosicionMatriz pos) const;   //para asegurarnos que no nos salimos del tablero
 	// ----- FUNCIONES DE CURSOR Y SELECCIÓN ------ END
-
-
-
-	// ----- FUNCIONES MISCELÁNEAS ------ START
-    bool hayCombatePendiente() const;
-    void limpiarCombatePendiente(); //cuando empieza la arena se limpia el flag de combate pendiente
-
-	void actualizarPanelStats(PanelStats* panel, const Pieza* pieza);
-
-    bool comprobarFinJuego();
-    void resultadoCombate(Pieza* ganador);
-	// ------ FUNCIONES MISCELÁNEAS ------ END
     
-
-
-
-	// ------- EFECTOS DE CASILLAS Y OTROS ------- START
-    void aplicarEfectoTipoCasilla(Pieza* p, const Casilla& c);
-
-    void curaPasiva();
-	// ------- EFECTOS DE CASILLAS Y OTROS ------- END
-
-
 
     // ----- FUNCIONES PARA HECHIZOS ----- START
    /* void seleccionar0CasillaHechizos(); */
@@ -197,6 +177,8 @@ private:
     Bando comprobarCasillasDePoder();
 
     bool comprobarFinJuego();
+
+    // ------ FUNCIONES MISCELÁNEAS ------ END
 
     //para después de mover o terminar la arena
     //hacer una funcion para cuando se termina el combate y aplicar los resultados
