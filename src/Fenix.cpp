@@ -13,6 +13,6 @@ Fenix::Fenix(std::string nombre, Bando b) : Pieza(
     TipoMovimiento::VUELA           
 ) {
 }
-void Fenix::dibuja(const Renderer& renderer,const Vector2D& centro, double ancho, double alto) const {
-    renderer.dibujaSprite(fenix.graf, centro, ancho, alto);
+void Fenix::dibuja(const Renderer& renderer, const ContenedorSprites& contenedorSprites, const Vector2D& centro, double ancho, double alto) const {
+    renderer.dibujaOvalo(contenedorSprites.spriteFenix.spriteCuerpo, centro, Config::magenta, ancho, alto);
 }

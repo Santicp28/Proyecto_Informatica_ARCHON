@@ -20,7 +20,7 @@ void ListaPiezas::piezaPierde(Pieza* p)
     }
 }
 
-void ListaPiezas::dibujarPiezas(const Renderer& renderer, const Vector2D& esquinaSuperiorIzda, double longitudCasilla) const
+void ListaPiezas::dibujarPiezas(const Renderer& renderer, const ContenedorSprites& contenedorSprites, const Vector2D& esquinaSuperiorIzda, double longitudCasilla) const
 {
     double escalaPieza = 1.8;
 
@@ -34,7 +34,7 @@ void ListaPiezas::dibujarPiezas(const Renderer& renderer, const Vector2D& esquin
                 esquinaSuperiorIzda.y + (pos.fila + 0.5) * longitudCasilla
             };
 
-            pieza->dibuja(renderer, centroPieza, longitudCasilla * escalaPieza, longitudCasilla * escalaPieza);
+            pieza->dibuja(renderer, contenedorSprites, centroPieza, longitudCasilla * escalaPieza, longitudCasilla * escalaPieza);
         }
     }
 }

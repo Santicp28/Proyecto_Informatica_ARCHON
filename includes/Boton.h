@@ -2,6 +2,7 @@
 #include <string>
 #include "Vector2D.h"
 #include "Renderer.h"
+#include "ContenedorSprites.h"
 using std::string;
 
 class Boton
@@ -19,7 +20,7 @@ public:
     {
     }
     void inicializa() { seleccionado = false; activo = true; }
-    void dibuja(const Renderer& renderer, const Vector2D& posicion, const Vector2D& size)const;
+    void dibuja(const Renderer& renderer, const ContenedorSprites& contenedorSprites, const Vector2D& posicion, const Vector2D& size)const;
     void cambiarEstado();
 	void desactivarBoton() { activo = false; }
 	void activarBoton() { activo = true; }

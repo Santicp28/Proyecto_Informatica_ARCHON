@@ -5,8 +5,8 @@
 #include <vector>
 
 Juego juego;
-Renderer renderer(EstadoRenderer::SIMPLE);
-ContenedorSprites contenedorSprites;
+Renderer renderer;
+ContenedorSprites contenedorSprites{false};
 
 void OnDraw(void);
 void OnTimer(int value);
@@ -26,6 +26,10 @@ int main(int argc, char* argv[])
 
     renderer.inicializa2D();
     juego.inicializa();
+	if(contenedorSprites.modoCargado())
+	{
+		contenedorSprites.cargarContenedorSprites();
+	}
 
     // CALLBACKS
     glutDisplayFunc(OnDraw);
@@ -44,14 +48,14 @@ void OnDraw(void)
 {   
     renderer.iniciaFrame();
 
-    juego.dibuja(renderer);
+    juego.dibuja(renderer, contenedorSprites);
 
     glutSwapBuffers();
 }
 
 void OnKeyboardDown(unsigned char key, int x, int y)
 {
-    juego.tecla(key, renderer);
+    juego.tecla(key, contenedorSprites);
     glutPostRedisplay();
 }
 

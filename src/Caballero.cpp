@@ -13,6 +13,6 @@ Caballero::Caballero(std::string nombre, Bando b) : Pieza(
     TipoMovimiento::CAMINA         
 ) {
 }
-void Caballero::dibuja(const Renderer& renderer, const Vector2D& centro, double ancho, double alto) const {
-    renderer.dibujaSprite(caballero.graf, centro, ancho, alto);
+void Caballero::dibuja(const Renderer& renderer, const ContenedorSprites& contenedorSprites, const Vector2D& centro, double ancho, double alto) const {
+    renderer.dibujaOvalo(contenedorSprites.spriteCaballero.spriteCuerpo, centro, Config::magenta, ancho, alto);
 }

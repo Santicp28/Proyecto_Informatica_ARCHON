@@ -29,23 +29,20 @@ void Casilla::inicializa(const TipoCasilla& nuevoTipo, PosicionMatriz nuevaPosic
     }
 }
 
-void Casilla::dibuja(const Renderer& renderer, const Vector2D& posicion, double longitud) const
+void Casilla::dibuja(const Renderer& renderer, const ContenedorSprites& contenedorSprites, const Vector2D& posicion, double longitud) const
 {
-    //renderer.dibujaCuadrado(posicion, color, { longitud,longitud });
-    //renderer.dibujaContornoCuadrado(posicion, { 0.5f, 0.5f, 0.5f }, { longitud,longitud });
     double escalaPieza = 1.3;
 
+    if (tipo == TipoCasilla::CLARA) renderer.dibujaCuadrado(contenedorSprites.spriteClara, posicion,Config::azul, { longitud * escalaPieza, longitud * escalaPieza });
+    else if (tipo == TipoCasilla::BASTANTE_CLARA) renderer.dibujaCuadrado(contenedorSprites.spriteBastanteClara, posicion,Config::cyan, { longitud * escalaPieza, longitud * escalaPieza });
+    else if (tipo == TipoCasilla::LIGERAMENTE_CLARA) renderer.dibujaCuadrado(contenedorSprites.spriteLigeramenteClara, posicion,Config::verde, { longitud * escalaPieza, longitud * escalaPieza });
+    else if (tipo == TipoCasilla::LIGERAMENTE_OSCURA) renderer.dibujaCuadrado(contenedorSprites.spriteLigeramenteOscura, posicion,Config::amarillo, { longitud * escalaPieza, longitud * escalaPieza });
+    else if (tipo == TipoCasilla::BASTANTE_OSCURA) renderer.dibujaCuadrado(contenedorSprites.spriteBastanteOscura, posicion,Config::naranja, { longitud * escalaPieza, longitud * escalaPieza });
+    else if (tipo == TipoCasilla::OSCURA) renderer.dibujaCuadrado(contenedorSprites.spriteOscura, posicion,Config::rojo, { longitud * escalaPieza, longitud * escalaPieza });
+	else if (tipo == TipoCasilla::PODER) renderer.dibujaCuadrado(contenedorSprites.spriteCasillaEspecial, posicion,Config::morado, { longitud * escalaPieza, longitud * escalaPieza });
 
-    if (tipo == TipoCasilla::CLARA) renderer.dibujaSprite(*variantes[0], posicion, longitud * escalaPieza, longitud * escalaPieza);
-    else if (tipo == TipoCasilla::BASTANTE_CLARA) renderer.dibujaSprite(*variantes[1], posicion, longitud * escalaPieza, longitud * escalaPieza);
-    else if (tipo == TipoCasilla::LIGERAMENTE_CLARA) renderer.dibujaSprite(*variantes[2], posicion, longitud * escalaPieza, longitud * escalaPieza);
-    else if (tipo == TipoCasilla::LIGERAMENTE_OSCURA) renderer.dibujaSprite(*variantes[3], posicion, longitud * escalaPieza, longitud * escalaPieza);
-    else if (tipo == TipoCasilla::BASTANTE_OSCURA) renderer.dibujaSprite(*variantes[4], posicion, longitud * escalaPieza, longitud * escalaPieza);
-    else if (tipo == TipoCasilla::OSCURA) renderer.dibujaSprite(*variantes[5], posicion, longitud * escalaPieza, longitud * escalaPieza);
-	else if (tipo == TipoCasilla::PODER) renderer.dibujaSprite(*variantes[6], posicion, longitud * escalaPieza, longitud * escalaPieza);
-    
     if (resaltada) {
-        renderer.dibujaSprite(posiciones.sprite, posicion, longitud, longitud);
+        renderer.dibujaContornoCuadrado(contenedorSprites.spriteElegido, posicion,Config::verdeOscuro, { longitud, longitud });
     }
 }
 

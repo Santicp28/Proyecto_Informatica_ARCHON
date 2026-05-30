@@ -2,7 +2,7 @@
 #include"Renderer.h"
 #include "Boton.h"
 #include "Config.h"
-#include "Grafmenu.h"
+#include "ContenedorSprites.h"
 #include "Tipos.h"
 #include<string>
 #include <vector>
@@ -22,8 +22,7 @@ public:
     Menu(const vector<string>& textos,const vector<MenuAccion>& acc, const Vector2D& sMenu, const Vector2D& c, const string& titu, const Color& colorTit);
 
     void inicializa();
-    void dibuja(Grafmenu& grafmenu, const Renderer& renderer)const;
-    void dibuja(const Renderer& renderer)const;
+    void dibuja(const Renderer& renderer, const ContenedorSprites& contenedorSprites)const;
     void mueve(float dt);
   
     MenuAccion tecla(unsigned char key);

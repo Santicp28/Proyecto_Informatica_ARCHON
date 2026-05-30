@@ -1,6 +1,4 @@
 #include "Juego.h"
-#include "freeglut.h"
-#include "Grafmenu.h"
 #include <cstdlib>
 #include "Tipos.h"
 
@@ -33,32 +31,32 @@ void Juego::inicializa()
     tablero.inicializa();
 }
 
-void Juego::dibuja(const Renderer& renderer)
+void Juego::dibuja(const Renderer& renderer, const ContenedorSprites& contenedorSprites)
 {
     renderer.dibujaColorFondo({ 0.2f, 0.2f, 0.2f });
     switch (estado) {
     case EstadoJuego::MENU_PRINCIPAL:
-        menuPrincipal.dibuja(grafmenu, renderer);
+        menuPrincipal.dibuja(renderer, contenedorSprites);
         break;
 
     case EstadoJuego::TABLERO:
-        tablero.dibuja(renderer);
+        tablero.dibuja(renderer, contenedorSprites);
         break;
 
 	case EstadoJuego::PAUSA:
-		menuPausa.dibuja(renderer);
+		menuPausa.dibuja(renderer, contenedorSprites);
 		break;
 
     case EstadoJuego::ARENA:   
-        arena.dibuja(renderer);
+        arena.dibuja(renderer, contenedorSprites);
         break;
 
     case EstadoJuego::OPCIONES:
-		menuOpciones.dibuja(renderer);
+		menuOpciones.dibuja(renderer, contenedorSprites);
         break;
 
 	case EstadoJuego::FIN_PARTIDA:
-		menuFinPartida.dibuja(renderer);
+		menuFinPartida.dibuja(renderer, contenedorSprites);
 		break;
     }
 }
@@ -69,7 +67,7 @@ void Juego::mueve(float dt)
 		arena.mueve(dt);
 }
 
-void Juego::tecla(unsigned char key, Renderer& renderer)
+void Juego::tecla(unsigned char key, ContenedorSprites& contenedorSprites)
 {
     switch (estado)
     {
@@ -137,7 +135,7 @@ void Juego::tecla(unsigned char key, Renderer& renderer)
             estado = EstadoJuego::OPCIONES;
             break;
         case MenuAccion::MODO_SPRITES_SIMPLE:
-            renderer.tecla(key);
+            contenedorSprites.cambiarModo();
             break;
         case MenuAccion::VOLVER:
             estado = EstadoJuego::MENU_PRINCIPAL;

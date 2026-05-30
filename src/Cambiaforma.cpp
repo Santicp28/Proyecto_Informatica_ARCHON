@@ -13,6 +13,6 @@ Cambiaforma::Cambiaforma(std::string nombre, Bando b) : Pieza(
     TipoMovimiento::VUELA           
 ) {
 }
-void Cambiaforma::dibuja(const Renderer& renderer, const Vector2D& centro, double ancho, double alto) const {
-    renderer.dibujaSprite(cambiaforma.graf, centro, ancho, alto);
+void Cambiaforma::dibuja(const Renderer& renderer, const ContenedorSprites& contenedorSprites, const Vector2D& centro, double ancho, double alto) const {
+    renderer.dibujaOvalo(contenedorSprites.spriteCambiaforma.spriteCuerpo, centro, Config::magenta, ancho, alto);
 }

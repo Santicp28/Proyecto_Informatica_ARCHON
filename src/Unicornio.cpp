@@ -13,6 +13,6 @@ Unicornio::Unicornio(std::string nombre, Bando b) : Pieza(
     TipoMovimiento::CAMINA     
 ) {
 }
-void Unicornio::dibuja(const Renderer& renderer, const Vector2D& centro, double ancho, double alto) const {
-    renderer.dibujaSprite(unicornio.graf, centro, ancho, alto);
+void Unicornio::dibuja(const Renderer& renderer, const ContenedorSprites& contenedorSprites, const Vector2D& centro, double ancho, double alto) const {
+    renderer.dibujaOvalo(contenedorSprites.spriteUnicornio.spriteCuerpo, centro, Config::magenta, ancho, alto);
 }

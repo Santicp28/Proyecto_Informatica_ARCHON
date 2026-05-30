@@ -4,6 +4,7 @@
 #include "Tablero.h"
 #include"Vector2D.h"
 #include "Renderer.h"
+#include "ContenedorSprites.h"
 #include "Tipos.h"
 enum class EstadoJuego {
     MENU_PRINCIPAL,
@@ -27,10 +28,10 @@ private:
 public:
     Juego();
     void inicializa();
-    void dibuja(const Renderer& renderer);
+    void dibuja(const Renderer& renderer, const ContenedorSprites& contenedorSprites);
     void mueve(float dt);
 
-    void tecla(unsigned char key, Renderer& renderer);
+    void tecla(unsigned char key, ContenedorSprites& contenedorSprites);
     void teclaEspecial(int key);
     void teclaUP(unsigned char key);
     void teclaEspecialUP(int key);

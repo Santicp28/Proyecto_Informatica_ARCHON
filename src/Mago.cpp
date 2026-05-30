@@ -14,6 +14,6 @@ Mago::Mago(std::string nombre, Bando b) : Pieza(
     TipoMovimiento::TELETRANSPORTE 
 ) {
 }
-void Mago::dibuja(const Renderer& renderer, const Vector2D& centro, double ancho, double alto) const {
-    renderer.dibujaSprite(mago.graf, centro, ancho, alto);
+void Mago::dibuja(const Renderer& renderer, const ContenedorSprites& contenedorSprites, const Vector2D& centro, double ancho, double alto) const {
+    renderer.dibujaOvalo(contenedorSprites.spriteMago.spriteCuerpo, centro, Config::magenta, ancho, alto);
 }

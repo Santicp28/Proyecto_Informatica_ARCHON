@@ -11,6 +11,7 @@ namespace  Config
 
     inline static constexpr  Color rojo { 1.0f, 0.0f, 0.0f };
     inline static constexpr  Color verde { 0.0f, 1.0f, 0.0f };
+    inline static constexpr  Color verdeOscuro { 0.0f, 0.3f, 0.0f };
     inline static constexpr  Color azul { 0.0f, 0.0f, 1.0f };
 
     inline static constexpr  Color amarillo { 1.0f, 1.0f, 0.0f };

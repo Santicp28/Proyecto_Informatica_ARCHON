@@ -13,6 +13,6 @@ Dragon::Dragon(std::string nombre, Bando b) : Pieza(
     TipoMovimiento::VUELA           
 ) {
 }
-void Dragon::dibuja(const Renderer& renderer, const Vector2D& centro, double ancho, double alto) const {
-    renderer.dibujaSprite(dragon.graf, centro, ancho, alto);
+void Dragon::dibuja(const Renderer& renderer, const ContenedorSprites& contenedorSprites, const Vector2D& centro, double ancho, double alto) const {
+    renderer.dibujaOvalo(contenedorSprites.spriteDragon.spriteCuerpo, centro, Config::magenta, ancho, alto);
 }

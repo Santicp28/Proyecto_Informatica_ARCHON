@@ -13,6 +13,6 @@ Banshee::Banshee(std::string nombre, Bando b) : Pieza(
     TipoMovimiento::VUELA           
 ) {
 }
-void Banshee::dibuja(const Renderer& renderer, const Vector2D& centro, double ancho, double alto) const {
-    renderer.dibujaSprite(banshee.graf, centro, ancho, alto);
+void Banshee::dibuja(const Renderer& renderer, const ContenedorSprites& contenedorSprites, const Vector2D& centro, double ancho, double alto) const {
+    renderer.dibujaOvalo(contenedorSprites.spriteBanshee.spriteCuerpo, centro, Config::magenta, ancho, alto);
 }

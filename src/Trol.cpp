@@ -13,6 +13,6 @@ Trol::Trol(std::string nombre, Bando b) : Pieza(
     TipoMovimiento::CAMINA      
 ) {
 }
-void Trol::dibuja(const Renderer& renderer, const Vector2D& centro, double ancho, double alto) const {
-    renderer.dibujaSprite(trol.graf, centro, ancho, alto);
+void Trol::dibuja(const Renderer& renderer, const ContenedorSprites& contenedorSprites, const Vector2D& centro, double ancho, double alto) const {
+    renderer.dibujaOvalo(contenedorSprites.spriteTrol.spriteCuerpo, centro, Config::magenta, ancho, alto);
 }

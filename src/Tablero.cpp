@@ -1,7 +1,6 @@
 #include "Tablero.h"
 #include "Renderer.h"
 #include <iostream>
-#include "Graftablero.h"
 
 
 using enum TipoCasilla;
@@ -131,33 +130,33 @@ void Tablero::inicializa()
 }
 
 // --------------- FUNCIONES DE DIBUJO ------------------ START
-void Tablero::dibuja(const Renderer& renderer)const {
-    renderer.dibujaSprite(mesa.sprite, posicion, Config::sizeMundo.x, Config::sizeMundo.y);
-    renderer.dibujaSprite(hoja.sprite, posicion, Config::sizeMundo.x * 0.6, Config::sizeMundo.y * 0.8);
+void Tablero::dibuja(const Renderer& renderer, const ContenedorSprites& contenedorSprites)const {
+    renderer.dibujaCuadrado(contenedorSprites.spriteMesa, posicion,Config::gris, Config::sizeMundo);
+    renderer.dibujaCuadrado(contenedorSprites.spriteHoja, posicion, Config::blanco, {Config::sizeMundo.x * 0.6, Config::sizeMundo.y * 0.8});
 
     double longitudCasilla = longitud / TAM;
     Vector2D esquinaSuperiorIzda{ posicion.x - longitud / 2.0, posicion.y - longitud / 2.0 };
     for (unsigned int f = 0; f < TAM; f++) {
         for (unsigned int c = 0; c < TAM; c++) {
             Vector2D centroCasilla{ esquinaSuperiorIzda.x + (c + 0.5) * longitudCasilla, esquinaSuperiorIzda.y + (f + 0.5) * longitudCasilla };
-             casillas[f][c].dibuja(renderer, centroCasilla, longitudCasilla);
+             casillas[f][c].dibuja(renderer, contenedorSprites, centroCasilla, longitudCasilla);
         }
     }
 
     
-	listaPiezas.dibujarPiezas(renderer, esquinaSuperiorIzda, longitudCasilla);
-    dibujaOrigenSeleccionado(renderer, esquinaSuperiorIzda, longitudCasilla);
-    cursor.dibuja(renderer, esquinaSuperiorIzda, longitudCasilla, turnoActual);
+	listaPiezas.dibujarPiezas(renderer, contenedorSprites, esquinaSuperiorIzda, longitudCasilla);
+    dibujaOrigenSeleccionado(renderer, contenedorSprites, esquinaSuperiorIzda, longitudCasilla);
+    cursor.dibuja(renderer, contenedorSprites, esquinaSuperiorIzda, longitudCasilla, turnoActual);
 
 	if (estadoTablero == EstadoTablero::MENU_HECHIZOS && turnoActual == Bando::LUZ) {
-		menuHechizosLuz.dibuja(renderer);
+		menuHechizosLuz.dibuja(renderer, contenedorSprites);
 	}
 	else if (estadoTablero == EstadoTablero::MENU_HECHIZOS && turnoActual == Bando::OSCURIDAD) {
-		menuHechizosOscuridad.dibuja(renderer);
+		menuHechizosOscuridad.dibuja(renderer, contenedorSprites);
 	}
 
-	panelStatsLuz->dibuja(renderer);
-	panelStatsOscuridad->dibuja(renderer);
+	panelStatsLuz->dibuja(renderer, contenedorSprites);
+	panelStatsOscuridad->dibuja(renderer, contenedorSprites);
 }
 
 
@@ -192,7 +191,7 @@ void Tablero::limpiarResaltados() {
     movimientosPosibles.clear();
 }
 
-void Tablero::dibujaOrigenSeleccionado(const Renderer& renderer, const Vector2D& esquinaSuperiorIzda, double longitud) const
+void Tablero::dibujaOrigenSeleccionado(const Renderer& renderer, const ContenedorSprites& contenedorSprites, const Vector2D& esquinaSuperiorIzda, double longitud) const
 {
     Vector2D centro{
         esquinaSuperiorIzda.x + (origenSeleccionado.columna + 0.5) * longitud,
@@ -200,7 +199,7 @@ void Tablero::dibujaOrigenSeleccionado(const Renderer& renderer, const Vector2D&
     };
 
     if (hayOrigenSeleccionado) {
-        renderer.dibujaSprite(elegido.sprite, centro, longitud, longitud);
+        renderer.dibujaContornoCuadrado(contenedorSprites.spriteElegido, centro,Config::gris, {longitud, longitud});
     }
 }
 

@@ -13,6 +13,6 @@ Golem::Golem(std::string nombre, Bando b) : Pieza(
     TipoMovimiento::CAMINA    
 ) {
 }
-void Golem::dibuja(const Renderer& renderer, const Vector2D& centro, double ancho, double alto) const {
-    renderer.dibujaSprite(golem.graf, centro, ancho, alto);
+void Golem::dibuja(const Renderer& renderer, const ContenedorSprites& contenedorSprites, const Vector2D& centro, double ancho, double alto) const {
+    renderer.dibujaOvalo(contenedorSprites.spriteGolem.spriteCuerpo, centro, Config::magenta, ancho, alto);
 }

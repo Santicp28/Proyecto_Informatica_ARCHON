@@ -13,6 +13,6 @@ Djinni::Djinni(std::string nombre, Bando b) : Pieza(
     TipoMovimiento::VUELA   
 ) {
 }
-void Djinni::dibuja(const Renderer& renderer, const Vector2D& centro, double ancho, double alto) const {
-    renderer.dibujaSprite(djinni.graf, centro, ancho, alto);
+void Djinni::dibuja(const Renderer& renderer, const ContenedorSprites& contenedorSprites, const Vector2D& centro, double ancho, double alto) const {
+    renderer.dibujaOvalo(contenedorSprites.spriteDjinni.spriteCuerpo, centro, Config::magenta, ancho, alto);
 }

@@ -13,7 +13,7 @@ public:
 	void mover(int df, int dc);
 	void setPosicion(PosicionMatriz nuevaPosicion) { posicion = nuevaPosicion; }
 
-	void dibuja(const Renderer& renderer, const Vector2D& esquinaSuperiorIzda, double longitudCasilla, Bando b) const;
+	void dibuja(const Renderer& renderer, const ContenedorSprites& contenedorSprites, const Vector2D& esquinaSuperiorIzda, double longitudCasilla, Bando b) const;
 
 	PosicionMatriz getPosicion() const { return posicion; }
 

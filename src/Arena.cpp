@@ -93,7 +93,7 @@ void Arena::mueve(float dt)
 		  //	jugador1->getSpriteAtaque()));
 	//  }
 
-	if (jugador1->puedeDisparar()) {
+	/*if (jugador1->puedeDisparar()) {
 		Vector2D dir = jugador1->getDireccion();
 		Vector2D vel = dir * jugador1->getVelocidadAtaque();
 		
@@ -107,17 +107,17 @@ void Arena::mueve(float dt)
 		listaDisparos.agregar(new Disparo(jugador2->posicion(),
 			jugador2->getDireccion() * jugador2->getVelocidadAtaque(),
 			jugador2->getSpriteAtaque()));
-		}
+		}*/
 
 	
 }
 
-void Arena::dibuja(const Renderer& renderer) const
+void Arena::dibuja(const Renderer& renderer, const ContenedorSprites& contenedorSprites) const
 {
     bordes.dibuja(renderer);
-    listaDisparos.dibuja(renderer);
+    /*listaDisparos.dibuja(renderer);
 	if (jugador1) jugador1->dibuja(renderer, jugador1->posicion(), size.x, size.y);
-	if (jugador2) jugador2->dibuja(renderer, jugador2->posicion(), size.x, size.y);
+	if (jugador2) jugador2->dibuja(renderer, jugador2->posicion(), size.x, size.y);*/
 }
 
 Pieza* Arena::getGanador() const

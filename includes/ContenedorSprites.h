@@ -14,12 +14,14 @@ struct SpritePieza
 	}
 };
 
-class ContenedorSprites//equivalente a Sprite* spriteCuerpo= nullptr;
+struct ContenedorSprites//equivalente a Sprite* spriteCuerpo= nullptr;
 {
+	bool cargado = false;
+
 	unique_ptr<Sprite> spriteMenu;
 
 	unique_ptr<Sprite> spriteFondotablero;
-	unique_ptr<Sprite> spriteMesa;
+	unique_ptr<Sprite> spriteMesa;	
 	unique_ptr<Sprite> spriteHoja;
 	unique_ptr<Sprite> spriteClara;
 	unique_ptr<Sprite> spriteBastanteClara;
@@ -62,7 +64,9 @@ class ContenedorSprites//equivalente a Sprite* spriteCuerpo= nullptr;
 	SpritePieza spriteDragon;
 	SpritePieza spriteDuende;
 
-public:
+	ContenedorSprites(bool cargad = false) : cargado(cargad) {}
+	bool modoCargado() const { return cargado; }
+	void cambiarModo() { cargado = !cargado; }
 	void cargarContenedorSprites();
 	void descargarContenedorSprites();
 };

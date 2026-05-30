@@ -2,6 +2,8 @@
 #include<vector>
 #include "Pieza.h"
 #include "Tipos.h"
+#include "Renderer.h"
+#include "ContenedorSprites.h"
 
 using std::vector;
 
@@ -21,7 +23,7 @@ public:
     //llamar después de arena
     void piezaPierde(Pieza* p); 
 
-    void dibujarPiezas(const Renderer& renderer, const Vector2D& esquinaSuperiorIzda, double longitudCasilla) const;
+    void dibujarPiezas(const Renderer& renderer, const ContenedorSprites& contenedorSprites, const Vector2D& esquinaSuperiorIzda, double longitudCasilla) const;
     
 
 

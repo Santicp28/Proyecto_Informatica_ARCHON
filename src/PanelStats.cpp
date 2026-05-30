@@ -1,7 +1,7 @@
 #pragma once
 #include "PanelStats.h"
 
-void PanelStats::dibuja(const Renderer& renderer) const
+void PanelStats::dibuja(const Renderer& renderer, const ContenedorSprites& contenedorSprites) const
 {
 	Vector2D centro = { posicion.x + size.x / 2.0, posicion.y + size.y / 2.0 };
 
@@ -10,8 +10,8 @@ void PanelStats::dibuja(const Renderer& renderer) const
     double x_texto = posicion.x + 5;
     double y_texto_inicio = posicion.y + 30;
 
-    renderer.dibujaCuadrado(centro, colorFondo, size); //Fondo
-    renderer.dibujaContornoCuadrado(centro, colorBorde, size); //Bordes
+    renderer.dibujaCuadrado(nullptr, centro, colorFondo, size); //Fondo
+    renderer.dibujaContornoCuadrado(nullptr, centro, colorBorde, size); //Bordes
     renderer.dibujaTexto(titulo,{x_texto, posicion.y*1.1 }, colorTitulo, tam_titulo_escalado, AlineacionTexto::IZQUIERDA); //Título
 
     double y_stats = y_texto_inicio + 10;

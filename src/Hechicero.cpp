@@ -14,6 +14,6 @@ Hechicero::Hechicero(std::string nombre, Bando b) : Pieza(
     TipoMovimiento::TELETRANSPORTE 
 ) {
 }
-void Hechicero::dibuja(const Renderer& renderer, const Vector2D& centro, double ancho, double alto) const {
-    renderer.dibujaSprite(hechicero.graf, centro, ancho, alto);
+void Hechicero::dibuja(const Renderer& renderer, const ContenedorSprites& contenedorSprites, const Vector2D& centro, double ancho, double alto) const {
+    renderer.dibujaOvalo(contenedorSprites.spriteHechicero.spriteCuerpo, centro, Config::magenta, ancho, alto);
 }

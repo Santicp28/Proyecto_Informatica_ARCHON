@@ -13,6 +13,6 @@ Manticora::Manticora(std::string nombre, Bando b) : Pieza(
     TipoMovimiento::CAMINA   
 ) {
 }
-void Manticora::dibuja(const Renderer& renderer, const Vector2D& centro, double ancho, double alto) const {
-    renderer.dibujaSprite(manticora.graf, centro, ancho, alto);
+void Manticora::dibuja(const Renderer& renderer, const ContenedorSprites& contenedorSprites, const Vector2D& centro, double ancho, double alto) const {
+    renderer.dibujaOvalo(contenedorSprites.spriteManticora.spriteCuerpo, centro, Config::magenta, ancho, alto);
 }

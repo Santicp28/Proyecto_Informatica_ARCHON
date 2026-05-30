@@ -4,26 +4,6 @@
 #include "Config.h"
 #include <memory>
 
-Renderer::Renderer(EstadoRenderer estado):
-	estadoRenderer(estado)
-{
-	if (estadoRenderer == EstadoRenderer::SPRITES)
-		contenedorSprites.cargarContenedorSprites();
-}
-void Renderer::tecla(unsigned char key)
-{
-	if (key == ' ') {
-		if (estadoRenderer == EstadoRenderer::SIMPLE) {
-			estadoRenderer = EstadoRenderer::SPRITES;
-			contenedorSprites.cargarContenedorSprites();
-		}
-		else if (estadoRenderer == EstadoRenderer::SPRITES) {
-			estadoRenderer = EstadoRenderer::SIMPLE;
-			contenedorSprites.descargarContenedorSprites();
-		}
-	}
-}
-
 void Renderer::inicializa2D()
 {
 	glDisable(GL_DEPTH_TEST);//No hay 3D real de profundidad, todo se dibuja en orden de renderizado
@@ -39,10 +19,13 @@ void Renderer::inicializa2D()
 	glMatrixMode(GL_MODELVIEW);// todo lo siguiente define como se ven los objetos
 }
 
-void Renderer::dibujaCuadrado(unique_ptr<Sprite>& sprite, const Vector2D& centro, const Color& color, const Vector2D& size)const
+void Renderer::dibujaCuadrado(const unique_ptr<Sprite>& sprite, const Vector2D& centro, const Color& color, const Vector2D& size)const
 {
 	empiezaUI();
-	if (estadoRenderer == EstadoRenderer::SIMPLE) {
+	if (sprite)
+		dibujaSprite(sprite, centro, size); 
+	else
+	{
 		Vector2D desplazamiento = size * 0.5;
 		dibujaColor(color);
 		glBegin(GL_QUADS);
@@ -53,15 +36,17 @@ void Renderer::dibujaCuadrado(unique_ptr<Sprite>& sprite, const Vector2D& centro
 
 		glEnd();
 	}
-	else if (estadoRenderer == EstadoRenderer::SPRITES)
-		dibujaSprite(sprite, centro, size);
+		
 	terminaUI();
 }
 
-void Renderer::dibujaContornoCuadrado(unique_ptr<Sprite>& sprite, const Vector2D& centro, const Color& color, const Vector2D& size)const
+void Renderer::dibujaContornoCuadrado(const unique_ptr<Sprite>& sprite, const Vector2D& centro, const Color& color, const Vector2D& size)const
 {
 	empiezaUI();
-	if (estadoRenderer == EstadoRenderer::SIMPLE) {
+	if (sprite)
+		dibujaSprite(sprite, centro, size); 
+	else
+	{
 		Vector2D desplazamiento = size * 0.5;
 		dibujaColor(color);
 		glLineWidth(2.0f);//ancho de lineas
@@ -71,9 +56,7 @@ void Renderer::dibujaContornoCuadrado(unique_ptr<Sprite>& sprite, const Vector2D
 		glVertex2d(centro.x + desplazamiento.x, centro.y + desplazamiento.y); // arriba derecha
 		glVertex2d(centro.x - desplazamiento.x, centro.y + desplazamiento.y); // arriba izquierda
 		glEnd();
-	}
-	else if (estadoRenderer == EstadoRenderer::SPRITES)
-		dibujaSprite(sprite, centro, size);
+	}	
 	terminaUI();
 }
 
@@ -89,20 +72,25 @@ void Renderer::dibujaLinea(const Vector2D& limite1, const Vector2D& limite2, con
 	terminaUI();
 }
 
-void Renderer::dibujaOvalo(const Vector2D& centro, const Color& color, double radioX, double radioY) const {
+void Renderer::dibujaOvalo(const unique_ptr<Sprite>& sprite,const Vector2D& centro, const Color& color, double radioX, double radioY) const {
 	empiezaUI();
-	dibujaColor(color);
-	glBegin(GL_POLYGON);
-	for (int i = 0; i < 24; i++)
+	if (sprite)
+		dibujaSprite(sprite, centro, {radioX, radioY});
+	else 
 	{
-		double a = 2.0f * Config::PI * i / 24.0f;
-		glVertex3d(centro.x + cos(a) * radioX,centro.y + sin(a) * radioY,0.1);
+		dibujaColor(color);
+		glBegin(GL_POLYGON);
+		for (int i = 0; i < 24; i++)
+		{
+			double a = 2.0f * Config::PI * i / 24.0f;
+			glVertex3d(centro.x + cos(a) * radioX, centro.y + sin(a) * radioY, 0.1);
+		}
+		glEnd();
 	}
-	glEnd();
 	terminaUI();
 }
 
-void Renderer::dibujaSprite(unique_ptr<Sprite>& sprite, const Vector2D& centro, const Vector2D& size) const {
+void Renderer::dibujaSprite(const unique_ptr<Sprite>& sprite, const Vector2D& centro, const Vector2D& size) const {
 	empiezaUI();
 	sprite->setPos(centro.x - (size.x / 2.0), centro.y + (size.y / 2.0));
 	sprite->setSize(size.x, size.y);

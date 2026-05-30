@@ -13,6 +13,6 @@ Basilisco::Basilisco(std::string nombre, Bando b) : Pieza(
     TipoMovimiento::CAMINA         
 ) {
 }
-void Basilisco::dibuja(const Renderer& renderer, const Vector2D& centro, double ancho, double alto) const {
-    renderer.dibujaSprite(basilisco.graf, centro, ancho, alto);
+void Basilisco::dibuja(const Renderer& renderer, const ContenedorSprites& contenedorSprites, const Vector2D& centro, double ancho, double alto) const {
+    renderer.dibujaOvalo(contenedorSprites.spriteBasilisco.spriteCuerpo, centro,Config::magenta, ancho, alto);
 }

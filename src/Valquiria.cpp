@@ -13,6 +13,6 @@ Valquiria::Valquiria(std::string nombre, Bando b) : Pieza(
     TipoMovimiento::VUELA     
 ) {
 }
-void Valquiria::dibuja(const Renderer& renderer, const Vector2D& centro, double ancho, double alto) const {
-    renderer.dibujaSprite(valquiria.graf, centro, ancho, alto);
+void Valquiria::dibuja(const Renderer& renderer, const ContenedorSprites& contenedorSprites, const Vector2D& centro, double ancho, double alto) const {
+    renderer.dibujaOvalo(contenedorSprites.spriteValquiria.spriteCuerpo, centro, Config::magenta, ancho, alto);
 }

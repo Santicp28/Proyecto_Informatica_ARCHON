@@ -12,7 +12,7 @@ public:
 	PanelStats(Vector2D size, Vector2D posicion, Color colorFondo, Color colorTexto, Color colorTitulo, Color colorBorde, const std::string& titulo, int escalaTexto, int escalaTitulo)
 		: Panel(size, posicion, colorFondo, colorTexto, colorTitulo, colorBorde, titulo, escalaTexto, escalaTitulo) { pieza = nullptr; }
 
-	void dibuja(const Renderer& renderer) const;
+	void dibuja(const Renderer& renderer, const ContenedorSprites& contenedorSprites) const;
 	void setPieza(const Pieza* nuevaPieza) { pieza = nuevaPieza; }
 
 	~PanelStats() override {}

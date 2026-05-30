@@ -2,6 +2,7 @@
 #include "freeglut.h"
 #include "Casilla.h"
 #include"Renderer.h"
+#include "ContenedorSprites.h"
 #include"Vector2D.h"
 #include "Tipos.h"
 #include "ObjetoMovil.h"
@@ -33,9 +34,7 @@ protected:
 public:
     bool atacar{ false };
 
-    virtual void dibuja(const Renderer& renderer, const Vector2D& centro, double ancho, double alto) const = 0;
-
-    virtual const char* getSpriteAtaque() const { return nullptr; }
+    virtual void dibuja(const Renderer& renderer, const ContenedorSprites& contenedorSprites, const Vector2D& centro, double ancho, double alto) const = 0;
 
     Pieza(std::string nom, Ataque at, Vida_maxima vi, Velocidad vel, Cadencia cad, Velocidad_ataque vel_at, Rango ra, Bando b, TipoMovimiento tm)
         :ObjetoMovil({}, {}, {}, 20.0)

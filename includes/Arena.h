@@ -28,7 +28,7 @@ class Arena
 public:
 	void inicializa(Pieza * p1, Pieza * p2);
 	void mueve(float dt);
-	void dibuja(const Renderer& renderer) const;
+	void dibuja(const Renderer& renderer, const ContenedorSprites& contenedorSprites) const;
 	void tecla(unsigned char key);
 	void teclaUP(unsigned char key);
 	void teclaEspecial(int key);

@@ -13,6 +13,6 @@ Arquero::Arquero(std::string nombre, Bando b) : Pieza(
     TipoMovimiento::CAMINA          
 ) {
 }
-void Arquero::dibuja(const Renderer& renderer, const Vector2D& centro, double ancho, double alto) const {
-    renderer.dibujaSprite(arquero.graf,centro, ancho, alto);
+void Arquero::dibuja(const Renderer& renderer,const ContenedorSprites& contenedorSprites, const Vector2D& centro, double ancho, double alto) const {
+    renderer.dibujaOvalo(contenedorSprites.spriteArquero.spriteCuerpo,centro,Config::magenta, ancho, alto);
 }

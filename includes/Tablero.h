@@ -1,6 +1,7 @@
 #pragma once
 #include "Casilla.h"
 #include "Config.h"
+#include "ContenedorSprites.h"
 #include "Cursor.h"
 #include "ListaPiezas.h"
 #include "Menu.h"
@@ -9,12 +10,6 @@
 #include "Tipos.h"
 
 #include <vector>
-#include "Tipos.h"
-#include "ListaPiezas.h"
-#include "Renderer.h"
-#include "Config.h"
-#include "Cursor.h"
-#include "Menu.h"
 
 #include "Arquero.h"
 #include "Banshee.h"
@@ -92,12 +87,12 @@ public:
 
 
     // ----- FUNCIONES DE DIBUJO ------ START
-    void dibuja(const Renderer& renderer)const;
+    void dibuja(const Renderer& renderer, const ContenedorSprites& contenedorSprites)const;
 
     void resaltarMovimientoPosible();
     void limpiarResaltados();
 
-    void dibujaOrigenSeleccionado(const Renderer& renderer, const Vector2D& posicion, double longitud) const;
+    void dibujaOrigenSeleccionado(const Renderer& renderer, const ContenedorSprites& contenedorSprites, const Vector2D& posicion, double longitud) const;
     
     // ----- FUNCIONES DE DIBUJO ------ END
 

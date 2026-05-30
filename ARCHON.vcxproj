@@ -225,7 +225,6 @@ xcopy "$(ProjectDir)assets\Graficos" "$(OutDir)Graficos" /E /I /Y</Command>
     <ClInclude Include="includes\ContenedorSprites.h" />
     <ClInclude Include="includes\Tablero.h" />
     <ClInclude Include="includes\Tipos.h" />
-    <ClInclude Include="includes\Grafpiezas.h" />
     <ClInclude Include="includes\Trol.h" />
     <ClInclude Include="includes\Unicornio.h" />
     <ClInclude Include="includes\Valquiria.h" />
