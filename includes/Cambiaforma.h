@@ -4,7 +4,7 @@
 class Cambiaforma : public Pieza
 {
 public:
-    Cambiaforma(std::string nombre = "Cambiaforma", Bando b = Bando::OSCURIDAD);
+    Cambiaforma(std::string nombre = "Cambiaforma", TipoPieza tipo = TipoPieza::CAMBIAFORMA, Bando b = Bando::OSCURIDAD);
     
-    void dibuja(const Renderer& renderer, const Vector2D& centro, double ancho, double alto) const override;
+
 };

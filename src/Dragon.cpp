@@ -1,8 +1,9 @@
 #include "Dragon.h"
 #include "Pieza.h"
 
-Dragon::Dragon(std::string nombre, Bando b) : Pieza(
+Dragon::Dragon(std::string nombre, TipoPieza tipo, Bando b) : Pieza(
     nombre,
+    tipo,
     Ataque::MUYALTO,               
     Vida_maxima::MUYALTA,                 
     Velocidad::NORMAL,             
@@ -13,6 +14,4 @@ Dragon::Dragon(std::string nombre, Bando b) : Pieza(
     TipoMovimiento::VUELA           
 ) {
 }
-void Dragon::dibuja(const Renderer& renderer, const Vector2D& centro, double ancho, double alto) const {
-    renderer.dibujaSprite(dragon.graf, centro, ancho, alto);
-}
+

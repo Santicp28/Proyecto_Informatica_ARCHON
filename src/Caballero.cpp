@@ -1,8 +1,9 @@
 #include "Caballero.h"
 #include "Pieza.h"
 
-Caballero::Caballero(std::string nombre, Bando b) : Pieza(
+Caballero::Caballero(std::string nombre, TipoPieza tipo, Bando b) : Pieza(
     nombre,
+    tipo,
     Ataque::BAJO,                  
     Vida_maxima::CORTA,                
     Velocidad::NORMAL,             
@@ -13,7 +14,4 @@ Caballero::Caballero(std::string nombre, Bando b) : Pieza(
     TipoMovimiento::CAMINA         
 ) {
     golpe = new GolpeAtaque();
-}
-void Caballero::dibuja(const Renderer& renderer, const Vector2D& centro, double ancho, double alto) const {
-    renderer.dibujaSprite(caballero.graf, centro, ancho, alto);
 }

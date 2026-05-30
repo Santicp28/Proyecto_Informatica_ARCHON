@@ -1,8 +1,9 @@
 #include "Duende.h"
 #include "Pieza.h"
 
-Duende::Duende(std::string nombre, Bando b) : Pieza(
+Duende::Duende(std::string nombre, TipoPieza tipo, Bando b) : Pieza(
     nombre,
+    tipo,
     Ataque::BAJO,                  
     Vida_maxima::CORTA,                   
     Velocidad::NORMAL,             
@@ -13,7 +14,4 @@ Duende::Duende(std::string nombre, Bando b) : Pieza(
     TipoMovimiento::CAMINA         
 ) {
     golpe = new GolpeAtaque();
-}
-void Duende::dibuja(const Renderer& renderer,const Vector2D& centro, double ancho, double alto) const {
-    renderer.dibujaSprite(duende.graf, centro, ancho, alto);
 }

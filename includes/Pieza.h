@@ -7,6 +7,9 @@
 #include "ObjetoMovil.h"
 #include"GolpeAtaque.h"
 #include <string>
+#include "ETSIDI.h"
+#include "Grafpiezas.h"
+#include "Grafhechizos.h"
 
 class Disparo;
 class Pieza: public ObjetoMovil
@@ -15,6 +18,7 @@ class Pieza: public ObjetoMovil
 protected:
 
 	std::string nombre;
+    TipoPieza tipo;
 	PosicionMatriz posicionMatriz; 
     Vector2D posicionArena;
     double ataque;
@@ -33,18 +37,28 @@ protected:
 	bool encarcelada = false; 
     bool mojada = false;
 
+	bool enArena = false; 
+
     bool golpeConectado = false;
     double tiempoDesdeUltimoDisparo = 999.0;
+
+    //variables para el reset de stats después del vaso de agua
+    double ataque_og;
+    double velocidadMax_og;
+    double cadencia_og;
+    double velocidad_ataque_og;
+
 public:
     bool atacar{ false };
 
-    virtual void dibuja(const Renderer& renderer, const Vector2D& centro, double ancho, double alto) const = 0;
+    virtual void dibuja(const Renderer& renderer, const Vector2D& centro, double ancho, double alto) const;
 
     virtual const char* getSpriteAtaque() const { return nullptr; }
 
-    Pieza(std::string nom, Ataque at, Vida_maxima vi, Velocidad vel, Cadencia cad, Velocidad_ataque vel_at, Rango ra, Bando b, TipoMovimiento tm)
+    Pieza(std::string nom, TipoPieza tipo, Ataque at, Vida_maxima vi, Velocidad vel, Cadencia cad, Velocidad_ataque vel_at, Rango ra, Bando b, TipoMovimiento tm)
         :ObjetoMovil({}, {}, {}, 30.0)
        ,nombre(nom),
+        tipo(tipo),
         posicionMatriz{ 0, 0 },
         ataque(0.0),
         velocidadMax(0.0),
@@ -95,6 +109,11 @@ public:
         if (ra == Rango::CORTO) rango_movimiento = 3;
         else if (ra == Rango::MEDIO) rango_movimiento = 4;
         else if (ra == Rango::LARGO) rango_movimiento = 5;
+
+		ataque_og = ataque;
+		velocidadMax_og = velocidadMax;
+		cadencia_og = cadencia;
+		velocidad_ataque_og = velocidad_ataque;
     }
 
     
@@ -109,11 +128,19 @@ public:
     void setVidaActual(double vida) { vida_actual = vida; }
     void setVelocidadAtaque(double vel) { velocidad_ataque = vel; }
 
+    void resetStats() {
+        ataque = ataque_og;
+        velocidadMax = velocidadMax_og;
+        cadencia = cadencia_og;
+        velocidad_ataque = velocidad_ataque_og;
+	}
+
     virtual void setPosicionArena(const Vector2D& posicion) { posicion_ = posicion; }
 
 	void setProteccionContraHechizos(bool protegido) { protegidoContraHechizos = protegido;}
 	void setEncarcelada(bool encarcelada) { this->encarcelada = encarcelada; }
 	void setMojada(bool mojada) { this->mojada = mojada; }
+	void setEnArena(bool enArena) { this->enArena = enArena; }
 
 	void curar(double cantidad) { 
         if ((vida_actual + cantidad) > vida_maxima) vida_actual = vida_maxima; 

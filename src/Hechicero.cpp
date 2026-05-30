@@ -2,8 +2,9 @@
 #include "Pieza.h"
 
 
-Hechicero::Hechicero(std::string nombre, Bando b) : Pieza(
+Hechicero::Hechicero(std::string nombre, TipoPieza tipo, Bando b) : Pieza(
     nombre,
+    tipo,
     Ataque::MODERADO,              
     Vida_maxima::MODERADA,                
     Velocidad::NORMAL,             
@@ -13,7 +14,4 @@ Hechicero::Hechicero(std::string nombre, Bando b) : Pieza(
     b,
     TipoMovimiento::TELETRANSPORTE 
 ) {
-}
-void Hechicero::dibuja(const Renderer& renderer, const Vector2D& centro, double ancho, double alto) const {
-    renderer.dibujaSprite(hechicero.graf, centro, ancho, alto);
 }

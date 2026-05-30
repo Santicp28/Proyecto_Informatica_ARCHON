@@ -357,6 +357,9 @@ bool Tablero::moverPieza(PosicionMatriz origen, PosicionMatriz destino)
         origenCombate = origen;
         destinoCombate = destino;
 
+        atacante->setEnArena(true);
+        defensor->setEnArena(true);
+
         return true;
     }
 
@@ -690,7 +693,10 @@ void Tablero::cicloTurno()
             Pieza* p = listaPiezas.getPiezaEnPosicion({ f,c });
             if (p != nullptr) {
                 if (contadorTurnosParaCiclo == 0) {
-                    p->setMojada(false); //si las oscilantes son claras, (momento de luz) se seca y pierde los efectos de mojado
+                    if (p->estaMojada()) {
+                        p->setMojada(false); //si las oscilantes son claras, (momento de luz) se seca y pierde los efectos de mojado
+                        p->resetStats();
+                    }
                     if (p->getBando() == Bando::LUZ) p->setEncarcelada(false);
                 }
                 if (contadorTurnosParaCiclo == 5) {
@@ -805,7 +811,7 @@ void Tablero::curaPasiva()
             Pieza* p = listaPiezas.getPiezaEnPosicion({ f,c });
             if (p != nullptr) {
                 if (casillas[f][c].getTipo() == TipoCasilla::PODER) p->curar(10.0);
-                else p->curar(5.0);
+                else p->curar(2.5);
             }
         }
     }

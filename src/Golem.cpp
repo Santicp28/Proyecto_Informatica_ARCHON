@@ -1,8 +1,9 @@
 #include "Golem.h"
 #include "Pieza.h"
 
-Golem::Golem(std::string nombre, Bando b) : Pieza(
+Golem::Golem(std::string nombre, TipoPieza tipo, Bando b) : Pieza(
     nombre,
+    tipo,
     Ataque::ALTO,               
     Vida_maxima::ALTA,              
     Velocidad::BAJA,         
@@ -12,7 +13,4 @@ Golem::Golem(std::string nombre, Bando b) : Pieza(
     b,
     TipoMovimiento::CAMINA    
 ) {
-}
-void Golem::dibuja(const Renderer& renderer, const Vector2D& centro, double ancho, double alto) const {
-    renderer.dibujaSprite(golem.graf, centro, ancho, alto);
 }
