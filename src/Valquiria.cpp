@@ -1,8 +1,9 @@
 #include "Valquiria.h"
 #include "Pieza.h"
 
-Valquiria::Valquiria(std::string nombre, Bando b) : Pieza(
+Valquiria::Valquiria(std::string nombre, TipoPieza tipo, Bando b) : Pieza(
     nombre,
+    tipo,
     Ataque::MODERADO,    
     Vida_maxima::MODERADA,     
     Velocidad::NORMAL,  
@@ -12,7 +13,4 @@ Valquiria::Valquiria(std::string nombre, Bando b) : Pieza(
     b,
     TipoMovimiento::VUELA     
 ) {
-}
-void Valquiria::dibuja(const Renderer& renderer, const Vector2D& centro, double ancho, double alto) const {
-    renderer.dibujaSprite(valquiria.graf, centro, ancho, alto);
 }

@@ -1,8 +1,9 @@
 #include "Arquero.h"
 #include "Pieza.h"
 
-Arquero::Arquero(std::string nombre, Bando b) : Pieza(
+Arquero::Arquero(std::string nombre, TipoPieza tipo, Bando b) : Pieza(
     nombre,
+    tipo,
     Ataque::BAJO,                   
     Vida_maxima::CORTA,                    
     Velocidad::NORMAL,              
@@ -13,6 +14,4 @@ Arquero::Arquero(std::string nombre, Bando b) : Pieza(
     TipoMovimiento::CAMINA          
 ) {
 }
-void Arquero::dibuja(const Renderer& renderer, const Vector2D& centro, double ancho, double alto) const {
-    renderer.dibujaSprite(arquero.graf,centro, ancho, alto);
-}
+
