@@ -52,9 +52,9 @@ void Casilla::dibuja(const Renderer& renderer, const Vector2D& posicion, double 
 }
 
 
-void Casilla::cambiarOscilantes(int cicloLuz_A_Oscuridad) {
+void Casilla::cambiarOscilantes(bool ciclo) {
     if (esOscilante) {
-        if (cicloLuz_A_Oscuridad) {
+        if (ciclo) {
             if (tipo == TipoCasilla::CLARA) tipo = TipoCasilla::BASTANTE_CLARA;
             else if (tipo == TipoCasilla::BASTANTE_CLARA) tipo = TipoCasilla::LIGERAMENTE_CLARA;
             else if (tipo == TipoCasilla::LIGERAMENTE_CLARA) tipo = TipoCasilla::LIGERAMENTE_OSCURA;

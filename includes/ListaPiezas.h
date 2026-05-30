@@ -17,7 +17,7 @@ public:
     }
     //tablero se encarga de decidir si el movimiento es correcto, esta funcion solo se encarga de mover la pieza
     bool moverDeCasilla(const PosicionMatriz& origen, const PosicionMatriz& destino);
-
+    
     //llamar después de arena
     void piezaPierde(Pieza* p); 
 

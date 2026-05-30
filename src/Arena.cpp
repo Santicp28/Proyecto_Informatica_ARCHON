@@ -249,10 +249,10 @@ void Arena::mueve(float dt)
 	}
 }
 void Arena::dibuja(const Renderer& renderer) const
-{ 
-   
+{
+	renderer.dibujaSprite(pizarra.sprite, centro, size.x, size.y);
     bordes.dibuja(renderer);
-    renderer.dibujaSprite(fondoarena.sprite, centro, size.x, size.y);
+    
 
 	listaObstaculos.dibuja(renderer);
 	listaDisparos.dibuja(renderer);

@@ -13,7 +13,7 @@ enum class MenuAccion
     CAMBIAR_TIEMPO,
     INTERCAMBIAR,
     ENCARCELAR,
-    TIJERAS,
+    VASO_DE_AGUA,
 
     CONTINUAR,
 
@@ -112,4 +112,8 @@ enum class TipoAtaque {
 enum class AlineacionTexto {
 	CENTRADO,
 	IZQUIERDA
+};
+
+struct CicloLuz_A_Oscuridad {
+    bool valor;
 };
