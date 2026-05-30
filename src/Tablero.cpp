@@ -716,23 +716,33 @@ void Tablero::limpiarCombatePendiente()
 {
     combatePendiente = false;
 }
-void Tablero::resultadoCombate(Pieza* ganador)
+bool Tablero::resultadoCombate(Pieza* ganadorArena)
 {
     Pieza* enOrigen = listaPiezas.getPiezaEnPosicion(origenCombate);
     Pieza* enDestino = listaPiezas.getPiezaEnPosicion(destinoCombate);
 
-    if (ganador) {
-        Pieza* perdedor = (ganador == enOrigen) ? enDestino : enOrigen;
-        if (perdedor) listaPiezas.piezaPierde(perdedor);
+    if (ganadorArena ) {
+        Pieza* perdedor = (ganadorArena == enOrigen) ? enDestino : enOrigen;
+        listaPiezas.piezaPierde(perdedor);
 
-        if (ganador == enOrigen)
+        if (ganadorArena == enOrigen)
             listaPiezas.moverDeCasilla(origenCombate, destinoCombate);
     }
 
-    if (enOrigen) enOrigen->resetEstadoArena();
-    if (enDestino) enDestino->resetEstadoArena();
-   
+    enOrigen->resetEstadoArena();
+    //enOrigen->setEnArena(false);
+    enDestino->resetEstadoArena();
+    //enDestino->setEnArena(false);
+    bool finJuego = comprobarFinJuego();
+
+    if (finJuego)
+        printf("[FIN] Ganador absoluto: %s\n",
+            ganador == Bando::LUZ ? "LUZ" : "OSCURIDAD");
+    else
+        printf("[PARTIDA] Quedan piezas, la partida continua\n");
+
     cambiarTurno();
+    return finJuego;
 }
 
 void Tablero::actualizarPanelStats(PanelStats* panel, const Pieza* pieza)

@@ -7,4 +7,5 @@ public:
     Cambiaforma(std::string nombre = "Cambiaforma", Bando b = Bando::OSCURIDAD);
     
     void dibuja(const Renderer& renderer, const Vector2D& centro, double ancho, double alto) const override;
+    const char* getSpriteAtaque() const override { return cambiaforma.grafAtaque; }
 };

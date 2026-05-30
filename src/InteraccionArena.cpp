@@ -22,8 +22,6 @@ void InteraccionArena::colision(Pieza& p, const Bordes& b)
     resolverBorde(p, b.dcha);
 }
 
-
-
 bool InteraccionArena::colision(const Disparo& d, const Bordes& b)
 {
     const Pared* paredes[] = { &b.suelo, &b.techo, &b.izq, &b.dcha };

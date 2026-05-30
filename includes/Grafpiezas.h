@@ -76,7 +76,7 @@ inline constexpr TiposPiezas banshee = {
 
 inline constexpr TiposPiezas cambiaforma = {
 	"assets/Graficos/cambiaformas.png",
-	"assets/Graficos/"
+	"assets/Graficos/espejo.png"
 };
 
 inline constexpr TiposPiezas dragon = {

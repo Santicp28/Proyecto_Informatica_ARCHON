@@ -61,13 +61,8 @@ void Juego::dibuja(const Renderer& renderer)
 
 void Juego::mueve(float dt)
 {
-    if(estado==EstadoJuego::ARENA) {
+    if (estado == EstadoJuego::ARENA) {
         arena.mueve(dt);
-
-        if (arena.terminado()) {
-            tablero.resultadoCombate(arena.getGanador());
-            estado = EstadoJuego::TABLERO;
-        }
     }
 }
 
@@ -119,15 +114,41 @@ void Juego::tecla(unsigned char key)
     }
     case EstadoJuego::ARENA:
     {
-        if (key == 27) { //también para ir probando como cambia, revisar en siguientes versiones cuando desarrollemos la arena
-            estado = EstadoJuego::TABLERO;
+        if (arena.terminado()) {
+            if (key == '\t') { // <- solo ENTER, no cualquier tecla
+                if (arena.getFinAbsoluto()) {
+                    estado = EstadoJuego::FIN_PARTIDA;
+                }
+                else {
+                    bool finJuego = tablero.resultadoCombate(arena.getGanador());
+                    arenaResultadoProcesado = true;
+                    arena.limpiarJugadores();
+                    if (finJuego) {
+                        arena.setFinAbsoluto(tablero.getGanador()); // <- AQUÍ
+                    }
+                    else {
+                        estado = EstadoJuego::TABLERO;
+                        arenaResultadoProcesado = false;
+                    }
+                }
+            }
         }
         else {
             arena.tecla(key);
         }
-
         break;
+
+        ////ESTE ESC es para pruebas 
+        //if (key == 27) { //también para ir probando como cambia, revisar en siguientes versiones cuando desarrollemos la arena
+        //    estado = EstadoJuego::TABLERO;
+        //}
+        //else {
+        //    arena.tecla(key);
+        //}
+
+        //break;
     }
+    
     case EstadoJuego::OPCIONES:
     {
         if (key == 27) { //desarrollar esto al final

@@ -46,7 +46,7 @@ public:
     virtual const char* getSpriteAtaque() const { return nullptr; }
 
     Pieza(std::string nom, Ataque at, Vida_maxima vi, Velocidad vel, Cadencia cad, Velocidad_ataque vel_at, Rango ra, Bando b, TipoMovimiento tm)
-        :ObjetoMovil({}, {}, {}, 30.0)
+        :ObjetoMovil({}, {}, {}, 20.0)
        ,nombre(nom),
         posicionMatriz{ 0, 0 },
         ataque(0.0),

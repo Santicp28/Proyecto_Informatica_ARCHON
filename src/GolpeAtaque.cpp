@@ -44,7 +44,7 @@ void GolpeAtaque::dibuja(const Renderer& renderer, const Vector2D& posJugador,
 
     if (sprite) {
         double angulo = std::atan2(dirEspada.y, dirEspada.x) * (180.0 / Config::PI) + 90.0;
-        renderer.dibujaSpriteRotado(sprite, posJugador, longitud*0.35, longitud, angulo);
+        renderer.dibujaSpriteRotado(sprite, posJugador, longitud+0.2, longitud, angulo);
     }
     else {
         renderer.dibujaLinea(posJugador, punta, { 1.0f, 1.0f, 0.0f });

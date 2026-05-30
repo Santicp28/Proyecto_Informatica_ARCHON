@@ -20,7 +20,8 @@ void Arena::inicializa(Pieza* p1, Pieza* p2)
 
 	combateTerminado = false;
 	ganadorBando = 0;
-
+	esFinAbsoluto = false;
+	bandoGanadorAbsoluto = Bando::NINGUNO;
 	generaObstaculos(8);
 }
 bool Arena::esPosicionReservada(const Vector2D& pos, float margen) const
@@ -268,6 +269,22 @@ void Arena::dibuja(const Renderer& renderer) const
 		jugador1->getGrito().dibuja(renderer, jugador1->posicion());
 	if (jugador2->esAtaqueArea() && jugador2->getGrito().estaActivo())
 		jugador2->getGrito().dibuja(renderer, jugador2->posicion());
+
+	if (combateTerminado) {
+		if (esFinAbsoluto) {
+			if (bandoGanadorAbsoluto == Bando::LUZ)
+				renderer.dibujaSprite(finluz.sprite, centro, size.x * 0.5, size.y * 0.3);
+			else
+				renderer.dibujaSprite(finoscuro.sprite, centro, size.x * 0.5, size.y * 0.3);
+		}
+		else {
+			if (ganadorBando == 1)
+				renderer.dibujaSprite(ganaluz.sprite, centro, size.x * 0.5, size.y * 0.3);
+			else if (ganadorBando == 2)
+				renderer.dibujaSprite(ganaoscuro.sprite, centro, size.x * 0.5, size.y * 0.3);
+		}
+		
+	}
 
 }
 

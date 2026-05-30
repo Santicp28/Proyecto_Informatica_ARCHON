@@ -32,10 +32,11 @@ class Arena
 
 	void generaObstaculos(int cantidad = 8, unsigned int semilla = 0);
 	bool esPosicionReservada(const Vector2D& pos, float margen) const;
-
-
+	bool esFinAbsoluto = false;
+	Bando bandoGanadorAbsoluto = Bando::NINGUNO;
 	bool teclas[256]{false};
 	bool teclasEspeciales[512]{ false };
+
 
 public:
 	void inicializa(Pieza * p1, Pieza * p2);
@@ -45,7 +46,9 @@ public:
 	void teclaUP(unsigned char key);
 	void teclaEspecial(int key);
 	void teclaEspecialUP(int key);
-
+	void setFinAbsoluto(Bando ganador) { esFinAbsoluto = true; bandoGanadorAbsoluto = ganador; }
+	void limpiarJugadores() { jugador1 = nullptr; jugador2 = nullptr; }
+	bool getFinAbsoluto() const { return esFinAbsoluto; }
 	bool terminado() const { return combateTerminado; };
 
 	void resetPosiciones();

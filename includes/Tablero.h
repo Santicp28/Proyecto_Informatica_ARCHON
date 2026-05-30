@@ -125,7 +125,7 @@ public:
 
 	Bando getGanador() const { return ganador; }
 
-    void resultadoCombate(Pieza* ganador);
+    bool resultadoCombate(Pieza* ganadorArena);
 	// ------- GETTERS ------ END
 
 
