@@ -4,6 +4,6 @@
 class Dragon : public Pieza
 {
 public:
-    Dragon(std::string nombre = "Dragon", TipoPieza tipo = TipoPieza::DRAGON, Bando b = Bando::OSCURIDAD);
+    Dragon(std::string nombre = "Dragon", Bando b = Bando::ROJO);
 
 };

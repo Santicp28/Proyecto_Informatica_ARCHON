@@ -1,5 +1,7 @@
 #pragma once
 
+constexpr int TAM_TABLERO = 9;
+
 enum class MenuAccion
 {
     NINGUNA,
@@ -30,17 +32,17 @@ enum class TableroAccion {
 
 enum class Bando {
     NINGUNO,
-    LUZ,
-    OSCURIDAD
+    AZUL,
+    ROJO
 };
 
 enum class TipoCasilla {
-    CLARA,
-    BASTANTE_CLARA,
-    LIGERAMENTE_CLARA,
-    LIGERAMENTE_OSCURA,
-    BASTANTE_OSCURA,
-    OSCURA,
+    AZUL,
+    TURQUESA,
+    VERDE,
+    AMARILLA,
+    NARANJA,
+    ROJA,
     OSCILANTE,
     PODER,
 };
@@ -134,6 +136,6 @@ enum class AlineacionTexto {
 	IZQUIERDA
 };
 
-struct CicloLuz_A_Oscuridad {
+struct CicloAZUL_A_ROJO {
     bool valor;
 };

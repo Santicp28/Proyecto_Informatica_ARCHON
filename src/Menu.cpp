@@ -95,6 +95,26 @@ bool Menu::esHechizo(MenuAccion accion)
     }
 }
 
+
+void Menu::recolocarSeleccion()
+{
+    botones[seleccionado].cambiarEstado();
+
+    unsigned int intentos = 0;
+    while (botones[seleccionado].estaDesactivo() && intentos < botones.size()) {
+        seleccionado++;
+
+        if (seleccionado >= botones.size()) {
+            seleccionado = 0;
+        }
+        intentos++;
+    }
+
+    if (!botones[seleccionado].estaDesactivo()) {
+        botones[seleccionado].cambiarEstado();
+    }
+}
+
 void Menu::teclaEspecial(int key)
 {
 }

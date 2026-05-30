@@ -4,6 +4,6 @@
 class Unicornio : public Pieza
 {
 public:
-    Unicornio(std::string nombre = "Unicornio", TipoPieza tipo = TipoPieza::UNICORNIO, Bando b = Bando::LUZ);
+    Unicornio(std::string nombre = "Unicornio", Bando b = Bando::AZUL);
     const char* getSpriteAtaque() const override { return unicornio.grafAtaque; }
 };

@@ -4,7 +4,7 @@
 class Basilisco : public Pieza
 {
 public:
-    Basilisco(std::string nombre = "Basilisco", TipoPieza tipo = TipoPieza::BASILISCO, Bando b = Bando::OSCURIDAD);
+    Basilisco(std::string nombre = "Basilisco", Bando b = Bando::ROJO);
 
     const char* getSpriteAtaque() const override { return basilisco.grafAtaque; }
 };

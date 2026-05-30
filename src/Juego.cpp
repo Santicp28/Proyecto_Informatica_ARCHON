@@ -117,7 +117,7 @@ void Juego::tecla(unsigned char key)
     }
     case EstadoJuego::ARENA:
     {
-        if (key == 27) { //también para ir probando como cambia, revisar en siguientes versiones cuando desarrollemos la arena
+        if (key == 27) { //TAM_TABLERObién para ir probando como cambia, revisar en siguientes versiones cuando desarrollemos la arena
             estado = EstadoJuego::TABLERO;
         }
         else {

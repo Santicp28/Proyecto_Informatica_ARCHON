@@ -39,8 +39,7 @@ class Tablero {
     double longitud{ Config::sizeMundo.y };
     Vector2D posicion{ Config::sizeMundo * 0.5 };//en el centro
 
-    static constexpr int TAM = 9;
-    Casilla casillas[TAM][TAM];
+    Casilla casillas[TAM_TABLERO][TAM_TABLERO];
 
     ListaPiezas listaPiezas;
 
@@ -52,11 +51,11 @@ class Tablero {
 	Color colorFondoPanel{ 0.3f, 0.3f, 0.3f };
 	Color colorBordePanel{ 0.9f, 0.9f, 0.9f };
 	Color colorTextoPanel{ 0.4f, 0.4f, 0.4f };
-	Color colorTituloPanelLuz{ 0.0f, 0.0f, 1.0f };
-	Color colorTituloPanelOscuridad{ 1.0f, 0.0f, 0.0f };
+	Color colorTituloPanelAZUL{ 0.0f, 0.0f, 1.0f };
+	Color colorTituloPanelROJO{ 1.0f, 0.0f, 0.0f };
    
-    PanelStats* panelStatsLuz = nullptr;
-	PanelStats* panelStatsOscuridad = nullptr;
+    PanelStats* panelStatsAZUL = nullptr;
+	PanelStats* panelStatsROJO = nullptr;
     
 
     //flags hechizos
@@ -82,21 +81,21 @@ class Tablero {
     PosicionMatriz destinoCombate;
 
 	EstadoTablero estadoTablero;
-	Menu menuHechizosLuz;
-	Menu menuHechizosOscuridad;
+	Menu menuHechizosAZUL;
+	Menu menuHechizosROJO;
 
     int contadorTurnos;
     int contadorTurnosParaCiclo;
 
-    CicloLuz_A_Oscuridad ciclo;
+    CicloAZUL_A_ROJO ciclo;
 
 	std::string mensajeEtapaActual;
 
 public:
     Tablero(double longit);
     ~Tablero() {
-        delete panelStatsLuz;
-        delete panelStatsOscuridad;
+        delete panelStatsAZUL;
+        delete panelStatsROJO;
 	}
 
     void inicializa();
@@ -162,8 +161,9 @@ private:
     void seleccionar1CasillaHechizos();
 	void seleccionar2CasillasHechizos();
 
-
     void limpiarHechizoSeleccionado();
+
+	void aplicarDebuffPorUsoHechizo();
 	// ----- FUNCIONES PARA HECHIZOS ----- END
 
 

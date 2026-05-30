@@ -36,6 +36,7 @@ protected:
 	bool protegidoContraHechizos = false; 
 	bool encarcelada = false; 
     bool mojada = false;
+    bool UsadoHechizo = false;
 
 	bool enArena = false; 
 
@@ -51,7 +52,7 @@ protected:
 public:
     bool atacar{ false };
 
-    virtual void dibuja(const Renderer& renderer, const Vector2D& centro, double ancho, double alto) const;
+    void dibuja(const Renderer& renderer, const Vector2D& centro, double ancho, double alto) const;
 
     virtual const char* getSpriteAtaque() const { return nullptr; }
 
@@ -140,6 +141,7 @@ public:
 	void setProteccionContraHechizos(bool protegido) { protegidoContraHechizos = protegido;}
 	void setEncarcelada(bool encarcelada) { this->encarcelada = encarcelada; }
 	void setMojada(bool mojada) { this->mojada = mojada; }
+	void setHaUsadoHechizo(bool haUsado) { UsadoHechizo = haUsado; }
 	void setEnArena(bool enArena) { this->enArena = enArena; }
 
 	void curar(double cantidad) { 
@@ -161,7 +163,9 @@ public:
     Bando getBando() const { return bando; }
 	bool estaProtegidoContraHechizos() const { return protegidoContraHechizos; }
 	bool estaEncarcelada() const { return encarcelada; }
-	bool estaMojada() const { return mojada; }
+	bool esTAM_TABLEROojada() const { return mojada; }
+	bool haUsadoHechizo() const { return UsadoHechizo; }
+
 	TipoPieza getTipo() const { return tipo; }
 
 	std::string getNombre() const { return nombre; }
@@ -185,7 +189,7 @@ public:
     // --- FLAGS ----
     bool puedeMoverseA(PosicionMatriz destino);
     bool puedeDisparar();
-    bool estaMuerto() const { return vida_actual <= 0; }
+    bool esTAM_TABLEROuerto() const { return vida_actual <= 0; }
     bool esAtaqueMelee() const { return golpe != nullptr; };
     bool golpeActivo() const { return golpeConectado; }
     bool golpeYaConecto = false; //un golpe por swing
@@ -198,6 +202,6 @@ public:
         ObjetoMovil::mueve(t);
         tiempoDesdeUltimoDisparo += t;
     }
-    void               actualizarGolpe(double dt);
+    void actualizarGolpe(double dt);
 };
 

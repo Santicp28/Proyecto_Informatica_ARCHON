@@ -4,6 +4,6 @@
 class Fenix : public Pieza
 {
 public:
-    Fenix(std::string nombre = "Fenix", TipoPieza tipo = TipoPieza::FENIX, Bando b = Bando::LUZ);
+    Fenix(std::string nombre = "Fenix", Bando b = Bando::AZUL);
 
 };

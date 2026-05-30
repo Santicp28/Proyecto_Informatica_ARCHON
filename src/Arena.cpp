@@ -61,7 +61,7 @@ void Arena::generaObstaculos(int cantidad, unsigned int semilla)
 
 void Arena::inicializa(Pieza* p1, Pieza* p2)
 {
-	if (p1->getBando() == Bando::LUZ) {
+	if (p1->getBando() == Bando::AZUL) {
 		jugador1 = p1;
 		jugador2 = p2;
 	}

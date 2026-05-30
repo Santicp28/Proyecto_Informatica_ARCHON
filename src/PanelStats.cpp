@@ -44,7 +44,7 @@ void PanelStats::dibuja(const Renderer& renderer) const
         dibujaLineaStat(renderer, "Rango", pieza->getRangoMovimiento(), { x_texto, y_stats + 9 * salto });
 		renderer.dibujaTexto("Prot. Hechizos: " + std::string(pieza->estaProtegidoContraHechizos() ? "Si" : "No"), { x_texto, y_stats + 10 * salto }, colorTexto, tamTexto, AlineacionTexto::IZQUIERDA);
 		renderer.dibujaTexto("Encarcelada: " + std::string(pieza->estaEncarcelada() ? "Si" : "No"), { x_texto, y_stats + 11 * salto }, colorTexto, tamTexto, AlineacionTexto::IZQUIERDA);
-		renderer.dibujaTexto("Mojada: " + std::string(pieza->estaMojada() ? "Si" : "No"), { x_texto, y_stats + 12 * salto }, colorTexto, tamTexto, AlineacionTexto::IZQUIERDA);
+		renderer.dibujaTexto("Mojada: " + std::string(pieza->esTAM_TABLEROojada() ? "Si" : "No"), { x_texto, y_stats + 12 * salto }, colorTexto, tamTexto, AlineacionTexto::IZQUIERDA);
     }
     
 }
