@@ -23,7 +23,8 @@ class Arena
 	const Vector2D posicionInicialJugador1{ {Config::sizeMundo.x * 0.2},{Config::sizeMundo.y * 0.5} };//centro izda
 	const Vector2D posicionInicialJugador2{ {Config::sizeMundo.x - posicionInicialJugador1.x},posicionInicialJugador1.y };//centro drcha
 	const Vector2D size{ Config::sizeMundo };
-	const Bordes bordes{ size * 0.7, centro };
+	const Vector2D centroArena{ centro.x , centro.y - size.y * 0.03 };
+	const Bordes bordes{ {size.x * 0.78, size.y * 0.75}, centroArena };
 	ListaDisparos listaDisparos;
 	ListaObstaculos listaObstaculos;
 
@@ -36,6 +37,11 @@ class Arena
 
 	bool teclas[256]{false};
 	bool teclasEspeciales[512]{ false };
+
+	float tiempoDesdeUltimaGeneracion = 0.0f;
+	float intervaloGeneracion = 2.0f; // segundos entre cada regeneración
+	int cantidadObstaculos = 8;
+	static constexpr int maxObstaculos = 22;
 
 public:
 	void inicializa(Pieza * p1, Pieza * p2);

@@ -25,7 +25,7 @@ void PanelStats::dibuja(const Renderer& renderer) const
 
 	renderer.dibujaSprite(panel.sprite, centro, size.x * 2.2, size.y * 1.3); //Fondo con textura
    // renderer.dibujaCuadrado(centro, colorFondo, size); //Fondo
-    renderer.dibujaContornoCuadrado(centro, colorBorde, size); //Bordes
+   //renderer.dibujaContornoCuadrado(centro, colorBorde, size); //Bordes
     
    renderer.dibujaTexto(titulo, {x_texto, posicion.y + 30}, colorTitulo, tamTitulo, AlineacionTexto::IZQUIERDA); //Título
 
@@ -48,6 +48,8 @@ void PanelStats::dibuja(const Renderer& renderer) const
     }
     
 }
+
+
 
 void PanelStats::dibujaLineaStat(const Renderer& renderer, const char* nombre, double valor, Vector2D posicionTexto) const
 {

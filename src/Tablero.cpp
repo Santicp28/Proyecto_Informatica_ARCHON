@@ -131,6 +131,7 @@ void Tablero::inicializa()
 
     vamosUsarHechizo = false;
     limpiarHechizoSeleccionado();
+    mensajeEtapaActual = "Clara";
 }
 
 
@@ -270,12 +271,31 @@ void Tablero::dibuja(const Renderer& renderer)const {
     renderer.dibujaSprite(hoja.sprite, posicion, Config::sizeMundo.x * 0.6, Config::sizeMundo.y * 0.8);
 
 	if (estadoTablero != EstadoTablero::MENU_HECHIZOS) {
-        renderer.dibujaTexto("Turno de:" + std::string((turnoActual == Bando::LUZ) ? "LUZ" : "OSCURIDAD"),
-            { (Config::sizeMundo.x - Config::sizeMundo.y) * 0.5 * 0.5, Config::sizeMundo.y * 0.5 - 20 }, { 0.0f, 0.0f, 0.0f }, 20, AlineacionTexto::CENTRADO);
+
+        double xIzq = (Config::sizeMundo.x - Config::sizeMundo.y) - 100;
+        double yBase = Config::sizeMundo.y - 400;
+
+        /*renderer.dibujaTexto("Turno de:" + std::string((turnoActual == Bando::LUZ) ? "LUZ" : "OSCURIDAD"),
+            { xIzq, yBase }, { 0.0f, 0.0f, 0.0f }, 14, AlineacionTexto::CENTRADO);
         renderer.dibujaTexto("Ciclo hacia:" + std::string((ciclo.valor) ? "OSCURIDAD" : "LUZ"),
-            { (Config::sizeMundo.x - Config::sizeMundo.y) * 0.5 * 0.5, Config::sizeMundo.y * 0.5 }, { 0.0f, 0.0f, 0.0f }, 16, AlineacionTexto::CENTRADO);
+            { xIzq, yBase + 30 }, { 0.0f, 0.0f, 0.0f }, 14, AlineacionTexto::CENTRADO);
         renderer.dibujaTexto("Etapa:" + mensajeEtapaActual,
-            { (Config::sizeMundo.x - Config::sizeMundo.y) * 0.5 * 0.5, Config::sizeMundo.y * 0.5 + 20 }, { 0.0f, 0.0f, 0.0f }, 16, AlineacionTexto::CENTRADO);
+            { xIzq, yBase + 60 }, { 0.0f, 0.0f, 0.0f }, 14, AlineacionTexto::CENTRADO);*/
+
+        renderer.dibujaTexto("Turno:",
+            { xIzq, yBase }, { 0.0f, 0.0f, 0.0f }, 14, AlineacionTexto::CENTRADO);
+        renderer.dibujaTexto((turnoActual == Bando::LUZ) ? "LUZ" : "OSC",
+            { xIzq, yBase + 20 }, { 0.0f, 0.0f, 0.0f }, 14, AlineacionTexto::CENTRADO);
+
+        renderer.dibujaTexto("Ciclo:",
+            { xIzq, yBase + 50 }, { 0.0f, 0.0f, 0.0f }, 14, AlineacionTexto::CENTRADO);
+        renderer.dibujaTexto((ciclo.valor) ? "->OSC" : "->LUZ",
+            { xIzq, yBase + 70 }, { 0.0f, 0.0f, 0.0f }, 14, AlineacionTexto::CENTRADO);
+
+        renderer.dibujaTexto("Etapa:",
+            { xIzq, yBase + 100 }, { 0.0f, 0.0f, 0.0f }, 14, AlineacionTexto::CENTRADO);
+        renderer.dibujaTexto(mensajeEtapaActual,
+            { xIzq, yBase + 120 }, { 0.0f, 0.0f, 0.0f }, 12, AlineacionTexto::CENTRADO);
     }
 	
 
@@ -728,10 +748,10 @@ void Tablero::cicloTurno()
             mensajeEtapaActual = "Bastante Clara";
 			break;
         case 2:
-			mensajeEtapaActual = "Ligeramente Clara";
+			mensajeEtapaActual = "Lig Clara";
             break;
 		case 3:
-			mensajeEtapaActual = "Ligeramente Oscura";
+			mensajeEtapaActual = "Lig Oscura";
             break;
 		case 4:
             mensajeEtapaActual = "Bastante Oscura";
@@ -739,9 +759,6 @@ void Tablero::cicloTurno()
         case 5:
 			mensajeEtapaActual = "Oscura";
             break;
-        default:
-            mensajeEtapaActual = "";
-			break;
     }
 
     for (int f = 0; f < TAM; f++) {
