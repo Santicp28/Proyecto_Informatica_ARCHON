@@ -4,10 +4,24 @@
 #include "Config.h"
 #include <memory>
 
+Renderer::Renderer(EstadoRenderer estado):
+	estadoRenderer(estado)
+{
+	if (estadoRenderer == EstadoRenderer::SPRITES)
+		contenedorSprites.cargarContenedorSprites();
+}
 void Renderer::tecla(unsigned char key)
 {
-	if(key==' ')
-		estadoRender = (estadoRender == EstadoRender::SIMPLE) ? EstadoRender::SPRITES : EstadoRender::SIMPLE;
+	if (key == ' ') {
+		if (estadoRenderer == EstadoRenderer::SIMPLE) {
+			estadoRenderer = EstadoRenderer::SPRITES;
+			contenedorSprites.cargarContenedorSprites();
+		}
+		else if (estadoRenderer == EstadoRenderer::SPRITES) {
+			estadoRenderer = EstadoRenderer::SIMPLE;
+			contenedorSprites.descargarContenedorSprites();
+		}
+	}
 }
 
 void Renderer::inicializa2D()
@@ -25,35 +39,41 @@ void Renderer::inicializa2D()
 	glMatrixMode(GL_MODELVIEW);// todo lo siguiente define como se ven los objetos
 }
 
-void Renderer::dibujaCuadrado(const Vector2D& centro, const Color& color, const Vector2D& size)const
+void Renderer::dibujaCuadrado(unique_ptr<Sprite>& sprite, const Vector2D& centro, const Color& color, const Vector2D& size)const
 {
 	empiezaUI();
-	Vector2D desplazamiento = size * 0.5;
-	dibujaColor(color);
-	glBegin(GL_QUADS);
+	if (estadoRenderer == EstadoRenderer::SIMPLE) {
+		Vector2D desplazamiento = size * 0.5;
+		dibujaColor(color);
+		glBegin(GL_QUADS);
+		glVertex2d(centro.x - desplazamiento.x, centro.y - desplazamiento.y); // arriba izquierda
+		glVertex2d(centro.x + desplazamiento.x, centro.y - desplazamiento.y); // arriba derecha
+		glVertex2d(centro.x + desplazamiento.x, centro.y + desplazamiento.y); // abajo derecha
+		glVertex2d(centro.x - desplazamiento.x, centro.y + desplazamiento.y); // abajo izquierda
 
-	glVertex2d(centro.x - desplazamiento.x, centro.y - desplazamiento.y); // arriba izquierda
-	glVertex2d(centro.x + desplazamiento.x, centro.y - desplazamiento.y); // arriba derecha
-	glVertex2d(centro.x + desplazamiento.x, centro.y + desplazamiento.y); // abajo derecha
-	glVertex2d(centro.x - desplazamiento.x, centro.y + desplazamiento.y); // abajo izquierda
-
-	glEnd();
+		glEnd();
+	}
+	else if (estadoRenderer == EstadoRenderer::SPRITES)
+		dibujaSprite(sprite, centro, size);
 	terminaUI();
 }
 
-void Renderer::dibujaContornoCuadrado(const Vector2D& centro, const Color& color, const Vector2D& size)const
+void Renderer::dibujaContornoCuadrado(unique_ptr<Sprite>& sprite, const Vector2D& centro, const Color& color, const Vector2D& size)const
 {
 	empiezaUI();
-	// 2. Dibujar el borde con un pequeño offset en Z para evitar parpadeo
-	Vector2D desplazamiento = size *0.5;
-	dibujaColor(color);
-	glLineWidth(2.0f);//ancho de lineas
-	glBegin(GL_LINE_LOOP);
-	glVertex2d(centro.x - desplazamiento.x, centro.y - desplazamiento.y); // abajo izquierda
-	glVertex2d(centro.x + desplazamiento.x, centro.y - desplazamiento.y); // abajo derecha
-	glVertex2d(centro.x + desplazamiento.x, centro.y + desplazamiento.y); // arriba derecha
-	glVertex2d(centro.x - desplazamiento.x, centro.y + desplazamiento.y); // arriba izquierda
-	glEnd();
+	if (estadoRenderer == EstadoRenderer::SIMPLE) {
+		Vector2D desplazamiento = size * 0.5;
+		dibujaColor(color);
+		glLineWidth(2.0f);//ancho de lineas
+		glBegin(GL_LINE_LOOP);
+		glVertex2d(centro.x - desplazamiento.x, centro.y - desplazamiento.y); // abajo izquierda
+		glVertex2d(centro.x + desplazamiento.x, centro.y - desplazamiento.y); // abajo derecha
+		glVertex2d(centro.x + desplazamiento.x, centro.y + desplazamiento.y); // arriba derecha
+		glVertex2d(centro.x - desplazamiento.x, centro.y + desplazamiento.y); // arriba izquierda
+		glEnd();
+	}
+	else if (estadoRenderer == EstadoRenderer::SPRITES)
+		dibujaSprite(sprite, centro, size);
 	terminaUI();
 }
 
@@ -82,47 +102,17 @@ void Renderer::dibujaOvalo(const Vector2D& centro, const Color& color, double ra
 	terminaUI();
 }
 
-void Renderer::cuadradoParaPruebas() const
-{
-	dibujaCuadrado(Config::sizeMundo * 0.5, { 1.0,1.0,1.0 }, Config::sizeMundo * 0.2);
-}
-
-void Renderer::dibujaSprite(const char* rutaPNG, const Vector2D& centro, double ancho, double alto) const {
+void Renderer::dibujaSprite(unique_ptr<Sprite>& sprite, const Vector2D& centro, const Vector2D& size) const {
 	empiezaUI();
-	if (estadoRender == EstadoRender::SIMPLE)
-	{
-		dibujaCuadrado(centro, { 1.0f, 0.0f, 1.0f }, { ancho, alto });
-	}
-	else if (estadoRender == EstadoRender::SPRITES)
-	{
-		ETSIDI::Sprite sprite(rutaPNG, (double)(centro.x), (double)(centro.y), (double)ancho, (double)alto);
-		sprite.flip(false, true);
-		sprite.draw();
-	}
-	terminaUI();
-}
-
-void Renderer::dibujaSprite(const ETSIDI::Sprite& sprite, const Vector2D& centro, double ancho, double alto) const {
-	empiezaUI();
-	if (estadoRender == EstadoRender::SIMPLE)
-	{
-		dibujaCuadrado(centro, { 1.0f, 0.0f, 1.0f }, { ancho, alto });
-	}
-	else if (estadoRender == EstadoRender::SPRITES)
-	{
-		ETSIDI::Sprite s = sprite; // copia el sprite ya cargado
-		s.setPos(centro.x - (ancho / 2.0), centro.y + (alto / 2.0));
-		s.setSize(ancho, alto);
-		s.flip(false, true);
-		s.draw();
-	}
+	sprite->setPos(centro.x - (size.x / 2.0), centro.y + (size.y / 2.0));
+	sprite->setSize(size.x, size.y);
+	sprite->flip(false, true);
+	sprite->draw();
 	terminaUI();
 }
 
 void Renderer::dibujaTexto(const std::string& texto, const Vector2D& pos, const Color& color, int size, AlineacionTexto alineacion) const {
-	glDisable(GL_LIGHTING);
-	glDisable(GL_DEPTH_TEST);
-	glMatrixMode(GL_MODELVIEW);
+	empiezaUI();
 	const char* p = texto.c_str();//convierte el string a un puntero a char para que lo acepte la función printxy
 
 	float correccionAlto = size * 0.5f;//corrección para que el texto quede centrado porque printxy dibuja el texto a partir de la esquina superior izquierda
@@ -139,9 +129,7 @@ void Renderer::dibujaTexto(const std::string& texto, const Vector2D& pos, const 
 		ETSIDI::setFont("assets/fuentes/ComicNeue-Regular.ttf", size);
 		ETSIDI::printxy(p, (int)(pos.x - correccionAncho), (int)(pos.y + correccionAlto));
 	}
-
-	glEnable(GL_LIGHTING);
-	glEnable(GL_DEPTH_TEST);
+	terminaUI();
 }
 
 void Renderer::empiezaUI() const {

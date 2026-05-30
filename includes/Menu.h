@@ -22,7 +22,7 @@ public:
     Menu(const vector<string>& textos,const vector<MenuAccion>& acc, const Vector2D& sMenu, const Vector2D& c, const string& titu, const Color& colorTit);
 
     void inicializa();
-    void dibuja(const Grafmenu& grafmenu, const Renderer& renderer)const;
+    void dibuja(Grafmenu& grafmenu, const Renderer& renderer)const;
     void dibuja(const Renderer& renderer)const;
     void mueve(float dt);
   

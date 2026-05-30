@@ -1,10 +1,12 @@
 #include "Juego.h"
 #include"Renderer.h"
+#include "ContenedorSprites.h"
 #include "freeglut.h"
 #include <vector>
 
 Juego juego;
-Renderer renderer;
+Renderer renderer(EstadoRenderer::SIMPLE);
+ContenedorSprites contenedorSprites;
 
 void OnDraw(void);
 void OnTimer(int value);

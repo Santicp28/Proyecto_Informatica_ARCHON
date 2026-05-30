@@ -17,10 +17,10 @@ void Menu::inicializa()
 }
 
 
-void Menu::dibuja(const Grafmenu& grafmenu, const Renderer& renderer)const
+void Menu::dibuja( Grafmenu& grafmenu, const Renderer& renderer)const
 {
     renderer.dibujaColorFondo(colorFondo);
-    renderer.dibujaSprite(grafmenu.sprite, centro , Config::sizeMundo.x, Config::sizeMundo.y);
+    renderer.dibujaCuadrado(grafmenu.sprite, centro ,colorFondo, Config::sizeMundo);
     const Vector2D sizeBotones{ calcularSizeBotones() };
     renderer.dibujaTexto(titulo, calcularPosicionBotones(-1), { 0.0f,0.0f,0.0f }, sizeBotones.y * 0.8, AlineacionTexto::CENTRADO);
     for (int i = 0; i < botones.size(); i++) {
