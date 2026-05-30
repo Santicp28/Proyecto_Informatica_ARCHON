@@ -17,7 +17,7 @@ void PanelStats::dibuja(const Renderer& renderer) const
 
 	Vector2D centro = { posicion.x + size.x / 2.0, posicion.y + size.y / 2.0 };
 
-    double salto = 17;
+    double salto = 14;
 
     double x_texto = posicion.x ;
     double y_texto_inicio = posicion.y + 45;
@@ -42,6 +42,9 @@ void PanelStats::dibuja(const Renderer& renderer) const
 		dibujaLineaStat(renderer, "Vel. At.", pieza->getVelocidadAtaque(), { x_texto, y_stats + 7 * salto });
 		renderer.dibujaTexto("Mov.: " + pieza->getTipoMovimientoString(), { x_texto, y_stats + 8 * salto }, colorTexto, tamTexto, AlineacionTexto::IZQUIERDA);
         dibujaLineaStat(renderer, "Rango", pieza->getRangoMovimiento(), { x_texto, y_stats + 9 * salto });
+		renderer.dibujaTexto("Prot. Hechizos: " + std::string(pieza->estaProtegidoContraHechizos() ? "Si" : "No"), { x_texto, y_stats + 10 * salto }, colorTexto, tamTexto, AlineacionTexto::IZQUIERDA);
+		renderer.dibujaTexto("Encarcelada: " + std::string(pieza->estaEncarcelada() ? "Si" : "No"), { x_texto, y_stats + 11 * salto }, colorTexto, tamTexto, AlineacionTexto::IZQUIERDA);
+		renderer.dibujaTexto("Mojada: " + std::string(pieza->estaMojada() ? "Si" : "No"), { x_texto, y_stats + 12 * salto }, colorTexto, tamTexto, AlineacionTexto::IZQUIERDA);
     }
     
 }

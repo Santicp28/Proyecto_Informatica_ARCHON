@@ -5,15 +5,18 @@
 #include"Vector2D.h"
 #include "Tipos.h"
 #include "ObjetoMovil.h"
+#include"GolpeAtaque.h"
+#include "GritoArea.h"
 #include <string>
 
 class Disparo;
 class Pieza: public ObjetoMovil
 {
+    friend class InteraccionArena;
 protected:
 
 	std::string nombre;
-	PosicionMatriz posicionMatriz; // Posición en la matriz (fila, columna)
+	PosicionMatriz posicionMatriz; 
     Vector2D posicionArena;
     double ataque;
     double velocidadMax;
@@ -26,9 +29,14 @@ protected:
     TipoMovimiento tipo_movimiento;
     int rango_movimiento;
     Color color;
-
+    GolpeAtaque* golpe = nullptr;
+    GritoArea* grito = nullptr;
+	
 	bool protegidoContraHechizos = false; 
+	bool encarcelada = false; 
+    bool mojada = false;
 
+    bool golpeConectado = false;
     double tiempoDesdeUltimoDisparo = 999.0;
 public:
     bool atacar{ false };
@@ -38,7 +46,7 @@ public:
     virtual const char* getSpriteAtaque() const { return nullptr; }
 
     Pieza(std::string nom, Ataque at, Vida_maxima vi, Velocidad vel, Cadencia cad, Velocidad_ataque vel_at, Rango ra, Bando b, TipoMovimiento tm)
-        :ObjetoMovil({}, {}, {}, 20.0)
+        :ObjetoMovil({}, {}, {}, 30.0)
        ,nombre(nom),
         posicionMatriz{ 0, 0 },
         ataque(0.0),
@@ -68,23 +76,23 @@ public:
 		vida_actual = vida_maxima; 
 
         // --- VELOCIDAD (Desplazamiento) ---
-        if (vel == Velocidad::BAJA) velocidadMax = 40.0;
-        else if (vel == Velocidad::NORMAL) velocidadMax = 60.0;
-        else if (vel == Velocidad::VARIABLE) velocidadMax = 60.0;
+        if (vel == Velocidad::BAJA) velocidadMax = 60.0;
+        else if (vel == Velocidad::NORMAL) velocidadMax = 80.0;
+        else if (vel == Velocidad::VARIABLE) velocidadMax = 80.0;
 
         // --- CADENCIA (Tiempo entre disparos) ---
         if (cad == Cadencia::MUYRAPIDA) cadencia = 0.2;
-        else if (cad == Cadencia::PROMEDIO) cadencia = 1.5;
-        else if (cad == Cadencia::RAPIDA) cadencia = 2.0;
+        else if (cad == Cadencia::PROMEDIO) cadencia = 1.0;
+        else if (cad == Cadencia::RAPIDA) cadencia = 1.5;
         else if (cad == Cadencia::LENTA) cadencia = 2.5;
-        else if (cad == Cadencia::VARIABLE) cadencia = 1.5;
+        else if (cad == Cadencia::VARIABLE) cadencia = 2;
 
         // --- VELOCIDAD_ATAQUE (Movimiento del proyectil) ---
         if (vel_at == Velocidad_ataque::LENTO) velocidad_ataque = 50.0; //5
         else if (vel_at == Velocidad_ataque::NORMAL) velocidad_ataque = 150.0;//8
         else if (vel_at == Velocidad_ataque::RAPIDO) velocidad_ataque = 250.0;//12
-        else if (vel_at == Velocidad_ataque::INSTANTANEO) velocidad_ataque = 25.0;
-        else if (vel_at == Velocidad_ataque::VARIABLE) velocidad_ataque = 8.0;
+        else if (vel_at == Velocidad_ataque::INSTANTANEO) velocidad_ataque = 300.0;
+        else if (vel_at == Velocidad_ataque::VARIABLE) velocidad_ataque = 150.0;
 
         // --- RANGO (Casillas que puede avanzar en tablero) --- 
         if (ra == Rango::CORTO) rango_movimiento = 3;
@@ -97,24 +105,39 @@ public:
 
     // --- SETTERS ----
     void setDefensa(double def) { defensa = def; }
+    void setAtaque(double at) { ataque = at; }
+    void setVelocidad(double vel) { velocidadMax = vel; }
+    void setCadencia(double cad) { cadencia = cad; }
+    void setVidaMaxima(double vida) { vida_maxima = vida; }
+    void setVidaActual(double vida) { vida_actual = vida; }
+    void setVelocidadAtaque(double vel) { velocidad_ataque = vel; }
+
     virtual void setPosicionArena(const Vector2D& posicion) { posicion_ = posicion; }
+
 	void setProteccionContraHechizos(bool protegido) { protegidoContraHechizos = protegido;}
+	void setEncarcelada(bool encarcelada) { this->encarcelada = encarcelada; }
+	void setMojada(bool mojada) { this->mojada = mojada; }
 
 	void curar(double cantidad) { 
         if ((vida_actual + cantidad) > vida_maxima) vida_actual = vida_maxima; 
 		else vida_actual += cantidad;
     }
 
-    void setPosicionMatriz(unsigned int fila, unsigned int columna) {
-        posicionMatriz.fila = fila;
-        posicionMatriz.columna = columna;
+    void setPosicionMatriz(PosicionMatriz nuevaPosicion) {
+        posicionMatriz = nuevaPosicion;
     }
-
+    void recibirDanio(double cantidad) {
+        vida_actual -= cantidad / defensa;
+        if (vida_actual < 0) vida_actual = 0;
+        printf("vida actual: %f\n", vida_actual);
+    }
 
     // --- GETTERS ----
     PosicionMatriz getPosicionMatriz() const { return posicionMatriz; }
     Bando getBando() const { return bando; }
 	bool estaProtegidoContraHechizos() const { return protegidoContraHechizos; }
+	bool estaEncarcelada() const { return encarcelada; }
+	bool estaMojada() const { return mojada; }
 
 	std::string getNombre() const { return nombre; }
 	double getVidaMax() const { return vida_maxima; }
@@ -137,18 +160,22 @@ public:
     // --- FLAGS ----
     bool puedeMoverseA(PosicionMatriz destino);
     bool puedeDisparar();
-    
-
+    bool estaMuerto() const { return vida_actual <= 0; }
+    bool esAtaqueMelee() const { return golpe != nullptr; }
+    bool esAtaqueArea() const { return grito != nullptr; }
+    bool golpeActivo() const { return golpeConectado; }
+    bool golpeYaConecto = false; //un golpe por swing
 
     //double getArmadura() const { return armadura; }    //double getDanio() const { return ataque; }
    
-    
- 
     const Vector2D& getDireccion() const { return direccion; }
-	
+    const GolpeAtaque& getGolpe() const { return *golpe; }
+    GritoArea& getGrito() { return *grito; }
     void mueve(double t) override {
         ObjetoMovil::mueve(t);
         tiempoDesdeUltimoDisparo += t;
     }
+    void actualizarGolpe(double dt);
+    void resetEstadoArena();
 };
 

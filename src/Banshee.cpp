@@ -12,6 +12,7 @@ Banshee::Banshee(std::string nombre, Bando b) : Pieza(
     b,                             
     TipoMovimiento::VUELA           
 ) {
+    grito = new GritoArea();
 }
 void Banshee::dibuja(const Renderer& renderer, const Vector2D& centro, double ancho, double alto) const {
     renderer.dibujaSprite(banshee.graf, centro, ancho, alto);
