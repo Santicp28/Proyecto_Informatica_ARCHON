@@ -167,7 +167,20 @@ TableroAccion Tablero::tecla(unsigned char key)
 
         case 'h':
         {
-            if(!hayOrigenSeleccionado) estadoTablero = EstadoTablero::MENU_HECHIZOS;
+            if(hayOrigenSeleccionado) return TableroAccion::NINGUNA;
+
+            Pieza* mago = listaPiezas.getPiezaPorTipo(TipoPieza::MAGO);
+			Pieza* hechicero = listaPiezas.getPiezaPorTipo(TipoPieza::HECHICERO);
+			
+            //si el que usa hechizos de cada bando está en la carcel o está muerto, no se pueden usar hechizos
+            if (turnoActual == Bando::LUZ) {
+				if (mago == nullptr || mago->estaEncarcelada()) return TableroAccion::NINGUNA;
+                else estadoTablero = EstadoTablero::MENU_HECHIZOS;
+            }
+            else if (turnoActual == Bando::OSCURIDAD) {
+                if (hechicero == nullptr || hechicero->estaEncarcelada()) return TableroAccion::NINGUNA;
+				else estadoTablero = EstadoTablero::MENU_HECHIZOS;
+            }
             break;
         }
         case'f':
@@ -255,6 +268,16 @@ TableroAccion Tablero::tecla(unsigned char key)
 void Tablero::dibuja(const Renderer& renderer)const {
     renderer.dibujaSprite(mesa.sprite, posicion, Config::sizeMundo.x, Config::sizeMundo.y);
     renderer.dibujaSprite(hoja.sprite, posicion, Config::sizeMundo.x * 0.6, Config::sizeMundo.y * 0.8);
+
+	if (estadoTablero != EstadoTablero::MENU_HECHIZOS) {
+        renderer.dibujaTexto("Turno de:" + std::string((turnoActual == Bando::LUZ) ? "LUZ" : "OSCURIDAD"),
+            { (Config::sizeMundo.x - Config::sizeMundo.y) * 0.5 * 0.5, Config::sizeMundo.y * 0.5 - 20 }, { 0.0f, 0.0f, 0.0f }, 20, AlineacionTexto::CENTRADO);
+        renderer.dibujaTexto("Ciclo hacia:" + std::string((ciclo.valor) ? "OSCURIDAD" : "LUZ"),
+            { (Config::sizeMundo.x - Config::sizeMundo.y) * 0.5 * 0.5, Config::sizeMundo.y * 0.5 }, { 0.0f, 0.0f, 0.0f }, 16, AlineacionTexto::CENTRADO);
+        renderer.dibujaTexto("Etapa:" + mensajeEtapaActual,
+            { (Config::sizeMundo.x - Config::sizeMundo.y) * 0.5 * 0.5, Config::sizeMundo.y * 0.5 + 20 }, { 0.0f, 0.0f, 0.0f }, 16, AlineacionTexto::CENTRADO);
+    }
+	
 
     double longitudCasilla = longitud / TAM;
     Vector2D esquinaSuperiorIzda{ posicion.x - longitud / 2.0, posicion.y - longitud / 2.0 };
@@ -359,6 +382,9 @@ bool Tablero::moverPieza(PosicionMatriz origen, PosicionMatriz destino)
             origen.fila, origen.columna, destino.fila, destino.columna);
         origenCombate = origen;
         destinoCombate = destino;
+
+        atacante->setEnArena(true);
+        defensor->setEnArena(true);
 
         return true;
     }
@@ -694,13 +720,39 @@ void Tablero::cicloTurno()
         ciclo.valor = !ciclo.valor;
     }
 
+    switch (contadorTurnosParaCiclo) {
+        case 0:
+            mensajeEtapaActual = "Clara";
+			break;
+        case 1:
+            mensajeEtapaActual = "Bastante Clara";
+			break;
+        case 2:
+			mensajeEtapaActual = "Ligeramente Clara";
+            break;
+		case 3:
+			mensajeEtapaActual = "Ligeramente Oscura";
+            break;
+		case 4:
+            mensajeEtapaActual = "Bastante Oscura";
+			break;
+        case 5:
+			mensajeEtapaActual = "Oscura";
+            break;
+        default:
+            mensajeEtapaActual = "";
+			break;
+    }
 
     for (int f = 0; f < TAM; f++) {
         for (int c = 0; c < TAM; c++) {
             Pieza* p = listaPiezas.getPiezaEnPosicion({ f,c });
             if (p != nullptr) {
                 if (contadorTurnosParaCiclo == 0) {
-                    p->setMojada(false); //si las oscilantes son claras, (momento de luz) se seca y pierde los efectos de mojado
+                    if (p->estaMojada()) {
+                        p->setMojada(false); //si las oscilantes son claras, (momento de luz) se seca y pierde los efectos de mojado
+                        p->resetStats();
+                    }
                     if (p->getBando() == Bando::LUZ) p->setEncarcelada(false);
                 }
                 if (contadorTurnosParaCiclo == 5) {
@@ -832,7 +884,7 @@ void Tablero::curaPasiva()
             Pieza* p = listaPiezas.getPiezaEnPosicion({ f,c });
             if (p != nullptr) {
                 if (casillas[f][c].getTipo() == TipoCasilla::PODER) p->curar(10.0);
-                else p->curar(5.0);
+                else p->curar(2.5);
             }
         }
     }

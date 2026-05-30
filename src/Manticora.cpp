@@ -1,8 +1,9 @@
 #include "Manticora.h"
 #include "Pieza.h"
 
-Manticora::Manticora(std::string nombre, Bando b) : Pieza(
+Manticora::Manticora(std::string nombre, TipoPieza tipo, Bando b) : Pieza(
     nombre,
+    tipo,
     Ataque::BAJO,           
     Vida_maxima::MODERADA,          
     Velocidad::NORMAL,           
@@ -12,7 +13,4 @@ Manticora::Manticora(std::string nombre, Bando b) : Pieza(
     b,
     TipoMovimiento::CAMINA   
 ) {
-}
-void Manticora::dibuja(const Renderer& renderer, const Vector2D& centro, double ancho, double alto) const {
-    renderer.dibujaSprite(manticora.graf, centro, ancho, alto);
 }

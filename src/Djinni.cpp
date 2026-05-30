@@ -1,8 +1,9 @@
 #include "Djinni.h"
 #include "Pieza.h"
 
-Djinni::Djinni(std::string nombre, Bando b) : Pieza(
+Djinni::Djinni(std::string nombre, TipoPieza tipo, Bando b) : Pieza(
     nombre,
+    tipo,
     Ataque::MODERADO,              
     Vida_maxima::ALTA,                
     Velocidad::NORMAL,             
@@ -12,7 +13,4 @@ Djinni::Djinni(std::string nombre, Bando b) : Pieza(
     b,
     TipoMovimiento::VUELA   
 ) {
-}
-void Djinni::dibuja(const Renderer& renderer, const Vector2D& centro, double ancho, double alto) const {
-    renderer.dibujaSprite(djinni.graf, centro, ancho, alto);
 }
