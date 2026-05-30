@@ -86,3 +86,7 @@ bool InteraccionArena::colision(const GolpeAtaque& golpe, const Vector2D& posAta
 {
     return golpe.colisiona(posAtacante, dir, defensor.posicion_, defensor.sizeradio_);
 }
+bool InteraccionArena::colision(const GritoArea& grito, const Vector2D& posBanshee, const Pieza& defensor)
+{
+    return grito.dentroDelArea(posBanshee, defensor.posicion_);
+}

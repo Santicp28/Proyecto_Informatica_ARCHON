@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <cmath>
+#include <algorithm>
 #include "Pieza.h"
 #include "Bordes.h"
 #include "InteraccionArena.h"

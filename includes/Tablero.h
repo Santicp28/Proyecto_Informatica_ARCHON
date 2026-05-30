@@ -129,6 +129,7 @@ public:
 	void actualizarPanelStats(PanelStats* panel, const Pieza* pieza);
 
     bool comprobarFinJuego();
+    void resultadoCombate(Pieza* ganador);
 	// ------ FUNCIONES MISCELÁNEAS ------ END
     
 
@@ -170,7 +171,7 @@ private:
     //hacer una funcion para cuando se termina el combate y aplicar los resultados
     void cambiarTurno();
     void cicloTurno();
-
+    
     //plantilla para agregar piezas
     template <typename T>
     void agregarPieza(int fila, int columna)

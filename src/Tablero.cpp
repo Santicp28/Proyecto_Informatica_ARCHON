@@ -490,6 +490,10 @@ bool Tablero::posicionValida(PosicionMatriz pos) const
 //funcion para camiar de turno, se llama después de mover o terminar la arena
 void Tablero::cambiarTurno()
 {
+    //quitar entre estos coments 
+    static int llamada = 0;
+    printf("[cambiarTurno #%d] antes=%s\n", ++llamada, turnoActual == Bando::LUZ ? "LUZ" : "OSC");
+//quitar  
     if (turnoActual == Bando::LUZ) {
         turnoActual = Bando::OSCURIDAD;
         cursor.setPosicion({ 4 , 8 }); //cursor en el lado de oscuridad
@@ -498,7 +502,9 @@ void Tablero::cambiarTurno()
         turnoActual = Bando::LUZ;
         cursor.setPosicion({ 4 , 0 }) ; //cursor en el lado de luz
     }
-
+    //
+    printf("[cambiarTurno #%d] despues=%s\n", llamada, turnoActual == Bando::LUZ ? "LUZ" : "OSC");
+    //
     cicloTurno();
     curaPasiva();
 
@@ -541,7 +547,24 @@ void Tablero::limpiarCombatePendiente()
 {
     combatePendiente = false;
 }
+void Tablero::resultadoCombate(Pieza* ganador)
+{
+    Pieza* enOrigen = listaPiezas.getPiezaEnPosicion(origenCombate);
+    Pieza* enDestino = listaPiezas.getPiezaEnPosicion(destinoCombate);
 
+    if (ganador) {
+        Pieza* perdedor = (ganador == enOrigen) ? enDestino : enOrigen;
+        if (perdedor) listaPiezas.piezaPierde(perdedor);
+
+        if (ganador == enOrigen)
+            listaPiezas.moverDeCasilla(origenCombate, destinoCombate);
+    }
+
+    if (enOrigen) enOrigen->resetEstadoArena();
+    if (enDestino) enDestino->resetEstadoArena();
+   
+    cambiarTurno();
+}
 
 void Tablero::actualizarPanelStats(PanelStats* panel, const Pieza* pieza)
 {

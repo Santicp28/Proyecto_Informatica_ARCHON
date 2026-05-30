@@ -65,6 +65,7 @@ void Juego::mueve(float dt)
         arena.mueve(dt);
 
         if (arena.terminado()) {
+            tablero.resultadoCombate(arena.getGanador());
             estado = EstadoJuego::TABLERO;
         }
     }

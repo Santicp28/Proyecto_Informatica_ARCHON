@@ -17,13 +17,12 @@ public:
 
     void actualizar(bool atacando, double dt);
     bool colisiona(const Vector2D& posJugador, const Vector2D& dir,
-        const Vector2D& posEnemigo, double radioEnemigo) const;
+    const Vector2D& posEnemigo, double radioEnemigo) const;
     void dibuja(const Renderer& renderer, const Vector2D& posJugador,
-        const Vector2D& dir) const;
+    const Vector2D& dir) const;
     double getAngulo() const { return anguloGolpe; };
 
 private:
     Vector2D getPunta(const Vector2D& posJugador, const Vector2D& dir) const;
-
 };
 

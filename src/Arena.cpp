@@ -1,5 +1,28 @@
 #include "Arena.h"
 
+void Arena::inicializa(Pieza* p1, Pieza* p2)
+{
+	//----resetea las teclas----
+	std::fill(std::begin(teclas), std::end(teclas), false);
+	std::fill(std::begin(teclasEspeciales), std::end(teclasEspeciales), false);
+	//resetea disparos
+	listaDisparos.limpiar();
+	if (p1->getBando() == Bando::LUZ) {
+		jugador1 = p1;
+		jugador2 = p2;
+	}
+	else {
+		jugador1 = p2;
+		jugador2 = p1;
+	}
+	jugador1->setPosicionArena(posicionInicialJugador1);
+	jugador2->setPosicionArena(posicionInicialJugador2);
+
+	combateTerminado = false;
+	ganadorBando = 0;
+
+	generaObstaculos(8);
+}
 bool Arena::esPosicionReservada(const Vector2D& pos, float margen) const
 {
     auto cerca = [&](const Vector2D& ref) {
@@ -59,24 +82,6 @@ void Arena::generaObstaculos(int cantidad, unsigned int semilla)
     }
 }
 
-void Arena::inicializa(Pieza* p1, Pieza* p2)
-{
-	if (p1->getBando() == Bando::LUZ) {
-		jugador1 = p1;
-		jugador2 = p2;
-	}
-	else {
-		jugador1 = p2;
-		jugador2 = p1;
-	}
-    jugador1->setPosicionArena(posicionInicialJugador1);
-    jugador2->setPosicionArena(posicionInicialJugador2);
-
-    combateTerminado = false;
-    ganadorBando = 0;
-   
-    generaObstaculos(8);
-}
 void Arena::tecla(unsigned char key) {
     teclas[key] = true;
 	jugador1->atacar = teclas[' '];
@@ -210,31 +215,13 @@ void Arena::mueve(float dt)
 	if (jugador1->esAtaqueMelee()) jugador1->actualizarGolpe(dt);
 	if (jugador2->esAtaqueMelee()) jugador2->actualizarGolpe(dt);
 
-	/*if (jugador1->esAtaqueMelee() && jugador1->golpeActivo() && !jugador1->golpeYaConecto) {
+	if (jugador1->esAtaqueMelee() && jugador1->golpeActivo() && !jugador1->golpeYaConecto) {
 		if (InteraccionArena::colision(jugador1->getGolpe(), jugador1->posicion(),
 			jugador1->getDireccion(), *jugador2)) {
 			jugador2->recibirDanio(jugador1->getAtaque());
 			jugador1->golpeYaConecto = true;
 		}
-	}*/
-
-	if (jugador1->esAtaqueMelee() && jugador1->golpeActivo()) {
-		printf("[MELEE J1] golpeActivo=true, golpeYaConecto=%d\n", jugador1->golpeYaConecto);
-		if (InteraccionArena::colision(jugador1->getGolpe(), jugador1->posicion(),
-			jugador1->getDireccion(), *jugador2)) {
-			printf("[MELEE J1] COLISION DETECTADA\n");
-			if (!jugador1->golpeYaConecto) {
-				jugador2->recibirDanio(jugador1->getAtaque());
-				jugador1->golpeYaConecto = true;
-				printf("[MELEE J1] DANIO APLICADO\n");
-			}
-		}
 	}
-
-
-
-
-
 
 	if (jugador2->esAtaqueMelee() && jugador2->golpeActivo() && !jugador2->golpeYaConecto) {
 		if (InteraccionArena::colision(jugador2->getGolpe(), jugador2->posicion(),
@@ -243,22 +230,44 @@ void Arena::mueve(float dt)
 			jugador2->golpeYaConecto = true;
 		}
 	}
+	//.----ataque area-----
+	if (jugador1->esAtaqueArea()) {
+		if (jugador1->atacar)
+			jugador1->getGrito().activar();
+		if (jugador1->getGrito().actualizar(dt, jugador1->getCadencia())) {
+			if (InteraccionArena::colision(jugador1->getGrito(), jugador1->posicion(), *jugador2))
+				jugador2->recibirDanio(jugador1->getAtaque());
+		}
+	}
+	if (jugador2->esAtaqueArea()) {
+		if (jugador2->atacar)
+			jugador2->getGrito().activar();
+		if (jugador2->getGrito().actualizar(dt, jugador2->getCadencia())) {
+			if (InteraccionArena::colision(jugador2->getGrito(), jugador2->posicion(), *jugador1))
+				jugador1->recibirDanio(jugador2->getAtaque());
+		}
+	}
 }
-
 void Arena::dibuja(const Renderer& renderer) const
-{
+{ 
    
     bordes.dibuja(renderer);
     renderer.dibujaSprite(fondoarena.sprite, centro, size.x, size.y);
 
 	listaObstaculos.dibuja(renderer);
 	listaDisparos.dibuja(renderer);
-	if (jugador1) jugador1->dibuja(renderer, jugador1->posicion(), 175.0, 175.0);
-	if (jugador2) jugador2->dibuja(renderer, jugador2->posicion(), 175.0, 175.0);
+	jugador1->dibuja(renderer, jugador1->posicion(), 175.0, 175.0);
+	jugador2->dibuja(renderer, jugador2->posicion(), 175.0, 175.0);
+	//-------golpes espada------
 	if (jugador1 && jugador1->esAtaqueMelee())
 		jugador1->getGolpe().dibuja(renderer, jugador1->posicion(), jugador1->getDireccion());
 	if (jugador2 && jugador2->esAtaqueMelee())
 		jugador2->getGolpe().dibuja(renderer, jugador2->posicion(), jugador2->getDireccion());
+	//-------gritos area-----
+	if (jugador1->esAtaqueArea() && jugador1->getGrito().estaActivo())
+		jugador1->getGrito().dibuja(renderer, jugador1->posicion());
+	if (jugador2->esAtaqueArea() && jugador2->getGrito().estaActivo())
+		jugador2->getGrito().dibuja(renderer, jugador2->posicion());
 
 }
 

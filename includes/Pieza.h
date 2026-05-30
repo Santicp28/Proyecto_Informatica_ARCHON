@@ -6,6 +6,7 @@
 #include "Tipos.h"
 #include "ObjetoMovil.h"
 #include"GolpeAtaque.h"
+#include "GritoArea.h"
 #include <string>
 
 class Disparo;
@@ -29,6 +30,8 @@ protected:
     int rango_movimiento;
     Color color;
     GolpeAtaque* golpe = nullptr;
+    GritoArea* grito = nullptr;
+	
 	bool protegidoContraHechizos = false; 
     bool golpeConectado = false;
     double tiempoDesdeUltimoDisparo = 999.0;
@@ -76,17 +79,17 @@ public:
 
         // --- CADENCIA (Tiempo entre disparos) ---
         if (cad == Cadencia::MUYRAPIDA) cadencia = 0.2;
-        else if (cad == Cadencia::PROMEDIO) cadencia = 1.5;
-        else if (cad == Cadencia::RAPIDA) cadencia = 2.0;
+        else if (cad == Cadencia::PROMEDIO) cadencia = 1.0;
+        else if (cad == Cadencia::RAPIDA) cadencia = 1.5;
         else if (cad == Cadencia::LENTA) cadencia = 2.5;
-        else if (cad == Cadencia::VARIABLE) cadencia = 1.5;
+        else if (cad == Cadencia::VARIABLE) cadencia = 2;
 
         // --- VELOCIDAD_ATAQUE (Movimiento del proyectil) ---
         if (vel_at == Velocidad_ataque::LENTO) velocidad_ataque = 50.0; //5
         else if (vel_at == Velocidad_ataque::NORMAL) velocidad_ataque = 150.0;//8
         else if (vel_at == Velocidad_ataque::RAPIDO) velocidad_ataque = 250.0;//12
-        else if (vel_at == Velocidad_ataque::INSTANTANEO) velocidad_ataque = 25.0;
-        else if (vel_at == Velocidad_ataque::VARIABLE) velocidad_ataque = 8.0;
+        else if (vel_at == Velocidad_ataque::INSTANTANEO) velocidad_ataque = 300.0;
+        else if (vel_at == Velocidad_ataque::VARIABLE) velocidad_ataque = 150.0;
 
         // --- RANGO (Casillas que puede avanzar en tablero) --- 
         if (ra == Rango::CORTO) rango_movimiento = 3;
@@ -144,7 +147,8 @@ public:
     bool puedeMoverseA(PosicionMatriz destino);
     bool puedeDisparar();
     bool estaMuerto() const { return vida_actual <= 0; }
-    bool esAtaqueMelee() const { return golpe != nullptr; };
+    bool esAtaqueMelee() const { return golpe != nullptr; }
+    bool esAtaqueArea() const { return grito != nullptr; }
     bool golpeActivo() const { return golpeConectado; }
     bool golpeYaConecto = false; //un golpe por swing
 
@@ -152,10 +156,12 @@ public:
    
     const Vector2D& getDireccion() const { return direccion; }
     const GolpeAtaque& getGolpe() const { return *golpe; }
+    GritoArea& getGrito() { return *grito; }
     void mueve(double t) override {
         ObjetoMovil::mueve(t);
         tiempoDesdeUltimoDisparo += t;
     }
-    void               actualizarGolpe(double dt);
+    void actualizarGolpe(double dt);
+    void resetEstadoArena();
 };
 

@@ -19,5 +19,5 @@ public:
   static bool colision(const Disparo& d, const Pieza& p);
   static bool colision(const Disparo& d, const Obstaculo& obs);
   static bool colision(const GolpeAtaque& golpe, const Vector2D& posAtacante,const Vector2D& dir, const Pieza& defensor);
- 
+  static bool colision(const GritoArea& grito, const Vector2D& posBanshee, const Pieza& defensor);
 };
