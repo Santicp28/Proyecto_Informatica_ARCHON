@@ -32,6 +32,12 @@ public:
         return nullptr;
     }
 
+    Pieza* getPiezaPorTipo(TipoPieza tipo) const {
+        for (auto p : listaPiezas)
+            if (p != nullptr && p->getTipo() == tipo) {return p;}
+        return nullptr;
+	}
+
     //para saber cuando pierde un bando
     bool noQuedanPiezasDeBando(Bando b) const {
         for (auto p : listaPiezas)

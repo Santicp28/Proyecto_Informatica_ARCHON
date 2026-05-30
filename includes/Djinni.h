@@ -6,9 +6,8 @@
 class Djinni : public Pieza
 {
 public:
-    Djinni(std::string nombre = "Djinni", Bando b = Bando::LUZ);
+    Djinni(std::string nombre = "Djinni", TipoPieza tipo = TipoPieza::DJINNI, Bando b = Bando::LUZ);
     
-    void dibuja(const Renderer& renderer, const Vector2D& centro, double ancho, double alto) const override;
     const char* getSpriteAtaque() const override { return djinni.grafAtaque; }
     void reproducirSonidoAtaque() const override { sfx_ataque_disparo.play(); }
 };
