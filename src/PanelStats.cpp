@@ -4,9 +4,9 @@
 
 void PanelStats::dibuja(const Renderer& renderer) const
 {
-    char debug[50];
+    /*char debug[50];
     std::snprintf(debug, sizeof(debug), "W:%d H:%d", Config::anchoVentana, Config::altoVentana);
-    renderer.dibujaTexto(debug, { posicion.x, posicion.y - 20 }, { 1,0,0 }, 14, AlineacionTexto::IZQUIERDA);
+    renderer.dibujaTexto(debug, { posicion.x, posicion.y - 20 }, { 1,0,0 }, 14, AlineacionTexto::IZQUIERDA);*/
 
 
     float referencia = (glutGet(GLUT_WINDOW_WIDTH) + glutGet(GLUT_WINDOW_HEIGHT)) * 0.5f;
