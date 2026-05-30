@@ -33,10 +33,32 @@ bool Pieza::puedeMoverseA(PosicionMatriz destino) {
 bool Pieza::puedeDisparar() {
 
 	if (!atacar) return false; 
+    if (esAtaqueMelee()) return false;
+    if (esAtaqueArea())return false;
     if (tiempoDesdeUltimoDisparo >= cadencia) {
 		tiempoDesdeUltimoDisparo = 0.0; 
 		return true;
     }
 
 	return false;
+}
+
+
+void Pieza::actualizarGolpe(double dt)
+{
+    if (!golpe) return;
+    bool yaEstabaExtendido = golpe->getAngulo() <= 10.0;
+    golpe->actualizar(atacar, dt);
+    bool ahoraExtendido = golpe->getAngulo() <= 10.0;
+    golpeConectado = (!yaEstabaExtendido && ahoraExtendido);
+    if (golpe->getAngulo() >= 45 - 1.0)  
+        golpeYaConecto = false;
+}
+
+void Pieza::resetEstadoArena()
+{
+    velocidad_ = { 0, 0 };
+    atacar = false;
+    golpeYaConecto = false;
+    tiempoDesdeUltimoDisparo = 999.0;
 }

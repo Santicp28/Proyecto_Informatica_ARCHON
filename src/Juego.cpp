@@ -61,8 +61,14 @@ void Juego::dibuja(const Renderer& renderer)
 
 void Juego::mueve(float dt)
 {
-    if(estado==EstadoJuego::ARENA)
-		arena.mueve(dt);
+    if(estado==EstadoJuego::ARENA) {
+        arena.mueve(dt);
+
+        if (arena.terminado()) {
+            tablero.resultadoCombate(arena.getGanador());
+            estado = EstadoJuego::TABLERO;
+        }
+    }
 }
 
 void Juego::tecla(unsigned char key)
@@ -102,8 +108,9 @@ void Juego::tecla(unsigned char key)
 			estado = EstadoJuego::PAUSA;
 			break;
 		case TableroAccion::IR_ARENA:
+            printf("atacante: %p, defensor: %p\n", tablero.getAtacante(), tablero.getDefensor());
             arena.inicializa(tablero.getAtacante(), tablero.getDefensor());
-			estado = EstadoJuego::ARENA;
+            estado = EstadoJuego::ARENA;
 			break;
         default:
             break;

@@ -1,5 +1,5 @@
 #include "freeglut.h"
-#include "disparo.h"
+#include "Disparo.h"
 #include "ObjetoMovil.h"
 void Disparo::dibuja(const Renderer& renderer) const
 {
