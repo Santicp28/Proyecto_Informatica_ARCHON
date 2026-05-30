@@ -1,4 +1,5 @@
 #include "Arena.h"
+#include "sonidos.h"
 
 void Arena::inicializa(Pieza* p1, Pieza* p2)
 {
@@ -173,12 +174,14 @@ void Arena::mueve(float dt)
 		if (InteraccionArena::colision(*listaDisparos[i], *jugador2) &&
 			listaDisparos[i]->getPropietario() != jugador2) {
 			jugador2->recibirDanio(jugador1->getAtaque());
+			sfx_recibir_danio.play();
 			listaDisparos.eliminar(i);
 			continue;
 		}
 		if (InteraccionArena::colision(*listaDisparos[i], *jugador1) &&
 			listaDisparos[i]->getPropietario() != jugador1) {
 			jugador1->recibirDanio(jugador2->getAtaque());
+			sfx_recibir_danio.play();
 			listaDisparos.eliminar(i);
 			continue;
 		}
@@ -191,6 +194,7 @@ void Arena::mueve(float dt)
 			jugador1->getSpriteAtaque(),
 			jugador1
 		));
+		jugador1->reproducirSonidoAtaque();
 	}
 	if (jugador2->puedeDisparar()) {
 		listaDisparos.agregar(new Disparo(
@@ -199,16 +203,19 @@ void Arena::mueve(float dt)
 			jugador2->getSpriteAtaque(),
 			jugador2
 		));
+		jugador2->reproducirSonidoAtaque();
 	}
 
 	//--------vida----------
 	if (jugador1->getVidaActual() <= 0) {
 		combateTerminado = true;
 		ganadorBando = 2;
+		sfx_muerte.play();
 	}
 	else if (jugador2->getVidaActual() <= 0) {
 		combateTerminado = true;
 		ganadorBando = 1;
+		sfx_muerte.play();
 	}
 
 	//-------ataque cuerpo a cuerpo ------
@@ -219,6 +226,8 @@ void Arena::mueve(float dt)
 		if (InteraccionArena::colision(jugador1->getGolpe(), jugador1->posicion(),
 			jugador1->getDireccion(), *jugador2)) {
 			jugador2->recibirDanio(jugador1->getAtaque());
+			jugador1->reproducirSonidoAtaque();
+			sfx_recibir_danio.play();
 			jugador1->golpeYaConecto = true;
 		}
 	}
@@ -227,6 +236,8 @@ void Arena::mueve(float dt)
 		if (InteraccionArena::colision(jugador2->getGolpe(), jugador2->posicion(),
 			jugador2->getDireccion(), *jugador1)) {
 			jugador1->recibirDanio(jugador2->getAtaque());
+			jugador2->reproducirSonidoAtaque();
+			sfx_recibir_danio.play();
 			jugador2->golpeYaConecto = true;
 		}
 	}
@@ -237,6 +248,8 @@ void Arena::mueve(float dt)
 		if (jugador1->getGrito().actualizar(dt, jugador1->getCadencia())) {
 			if (InteraccionArena::colision(jugador1->getGrito(), jugador1->posicion(), *jugador2))
 				jugador2->recibirDanio(jugador1->getAtaque());
+				jugador1->reproducirSonidoAtaque();
+				sfx_recibir_danio.play();
 		}
 	}
 	if (jugador2->esAtaqueArea()) {
@@ -245,6 +258,8 @@ void Arena::mueve(float dt)
 		if (jugador2->getGrito().actualizar(dt, jugador2->getCadencia())) {
 			if (InteraccionArena::colision(jugador2->getGrito(), jugador2->posicion(), *jugador1))
 				jugador1->recibirDanio(jugador2->getAtaque());
+				jugador2->reproducirSonidoAtaque();
+				sfx_recibir_danio.play();
 		}
 	}
 }

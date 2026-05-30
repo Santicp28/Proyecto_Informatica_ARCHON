@@ -7,6 +7,7 @@
 #include "ObjetoMovil.h"
 #include"GolpeAtaque.h"
 #include "GritoArea.h"
+#include "sonidos.h"
 #include <string>
 
 class Disparo;
@@ -44,6 +45,7 @@ public:
     virtual void dibuja(const Renderer& renderer, const Vector2D& centro, double ancho, double alto) const = 0;
 
     virtual const char* getSpriteAtaque() const { return nullptr; }
+    virtual void reproducirSonidoAtaque() const { sfx_ataque_disparo.play(); }
 
     Pieza(std::string nom, Ataque at, Vida_maxima vi, Velocidad vel, Cadencia cad, Velocidad_ataque vel_at, Rango ra, Bando b, TipoMovimiento tm)
         :ObjetoMovil({}, {}, {}, 30.0)

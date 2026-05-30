@@ -13,11 +13,12 @@ struct Grafmusica {
     void stop()                   const { ETSIDI::stopMusica(); }
 };
 
-inline constexpr Grafsfx sfx_grito_banshee{ "assets/Sonidos/grito_banshee.wav" };
-inline constexpr Grafsfx sfx_ataque_fuego{ "assets/Sonidos/ataque_fuego.wav" };
-inline constexpr Grafsfx sfx_ataque_disparo{ "assets/Sonidos/ataque_disparo.wav" };
-inline constexpr Grafsfx sfx_ataque_explosion{ "assets/Sonidos/ataque_explosion.wav" };
-inline constexpr Grafsfx sfx_ataque_melee{ "assets/Sonidos/ataque_melee.wav" };
-inline constexpr Grafsfx sfx_muerte{ "assets/Sonidos/muerte.mp3" };
-inline constexpr Grafsfx sfx_recibir_danio{ "assets/Sonidos/recibir_danio.mp3" };
-inline constexpr Grafmusica musica_fondo{ "assets/Sonidos/musica_fondo.mp3" };
+inline constexpr Grafsfx sfx_grito_banshee{ "assets/Audios/grito_banshee_low.mp3" };
+inline constexpr Grafsfx sfx_ataque_fuego{ "assets/Audios/ataque_fuego.wav" };
+inline constexpr Grafsfx sfx_ataque_disparo{ "assets/Audios/ataque_disparo.wav" };
+inline constexpr Grafsfx sfx_ataque_explosion{ "assets/Audios/ataque_explosion.wav" };
+inline constexpr Grafsfx sfx_ataque_melee{ "assets/Audios/ataque_melee.wav" };
+inline constexpr Grafsfx sfx_muerte{ "assets/Audios/muerte.mp3" };
+inline constexpr Grafsfx sfx_recibir_danio{ "assets/Audios/recibir_danio.wav" };
+inline constexpr Grafmusica musica_fondo{ "assets/Audios/musica_fondo.mp3" };
+inline constexpr Grafmusica musica_fondo_suave{ "assets/Audios/musica_fondo_suave.mp3" };

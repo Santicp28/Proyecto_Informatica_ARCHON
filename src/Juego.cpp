@@ -3,6 +3,8 @@
 #include "Grafmenu.h"
 #include <cstdlib>
 #include "Tipos.h"
+#include "sonidos.h"
+
 
 Juego::Juego() :
     estado(EstadoJuego::MENU_PRINCIPAL),
@@ -21,6 +23,7 @@ Juego::Juego() :
 
 void Juego::inicializa()
 {
+    musica_fondo_suave.play();
     estado = EstadoJuego::MENU_PRINCIPAL;
     menuPrincipal.inicializa();
 	menuPausa.inicializa();
