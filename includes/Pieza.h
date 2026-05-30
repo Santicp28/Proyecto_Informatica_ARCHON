@@ -162,6 +162,7 @@ public:
 	bool estaProtegidoContraHechizos() const { return protegidoContraHechizos; }
 	bool estaEncarcelada() const { return encarcelada; }
 	bool estaMojada() const { return mojada; }
+	TipoPieza getTipo() const { return tipo; }
 
 	std::string getNombre() const { return nombre; }
 	double getVidaMax() const { return vida_maxima; }
