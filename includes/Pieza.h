@@ -163,7 +163,7 @@ public:
     Bando getBando() const { return bando; }
 	bool estaProtegidoContraHechizos() const { return protegidoContraHechizos; }
 	bool estaEncarcelada() const { return encarcelada; }
-	bool esTAM_TABLEROojada() const { return mojada; }
+	bool estaMojada() const { return mojada; }
 	bool haUsadoHechizo() const { return UsadoHechizo; }
 
 	TipoPieza getTipo() const { return tipo; }
@@ -189,7 +189,7 @@ public:
     // --- FLAGS ----
     bool puedeMoverseA(PosicionMatriz destino);
     bool puedeDisparar();
-    bool esTAM_TABLEROuerto() const { return vida_actual <= 0; }
+    bool estaMuerto() const { return vida_actual <= 0; }
     bool esAtaqueMelee() const { return golpe != nullptr; };
     bool golpeActivo() const { return golpeConectado; }
     bool golpeYaConecto = false; //un golpe por swing

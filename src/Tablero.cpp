@@ -374,7 +374,7 @@ bool Tablero::moverPieza(PosicionMatriz origen, PosicionMatriz destino)
     Pieza* atacante = listaPiezas.getPiezaEnPosicion(origen);
     Pieza* defensor = listaPiezas.getPiezaEnPosicion(destino);
 
-    //ILUMINAR O DESTACAR CASILLA SI HAY ERROR O MOSTRAR UN SONIDO O ALGO, TAM_TABLEROBIEN MOSTRAR MENSAJE PARA SABER EL ERROR
+    //ILUMINAR O DESTACAR CASILLA SI HAY ERROR O MOSTRAR UN SONIDO O ALGO, TAMBIEN MOSTRAR MENSAJE PARA SABER EL ERROR
 
     //Si hay enemigo, no movemos todavía
     //Dejamos marcado que tiene que abrirse la arena
@@ -761,8 +761,8 @@ void Tablero::cicloTurno()
             Pieza* p = listaPiezas.getPiezaEnPosicion({ f,c });
             if (p != nullptr) {
                 if (contadorTurnosParaCiclo == 0) {
-                    if (p->esTAM_TABLEROojada()) {
-                        p->setMojada(false); //si las oscilantes son AZULs, (momento de AZUL) se seca y pierde los efectos de mojado
+                    if (p->estaMojada()) {
+                        p->setMojada(false); //si las oscilantes son azules, (momento de AZUL) se seca y pierde los efectos de mojado
                         p->resetStats();
                     }
                     if (p->getBando() == Bando::AZUL) p->setEncarcelada(false);
@@ -845,7 +845,7 @@ void Tablero::aplicarEfectoTipoCasilla(Pieza* p, const Casilla& c)
 {
     TipoCasilla tipo = c.getTipo();
 
-    bool condicion = (p->esTAM_TABLEROojada() || p->haUsadoHechizo());
+    bool condicion = (p->estaMojada() || p->haUsadoHechizo());
     if (p->getBando() == Bando::AZUL) {
         if (tipo == TipoCasilla::AZUL) {if(!condicion) p->setDefensa(1.55);}
         else if ((tipo == TipoCasilla::TURQUESA) && !condicion) p->setDefensa(1.45);
