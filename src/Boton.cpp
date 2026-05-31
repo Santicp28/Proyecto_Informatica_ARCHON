@@ -7,6 +7,7 @@ void Boton::dibuja(const Renderer& renderer, const Vector2D& posicion, const Vec
 
 }
 
+
 void Boton::cambiarEstado()
 {
     seleccionado = !seleccionado;   

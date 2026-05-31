@@ -6,7 +6,7 @@
 class Mago : public Pieza
 {
 public:
-    Mago(std::string nombre = "Mago", TipoPieza tipo = TipoPieza::MAGO, Bando b = Bando::LUZ);
+    Mago(std::string nombre = "Mago", Bando b = Bando::AZUL);
     
 
     const char* getSpriteAtaque() const override { return mago.grafAtaque; }

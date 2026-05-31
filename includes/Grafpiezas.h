@@ -6,7 +6,7 @@ struct TiposPiezas
 	const char* grafAtaque;
 };
 
-// Representación de la Luz
+// Representación de la AZUL
 inline constexpr TiposPiezas mago = {
 	"assets/Graficos/mago.png",
 	"assets/Graficos/bolafuego.PNG"
@@ -47,11 +47,11 @@ inline constexpr TiposPiezas caballero = {
 	"assets/Graficos/espada.PNG"
 };
 
-// Representación de la oscuridad
+// Representación de la ROJO
 
 inline constexpr TiposPiezas hechicero = {
 	"assets/Graficos/hechicero.png",
-	"assets/Graficos/hazluz.PNG"
+	"assets/Graficos/hazAZUL.PNG"
 };
 
 inline constexpr TiposPiezas basilisco = {

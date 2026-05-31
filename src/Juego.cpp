@@ -5,7 +5,6 @@
 #include "Tipos.h"
 #include "sonidos.h"
 
-
 Juego::Juego() :
     estado(EstadoJuego::MENU_PRINCIPAL),
     tablero(Config::sizeMundo.y*0.75),
@@ -81,6 +80,7 @@ void Juego::tecla(unsigned char key)
         switch (accion)
         {
         case MenuAccion::JUGAR:
+            tablero.inicializa();
             estado = EstadoJuego::TABLERO;
             break;
 
@@ -196,7 +196,7 @@ void Juego::tecla(unsigned char key)
 void Juego::teclaEspecial(int key)
 {
     if (estado == EstadoJuego::MENU_PRINCIPAL) {
-        menuPrincipal.teclaEspecial(key);
+        //menuPrincipal.teclaEspecial(key);
     }
     else if (estado == EstadoJuego::TABLERO) { //con esto conseguimos mover el cursor mediante las flechas en el teclado
         switch (key) {

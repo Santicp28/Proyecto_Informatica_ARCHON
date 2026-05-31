@@ -6,7 +6,7 @@
 class Arquero : public Pieza
 {
 public:
-	Arquero(std::string nombre = "Arquero", TipoPieza tipo = TipoPieza::ARQUERO,  Bando b = Bando::LUZ);
+	Arquero(std::string nombre = "Arquero",  Bando b = Bando::AZUL);
 
 	const char* getSpriteAtaque() const override { return arquero.grafAtaque; }
 	void reproducirSonidoAtaque() const override { sfx_ataque_disparo.play(); }
