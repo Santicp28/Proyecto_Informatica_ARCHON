@@ -145,6 +145,10 @@ TableroAccion Tablero::tecla(unsigned char key)
         {
         case '\r':// ENTER
         {
+            if (comprobarFinJuego()) {
+                return  TableroAccion::IR_FIN_PARTIDA;
+            }
+
             if (vamosUsarHechizo) {
 				if (hechizoSeleccionado.curar || hechizoSeleccionado.encarcelar || hechizoSeleccionado.vasoDeAgua) seleccionar1CasillaHechizos();
                 else if (hechizoSeleccionado.tp || hechizoSeleccionado.intercambiar) seleccionar2CasillasHechizos();
@@ -152,11 +156,9 @@ TableroAccion Tablero::tecla(unsigned char key)
             else seleccionarPiezasConCursor();
 
 
-            if (comprobarFinJuego()) {
-                return  TableroAccion::IR_FIN_PARTIDA;
-            }
+            
             //tablero avisa de que se he elegido combate, haciendo que juego ponga el estado ARENA y limpiando el flag del combate pendiente para no volver a entrar 
-            else if (hayCombatePendiente()) {
+            if (hayCombatePendiente()) {
                 limpiarCombatePendiente();
                 return TableroAccion::IR_ARENA;
             }
