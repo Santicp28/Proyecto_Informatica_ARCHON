@@ -51,7 +51,7 @@ inline constexpr TiposPiezas caballero = {
 
 inline constexpr TiposPiezas hechicero = {
 	"assets/Graficos/hechicero.png",
-	"assets/Graficos/hazAZUL.PNG"
+	"assets/Graficos/hazluz.PNG"
 };
 
 inline constexpr TiposPiezas basilisco = {
