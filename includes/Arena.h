@@ -12,6 +12,7 @@
 #include "ListaDisparos.h"
 #include "ListaObstaculos.h"
 #include "Grafarena.h"
+#include "Cambiaforma.h"
 
 using std::vector;
 

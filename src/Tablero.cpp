@@ -2,8 +2,7 @@
 #include "Renderer.h"
 #include <iostream>
 #include "Graftablero.h"
-
-
+#include "Grafarena.h"
 using enum TipoCasilla;
 
 Tablero::Tablero(double longit):
@@ -31,7 +30,7 @@ Tablero::Tablero(double longit):
 void Tablero::inicializa()
 {
 
-    cursor = { {4, 0} };
+    cursor.setPosicion({ 4, 0 });
 
     listaPiezas.destruirPiezas();
 
@@ -337,6 +336,18 @@ void Tablero::dibuja(const Renderer& renderer)const {
 		menuHechizosROJO.dibuja(renderer);
 	}
 
+	panelStatsLuz->dibuja(renderer);
+	panelStatsOscuridad->dibuja(renderer);
+
+    if (ganador == Bando::LUZ){
+        renderer.dibujaSprite(finluz.sprite, posicion, Config::sizeMundo.x, Config::sizeMundo.y);
+    }
+    else if (ganador == Bando::OSCURIDAD) {
+        renderer.dibujaSprite(finoscuro.sprite, posicion, Config::sizeMundo.x, Config::sizeMundo.y);
+    }
+    if (ganador != Bando::NINGUNO)
+        renderer.dibujaTexto("TAB PARA CONTINUAR", { 40.0, 40.0 }, { 0.0f, 0.0f, 0.0f }, 20, AlineacionTexto::IZQUIERDA);
+}
 	panelStatsAZUL->dibuja(renderer);
 	panelStatsROJO->dibuja(renderer);
 }
@@ -823,10 +834,11 @@ bool Tablero::resultadoCombate(Pieza* ganadorArena)
         if (ganadorArena == enOrigen)
             listaPiezas.moverDeCasilla(origenCombate, destinoCombate);
     }
-
-    enOrigen->resetEstadoArena();
+    else {
+        enOrigen->resetEstadoArena();
+        enDestino->resetEstadoArena();
+    }
     //enOrigen->setEnArena(false);
-    enDestino->resetEstadoArena();
     //enDestino->setEnArena(false);
     bool finJuego = comprobarFinJuego();
     cambiarTurno();

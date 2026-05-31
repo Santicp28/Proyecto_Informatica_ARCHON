@@ -83,55 +83,71 @@ void Juego::tecla(unsigned char key)
                 exit(0);
                 break;
 
-            default:
-                break;
-            }
+        default:
             break;
         }
-        case EstadoJuego::TABLERO:
-        {
-            TableroAccion accion = tablero.tecla(key);
-            switch (accion)
-            {
-		    case TableroAccion::IR_PAUSA:
-			    estado = EstadoJuego::PAUSA;
-			    break;
-            case TableroAccion::IR_ARENA:
-                arena.inicializa(tablero.getAtacante(), tablero.getDefensor());
-                estado = EstadoJuego::ARENA;
-			    break;
-            case TableroAccion::IR_FIN_PARTIDA:
+        break;
+    }
+    case EstadoJuego::TABLERO:
+    {
+        if (tablero.hayFinJuego()) { 
+            if (key == '\t')
                 estado = EstadoJuego::FIN_PARTIDA;
-                break;
-            default:
-                break;
-            }
             break;
         }
-        case EstadoJuego::ARENA:
+        TableroAccion accion = tablero.tecla(key);
+        switch (accion)
         {
-            if (arena.terminado()) {
-                if (key == '\t') { // <- solo ENTER, no cualquier tecla
-                    if (arena.getFinAbsoluto()) {
-                        estado = EstadoJuego::FIN_PARTIDA;
+		case TableroAccion::IR_PAUSA:
+			estado = EstadoJuego::PAUSA;
+			break;
+        case TableroAccion::IR_ARENA:
+            arena.inicializa(tablero.getAtacante(), tablero.getDefensor());
+            estado = EstadoJuego::ARENA;
+			break;
+        case TableroAccion::IR_FIN_PARTIDA:
+            break;
+        default:
+            break;
+        }
+        break;
+    }
+    case EstadoJuego::ARENA:
+    {
+        if (arena.terminado()) {
+            if (key == '\t') {
+                if (arena.getFinAbsoluto()) {
+                    arena.limpiarJugadores();
+                    estado = EstadoJuego::FIN_PARTIDA;
+                }
+                else {
+                    bool finJuego = tablero.resultadoCombate(arena.getGanador());
+                    arena.limpiarJugadores();
+                    if (finJuego) {
+                        arena.setFinAbsoluto(tablero.getGanador());
                     }
                     else {
-                        bool finJuego = tablero.resultadoCombate(arena.getGanador());
                         arena.limpiarJugadores();
-                        if (finJuego) {
-                            arena.setFinAbsoluto(tablero.getGanador()); // <- AQUÍ
-                        }
-                        else {
-                            estado = EstadoJuego::TABLERO;
-                        }
+                        estado = EstadoJuego::TABLERO;
                     }
                 }
             }
-            else {
-                arena.tecla(key);
-            }
-            break;
         }
+        else {
+            arena.tecla(key);
+        }
+        break;
+
+        ////ESTE ESC es para pruebas 
+        //if (key == 27) { //también para ir probando como cambia, revisar en siguientes versiones cuando desarrollemos la arena
+        //    estado = EstadoJuego::TABLERO;
+        //}
+        //else {
+        //    arena.tecla(key);
+        //}
+
+        //break;
+    }
     
         case EstadoJuego::PAUSA:
         {
@@ -199,12 +215,12 @@ void Juego::teclaEspecial(int key)
             case GLUT_KEY_RIGHT:
                 tablero.moverCursor(0, 1);
                 break;
-            }
         }
-        else if (estado == EstadoJuego::ARENA) {
+    }
+    else if (estado == EstadoJuego::ARENA) {
             arena.teclaEspecial(key);
-        }
-    } 
+    }
+} 
 
 
 EstadoJuego Juego::getEstado() const

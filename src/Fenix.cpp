@@ -13,5 +13,5 @@ Fenix::Fenix(std::string nombre, Bando b) : Pieza(
     b,
     TipoMovimiento::VUELA           
 ) {
-    grito = new GritoArea(80.0,1.0);
+    grito = new GritoArea(80.0, 1.0, fenix.grafAtaque);
 }

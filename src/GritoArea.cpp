@@ -56,6 +56,10 @@ void GritoArea::dibuja(const Renderer& renderer, const Vector2D& pos) const {
         Vector2D p1 = { pos.x + radio * cos(angulo1), pos.y + radio * sin(angulo1) };
         Vector2D p2 = { pos.x + radio * cos(angulo2), pos.y + radio * sin(angulo2) };
 
-		renderer.dibujaOvalo(p1, { 1.0f, 0.2f, 0.0f }, 5.0, 5.0);
+        if (sprite) {
+            renderer.dibujaSprite(sprite, pos, radio * 2, radio * 2);
+            return;  // si hay sprite no dibuja los puntos
+        }
+		//renderer.dibujaOvalo(p1, { 1.0f, 0.2f, 0.0f }, 5.0, 5.0);
     }
 }
