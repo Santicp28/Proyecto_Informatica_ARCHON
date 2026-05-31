@@ -158,7 +158,6 @@ TableroAccion Tablero::tecla(unsigned char key)
             //tablero avisa de que se he elegido combate, haciendo que juego ponga el estado ARENA y limpiando el flag del combate pendiente para no volver a entrar 
             else if (hayCombatePendiente()) {
                 limpiarCombatePendiente();
-                printf("hayCombatePendiente: %d\n", hayCombatePendiente());
                 return TableroAccion::IR_ARENA;
             }
             break;
@@ -803,13 +802,6 @@ bool Tablero::resultadoCombate(Pieza* ganadorArena)
     enDestino->resetEstadoArena();
     //enDestino->setEnArena(false);
     bool finJuego = comprobarFinJuego();
-
-    if (finJuego)
-        printf("[FIN] Ganador absoluto: %s\n",
-            ganador == Bando::LUZ ? "LUZ" : "OSCURIDAD");
-    else
-        printf("[PARTIDA] Quedan piezas, la partida continua\n");
-
     cambiarTurno();
     return finJuego;
 }
@@ -897,10 +889,6 @@ void Tablero::aplicarEfectoTipoCasilla(Pieza* p, const Casilla& c)
     //aplicar proteccion de hechizo
     if (c.getTipo() == TipoCasilla::PODER) p->setProteccionContraHechizos(true);
     else p->setProteccionContraHechizos(false);
-
-
-
-
 }
 
 
