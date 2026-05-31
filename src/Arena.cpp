@@ -23,6 +23,11 @@ void Arena::inicializa(Pieza* p1, Pieza* p2)
 	}
 	jugador1->setPosicionArena(posicionInicialJugador1);
 	jugador2->setPosicionArena(posicionInicialJugador2);
+	//para poder hacer que cambiaforma copie las stats superiores del rival
+	Cambiaforma* cf1 = dynamic_cast<Cambiaforma*>(jugador1);
+	Cambiaforma* cf2 = dynamic_cast<Cambiaforma*>(jugador2);
+	if (cf1 != nullptr) cf1->copiarStatsSuperiores(*jugador2);
+	if (cf2 != nullptr) cf2->copiarStatsSuperiores(*jugador1);
 
 	combateTerminado = false;
 	ganadorBando = 0;
