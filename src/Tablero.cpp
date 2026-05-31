@@ -30,6 +30,7 @@ Tablero::Tablero(double longit):
 
 void Tablero::inicializa()
 {
+    listaPiezas.destruirPiezas();
 	estadoTablero = EstadoTablero::TABLERO;
 
 	menuHechizosLuz.inicializa();
@@ -132,6 +133,7 @@ void Tablero::inicializa()
     vamosUsarHechizo = false;
     limpiarHechizoSeleccionado();
     mensajeEtapaActual = "Clara";
+    cursor.setPosicion({ 4, 0 });
 }
 
 
@@ -796,10 +798,11 @@ bool Tablero::resultadoCombate(Pieza* ganadorArena)
         if (ganadorArena == enOrigen)
             listaPiezas.moverDeCasilla(origenCombate, destinoCombate);
     }
-
-    enOrigen->resetEstadoArena();
+    else {
+        enOrigen->resetEstadoArena();
+        enDestino->resetEstadoArena();
+    }
     //enOrigen->setEnArena(false);
-    enDestino->resetEstadoArena();
     //enDestino->setEnArena(false);
     bool finJuego = comprobarFinJuego();
     cambiarTurno();

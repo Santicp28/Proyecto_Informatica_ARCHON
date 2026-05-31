@@ -74,7 +74,7 @@ bool InteraccionArena::colision(const Disparo& d, const Obstaculo& obs)
 {
     Vector2D diff = d.posicion_ - obs.posicion;
     double dist = diff.modulo();
-    double sumRadios = d.sizeradio_ + obs.size.x * 0.5;
+    double sumRadios = d.sizeradio_ + obs.size.x * 0.2;
     return dist < sumRadios;
 }
 

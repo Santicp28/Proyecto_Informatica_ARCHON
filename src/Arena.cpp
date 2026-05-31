@@ -104,6 +104,7 @@ void Arena::generaObstaculos(int cantidad, unsigned int semilla)
 
 void Arena::tecla(unsigned char key) {
     teclas[key] = true;
+	if (!jugador1) return;
 	jugador1->atacar = teclas[' '];
 	jugador2->atacar = teclas[13];
 
@@ -123,6 +124,7 @@ void Arena::tecla(unsigned char key) {
 
 void Arena::teclaUP(unsigned char key) { 
     teclas[key] = false;
+	if (!jugador1) return;
 	jugador1->atacar = teclas[' '];
 	jugador2->atacar = teclas[13];
 	Vector2D vel{ 0.0, 0.0 };
@@ -140,6 +142,7 @@ void Arena::teclaUP(unsigned char key) {
 
 void Arena::teclaEspecial(int key) { 
     teclasEspeciales[key] = true; 
+	if (!jugador2) return;
 	Vector2D vel{ 0.0, 0.0 };
 	double speed = jugador2->getVelocidad();
 	if (teclasEspeciales[GLUT_KEY_UP]) vel.y = -speed;
@@ -156,7 +159,8 @@ void Arena::teclaEspecial(int key) {
 
 
 void Arena::teclaEspecialUP(int key) { 
-    teclasEspeciales[key] = false; 
+    teclasEspeciales[key] = false;
+	if (!jugador2) return;
 	Vector2D vel{ 0, 0 };
 	double speed = jugador2->getVelocidad();
 	if (teclasEspeciales[GLUT_KEY_UP]) vel.y = -speed;
@@ -316,25 +320,25 @@ void Arena::dibuja(const Renderer& renderer) const
 
 	listaObstaculos.dibuja(renderer);
 	listaDisparos.dibuja(renderer);
-	jugador1->dibuja(renderer, jugador1->posicion(), 175.0, 175.0);
-	jugador2->dibuja(renderer, jugador2->posicion(), 175.0, 175.0);
+	if (jugador1) jugador1->dibuja(renderer, jugador1->posicion(), 175.0, 175.0);
+	if (jugador2) jugador2->dibuja(renderer, jugador2->posicion(), 175.0, 175.0);
 	//-------golpes espada------
 	if (jugador1 && jugador1->esAtaqueMelee())
 		jugador1->getGolpe().dibuja(renderer, jugador1->posicion(), jugador1->getDireccion());
 	if (jugador2 && jugador2->esAtaqueMelee())
 		jugador2->getGolpe().dibuja(renderer, jugador2->posicion(), jugador2->getDireccion());
 	//-------gritos area-----
-	if (jugador1->esAtaqueArea() && jugador1->getGrito().estaActivo())
+	if (jugador1 && jugador1->esAtaqueArea() && jugador1->getGrito().estaActivo())
 		jugador1->getGrito().dibuja(renderer, jugador1->posicion());
-	if (jugador2->esAtaqueArea() && jugador2->getGrito().estaActivo())
+	if (jugador2 && jugador2->esAtaqueArea() && jugador2->getGrito().estaActivo())
 		jugador2->getGrito().dibuja(renderer, jugador2->posicion());
 
 	if (combateTerminado) {
 		if (esFinAbsoluto) {
 			if (bandoGanadorAbsoluto == Bando::LUZ)
-				renderer.dibujaSprite(finluz.sprite, centro, size.x * 0.5, size.y * 0.3);
+				renderer.dibujaSprite(finluz.sprite, centro, size.x, size.y);
 			else
-				renderer.dibujaSprite(finoscuro.sprite, centro, size.x * 0.5, size.y * 0.3);
+				renderer.dibujaSprite(finoscuro.sprite, centro, size.x, size.y);
 		}
 		else {
 			if (ganadorBando == 1)

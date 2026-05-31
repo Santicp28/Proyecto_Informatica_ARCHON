@@ -120,17 +120,19 @@ void Juego::tecla(unsigned char key)
     case EstadoJuego::ARENA:
     {
         if (arena.terminado()) {
-            if (key == '\t') { // <- solo ENTER, no cualquier tecla
+            if (key == '\t') {
                 if (arena.getFinAbsoluto()) {
+                    arena.limpiarJugadores();
                     estado = EstadoJuego::FIN_PARTIDA;
                 }
                 else {
                     bool finJuego = tablero.resultadoCombate(arena.getGanador());
                     arena.limpiarJugadores();
                     if (finJuego) {
-                        arena.setFinAbsoluto(tablero.getGanador()); // <- AQUÍ
+                        arena.setFinAbsoluto(tablero.getGanador());
                     }
                     else {
+                        arena.limpiarJugadores();
                         estado = EstadoJuego::TABLERO;
                     }
                 }
@@ -183,12 +185,22 @@ void Juego::tecla(unsigned char key)
         MenuAccion accion = menuFinPartida.tecla(key);
         switch (accion)
         {
+
         case MenuAccion::JUGAR:
-            estado = EstadoJuego::TABLERO;
             tablero.inicializa();
-            break; {//POR AQUI ME HE QUEDADO
-            }
+            menuFinPartida.inicializa();
+            estado = EstadoJuego::TABLERO;
+            break;
+        case MenuAccion::IR_MENU_PRINCIPAL:
+            tablero.inicializa();          // resetea el tablero
+            menuFinPartida.inicializa();   // resetea el menu
+            estado = EstadoJuego::MENU_PRINCIPAL;
+            break;
+        case MenuAccion::SALIR:
+            exit(0);
+            break;
         }
+        break;
     }
     }
 }
@@ -215,12 +227,12 @@ void Juego::teclaEspecial(int key)
             case GLUT_KEY_RIGHT:
                 tablero.moverCursor(0, 1);
                 break;
-            }
         }
-        else if (estado == EstadoJuego::ARENA) {
+    }
+    else if (estado == EstadoJuego::ARENA) {
             arena.teclaEspecial(key);
-        }
-    } 
+    }
+} 
 
 
 EstadoJuego Juego::getEstado() const
