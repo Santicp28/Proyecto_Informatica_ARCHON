@@ -2,8 +2,7 @@
 #include "Renderer.h"
 #include <iostream>
 #include "Graftablero.h"
-
-
+#include "Grafarena.h"
 using enum TipoCasilla;
 
 Tablero::Tablero(double longit):
@@ -323,6 +322,15 @@ void Tablero::dibuja(const Renderer& renderer)const {
 
 	panelStatsLuz->dibuja(renderer);
 	panelStatsOscuridad->dibuja(renderer);
+
+    if (ganador == Bando::LUZ){
+        renderer.dibujaSprite(finluz.sprite, posicion, Config::sizeMundo.x, Config::sizeMundo.y);
+    }
+    else if (ganador == Bando::OSCURIDAD) {
+        renderer.dibujaSprite(finoscuro.sprite, posicion, Config::sizeMundo.x, Config::sizeMundo.y);
+    }
+    if (ganador != Bando::NINGUNO)
+        renderer.dibujaTexto("TAB PARA CONTINUAR", { 40.0, 40.0 }, { 0.0f, 0.0f, 0.0f }, 20, AlineacionTexto::IZQUIERDA);
 }
 
 

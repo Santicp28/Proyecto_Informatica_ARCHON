@@ -128,6 +128,10 @@ public:
 	Bando getGanador() const { return ganador; }
 
     bool resultadoCombate(Pieza* ganadorArena);
+
+    bool hayFinJuego() const { return ganador != Bando::NINGUNO; }
+
+
 	// ------- GETTERS ------ END
 
 

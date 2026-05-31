@@ -99,6 +99,11 @@ void Juego::tecla(unsigned char key)
     }
     case EstadoJuego::TABLERO:
     {
+        if (tablero.hayFinJuego()) { 
+            if (key == '\t')
+                estado = EstadoJuego::FIN_PARTIDA;
+            break;
+        }
         TableroAccion accion = tablero.tecla(key);
         switch (accion)
         {
@@ -110,7 +115,6 @@ void Juego::tecla(unsigned char key)
             estado = EstadoJuego::ARENA;
 			break;
         case TableroAccion::IR_FIN_PARTIDA:
-            estado = EstadoJuego::FIN_PARTIDA;
             break;
         default:
             break;
