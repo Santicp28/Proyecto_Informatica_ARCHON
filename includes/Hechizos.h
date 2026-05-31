@@ -18,7 +18,7 @@ namespace Hechizos {
 
 	//hechizos de 1 casilla
 	void curar(Pieza& p);
-	void encarcelar(Pieza& p);
+	void encarcelar(ListaPiezas& l, Pieza& p);
 	void vasoDeAgua(Pieza& p);
 
 	//hechizos de 2 casillas

@@ -34,8 +34,12 @@ void Hechizos::cambiarCiclo(CicloAZUL_A_ROJO& ciclo, int& contador, Casilla casi
 
 //hechizos de 1 casilla
 void Hechizos::curar(Pieza& p) { if(!p.estaProtegidoContraHechizos()) p.curar(9999.9); }
-void Hechizos::encarcelar(Pieza& p) {
+void Hechizos::encarcelar(ListaPiezas& l, Pieza& p) {
+    if (l.cuantasPiezasQuedanDeBando(p.getBando()) == 0) {
+        return;
+    }
 	if (!p.estaProtegidoContraHechizos()) p.setEncarcelada(true);
+    
 }
 
 void Hechizos::vasoDeAgua(Pieza& p) {

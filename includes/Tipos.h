@@ -8,7 +8,6 @@ enum class MenuAccion
     SALIR,
 
     JUGAR,
-    OPCIONES,
     
     TP,
     CURAR,

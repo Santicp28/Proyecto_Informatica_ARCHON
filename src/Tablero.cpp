@@ -176,7 +176,7 @@ TableroAccion Tablero::tecla(unsigned char key)
         case '\x1B': case 'P': case 'p':// '\x1B'==ESC
             return  TableroAccion::IR_PAUSA;
 
-        case 'h':
+        case 'h': case 'H':
         {
             if(hayOrigenSeleccionado) return TableroAccion::NINGUNA;
 
@@ -200,7 +200,7 @@ TableroAccion Tablero::tecla(unsigned char key)
             }
             break;
         }
-        case'f':
+        case'f': case 'F':
             return TableroAccion::IR_FIN_PARTIDA;
         default:
             return TableroAccion::NINGUNA;
@@ -904,6 +904,7 @@ void Tablero::aplicarEfectoTipoCasilla(Pieza* p, const Casilla& c)
         else if ((tipo == TipoCasilla::AMARILLA) && !condicion) p->setDefensa(1.0);
         else if ((tipo == TipoCasilla::NARANJA) && !condicion) p->setDefensa(1.0);
         else if ((tipo == TipoCasilla::ROJA) && !condicion) p->setDefensa(1.0);
+		else if (tipo == TipoCasilla::PODER) p->setDefensa(1.0);
     }
     else if (p->getBando() == Bando::ROJO) {
         if (tipo == TipoCasilla::ROJA) {if(!condicion) p->setDefensa(1.55);}
@@ -912,6 +913,7 @@ void Tablero::aplicarEfectoTipoCasilla(Pieza* p, const Casilla& c)
         else if ((tipo == TipoCasilla::VERDE) && !condicion) p->setDefensa(1.0);
         else if ((tipo == TipoCasilla::TURQUESA) && !condicion) p->setDefensa(1.0);
         else if ((tipo == TipoCasilla::AZUL) && !condicion) p->setDefensa(1.0);
+		else if (tipo == TipoCasilla::PODER) p->setDefensa(1.0);
     }
 
     //aplicar proteccion de hechizo
