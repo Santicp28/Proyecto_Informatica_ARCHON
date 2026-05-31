@@ -28,6 +28,7 @@ void Pieza::dibuja(const Renderer& renderer, const Vector2D& centro, double anch
     if (!enArena){
         if (mojada) renderer.dibujaSprite(status_mojada.graf, centro, ancho * escalaStatus, alto * escalaStatus);
         if (encarcelada) renderer.dibujaSprite(status_encarcelada.graf, centro, ancho * escalaStatus, alto * escalaStatus);
+		if (protegidoContraHechizos) renderer.dibujaSprite(status_proteccion.graf, centro, ancho * escalaStatus, alto * escalaStatus);
     }
 }
 

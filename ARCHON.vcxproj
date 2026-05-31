@@ -171,6 +171,7 @@ xcopy "$(ProjectDir)assets\Graficos" "$(OutDir)Graficos" /E /I /Y</Command>
     <ClCompile Include="src\ListaObstaculos.cpp" />
     <ClCompile Include="src\ListaPiezas.cpp" />
     <ClCompile Include="src\Manticora.cpp" />
+    <ClCompile Include="src\MenuHechizos.cpp" />
     <ClCompile Include="src\ObjetoMovil.cpp" />
     <ClCompile Include="src\Obstaculo.cpp" />
     <ClCompile Include="src\PanelStats.cpp" />
@@ -216,6 +217,7 @@ xcopy "$(ProjectDir)assets\Graficos" "$(OutDir)Graficos" /E /I /Y</Command>
     <ClInclude Include="includes\ListaDisparos.h" />
     <ClInclude Include="includes\ListaObstaculos.h" />
     <ClInclude Include="includes\Manticora.h" />
+    <ClInclude Include="includes\MenuHechizos.h" />
     <ClInclude Include="includes\ObjetoMovil.h" />
     <ClInclude Include="includes\Obstaculo.h" />
     <ClInclude Include="includes\Panel.h" />

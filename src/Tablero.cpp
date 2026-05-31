@@ -15,12 +15,12 @@ Tablero::Tablero(double longit):
 	contadorTurnos(0),
     contadorTurnosParaCiclo(0),
 	ciclo({true}),
-    menuHechizosAZUL({ "SALIR","TP","CURAR","TIEMPO","SWITCH","CARCEL","VASO_DE_AGUA" },
+    menuHechizosAZUL({ "SALIR","TP","CURAR","TIEMPO","SWITCH","CARCEL","V.AGUA" },
         { MenuAccion::SALIR, MenuAccion::TP, MenuAccion::CURAR, MenuAccion::CAMBIAR_TIEMPO, MenuAccion::INTERCAMBIAR, MenuAccion::ENCARCELAR, MenuAccion::VASO_DE_AGUA },
         { (Config::sizeMundo.x - Config::sizeMundo.y) * 0.5, Config::sizeMundo.y },
         { (Config::sizeMundo.x - Config::sizeMundo.y) * 0.5 * 0.5, Config::sizeMundo.y * 0.5 }, "AZUL", { 1.0f, 0.0f, 0.0f }),
 
-    menuHechizosROJO({ "SALIR","TP","CURAR","TIEMPO","SWITCH","CARCEL","VASO_DE_AGUA" },
+    menuHechizosROJO({ "SALIR","TP","CURAR","TIEMPO","SWITCH","CARCEL","V.AGUA" },
         { MenuAccion::SALIR, MenuAccion::TP, MenuAccion::CURAR, MenuAccion::CAMBIAR_TIEMPO, MenuAccion::INTERCAMBIAR, MenuAccion::ENCARCELAR, MenuAccion::VASO_DE_AGUA },
         { (Config::sizeMundo.x - Config::sizeMundo.y) * 0.5, Config::sizeMundo.y },
         { (Config::sizeMundo.x - Config::sizeMundo.y) * 0.5 * 0.5, Config::sizeMundo.y * 0.5 }, "ROJO", { 0.0f, 1.0f, 0.0f })

@@ -27,6 +27,8 @@ void Menu::dibuja(const Grafmenu& grafmenu, const Renderer& renderer)const
         botones[i].dibuja(renderer,calcularPosicionBotones(i), sizeBotones * 0.5);
     }
 }
+
+
 void Menu::dibuja(const Renderer& renderer) const
 {
 	renderer.dibujaColorFondo(colorFondo);
@@ -37,10 +39,6 @@ void Menu::dibuja(const Renderer& renderer) const
 	}
 }
 
-void Menu::mueve(float dt)
-{
-
-}
 
 MenuAccion Menu::tecla(unsigned char key)
 {
@@ -71,50 +69,7 @@ MenuAccion Menu::tecla(unsigned char key)
     }
     if (key == ' ') 
     {
-        if(esHechizo(acciones[seleccionado]))
-			botones[seleccionado].desactivarBoton(); //desactivamos el hechizo para que no se pueda volver a usar
         return acciones[seleccionado];
     }
     return MenuAccion::NINGUNA;
-}
-
-bool Menu::esHechizo(MenuAccion accion)
-{
-    switch (accion)
-    {
-    case MenuAccion::TP:
-    case MenuAccion::CURAR:
-    case MenuAccion::CAMBIAR_TIEMPO:
-    case MenuAccion::INTERCAMBIAR:
-    case MenuAccion::ENCARCELAR:
-    case MenuAccion::VASO_DE_AGUA:
-        return true;
-
-    default:
-        return false;
-    }
-}
-
-
-void Menu::recolocarSeleccion()
-{
-    botones[seleccionado].cambiarEstado();
-
-    unsigned int intentos = 0;
-    while (botones[seleccionado].estaDesactivo() && intentos < botones.size()) {
-        seleccionado++;
-
-        if (seleccionado >= botones.size()) {
-            seleccionado = 0;
-        }
-        intentos++;
-    }
-
-    if (!botones[seleccionado].estaDesactivo()) {
-        botones[seleccionado].cambiarEstado();
-    }
-}
-
-void Menu::teclaEspecial(int key)
-{
 }

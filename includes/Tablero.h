@@ -3,7 +3,8 @@
 #include "Config.h"
 #include "Cursor.h"
 #include "ListaPiezas.h"
-#include "Menu.h"
+#include "MenuHechizos.h"
+
 #include "Pieza.h"
 #include "Renderer.h"
 #include "Tipos.h"
@@ -81,8 +82,8 @@ class Tablero {
     PosicionMatriz destinoCombate;
 
 	EstadoTablero estadoTablero;
-	Menu menuHechizosAZUL;
-	Menu menuHechizosROJO;
+	MenuHechizos menuHechizosAZUL;
+	MenuHechizos menuHechizosROJO;
 
     int contadorTurnos;
     int contadorTurnosParaCiclo;

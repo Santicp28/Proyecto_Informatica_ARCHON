@@ -6,9 +6,11 @@
 #include "Tipos.h"
 #include<string>
 #include <vector>
+
 using std::vector, std::string;
 
 class Menu {
+protected:
     vector<Boton> botones;
     vector<MenuAccion> acciones;
     Color colorFondo{ 0.1f, 0.1f, 0.4f };
@@ -22,16 +24,12 @@ public:
     Menu(const vector<string>& textos,const vector<MenuAccion>& acc, const Vector2D& sMenu, const Vector2D& c, const string& titu, const Color& colorTit);
 
     void inicializa();
-    void dibuja(const Grafmenu& grafmenu, const Renderer& renderer)const;
-    void dibuja(const Renderer& renderer)const;
-    void mueve(float dt);
-  
-    MenuAccion tecla(unsigned char key);
-    bool esHechizo(MenuAccion accion);
+    virtual void dibuja(const Renderer& renderer)const;
+	void dibuja(const Grafmenu& grafmenu, const Renderer& renderer)const; //para menu principal, que tiene un fondo distinto
+
+    virtual MenuAccion tecla(unsigned char key);
     
-    void recolocarSeleccion();
-    void teclaEspecial(int key);
-private:
+protected:
     Vector2D calcularPosicionBotones(int ordenBoton)const { return { sizeMenu.x * 0.5, (ordenBoton + 2) * sizeMenu.y / (botones.size() + 2.0) }; } //calcula la separecion entre botones Config::sizeMundo.y / (botones.size() + 1.0)
     Vector2D calcularSizeBotones()const{ return{ sizeMenu.x * 0.6, sizeMenu.y / (botones.size() + 1.0) * 0.6 }; }
 

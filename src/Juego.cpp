@@ -82,7 +82,9 @@ void Juego::tecla(unsigned char key)
         switch (accion)
         {
         case MenuAccion::JUGAR:
+            tablero.inicializa();
             estado = EstadoJuego::TABLERO;
+            
             break;
 
         case MenuAccion::OPCIONES:
@@ -170,7 +172,7 @@ void Juego::tecla(unsigned char key)
 void Juego::teclaEspecial(int key)
 {
     if (estado == EstadoJuego::MENU_PRINCIPAL) {
-        menuPrincipal.teclaEspecial(key);
+        //menuPrincipal.teclaEspecial(key);
     }
     else if (estado == EstadoJuego::TABLERO) { //con esto conseguimos mover el cursor mediante las flechas en el teclado
         switch (key) {
