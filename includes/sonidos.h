@@ -13,6 +13,7 @@ struct Grafmusica {
     void stop()                   const { ETSIDI::stopMusica(); }
 };
 
+
 inline constexpr Grafsfx sfx_grito_banshee{ "assets/Audios/grito_banshee_low.mp3" };
 inline constexpr Grafsfx sfx_ataque_fuego{ "assets/Audios/ataque_fuego.wav" };
 inline constexpr Grafsfx sfx_ataque_disparo{ "assets/Audios/ataque_disparo.wav" };
