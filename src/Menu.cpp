@@ -77,7 +77,7 @@ bool Menu::esHechizo(MenuAccion accion)
     case MenuAccion::CAMBIAR_TIEMPO:
     case MenuAccion::INTERCAMBIAR:
     case MenuAccion::ENCARCELAR:
-    case MenuAccion::TIJERAS:
+    case MenuAccion::VASO_DE_AGUA:
         return true;
 
     default:

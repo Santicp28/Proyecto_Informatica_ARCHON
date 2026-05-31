@@ -23,9 +23,11 @@ public:
 	void dibujaContornoCuadrado(const unique_ptr<Sprite>& sprite,const Vector2D& centro,const Color& color, const Vector2D& size)const;
 	void dibujaLinea(const Vector2D& limite1, const Vector2D& limite2, const Color& color)const;
 	void dibujaOvalo(const unique_ptr<Sprite>& sprite, const Vector2D& centro, const Color& color, double radioX, double radioY) const;
+	void dibujaSpriteRotado(const char* rutaPNG, const Vector2D& base, double ancho, double alto, double angulo) const;
 
 	void dibujaSprite(const unique_ptr<Sprite>& sprite, const Vector2D& centro, const Vector2D& size) const;
 	void dibujaTexto(const std::string& texto, const Vector2D& pos, const Color& color, int size, AlineacionTexto alineacion) const;
+
 
 private:
 	void dibujaColor(const Color& color)const { glColor3f(color.r, color.g, color.b); }

@@ -4,6 +4,8 @@
 namespace  Config
 {
 	inline static constexpr Vector2D sizeMundo{ 800,600 };
+    inline int anchoVentana = 800;
+    inline int altoVentana = 600;
 	inline static constexpr double PI {3.14159265358979323846};
 
     inline static constexpr Color blanco{ 1.0f, 1.0f, 1.0f };

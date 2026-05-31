@@ -129,3 +129,24 @@ void Renderer::terminaUI() const {
 	glEnable(GL_LIGHTING);
 	glEnable(GL_DEPTH_TEST);
 }
+
+void Renderer::dibujaSpriteRotado(const char* rutaPNG, const Vector2D& base, double ancho, double alto, double angulo) const
+{
+	glDisable(GL_LIGHTING);
+	glDisable(GL_DEPTH_TEST);
+	glMatrixMode(GL_MODELVIEW);
+
+	glPushMatrix();
+	glTranslatef(base.x, base.y, 0.0f);
+	glRotatef(angulo, 0.0f, 0.0f, 1.0f);
+
+	// dibuja con la base anclada en el origen, la punta hacia arriba
+	ETSIDI::Sprite sprite(rutaPNG, -ancho / 2.0 + 20.0, -alto / 2.0, ancho, alto);
+	sprite.flip(false, true);
+	sprite.draw();
+
+	glPopMatrix();
+
+	glEnable(GL_LIGHTING);
+	glEnable(GL_DEPTH_TEST);
+}

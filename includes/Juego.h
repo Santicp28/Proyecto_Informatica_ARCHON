@@ -36,7 +36,7 @@ public:
     void teclaUP(unsigned char key);
     void teclaEspecialUP(int key);
 
-
+   
     EstadoJuego getEstado() const;
     void setEstado(EstadoJuego nuevoEstado);
 };

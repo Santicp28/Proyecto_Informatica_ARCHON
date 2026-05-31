@@ -13,7 +13,7 @@ enum class MenuAccion
     CAMBIAR_TIEMPO,
     INTERCAMBIAR,
     ENCARCELAR,
-    TIJERAS,
+    VASO_DE_AGUA,
 
     CONTINUAR,
 
@@ -47,6 +47,26 @@ enum class TipoCasilla {
     OSCURA,
     OSCILANTE,
     PODER,
+};
+
+enum class TipoPieza
+{
+    ARQUERO,
+    BANSHEE,
+    BASILISCO,
+    CABALLERO,
+    CAMBIAFORMA,
+    DJINNI,
+    DRAGON,
+    DUENDE,
+    FENIX,
+    GOLEM,
+    HECHICERO,
+    MAGO,
+    MANTICORA,
+    TROL,
+    UNICORNIO,
+    VALQUIRIA
 };
 
 enum class TipoMovimiento {
@@ -122,4 +142,7 @@ struct Color
 {
     float r, g, b;
 
+};
+struct CicloLuz_A_Oscuridad {
+    bool valor;
 };

@@ -5,10 +5,11 @@ bool ListaPiezas::moverDeCasilla(const PosicionMatriz& origen, const PosicionMat
     for (Pieza* p : listaPiezas) {
         if (p != nullptr && p->getPosicionMatriz() == origen)
         {
-            p->setPosicionMatriz(destino.fila, destino.columna);
+            p->setPosicionMatriz(destino);
             return true;
         }
     }
+    return false;
 }
 
 void ListaPiezas::piezaPierde(Pieza* p)

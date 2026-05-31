@@ -19,7 +19,7 @@ public:
     }
     //tablero se encarga de decidir si el movimiento es correcto, esta funcion solo se encarga de mover la pieza
     bool moverDeCasilla(const PosicionMatriz& origen, const PosicionMatriz& destino);
-
+    
     //llamar después de arena
     void piezaPierde(Pieza* p); 
 
@@ -33,6 +33,12 @@ public:
             if (p != nullptr && p->getPosicionMatriz() == pos) {return p;}
         return nullptr;
     }
+
+    Pieza* getPiezaPorTipo(TipoPieza tipo) const {
+        for (auto p : listaPiezas)
+            if (p != nullptr && p->getTipo() == tipo) {return p;}
+        return nullptr;
+	}
 
     //para saber cuando pierde un bando
     bool noQuedanPiezasDeBando(Bando b) const {

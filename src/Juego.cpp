@@ -1,6 +1,8 @@
 #include "Juego.h"
 #include <cstdlib>
 #include "Tipos.h"
+#include "sonidos.h"
+
 
 Juego::Juego() :
     estado(EstadoJuego::MENU_PRINCIPAL),
@@ -23,6 +25,7 @@ Juego::Juego() :
 
 void Juego::inicializa()
 {
+    musica_fondo_suave.play();
     estado = EstadoJuego::MENU_PRINCIPAL;
     menuPrincipal.inicializa();
     menuOpciones.inicializa();
@@ -63,8 +66,9 @@ void Juego::dibuja(const Renderer& renderer, const ContenedorSprites& contenedor
 
 void Juego::mueve(float dt)
 {
-    if(estado==EstadoJuego::ARENA)
-		arena.mueve(dt);
+    if (estado == EstadoJuego::ARENA) {
+        arena.mueve(dt);
+    }
 }
 
 void Juego::tecla(unsigned char key, ContenedorSprites& contenedorSprites)
@@ -103,10 +107,13 @@ void Juego::tecla(unsigned char key, ContenedorSprites& contenedorSprites)
 		case TableroAccion::IR_PAUSA:
 			estado = EstadoJuego::PAUSA;
 			break;
-		case TableroAccion::IR_ARENA:
+        case TableroAccion::IR_ARENA:
             arena.inicializa(tablero.getAtacante(), tablero.getDefensor());
-			estado = EstadoJuego::ARENA;
+            estado = EstadoJuego::ARENA;
 			break;
+        case TableroAccion::IR_FIN_PARTIDA:
+            estado = EstadoJuego::FIN_PARTIDA;
+            break;
         default:
             break;
         }
@@ -114,15 +121,39 @@ void Juego::tecla(unsigned char key, ContenedorSprites& contenedorSprites)
     }
     case EstadoJuego::ARENA:
     {
-        if (key == 27) { //también para ir probando como cambia, revisar en siguientes versiones cuando desarrollemos la arena
-            estado = EstadoJuego::TABLERO;
+        if (arena.terminado()) {
+            if (key == '\t') { // <- solo ENTER, no cualquier tecla
+                if (arena.getFinAbsoluto()) {
+                    estado = EstadoJuego::FIN_PARTIDA;
+                }
+                else {
+                    bool finJuego = tablero.resultadoCombate(arena.getGanador());
+                    arena.limpiarJugadores();
+                    if (finJuego) {
+                        arena.setFinAbsoluto(tablero.getGanador()); // <- AQUÍ
+                    }
+                    else {
+                        estado = EstadoJuego::TABLERO;
+                    }
+                }
+            }
         }
         else {
             arena.tecla(key);
         }
-
         break;
+
+        ////ESTE ESC es para pruebas 
+        //if (key == 27) { //también para ir probando como cambia, revisar en siguientes versiones cuando desarrollemos la arena
+        //    estado = EstadoJuego::TABLERO;
+        //}
+        //else {
+        //    arena.tecla(key);
+        //}
+
+        //break;
     }
+    
     case EstadoJuego::OPCIONES:
     {
         MenuAccion accion = menuOpciones.tecla(key);

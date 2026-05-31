@@ -1,8 +1,9 @@
 #include "Valquiria.h"
 #include "Pieza.h"
 
-Valquiria::Valquiria(std::string nombre, Bando b) : Pieza(
+Valquiria::Valquiria(std::string nombre, TipoPieza tipo, Bando b) : Pieza(
     nombre,
+    tipo,
     Ataque::MODERADO,    
     Vida_maxima::MODERADA,     
     Velocidad::NORMAL,  
