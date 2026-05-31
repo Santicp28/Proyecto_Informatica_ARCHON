@@ -173,8 +173,8 @@ TableroAccion Tablero::tecla(unsigned char key)
             }
             break;
         }
-        //case '\x1B': case 'P': case 'p':// '\x1B'==ESC
-        //    return  TableroAccion::IR_PAUSA;
+        case '\x1B': case 'P': case 'p':// '\x1B'==ESC
+            return  TableroAccion::IR_PAUSA;
 
         case 'h':
         {
