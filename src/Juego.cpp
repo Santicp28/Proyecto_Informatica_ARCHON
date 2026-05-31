@@ -5,15 +5,14 @@
 #include "Tipos.h"
 #include "sonidos.h"
 
-
 Juego::Juego() :
     estado(EstadoJuego::MENU_PRINCIPAL),
     tablero(Config::sizeMundo.y*0.75),
 
-    menuPrincipal({ "JUGAR","OPCIONES","SALIR" }, { MenuAccion::JUGAR, MenuAccion::OPCIONES, MenuAccion::SALIR },
+    menuPrincipal({ "JUGAR","SALIR" }, { MenuAccion::JUGAR, MenuAccion::SALIR },
         Config::sizeMundo, Config::sizeMundo * 0.5, "ARCHON", { 0.0f, 0.0f, 0.0f }),
 	
-	menuPausa({ "CONTINUAR","OPCIONES","SALIR" }, { MenuAccion::CONTINUAR, MenuAccion::OPCIONES, MenuAccion::SALIR },
+	menuPausa({ "CONTINUAR","MENU", "SALIR" }, { MenuAccion::CONTINUAR, MenuAccion::IR_MENU_PRINCIPAL, MenuAccion::SALIR },
 		Config::sizeMundo, Config::sizeMundo * 0.5, "PAUSA", { 0.0f, 0.0f, 0.0f }),
 
 	menuFinPartida({ "JUGAR DE NUEVO","MENU","SALIR" }, { MenuAccion::JUGAR, MenuAccion::IR_MENU_PRINCIPAL, MenuAccion::SALIR },
@@ -51,11 +50,6 @@ void Juego::dibuja(const Renderer& renderer)
         arena.dibuja(renderer);
         break;
 
-    case EstadoJuego::OPCIONES:
-        glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        break;
-
 	case EstadoJuego::FIN_PARTIDA:
 		menuFinPartida.dibuja(renderer);
 		break;
@@ -73,24 +67,21 @@ void Juego::tecla(unsigned char key)
 {
     switch (estado)
     {
-    case EstadoJuego::MENU_PRINCIPAL:
-    {
-
-        MenuAccion accion = menuPrincipal.tecla(key);
-
-        switch (accion)
+        case EstadoJuego::MENU_PRINCIPAL:
         {
-        case MenuAccion::JUGAR:
-            estado = EstadoJuego::TABLERO;
-            break;
 
-        case MenuAccion::OPCIONES:
-            estado = EstadoJuego::ARENA;
-            break;
+            MenuAccion accion = menuPrincipal.tecla(key);
 
-        case MenuAccion::SALIR:
-            exit(0);
-            break;
+            switch (accion)
+            {
+            case MenuAccion::JUGAR:
+                tablero.inicializa();
+                estado = EstadoJuego::TABLERO;
+                break;
+
+            case MenuAccion::SALIR:
+                exit(0);
+                break;
 
         default:
             break;
@@ -158,61 +149,54 @@ void Juego::tecla(unsigned char key)
         //break;
     }
     
-    case EstadoJuego::OPCIONES:
-    {
-        if (key == 27) { //desarrollar esto al final
-            estado = EstadoJuego::MENU_PRINCIPAL;
-        }
-        break;
-    }
-    case EstadoJuego::PAUSA:
-    {
-        MenuAccion accion = menuPausa.tecla(key);
-        switch (accion)
+        case EstadoJuego::PAUSA:
         {
-        case MenuAccion::CONTINUAR:
-            estado = EstadoJuego::TABLERO;
-            break;
-        case MenuAccion::OPCIONES:
-            estado = EstadoJuego::OPCIONES;
-            break;
-        case MenuAccion::SALIR:
-            exit(0);
-            break;
-        default:
+            MenuAccion accion = menuPausa.tecla(key);
+            switch (accion)
+            {
+                case MenuAccion::CONTINUAR: {
+                    estado = EstadoJuego::TABLERO;
+                    break;
+                }  
+                case MenuAccion::IR_MENU_PRINCIPAL: {
+                    estado = EstadoJuego::MENU_PRINCIPAL;
+				    break;
+                }
+                case MenuAccion::SALIR:
+                    exit(0);
+                    break;
+                default:
+                    break;
+            }
             break;
         }
-        break;
-    }
-    case EstadoJuego::FIN_PARTIDA:
-    {
-        MenuAccion accion = menuFinPartida.tecla(key);
-        switch (accion)
+        case EstadoJuego::FIN_PARTIDA:
         {
-
-        case MenuAccion::JUGAR:
-            tablero.inicializa();
-            menuFinPartida.inicializa();
-            estado = EstadoJuego::TABLERO;
-            break;
-        case MenuAccion::IR_MENU_PRINCIPAL:
-            tablero.inicializa();          // resetea el tablero
-            menuFinPartida.inicializa();   // resetea el menu
-            estado = EstadoJuego::MENU_PRINCIPAL;
-            break;
-        case MenuAccion::SALIR:
-            exit(0);
-            break;
+            MenuAccion accion = menuFinPartida.tecla(key);
+            switch (accion)
+            {
+                case MenuAccion::JUGAR: {
+                    estado = EstadoJuego::TABLERO;
+                    tablero.inicializa();
+                    break;
+                }
+                case MenuAccion::IR_MENU_PRINCIPAL:{
+                    estado = EstadoJuego::MENU_PRINCIPAL;
+                    break;
+                }
+                case MenuAccion::SALIR: {
+                    exit(0);
+                    break;
+                }
+            }
         }
-        break;
-    }
     }
 }
 
 void Juego::teclaEspecial(int key)
 {
     if (estado == EstadoJuego::MENU_PRINCIPAL) {
-        menuPrincipal.teclaEspecial(key);
+        //menuPrincipal.teclaEspecial(key);
     }
     else if (estado == EstadoJuego::TABLERO) { //con esto conseguimos mover el cursor mediante las flechas en el teclado
         switch (key) {

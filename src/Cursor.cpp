@@ -13,6 +13,6 @@ void Cursor::dibuja(const Renderer& renderer, const Vector2D& esquinaSuperiorIzd
 		esquinaSuperiorIzda.y + (posicion.fila + 0.5) * longitudCasilla
 	};
 
-	if (b == Bando::LUZ) renderer.dibujaSprite("assets/Graficos/cursor_luz.PNG", centro, longitudCasilla, longitudCasilla);
-	else if (b == Bando::OSCURIDAD) renderer.dibujaSprite("assets/Graficos/cursor_osc.PNG", centro, longitudCasilla, longitudCasilla);
+	if (b == Bando::AZUL) renderer.dibujaSprite(cursor_AZUL.sprite, centro, longitudCasilla, longitudCasilla);
+	else if (b == Bando::ROJO) renderer.dibujaSprite(cursor_ROJO.sprite, centro, longitudCasilla, longitudCasilla);
 }

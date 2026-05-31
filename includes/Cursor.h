@@ -1,7 +1,7 @@
 #pragma once
 #include "Tipos.h"
 #include "Renderer.h"
-
+#include "Graftablero.h"
 
 class Cursor {
 	PosicionMatriz posicion;

@@ -7,55 +7,63 @@ using enum TipoCasilla;
 
 Tablero::Tablero(double longit):
 	longitud(longit), estadoTablero(EstadoTablero::TABLERO),
-	turnoActual(Bando::LUZ),
+	turnoActual(Bando::AZUL),
 	ganador(Bando::NINGUNO),
 	combatePendiente(false),
 	hayOrigenSeleccionado(false),
 	contadorTurnos(0),
     contadorTurnosParaCiclo(0),
 	ciclo({true}),
-    menuHechizosLuz({ "SALIR","TP","CURAR","TIEMPO","SWITCH","CARCEL","VASO_DE_AGUA" },
+    menuHechizosAZUL({ "SALIR","TP","CURAR","TIEMPO","SWITCH","CARCEL","V.AGUA" },
         { MenuAccion::SALIR, MenuAccion::TP, MenuAccion::CURAR, MenuAccion::CAMBIAR_TIEMPO, MenuAccion::INTERCAMBIAR, MenuAccion::ENCARCELAR, MenuAccion::VASO_DE_AGUA },
         { (Config::sizeMundo.x - Config::sizeMundo.y) * 0.5, Config::sizeMundo.y },
-        { (Config::sizeMundo.x - Config::sizeMundo.y) * 0.5 * 0.5, Config::sizeMundo.y * 0.5 }, "LUZ", { 1.0f, 0.0f, 0.0f }),
+        { (Config::sizeMundo.x - Config::sizeMundo.y) * 0.5 * 0.5, Config::sizeMundo.y * 0.5 }, "AZUL", { 1.0f, 0.0f, 0.0f }),
 
-    menuHechizosOscuridad({ "SALIR","TP","CURAR","TIEMPO","SWITCH","CARCEL","VASO_DE_AGUA" },
+    menuHechizosROJO({ "SALIR","TP","CURAR","TIEMPO","SWITCH","CARCEL","V.AGUA" },
         { MenuAccion::SALIR, MenuAccion::TP, MenuAccion::CURAR, MenuAccion::CAMBIAR_TIEMPO, MenuAccion::INTERCAMBIAR, MenuAccion::ENCARCELAR, MenuAccion::VASO_DE_AGUA },
         { (Config::sizeMundo.x - Config::sizeMundo.y) * 0.5, Config::sizeMundo.y },
-        { (Config::sizeMundo.x - Config::sizeMundo.y) * 0.5 * 0.5, Config::sizeMundo.y * 0.5 }, "OSC", { 0.0f, 1.0f, 0.0f })
+        { (Config::sizeMundo.x - Config::sizeMundo.y) * 0.5 * 0.5, Config::sizeMundo.y * 0.5 }, "ROJO", { 0.0f, 1.0f, 0.0f })
 {
 }
 
 
 void Tablero::inicializa()
 {
+
+    cursor.setPosicion({ 4, 0 });
+
     listaPiezas.destruirPiezas();
+
 	estadoTablero = EstadoTablero::TABLERO;
 
-	menuHechizosLuz.inicializa();
-	menuHechizosOscuridad.inicializa();
+	menuHechizosAZUL.inicializa();
+	menuHechizosROJO.inicializa();
+
+    contadorTurnos = 0;
+    contadorTurnosParaCiclo = 0; 
+    ciclo.valor = true;
 
 	ganador = Bando::NINGUNO;
-    turnoActual = Bando::LUZ;
+    turnoActual = Bando::AZUL;
 
 	combatePendiente = false;
     hayOrigenSeleccionado = false;
 
 	//INICIALIZA CASILLAS
-    constexpr TipoCasilla tipoCasillas[TAM][TAM] =
+    constexpr TipoCasilla tipoCasillas[TAM_TABLERO][TAM_TABLERO] =
     {
-     { OSCURA,     CLARA,     OSCURA,     OSCILANTE,  PODER,      OSCILANTE,  CLARA,     OSCURA,     CLARA     },
-     { CLARA,      OSCURA,    OSCILANTE,  CLARA,      OSCILANTE,  OSCURA,      OSCILANTE,  CLARA,    OSCURA      },
-     { OSCURA,     OSCILANTE, CLARA,      OSCURA,     OSCILANTE,  CLARA,     OSCURA,      OSCILANTE, CLARA     },
-     { OSCILANTE,  CLARA,     OSCURA,     CLARA,      OSCILANTE,  OSCURA,      CLARA,     OSCURA,     OSCILANTE  },
+     { ROJA,     AZUL,     ROJA,     OSCILANTE,  PODER,      OSCILANTE,  AZUL,     ROJA,     AZUL     },
+     { AZUL,      ROJA,    OSCILANTE,  AZUL,      OSCILANTE,  ROJA,      OSCILANTE,  AZUL,    ROJA      },
+     { ROJA,     OSCILANTE, AZUL,      ROJA,     OSCILANTE,  AZUL,     ROJA,      OSCILANTE, AZUL     },
+     { OSCILANTE,  AZUL,     ROJA,     AZUL,      OSCILANTE,  ROJA,      AZUL,     ROJA,     OSCILANTE  },
      { PODER,      OSCILANTE, OSCILANTE,  OSCILANTE,  PODER,      OSCILANTE,  OSCILANTE,  OSCILANTE, PODER      },
-     { OSCILANTE,  CLARA,     OSCURA,     CLARA,      OSCILANTE,  OSCURA,      CLARA,     OSCURA,     OSCILANTE  },
-     { OSCURA,     OSCILANTE, CLARA,      OSCURA,     OSCILANTE,  CLARA,     OSCURA,      OSCILANTE, CLARA     },
-     { CLARA,      OSCURA,    OSCILANTE,  CLARA,      OSCILANTE,  OSCURA,      OSCILANTE,  CLARA,    OSCURA      },
-     { OSCURA,     CLARA,     OSCURA,     OSCILANTE,  PODER,      OSCILANTE,  CLARA,     OSCURA,     CLARA     }
+     { OSCILANTE,  AZUL,     ROJA,     AZUL,      OSCILANTE,  ROJA,      AZUL,     ROJA,     OSCILANTE  },
+     { ROJA,     OSCILANTE, AZUL,      ROJA,     OSCILANTE,  AZUL,     ROJA,      OSCILANTE, AZUL     },
+     { AZUL,      ROJA,    OSCILANTE,  AZUL,      OSCILANTE,  ROJA,      OSCILANTE,  AZUL,    ROJA      },
+     { ROJA,     AZUL,     ROJA,     OSCILANTE,  PODER,      OSCILANTE,  AZUL,     ROJA,     AZUL     }
     };
-    for (int f = 0; f < TAM; f++) {
-        for (int c = 0; c < TAM; c++) {
+    for (int f = 0; f < TAM_TABLERO; f++) {
+        for (int c = 0; c < TAM_TABLERO; c++) {
             casillas[f][c].inicializa(tipoCasillas[f][c], { f, c });
         }
     }
@@ -113,26 +121,25 @@ void Tablero::inicializa()
 
     float referencia = (Config::anchoVentana + Config::altoVentana) * 0.5f;
 
-    panelStatsLuz = new PanelStats{
+    panelStatsAZUL = new PanelStats{
         {Config::sizeMundo.x * 0.12, Config::sizeMundo.y * 0.42},
         { posicion.x + longitud / 1.7, posicion.y - longitud / 1.7},
-        colorFondoPanel, colorTextoPanel, colorTituloPanelLuz, colorBordePanel, "LUZ"
+        colorFondoPanel, colorTextoPanel, colorTituloPanelAZUL, colorBordePanel, "AZUL"
     };
 
-    panelStatsOscuridad = new PanelStats{
+    panelStatsROJO = new PanelStats{
         {Config::sizeMundo.x * 0.12, Config::sizeMundo.y * 0.42},
         { posicion.x + longitud / 1.7, posicion.y - longitud / 1.9 + Config::sizeMundo.y * 0.42},
-		colorFondoPanel, colorTextoPanel, colorTituloPanelOscuridad, colorBordePanel, "OSCURIDAD"
+		colorFondoPanel, colorTextoPanel, colorTituloPanelROJO, colorBordePanel, "ROJO"
     };
 
 	//inicializo panel de stats con la pieza que está debajo del cursor al inicio
-	if (turnoActual == Bando::LUZ) actualizarPanelStats(panelStatsLuz, listaPiezas.getPiezaEnPosicion(cursor.getPosicion()));
-    else actualizarPanelStats(panelStatsOscuridad, listaPiezas.getPiezaEnPosicion(cursor.getPosicion()));
+	if (turnoActual == Bando::AZUL) actualizarPanelStats(panelStatsAZUL, listaPiezas.getPiezaEnPosicion(cursor.getPosicion()));
+    else actualizarPanelStats(panelStatsROJO, listaPiezas.getPiezaEnPosicion(cursor.getPosicion()));
 
     vamosUsarHechizo = false;
     limpiarHechizoSeleccionado();
-    mensajeEtapaActual = "Clara";
-    cursor.setPosicion({ 4, 0 });
+    mensajeEtapaActual = "Azul";
 }
 
 
@@ -146,6 +153,10 @@ TableroAccion Tablero::tecla(unsigned char key)
         {
         case '\r':// ENTER
         {
+            if (comprobarFinJuego()) {
+                return  TableroAccion::IR_FIN_PARTIDA;
+            }
+
             if (vamosUsarHechizo) {
 				if (hechizoSeleccionado.curar || hechizoSeleccionado.encarcelar || hechizoSeleccionado.vasoDeAgua) seleccionar1CasillaHechizos();
                 else if (hechizoSeleccionado.tp || hechizoSeleccionado.intercambiar) seleccionar2CasillasHechizos();
@@ -153,20 +164,18 @@ TableroAccion Tablero::tecla(unsigned char key)
             else seleccionarPiezasConCursor();
 
 
-            if (comprobarFinJuego()) {
-                return  TableroAccion::IR_FIN_PARTIDA;
-            }
+            
             //tablero avisa de que se he elegido combate, haciendo que juego ponga el estado ARENA y limpiando el flag del combate pendiente para no volver a entrar 
-            else if (hayCombatePendiente()) {
+            if (hayCombatePendiente()) {
                 limpiarCombatePendiente();
                 return TableroAccion::IR_ARENA;
             }
             break;
         }
-        //case '\x1B': case 'P': case 'p':// '\x1B'==ESC
-        //    return  TableroAccion::IR_PAUSA;
+        case '\x1B': case 'P': case 'p':// '\x1B'==ESC
+            return  TableroAccion::IR_PAUSA;
 
-        case 'h':
+        case 'h': case 'H':
         {
             if(hayOrigenSeleccionado) return TableroAccion::NINGUNA;
 
@@ -174,17 +183,23 @@ TableroAccion Tablero::tecla(unsigned char key)
 			Pieza* hechicero = listaPiezas.getPiezaPorTipo(TipoPieza::HECHICERO);
 			
             //si el que usa hechizos de cada bando está en la carcel o está muerto, no se pueden usar hechizos
-            if (turnoActual == Bando::LUZ) {
+            if (turnoActual == Bando::AZUL) {
 				if (mago == nullptr || mago->estaEncarcelada()) return TableroAccion::NINGUNA;
-                else estadoTablero = EstadoTablero::MENU_HECHIZOS;
+                else {
+                    menuHechizosAZUL.recolocarSeleccion();
+                    estadoTablero = EstadoTablero::MENU_HECHIZOS;
+                }
             }
-            else if (turnoActual == Bando::OSCURIDAD) {
+            else if (turnoActual == Bando::ROJO) {
                 if (hechicero == nullptr || hechicero->estaEncarcelada()) return TableroAccion::NINGUNA;
-				else estadoTablero = EstadoTablero::MENU_HECHIZOS;
+				else {
+                    menuHechizosROJO.recolocarSeleccion();
+                    estadoTablero = EstadoTablero::MENU_HECHIZOS;
+                }
             }
             break;
         }
-        case'f':
+        case'f': case 'F':
             return TableroAccion::IR_FIN_PARTIDA;
         default:
             return TableroAccion::NINGUNA;
@@ -194,10 +209,10 @@ TableroAccion Tablero::tecla(unsigned char key)
     case EstadoTablero::MENU_HECHIZOS:
     {
         MenuAccion accion = MenuAccion::NINGUNA;
-        if (turnoActual == Bando::LUZ)
-            accion = menuHechizosLuz.tecla(key);
-        else if (turnoActual == Bando::OSCURIDAD)
-            accion = menuHechizosOscuridad.tecla(key);
+        if (turnoActual == Bando::AZUL)
+            accion = menuHechizosAZUL.tecla(key);
+        else if (turnoActual == Bando::ROJO)
+            accion = menuHechizosROJO.tecla(key);
         switch (accion)
         {
         case MenuAccion::TP: {
@@ -217,6 +232,7 @@ TableroAccion Tablero::tecla(unsigned char key)
         case MenuAccion::CAMBIAR_TIEMPO: {
             limpiarHechizoSeleccionado();
             Hechizos::cambiarCiclo(ciclo, contadorTurnosParaCiclo, casillas);
+            aplicarDebuffPorUsoHechizo();
             vamosUsarHechizo = false;
             estadoTablero = EstadoTablero::TABLERO;
             cambiarTurno();
@@ -284,12 +300,12 @@ void Tablero::dibuja(const Renderer& renderer)const {
 
         renderer.dibujaTexto("Turno:",
             { xIzq, yBase }, { 0.0f, 0.0f, 0.0f }, 14, AlineacionTexto::CENTRADO);
-        renderer.dibujaTexto((turnoActual == Bando::LUZ) ? "LUZ" : "OSC",
+        renderer.dibujaTexto((turnoActual == Bando::AZUL) ? "AZUL" : "ROJO",
             { xIzq, yBase + 20 }, { 0.0f, 0.0f, 0.0f }, 14, AlineacionTexto::CENTRADO);
 
         renderer.dibujaTexto("Ciclo:",
             { xIzq, yBase + 50 }, { 0.0f, 0.0f, 0.0f }, 14, AlineacionTexto::CENTRADO);
-        renderer.dibujaTexto((ciclo.valor) ? "->OSC" : "->LUZ",
+        renderer.dibujaTexto((ciclo.valor) ? "->ROJO" : "->AZUL",
             { xIzq, yBase + 70 }, { 0.0f, 0.0f, 0.0f }, 14, AlineacionTexto::CENTRADO);
 
         renderer.dibujaTexto("Etapa:",
@@ -299,10 +315,10 @@ void Tablero::dibuja(const Renderer& renderer)const {
     }
 	
 
-    double longitudCasilla = longitud / TAM;
+    double longitudCasilla = longitud / TAM_TABLERO;
     Vector2D esquinaSuperiorIzda{ posicion.x - longitud / 2.0, posicion.y - longitud / 2.0 };
-    for (unsigned int f = 0; f < TAM; f++) {
-        for (unsigned int c = 0; c < TAM; c++) {
+    for (unsigned int f = 0; f < TAM_TABLERO; f++) {
+        for (unsigned int c = 0; c < TAM_TABLERO; c++) {
             Vector2D centroCasilla{ esquinaSuperiorIzda.x + (c + 0.5) * longitudCasilla, esquinaSuperiorIzda.y + (f + 0.5) * longitudCasilla };
              casillas[f][c].dibuja(renderer, centroCasilla, longitudCasilla);
         }
@@ -313,24 +329,27 @@ void Tablero::dibuja(const Renderer& renderer)const {
     dibujaOrigenSeleccionado(renderer, esquinaSuperiorIzda, longitudCasilla);
     cursor.dibuja(renderer, esquinaSuperiorIzda, longitudCasilla, turnoActual);
 
-	if (estadoTablero == EstadoTablero::MENU_HECHIZOS && turnoActual == Bando::LUZ) {
-		menuHechizosLuz.dibuja(renderer);
+	if (estadoTablero == EstadoTablero::MENU_HECHIZOS && turnoActual == Bando::AZUL) {
+		menuHechizosAZUL.dibuja(renderer);
 	}
-	else if (estadoTablero == EstadoTablero::MENU_HECHIZOS && turnoActual == Bando::OSCURIDAD) {
-		menuHechizosOscuridad.dibuja(renderer);
+	else if (estadoTablero == EstadoTablero::MENU_HECHIZOS && turnoActual == Bando::ROJO) {
+		menuHechizosROJO.dibuja(renderer);
 	}
 
-	panelStatsLuz->dibuja(renderer);
-	panelStatsOscuridad->dibuja(renderer);
+	panelStatsAZUL->dibuja(renderer);
+	panelStatsROJO->dibuja(renderer);
 
-    if (ganador == Bando::LUZ){
+    if (ganador == Bando::AZUL){
         renderer.dibujaSprite(finluz.sprite, posicion, Config::sizeMundo.x, Config::sizeMundo.y);
     }
-    else if (ganador == Bando::OSCURIDAD) {
+    else if (ganador == Bando::ROJO) {
         renderer.dibujaSprite(finoscuro.sprite, posicion, Config::sizeMundo.x, Config::sizeMundo.y);
     }
-    if (ganador != Bando::NINGUNO)
+    if (ganador != Bando::NINGUNO){
         renderer.dibujaTexto("TAB PARA CONTINUAR", { 40.0, 40.0 }, { 0.0f, 0.0f, 0.0f }, 20, AlineacionTexto::IZQUIERDA);
+    }
+	panelStatsAZUL->dibuja(renderer);
+	panelStatsROJO->dibuja(renderer);
 }
 
 
@@ -344,8 +363,8 @@ void Tablero::resaltarMovimientoPosible()
             return;
         }
 
-        for (int f = 0; f < TAM; f++) {
-            for (int c = 0; c < TAM; c++) {
+        for (int f = 0; f < TAM_TABLERO; f++) {
+            for (int c = 0; c < TAM_TABLERO; c++) {
                 PosicionMatriz destino_posible{ f,c };
 
                 if (movimientoLegal(origenSeleccionado, destino_posible)) {
@@ -362,8 +381,8 @@ void Tablero::resaltarMovimientoPosible()
 }
 
 void Tablero::limpiarResaltados() {
-    for (int f = 0; f < TAM; f++) {
-        for (int c = 0; c < TAM; c++) {
+    for (int f = 0; f < TAM_TABLERO; f++) {
+        for (int c = 0; c < TAM_TABLERO; c++) {
             casillas[f][c].setResaltada(false);
         }
     }
@@ -401,7 +420,7 @@ bool Tablero::moverPieza(PosicionMatriz origen, PosicionMatriz destino)
 
     //Si hay enemigo, no movemos todavía
     //Dejamos marcado que tiene que abrirse la arena
-    if (defensor != nullptr && defensor->getBando() != Bando::NINGUNO) {
+    if (defensor != nullptr) {
 		aplicarEfectoTipoCasilla(atacante, casillas[destino.fila][destino.columna]); 
         //Se actualizan los valores antes de entrar a la arena, ya que pelean en la casilla destino y esa es la que aplica.
 		//haciendo que si el atacante gana, se queda con la misma defensa con la que entraba (la de destino) y si el defensor gana se queda con la misma ya que no se mueve de casilla.
@@ -420,7 +439,7 @@ bool Tablero::moverPieza(PosicionMatriz origen, PosicionMatriz destino)
 
     //Movimiento normal
 	listaPiezas.moverDeCasilla(origen, destino);
-    aplicarEfectoTipoCasilla(listaPiezas.getPiezaEnPosicion(destino), casillas[destino.fila][destino.columna]); //para que se actualicen los valores de defensa y poder verlos en tiempo real, a efectos prácticos solo necesitamos aplicarlos antes de arena
+    aplicarEfectoTipoCasilla(listaPiezas.getPiezaEnPosicion(destino), casillas[destino.fila][destino.columna]); //para que se actualicen los valores de defensa y poder verlos en tiempo real, a efectos prácticos solo necesiTAM_TABLEROos aplicarlos antes de arena
 
     cambiarTurno();
 
@@ -517,27 +536,27 @@ void Tablero::moverCursor(int df, int dc)
 	Bando bandoPiezaEnCursor = (piezaEnCursor != nullptr) ? piezaEnCursor->getBando() : Bando::NINGUNO;
 
     if (!hayOrigenSeleccionado) {
-         if (bandoPiezaEnCursor == Bando::LUZ) {
-             actualizarPanelStats(panelStatsLuz, listaPiezas.getPiezaEnPosicion(cursor.getPosicion()));
-             actualizarPanelStats(panelStatsOscuridad, nullptr);
+         if (bandoPiezaEnCursor == Bando::AZUL) {
+             actualizarPanelStats(panelStatsAZUL, listaPiezas.getPiezaEnPosicion(cursor.getPosicion()));
+             actualizarPanelStats(panelStatsROJO, nullptr);
          }
-         else if (bandoPiezaEnCursor == Bando::OSCURIDAD) {
-             actualizarPanelStats(panelStatsLuz, nullptr);
-             actualizarPanelStats(panelStatsOscuridad, listaPiezas.getPiezaEnPosicion(cursor.getPosicion()));
+         else if (bandoPiezaEnCursor == Bando::ROJO) {
+             actualizarPanelStats(panelStatsAZUL, nullptr);
+             actualizarPanelStats(panelStatsROJO, listaPiezas.getPiezaEnPosicion(cursor.getPosicion()));
          }
          else {
-             actualizarPanelStats(panelStatsOscuridad, nullptr);
-			 actualizarPanelStats(panelStatsLuz, nullptr);
+             actualizarPanelStats(panelStatsROJO, nullptr);
+			 actualizarPanelStats(panelStatsAZUL, nullptr);
          }
     }
     else {
-        if (turnoActual == Bando::LUZ) {
-            if (bandoPiezaEnCursor == Bando::OSCURIDAD) actualizarPanelStats(panelStatsOscuridad, listaPiezas.getPiezaEnPosicion(cursor.getPosicion()));
-			else actualizarPanelStats(panelStatsOscuridad, nullptr);
+        if (turnoActual == Bando::AZUL) {
+            if (bandoPiezaEnCursor == Bando::ROJO) actualizarPanelStats(panelStatsROJO, listaPiezas.getPiezaEnPosicion(cursor.getPosicion()));
+			else actualizarPanelStats(panelStatsROJO, nullptr);
         }
         else {
-            if (bandoPiezaEnCursor == Bando::LUZ) actualizarPanelStats(panelStatsLuz, listaPiezas.getPiezaEnPosicion(cursor.getPosicion()));
-			else actualizarPanelStats(panelStatsLuz, nullptr);
+            if (bandoPiezaEnCursor == Bando::AZUL) actualizarPanelStats(panelStatsAZUL, listaPiezas.getPiezaEnPosicion(cursor.getPosicion()));
+			else actualizarPanelStats(panelStatsAZUL, nullptr);
 		}
     }
 }
@@ -556,11 +575,11 @@ void Tablero::seleccionarPiezasConCursor()
         origenSeleccionado = cursor.getPosicion();
         hayOrigenSeleccionado = true;
 
-        if (turnoActual == Bando::LUZ) {
-            actualizarPanelStats(panelStatsLuz, listaPiezas.getPiezaEnPosicion(origenSeleccionado));
+        if (turnoActual == Bando::AZUL) {
+            actualizarPanelStats(panelStatsAZUL, listaPiezas.getPiezaEnPosicion(origenSeleccionado));
         }
         else {
-            actualizarPanelStats(panelStatsOscuridad, listaPiezas.getPiezaEnPosicion(origenSeleccionado));
+            actualizarPanelStats(panelStatsROJO, listaPiezas.getPiezaEnPosicion(origenSeleccionado));
         }
 
 		resaltarMovimientoPosible();//actualizamos los movimientos posibles para el origen seleccionado, para luego mostrarlos en la parte gráfica
@@ -586,7 +605,7 @@ bool Tablero::posicionValida(PosicionMatriz pos) const
 {
     int fila = pos.fila;
     int col = pos.columna;
-    return fila >= 0 && fila < TAM && col >= 0 && col < TAM;
+    return fila >= 0 && fila < TAM_TABLERO && col >= 0 && col < TAM_TABLERO;
 }
 // ----------------- FUNCIONES DEL CURSOR ----------------- END
 
@@ -621,7 +640,7 @@ void Tablero::seleccionar1CasillaHechizos()
         if (piezaSeleccionada == nullptr) return; //hechizo de encarcelar solo se puede aplicar sobre una pieza
         if (piezaSeleccionada->getBando() == turnoActual) return; //solo puedo encarcelar una pieza del bando contrario
 
-        Hechizos::encarcelar(*piezaSeleccionada);
+        Hechizos::encarcelar(listaPiezas, *piezaSeleccionada);
     }
     else if (hechizoSeleccionado.vasoDeAgua) {
         if (piezaSeleccionada == nullptr) return; //hechizo de vasoDeAgua solo se puede aplicar sobre una pieza
@@ -630,6 +649,7 @@ void Tablero::seleccionar1CasillaHechizos()
         Hechizos::vasoDeAgua(*piezaSeleccionada);
     }
 
+    aplicarDebuffPorUsoHechizo();
     vamosUsarHechizo = false;
     limpiarHechizoSeleccionado();
     cambiarTurno();
@@ -671,6 +691,7 @@ void Tablero::seleccionar2CasillasHechizos()
         Hechizos::intercambiar(primeraCasillaHechizo, destinoHechizoSeleccionado, listaPiezas);
     }
 
+    aplicarDebuffPorUsoHechizo();
     vamosUsarHechizo = false;
     limpiarHechizoSeleccionado();
     cambiarTurno();
@@ -691,6 +712,19 @@ void Tablero::limpiarHechizoSeleccionado()
     primeraCasillaHechizo = { -1, -1 };
     destinoHechizoSeleccionado = { -1, -1 };
 }
+
+void Tablero::aplicarDebuffPorUsoHechizo() {
+    if (turnoActual == Bando::AZUL) {
+        Pieza* mago = listaPiezas.getPiezaPorTipo(TipoPieza::MAGO);
+        mago->setHaUsadoHechizo(true);
+		mago->setDefensa(mago->getDefensa() - 0.08); 
+    }
+    else if (turnoActual == Bando::ROJO) {
+        Pieza* hechicero = listaPiezas.getPiezaPorTipo(TipoPieza::HECHICERO);
+        hechicero->setHaUsadoHechizo(true);
+		hechicero->setDefensa(hechicero->getDefensa() - 0.08);
+    }    
+}
 // ------------------ FUNCIONES DE HECHIZOS ----------------- END
 
 
@@ -701,40 +735,33 @@ void Tablero::limpiarHechizoSeleccionado()
 //funcion para camiar de turno, se llama después de mover o terminar la arena
 void Tablero::cambiarTurno()
 {
-    //quitar entre estos coments 
-    static int llamada = 0;
-    printf("[cambiarTurno #%d] antes=%s\n", ++llamada, turnoActual == Bando::LUZ ? "LUZ" : "OSC");
-//quitar  
-    if (turnoActual == Bando::LUZ) {
-        turnoActual = Bando::OSCURIDAD;
-        cursor.setPosicion({ 4 , 8 }); //cursor en el lado de oscuridad
+    if (turnoActual == Bando::AZUL) {
+        turnoActual = Bando::ROJO;
+        cursor.setPosicion({ 4 , 8 }); //cursor en el lado de ROJO
     }
     else {
-        turnoActual = Bando::LUZ;
-        cursor.setPosicion({ 4 , 0 }) ; //cursor en el lado de luz
+        turnoActual = Bando::AZUL;
+        cursor.setPosicion({ 4 , 0 }) ; //cursor en el lado de AZUL
     }
 
     contadorTurnos++;
-    //
-    printf("[cambiarTurno #%d] despues=%s\n", llamada, turnoActual == Bando::LUZ ? "LUZ" : "OSC");
-    //
     cicloTurno();
     curaPasiva();
 
-    if (turnoActual == Bando::LUZ) {
-        actualizarPanelStats(panelStatsLuz, listaPiezas.getPiezaEnPosicion(cursor.getPosicion()));
-        actualizarPanelStats(panelStatsOscuridad, nullptr);
+    if (turnoActual == Bando::AZUL) {
+        actualizarPanelStats(panelStatsAZUL, listaPiezas.getPiezaEnPosicion(cursor.getPosicion()));
+        actualizarPanelStats(panelStatsROJO, nullptr);
     }
     else {
-        actualizarPanelStats(panelStatsLuz, nullptr);
-        actualizarPanelStats(panelStatsOscuridad, listaPiezas.getPiezaEnPosicion(cursor.getPosicion()));
+        actualizarPanelStats(panelStatsAZUL, nullptr);
+        actualizarPanelStats(panelStatsROJO, listaPiezas.getPiezaEnPosicion(cursor.getPosicion()));
 	}
 }
 
 void Tablero::cicloTurno()
 {
-    for (int f = 0; f < TAM; f++) {
-        for (int c = 0; c < TAM; c++) {
+    for (int f = 0; f < TAM_TABLERO; f++) {
+        for (int c = 0; c < TAM_TABLERO; c++) {
             casillas[f][c].cambiarOscilantes(ciclo.valor);
             Pieza* p = listaPiezas.getPiezaEnPosicion({ f,c });
             if (p != nullptr) {
@@ -751,38 +778,38 @@ void Tablero::cicloTurno()
 
     switch (contadorTurnosParaCiclo) {
         case 0:
-            mensajeEtapaActual = "Clara";
+            mensajeEtapaActual = "Azul";
 			break;
         case 1:
-            mensajeEtapaActual = "Bastante Clara";
+            mensajeEtapaActual = "Turquesa";
 			break;
         case 2:
-			mensajeEtapaActual = "Lig Clara";
+			mensajeEtapaActual = "Verde";
             break;
 		case 3:
-			mensajeEtapaActual = "Lig Oscura";
+			mensajeEtapaActual = "Amarilla";
             break;
 		case 4:
-            mensajeEtapaActual = "Bastante Oscura";
+            mensajeEtapaActual = "Naranja";
 			break;
         case 5:
-			mensajeEtapaActual = "Oscura";
+			mensajeEtapaActual = "Roja";
             break;
     }
 
-    for (int f = 0; f < TAM; f++) {
-        for (int c = 0; c < TAM; c++) {
+    for (int f = 0; f < TAM_TABLERO; f++) {
+        for (int c = 0; c < TAM_TABLERO; c++) {
             Pieza* p = listaPiezas.getPiezaEnPosicion({ f,c });
             if (p != nullptr) {
                 if (contadorTurnosParaCiclo == 0) {
                     if (p->estaMojada()) {
-                        p->setMojada(false); //si las oscilantes son claras, (momento de luz) se seca y pierde los efectos de mojado
+                        p->setMojada(false); //si las oscilantes son azules, (momento de AZUL) se seca y pierde los efectos de mojado
                         p->resetStats();
                     }
-                    if (p->getBando() == Bando::LUZ) p->setEncarcelada(false);
+                    if (p->getBando() == Bando::AZUL) p->setEncarcelada(false);
                 }
                 if (contadorTurnosParaCiclo == 5) {
-                    if (p->getBando() == Bando::OSCURIDAD) p->setEncarcelada(false);
+                    if (p->getBando() == Bando::ROJO) p->setEncarcelada(false);
                 }
             }
         }
@@ -794,12 +821,13 @@ void Tablero::limpiarCombatePendiente()
 {
     combatePendiente = false;
 }
+
 bool Tablero::resultadoCombate(Pieza* ganadorArena)
 {
     Pieza* enOrigen = listaPiezas.getPiezaEnPosicion(origenCombate);
     Pieza* enDestino = listaPiezas.getPiezaEnPosicion(destinoCombate);
 
-    if (ganadorArena ) {
+    if (ganadorArena) {
         Pieza* perdedor = (ganadorArena == enOrigen) ? enDestino : enOrigen;
         listaPiezas.piezaPierde(perdedor);
 
@@ -827,36 +855,36 @@ void Tablero::actualizarPanelStats(PanelStats* panel, const Pieza* pieza)
 
 Bando Tablero::comprobarCasillasDePoder()
 {
-	int contadorLuz = 0;
-	int contadorOscuridad = 0;
+	int contadorAZUL = 0;
+	int contadorROJO = 0;
 
-    for (int f = 0; f < TAM; f++) {
-        for (int c = 0; c < TAM; c++) {
+    for (int f = 0; f < TAM_TABLERO; f++) {
+        for (int c = 0; c < TAM_TABLERO; c++) {
             if (casillas[f][c].getTipo() == TipoCasilla::PODER) {
                 Pieza* p = listaPiezas.getPiezaEnPosicion({ f, c });
 
                 if (p != nullptr) {
-                    if (p->getBando() == Bando::LUZ) { contadorLuz++;} 
-                    else if (p->getBando() == Bando::OSCURIDAD) {contadorOscuridad++;}
+                    if (p->getBando() == Bando::AZUL) { contadorAZUL++;} 
+                    else if (p->getBando() == Bando::ROJO) {contadorROJO++;}
                 }
             }
         }
     }
 
-    if (contadorLuz == 5) { return Bando::LUZ; }
-	else if (contadorOscuridad == 5) { return Bando::OSCURIDAD; }
+    if (contadorAZUL == 5) { return Bando::AZUL; }
+	else if (contadorROJO == 5) { return Bando::ROJO; }
     else return Bando::NINGUNO;
 }   
 
 
 bool Tablero::comprobarFinJuego()
 {
-    if (listaPiezas.noQuedanPiezasDeBando(Bando::LUZ)) {
-		ganador = Bando::OSCURIDAD;
+    if (listaPiezas.noQuedanPiezasDeBando(Bando::AZUL)) {
+		ganador = Bando::ROJO;
         return true;
     }
-    else if (listaPiezas.noQuedanPiezasDeBando(Bando::OSCURIDAD)) {
-        ganador = Bando::LUZ;
+    else if (listaPiezas.noQuedanPiezasDeBando(Bando::ROJO)) {
+        ganador = Bando::AZUL;
         return true;
     }
 	else if ((ganador = comprobarCasillasDePoder()) != Bando::NINGUNO) {;
@@ -880,21 +908,24 @@ void Tablero::aplicarEfectoTipoCasilla(Pieza* p, const Casilla& c)
 {
     TipoCasilla tipo = c.getTipo();
 
-    if (p->getBando() == Bando::LUZ) {
-        if (tipo == TipoCasilla::CLARA) {if(!p->estaMojada()) p->setDefensa(1.55);}
-        else if ((tipo == TipoCasilla::BASTANTE_CLARA) && !p->estaMojada()) p->setDefensa(1.45);
-        else if ((tipo == TipoCasilla::LIGERAMENTE_CLARA) && !p->estaMojada()) p->setDefensa(1.25);
-        else if ((tipo == TipoCasilla::LIGERAMENTE_OSCURA) && !p->estaMojada()) p->setDefensa(1.0);
-        else if ((tipo == TipoCasilla::BASTANTE_OSCURA) && !p->estaMojada()) p->setDefensa(1.0);
-        else if ((tipo == TipoCasilla::OSCURA) && !p->estaMojada()) p->setDefensa(1.0);
+    bool condicion = (p->estaMojada() || p->haUsadoHechizo());
+    if (p->getBando() == Bando::AZUL) {
+        if (tipo == TipoCasilla::AZUL) {if(!condicion) p->setDefensa(1.55);}
+        else if ((tipo == TipoCasilla::TURQUESA) && !condicion) p->setDefensa(1.45);
+        else if ((tipo == TipoCasilla::VERDE) && !condicion) p->setDefensa(1.25);
+        else if ((tipo == TipoCasilla::AMARILLA) && !condicion) p->setDefensa(1.0);
+        else if ((tipo == TipoCasilla::NARANJA) && !condicion) p->setDefensa(1.0);
+        else if ((tipo == TipoCasilla::ROJA) && !condicion) p->setDefensa(1.0);
+		else if (tipo == TipoCasilla::PODER) p->setDefensa(1.0);
     }
-    else if (p->getBando() == Bando::OSCURIDAD) {
-        if (tipo == TipoCasilla::OSCURA) {if(!p->estaMojada()) p->setDefensa(1.55);}
-        else if ((tipo == TipoCasilla::BASTANTE_OSCURA) && !p->estaMojada()) p->setDefensa(1.45);
-        else if ((tipo == TipoCasilla::LIGERAMENTE_OSCURA) && !p->estaMojada()) p->setDefensa(1.25);
-        else if ((tipo == TipoCasilla::LIGERAMENTE_CLARA) && !p->estaMojada()) p->setDefensa(1.0);
-        else if ((tipo == TipoCasilla::BASTANTE_CLARA) && !p->estaMojada()) p->setDefensa(1.0);
-        else if ((tipo == TipoCasilla::CLARA) && !p->estaMojada()) p->setDefensa(1.0);
+    else if (p->getBando() == Bando::ROJO) {
+        if (tipo == TipoCasilla::ROJA) {if(!condicion) p->setDefensa(1.55);}
+        else if ((tipo == TipoCasilla::NARANJA) && !condicion) p->setDefensa(1.45);
+        else if ((tipo == TipoCasilla::AMARILLA) && !condicion) p->setDefensa(1.25);
+        else if ((tipo == TipoCasilla::VERDE) && !condicion) p->setDefensa(1.0);
+        else if ((tipo == TipoCasilla::TURQUESA) && !condicion) p->setDefensa(1.0);
+        else if ((tipo == TipoCasilla::AZUL) && !condicion) p->setDefensa(1.0);
+		else if (tipo == TipoCasilla::PODER) p->setDefensa(1.0);
     }
 
     //aplicar proteccion de hechizo
@@ -905,8 +936,8 @@ void Tablero::aplicarEfectoTipoCasilla(Pieza* p, const Casilla& c)
 
 void Tablero::curaPasiva()
 {
-    for (int f = 0; f < TAM; f++) {
-        for (int c = 0; c < TAM; c++) {
+    for (int f = 0; f < TAM_TABLERO; f++) {
+        for (int c = 0; c < TAM_TABLERO; c++) {
             Pieza* p = listaPiezas.getPiezaEnPosicion({ f,c });
             if (p != nullptr) {
                 if (casillas[f][c].getTipo() == TipoCasilla::PODER) p->curar(10.0);

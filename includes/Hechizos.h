@@ -14,11 +14,11 @@ struct HechizoQueVoyAUsar {
 
 namespace Hechizos {
 	//hechizos sin casilla
-	void cambiarCiclo(CicloLuz_A_Oscuridad& ciclo, int& contador, Casilla casillas[9][9]);
+	void cambiarCiclo(CicloAZUL_A_ROJO& ciclo, int& contador, Casilla casillas[9][9]);
 
 	//hechizos de 1 casilla
 	void curar(Pieza& p);
-	void encarcelar(Pieza& p);
+	void encarcelar(ListaPiezas& l, Pieza& p);
 	void vasoDeAgua(Pieza& p);
 
 	//hechizos de 2 casillas

@@ -6,7 +6,7 @@
 class Banshee : public Pieza 
 {
 public:
-    Banshee(std::string nombre = "Banshee", TipoPieza tipo = TipoPieza::BANSHEE, Bando b = Bando::OSCURIDAD);
+    Banshee(std::string nombre = "Banshee", Bando b = Bando::ROJO);
     void reproducirSonidoAtaque() const override { sfx_grito_banshee.play(); }
    
 };

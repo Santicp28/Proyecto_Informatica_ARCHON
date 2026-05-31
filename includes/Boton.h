@@ -2,6 +2,8 @@
 #include <string>
 #include "Vector2D.h"
 #include "Renderer.h"
+
+
 using std::string;
 
 class Boton

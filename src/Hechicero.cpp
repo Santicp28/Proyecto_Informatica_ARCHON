@@ -2,9 +2,9 @@
 #include "Pieza.h"
 
 
-Hechicero::Hechicero(std::string nombre, TipoPieza tipo, Bando b) : Pieza(
+Hechicero::Hechicero(std::string nombre, Bando b) : Pieza(
     nombre,
-    tipo,
+    TipoPieza::HECHICERO,
     Ataque::MODERADO,              
     Vida_maxima::MODERADA,                
     Velocidad::NORMAL,             

@@ -15,12 +15,12 @@ class Casilla
 
 
 	const ETSIDI::Sprite* variantes[7] = {
-			&clara.sprite,
-			&bastante_clara.sprite,
-			&ligeramente_clara.sprite,
-			&ligeramente_oscura.sprite,
-			&bastante_oscura.sprite,
-			&oscura.sprite,
+			&azul.sprite,
+			&turquesa.sprite,
+			&verde.sprite,
+			&amarilla.sprite,
+			&naranja.sprite,
+			&roja.sprite,
 			&casillaespecial.sprite
 	};
 

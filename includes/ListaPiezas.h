@@ -23,7 +23,12 @@ public:
 
     void dibujarPiezas(const Renderer& renderer, const Vector2D& esquinaSuperiorIzda, double longitudCasilla) const;
     
-
+    int cuantasPiezasQuedanDeBando(Bando b) const {
+        int contador = 0;
+        for (auto p : listaPiezas)
+            if (p != nullptr && p->getBando() == b) {contador++;}
+        return contador;
+	}
 
     //sirve para obtener la pieza que hay en una posición dada
     Pieza* getPiezaEnPosicion(PosicionMatriz pos) const {

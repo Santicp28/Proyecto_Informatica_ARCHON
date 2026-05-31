@@ -40,6 +40,7 @@ protected:
 	bool protegidoContraHechizos = false; 
 	bool encarcelada = false; 
     bool mojada = false;
+    bool UsadoHechizo = false;
 
 	bool enArena = false; 
 
@@ -55,7 +56,7 @@ protected:
 public:
     bool atacar{ false };
 
-    virtual void dibuja(const Renderer& renderer, const Vector2D& centro, double ancho, double alto) const;
+    void dibuja(const Renderer& renderer, const Vector2D& centro, double ancho, double alto) const;
 
     virtual const char* getSpriteAtaque() const { return nullptr; }
     virtual void reproducirSonidoAtaque() const { sfx_ataque_disparo.play(); }
@@ -145,6 +146,7 @@ public:
 	void setProteccionContraHechizos(bool protegido) { protegidoContraHechizos = protegido;}
 	void setEncarcelada(bool encarcelada) { this->encarcelada = encarcelada; }
 	void setMojada(bool mojada) { this->mojada = mojada; }
+	void setHaUsadoHechizo(bool haUsado) { UsadoHechizo = haUsado; }
 	void setEnArena(bool enArena) { this->enArena = enArena; }
 
 	void curar(double cantidad) { 
@@ -167,6 +169,8 @@ public:
 	bool estaProtegidoContraHechizos() const { return protegidoContraHechizos; }
 	bool estaEncarcelada() const { return encarcelada; }
 	bool estaMojada() const { return mojada; }
+	bool haUsadoHechizo() const { return UsadoHechizo; }
+
 	TipoPieza getTipo() const { return tipo; }
 
 	std::string getNombre() const { return nombre; }

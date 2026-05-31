@@ -1,9 +1,9 @@
 #include "Basilisco.h"
 #include "Pieza.h"
 
-Basilisco::Basilisco(std::string nombre, TipoPieza tipo, Bando b) : Pieza(
+Basilisco::Basilisco(std::string nombre, Bando b) : Pieza(
     nombre,
-    tipo,
+    TipoPieza::BASILISCO,
     Ataque::ALTO,                  
     Vida_maxima::CORTA,                   
     Velocidad::NORMAL,             

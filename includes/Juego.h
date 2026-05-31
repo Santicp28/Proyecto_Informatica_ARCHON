@@ -9,7 +9,6 @@ enum class EstadoJuego {
     MENU_PRINCIPAL,
     TABLERO,
     ARENA,
-    OPCIONES,
     PAUSA,
     FIN_PARTIDA
 };
