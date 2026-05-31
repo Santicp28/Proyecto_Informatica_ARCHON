@@ -28,7 +28,6 @@ bool InteraccionArena::colision(const Disparo& d, const Bordes& b)
     for (const Pared* pared : paredes) {
         Vector2D dir;
         double dif = pared->distancia(d.posicion_, &dir) - d.sizeradio_;
-        printf("dif: %f\n", dif);
         if (dif <= 0) return true;
     }
     return false;

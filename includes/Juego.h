@@ -37,6 +37,4 @@ public:
    
     EstadoJuego getEstado() const;
     void setEstado(EstadoJuego nuevoEstado);
-
-    bool arenaResultadoProcesado = false;
 };

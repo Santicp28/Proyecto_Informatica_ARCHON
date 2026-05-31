@@ -102,11 +102,13 @@ void Juego::tecla(unsigned char key)
 		case TableroAccion::IR_PAUSA:
 			estado = EstadoJuego::PAUSA;
 			break;
-		case TableroAccion::IR_ARENA:
-            printf("atacante: %p, defensor: %p\n", tablero.getAtacante(), tablero.getDefensor());
+        case TableroAccion::IR_ARENA:
             arena.inicializa(tablero.getAtacante(), tablero.getDefensor());
             estado = EstadoJuego::ARENA;
 			break;
+        case TableroAccion::IR_FIN_PARTIDA:
+            estado = EstadoJuego::FIN_PARTIDA;
+            break;
         default:
             break;
         }
@@ -121,14 +123,12 @@ void Juego::tecla(unsigned char key)
                 }
                 else {
                     bool finJuego = tablero.resultadoCombate(arena.getGanador());
-                    arenaResultadoProcesado = true;
                     arena.limpiarJugadores();
                     if (finJuego) {
                         arena.setFinAbsoluto(tablero.getGanador()); // <- AQUÍ
                     }
                     else {
                         estado = EstadoJuego::TABLERO;
-                        arenaResultadoProcesado = false;
                     }
                 }
             }

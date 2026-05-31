@@ -1,5 +1,18 @@
 #include "Arena.h"
-
+Arena::Arena() :
+	combateTerminado(false),
+	ganadorBando(0), 
+	menuCombateTerminado(
+		{ "TAB PARA CONTINUAR" },
+		{ MenuAccion::CONTINUAR },
+		Config::sizeMundo,
+		{Config::sizeMundo.x*0.5, Config::sizeMundo.y * 0.66},
+		"",
+		{ 1.0f, 1.0f, 1.0f }
+	)
+{
+	menuCombateTerminado.inicializa();
+}
 void Arena::inicializa(Pieza* p1, Pieza* p2)
 {
 	//----resetea las teclas----
@@ -206,10 +219,12 @@ void Arena::mueve(float dt)
 	if (jugador1->getVidaActual() <= 0) {
 		combateTerminado = true;
 		ganadorBando = 2;
+		ultimoGanador = jugador2;
 	}
 	else if (jugador2->getVidaActual() <= 0) {
 		combateTerminado = true;
 		ganadorBando = 1;
+		ultimoGanador = jugador1;
 	}
 
 	//-------ataque cuerpo a cuerpo ------
@@ -279,11 +294,11 @@ void Arena::dibuja(const Renderer& renderer) const
 		}
 		else {
 			if (ganadorBando == 1)
-				renderer.dibujaSprite(ganaluz.sprite, centro, size.x * 0.5, size.y * 0.3);
+				renderer.dibujaSprite(ganaluz.sprite, centro, size.x, size.y);
 			else if (ganadorBando == 2)
-				renderer.dibujaSprite(ganaoscuro.sprite, centro, size.x * 0.5, size.y * 0.3);
+				renderer.dibujaSprite(ganaoscuro.sprite, centro, size.x, size.y);
 		}
-		
+		menuCombateTerminado.dibuja(renderer);
 	}
 
 }
