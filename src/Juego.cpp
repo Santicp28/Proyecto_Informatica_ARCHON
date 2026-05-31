@@ -72,124 +72,132 @@ void Juego::tecla(unsigned char key)
 {
     switch (estado)
     {
-    case EstadoJuego::MENU_PRINCIPAL:
-    {
-
-        MenuAccion accion = menuPrincipal.tecla(key);
-
-        switch (accion)
+        case EstadoJuego::MENU_PRINCIPAL:
         {
-        case MenuAccion::JUGAR:
-            tablero.inicializa();
-            estado = EstadoJuego::TABLERO;
-            break;
 
-        case MenuAccion::OPCIONES:
-            estado = EstadoJuego::ARENA;
-            break;
+            MenuAccion accion = menuPrincipal.tecla(key);
 
-        case MenuAccion::SALIR:
-            exit(0);
-            break;
+            switch (accion)
+            {
+            case MenuAccion::JUGAR:
+                tablero.inicializa();
+                estado = EstadoJuego::TABLERO;
+                break;
 
-        default:
+            case MenuAccion::OPCIONES:
+                estado = EstadoJuego::ARENA;
+                break;
+
+            case MenuAccion::SALIR:
+                exit(0);
+                break;
+
+            default:
+                break;
+            }
             break;
         }
-        break;
-    }
-    case EstadoJuego::TABLERO:
-    {
-        TableroAccion accion = tablero.tecla(key);
-        switch (accion)
+        case EstadoJuego::TABLERO:
         {
-		case TableroAccion::IR_PAUSA:
-			estado = EstadoJuego::PAUSA;
-			break;
-        case TableroAccion::IR_ARENA:
-            arena.inicializa(tablero.getAtacante(), tablero.getDefensor());
-            estado = EstadoJuego::ARENA;
-			break;
-        case TableroAccion::IR_FIN_PARTIDA:
-            estado = EstadoJuego::FIN_PARTIDA;
-            break;
-        default:
+            TableroAccion accion = tablero.tecla(key);
+            switch (accion)
+            {
+		    case TableroAccion::IR_PAUSA:
+			    estado = EstadoJuego::PAUSA;
+			    break;
+            case TableroAccion::IR_ARENA:
+                arena.inicializa(tablero.getAtacante(), tablero.getDefensor());
+                estado = EstadoJuego::ARENA;
+			    break;
+            case TableroAccion::IR_FIN_PARTIDA:
+                estado = EstadoJuego::FIN_PARTIDA;
+                break;
+            default:
+                break;
+            }
             break;
         }
-        break;
-    }
-    case EstadoJuego::ARENA:
-    {
-        if (arena.terminado()) {
-            if (key == '\t') { // <- solo ENTER, no cualquier tecla
-                if (arena.getFinAbsoluto()) {
-                    estado = EstadoJuego::FIN_PARTIDA;
-                }
-                else {
-                    bool finJuego = tablero.resultadoCombate(arena.getGanador());
-                    arena.limpiarJugadores();
-                    if (finJuego) {
-                        arena.setFinAbsoluto(tablero.getGanador()); // <- AQUÍ
+        case EstadoJuego::ARENA:
+        {
+            if (arena.terminado()) {
+                if (key == '\t') { // <- solo ENTER, no cualquier tecla
+                    if (arena.getFinAbsoluto()) {
+                        estado = EstadoJuego::FIN_PARTIDA;
                     }
                     else {
-                        estado = EstadoJuego::TABLERO;
+                        bool finJuego = tablero.resultadoCombate(arena.getGanador());
+                        arena.limpiarJugadores();
+                        if (finJuego) {
+                            arena.setFinAbsoluto(tablero.getGanador()); // <- AQUÍ
+                        }
+                        else {
+                            estado = EstadoJuego::TABLERO;
+                        }
                     }
                 }
             }
-        }
-        else {
-            arena.tecla(key);
-        }
-        break;
+            else {
+                arena.tecla(key);
+            }
+            break;
 
-        ////ESTE ESC es para pruebas 
-        //if (key == 27) { //también para ir probando como cambia, revisar en siguientes versiones cuando desarrollemos la arena
-        //    estado = EstadoJuego::TABLERO;
-        //}
-        //else {
-        //    arena.tecla(key);
-        //}
+            ////ESTE ESC es para pruebas 
+            //if (key == 27) { //también para ir probando como cambia, revisar en siguientes versiones cuando desarrollemos la arena
+            //    estado = EstadoJuego::TABLERO;
+            //}
+            //else {
+            //    arena.tecla(key);
+            //}
 
-        //break;
-    }
+            //break;
+        }
     
-    case EstadoJuego::OPCIONES:
-    {
-        if (key == 27) { //desarrollar esto al final
-            estado = EstadoJuego::MENU_PRINCIPAL;
-        }
-        break;
-    }
-    case EstadoJuego::PAUSA:
-    {
-        MenuAccion accion = menuPausa.tecla(key);
-        switch (accion)
+        case EstadoJuego::OPCIONES:
         {
-        case MenuAccion::CONTINUAR:
-            estado = EstadoJuego::TABLERO;
-            break;
-        case MenuAccion::OPCIONES:
-            estado = EstadoJuego::OPCIONES;
-            break;
-        case MenuAccion::SALIR:
-            exit(0);
-            break;
-        default:
+            if (key == 27) { //desarrollar esto al final
+                estado = EstadoJuego::MENU_PRINCIPAL;
+            }
             break;
         }
-        break;
-    }
-    case EstadoJuego::FIN_PARTIDA:
-    {
-        MenuAccion accion = menuFinPartida.tecla(key);
-        switch (accion)
+        case EstadoJuego::PAUSA:
         {
-        case MenuAccion::JUGAR:
-            estado = EstadoJuego::TABLERO;
-            tablero.inicializa();
-            break; {//POR AQUI ME HE QUEDADO
+            MenuAccion accion = menuPausa.tecla(key);
+            switch (accion)
+            {
+            case MenuAccion::CONTINUAR:
+                estado = EstadoJuego::TABLERO;
+                break;
+            case MenuAccion::OPCIONES:
+                estado = EstadoJuego::OPCIONES;
+                break;
+            case MenuAccion::SALIR:
+                exit(0);
+                break;
+            default:
+                break;
+            }
+            break;
+        }
+        case EstadoJuego::FIN_PARTIDA:
+        {
+            MenuAccion accion = menuFinPartida.tecla(key);
+            switch (accion)
+            {
+                case MenuAccion::JUGAR: {
+                    estado = EstadoJuego::TABLERO;
+                    tablero.inicializa();
+                    break;
+                }
+                case MenuAccion::IR_MENU_PRINCIPAL:{
+                    estado = EstadoJuego::MENU_PRINCIPAL;
+                    break;
+                }
+                case MenuAccion::SALIR: {
+                    exit(0);
+                    break;
+                }
             }
         }
-    }
     }
 }
 

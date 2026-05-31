@@ -13,7 +13,7 @@ void Arena::inicializa(Pieza* p1, Pieza* p2)
 	std::fill(std::begin(teclasEspeciales), std::end(teclasEspeciales), false);
 	//resetea disparos
 	listaDisparos.limpiar();
-	if (p1->getBando() == Bando::LUZ) {
+	if (p1->getBando() == Bando::AZUL) {
 		jugador1 = p1;
 		jugador2 = p2;
 	}
@@ -312,6 +312,8 @@ void Arena::dibuja(const Renderer& renderer) const
 	renderer.dibujaSprite(mesa.sprite, centro, Config::sizeMundo.x, Config::sizeMundo.y);
 	renderer.dibujaSprite(pizarra.sprite, centro, size.x, size.y);
     //bordes.dibuja(renderer);
+
+	if (jugador1 == nullptr || jugador2 == nullptr) return;
     
 	renderer.dibujaTexto("vida: " + std::to_string(static_cast<int>(jugador1->getVidaActual())), { 20, 30 }, { 0.0f,0.0f,0.0f }, 20, AlineacionTexto::IZQUIERDA);
 	renderer.dibujaTexto("vida: " + std::to_string(static_cast<int>(jugador2->getVidaActual())), { 700, 30 }, { 0.0f,0.0f,0.0f }, 20, AlineacionTexto::IZQUIERDA);
@@ -333,7 +335,7 @@ void Arena::dibuja(const Renderer& renderer) const
 
 	if (combateTerminado) {
 		if (esFinAbsoluto) {
-			if (bandoGanadorAbsoluto == Bando::LUZ)
+			if (bandoGanadorAbsoluto == Bando::AZUL)
 				renderer.dibujaSprite(finluz.sprite, centro, size.x * 0.5, size.y * 0.3);
 			else
 				renderer.dibujaSprite(finoscuro.sprite, centro, size.x * 0.5, size.y * 0.3);

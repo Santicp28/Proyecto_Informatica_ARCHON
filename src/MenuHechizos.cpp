@@ -2,9 +2,9 @@
 #include "Renderer.h"
 
     
-MenuAccion MenuHechizos::tecla(unsigned char key)
+MenuAccion MenuHechizos::tecla(unsigned char key) 
 {
-    if (key == 'w')
+    if (key == 'w' || key == 'W')
     {
         botones[seleccionado].cambiarEstado();
         do {
@@ -16,7 +16,7 @@ MenuAccion MenuHechizos::tecla(unsigned char key)
         botones[seleccionado].cambiarEstado();
     }
         
-    if (key == 's')
+    if (key == 's' || key == 'S')
     {
         botones[seleccionado].cambiarEstado();
         do {

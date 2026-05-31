@@ -30,10 +30,19 @@ Tablero::Tablero(double longit):
 
 void Tablero::inicializa()
 {
+
+    cursor = { {4, 0} };
+
+    listaPiezas.destruirPiezas();
+
 	estadoTablero = EstadoTablero::TABLERO;
 
 	menuHechizosAZUL.inicializa();
 	menuHechizosROJO.inicializa();
+
+    contadorTurnos = 0;
+    contadorTurnosParaCiclo = 0; 
+    ciclo.valor = true;
 
 	ganador = Bando::NINGUNO;
     turnoActual = Bando::AZUL;
@@ -292,7 +301,7 @@ void Tablero::dibuja(const Renderer& renderer)const {
 
         renderer.dibujaTexto("Turno:",
             { xIzq, yBase }, { 0.0f, 0.0f, 0.0f }, 14, AlineacionTexto::CENTRADO);
-        renderer.dibujaTexto((turnoActual == Bando::LUZ) ? "AZUL" : "ROKO",
+        renderer.dibujaTexto((turnoActual == Bando::AZUL) ? "AZUL" : "ROJO",
             { xIzq, yBase + 20 }, { 0.0f, 0.0f, 0.0f }, 14, AlineacionTexto::CENTRADO);
 
         renderer.dibujaTexto("Ciclo:",
@@ -801,12 +810,13 @@ void Tablero::limpiarCombatePendiente()
 {
     combatePendiente = false;
 }
+
 bool Tablero::resultadoCombate(Pieza* ganadorArena)
 {
     Pieza* enOrigen = listaPiezas.getPiezaEnPosicion(origenCombate);
     Pieza* enDestino = listaPiezas.getPiezaEnPosicion(destinoCombate);
 
-    if (ganadorArena ) {
+    if (ganadorArena) {
         Pieza* perdedor = (ganadorArena == enOrigen) ? enDestino : enOrigen;
         listaPiezas.piezaPierde(perdedor);
 
