@@ -131,7 +131,7 @@ void Tablero::inicializa()
 
     vamosUsarHechizo = false;
     limpiarHechizoSeleccionado();
-    mensajeEtapaActual = "Clara";
+    mensajeEtapaActual = "AZUL";
 }
 
 
@@ -285,12 +285,12 @@ void Tablero::dibuja(const Renderer& renderer)const {
 
         renderer.dibujaTexto("Turno:",
             { xIzq, yBase }, { 0.0f, 0.0f, 0.0f }, 14, AlineacionTexto::CENTRADO);
-        renderer.dibujaTexto((turnoActual == Bando::LUZ) ? "LUZ" : "OSC",
+        renderer.dibujaTexto((turnoActual == Bando::LUZ) ? "AZUL" : "ROKO",
             { xIzq, yBase + 20 }, { 0.0f, 0.0f, 0.0f }, 14, AlineacionTexto::CENTRADO);
 
         renderer.dibujaTexto("Ciclo:",
             { xIzq, yBase + 50 }, { 0.0f, 0.0f, 0.0f }, 14, AlineacionTexto::CENTRADO);
-        renderer.dibujaTexto((ciclo.valor) ? "->OSC" : "->LUZ",
+        renderer.dibujaTexto((ciclo.valor) ? "->ROJO" : "->AZUL",
             { xIzq, yBase + 70 }, { 0.0f, 0.0f, 0.0f }, 14, AlineacionTexto::CENTRADO);
 
         renderer.dibujaTexto("Etapa:",
@@ -743,22 +743,22 @@ void Tablero::cicloTurno()
 
     switch (contadorTurnosParaCiclo) {
         case 0:
-            mensajeEtapaActual = "Clara";
+            mensajeEtapaActual = "AZUL";
 			break;
         case 1:
-            mensajeEtapaActual = "Bastante Clara";
+            mensajeEtapaActual = "TURQUESA";
 			break;
         case 2:
-			mensajeEtapaActual = "Lig Clara";
+			mensajeEtapaActual = "VERDE";
             break;
 		case 3:
-			mensajeEtapaActual = "Lig Oscura";
+			mensajeEtapaActual = "AMARILLO";
             break;
 		case 4:
-            mensajeEtapaActual = "Bastante Oscura";
+            mensajeEtapaActual = "NARANJA";
 			break;
         case 5:
-			mensajeEtapaActual = "Oscura";
+			mensajeEtapaActual = "ROJO";
             break;
     }
 

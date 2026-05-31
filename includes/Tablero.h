@@ -90,7 +90,7 @@ class Tablero {
 
     CicloLuz_A_Oscuridad ciclo;
 
-	std::string mensajeEtapaActual = "Clara";
+	std::string mensajeEtapaActual = "AZUL";
 
 public:
     Tablero(double longit);
