@@ -313,6 +313,8 @@ void Arena::dibuja(const Renderer& renderer) const
 	renderer.dibujaSprite(pizarra.sprite, centro, size.x, size.y);
     //bordes.dibuja(renderer);
     
+	renderer.dibujaTexto("vida: " + std::to_string(static_cast<int>(jugador1->getVidaActual())), { 20, 30 }, { 0.0f,0.0f,0.0f }, 20, AlineacionTexto::IZQUIERDA);
+	renderer.dibujaTexto("vida: " + std::to_string(static_cast<int>(jugador2->getVidaActual())), { 700, 30 }, { 0.0f,0.0f,0.0f }, 20, AlineacionTexto::IZQUIERDA);
 
 	listaObstaculos.dibuja(renderer);
 	listaDisparos.dibuja(renderer);
