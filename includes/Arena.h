@@ -12,7 +12,6 @@
 #include "ListaDisparos.h"
 #include "ListaObstaculos.h"
 #include "Grafarena.h"
-#include "Menu.h"
 
 using std::vector;
 
@@ -28,7 +27,6 @@ class Arena
 	const Bordes bordes{ size * 0.7, centro };
 	ListaDisparos listaDisparos;
 	ListaObstaculos listaObstaculos;
-	Menu menuCombateTerminado;
 	bool combateTerminado; //si empate o uno muerto
 	int  ganadorBando;     // 1 = LUZ, 2 = OSCURIDAD, 0 = en curso
 

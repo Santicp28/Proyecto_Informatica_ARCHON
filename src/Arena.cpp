@@ -1,17 +1,8 @@
 #include "Arena.h"
 Arena::Arena() :
 	combateTerminado(false),
-	ganadorBando(0), 
-	menuCombateTerminado(
-		{ "TAB PARA CONTINUAR" },
-		{ MenuAccion::CONTINUAR },
-		Config::sizeMundo,
-		{Config::sizeMundo.x*0.5, Config::sizeMundo.y * 0.66},
-		"",
-		{ 1.0f, 1.0f, 1.0f }
-	)
+	ganadorBando(0)
 {
-	menuCombateTerminado.inicializa();
 }
 void Arena::inicializa(Pieza* p1, Pieza* p2)
 {
@@ -298,7 +289,7 @@ void Arena::dibuja(const Renderer& renderer) const
 			else if (ganadorBando == 2)
 				renderer.dibujaSprite(ganaoscuro.sprite, centro, size.x, size.y);
 		}
-		menuCombateTerminado.dibuja(renderer);
+		renderer.dibujaTexto("TAB PARA CONTINUAR", { 40.0, 40.0 }, { 0.0f, 0.0f, 0.0f }, 20, AlineacionTexto::IZQUIERDA);
 	}
 
 }
