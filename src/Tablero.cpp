@@ -153,10 +153,7 @@ TableroAccion Tablero::tecla(unsigned char key)
         {
         case '\r':// ENTER
         {
-            if (comprobarFinJuego()) {
-                return  TableroAccion::IR_FIN_PARTIDA;
-            }
-
+           
             if (vamosUsarHechizo) {
 				if (hechizoSeleccionado.curar || hechizoSeleccionado.encarcelar || hechizoSeleccionado.vasoDeAgua) seleccionar1CasillaHechizos();
                 else if (hechizoSeleccionado.tp || hechizoSeleccionado.intercambiar) seleccionar2CasillasHechizos();
@@ -348,8 +345,6 @@ void Tablero::dibuja(const Renderer& renderer)const {
     if (ganador != Bando::NINGUNO){
         renderer.dibujaTexto("TAB PARA CONTINUAR", { 40.0, 40.0 }, { 0.0f, 0.0f, 0.0f }, 20, AlineacionTexto::IZQUIERDA);
     }
-	panelStatsAZUL->dibuja(renderer);
-	panelStatsROJO->dibuja(renderer);
 }
 
 
@@ -440,7 +435,7 @@ bool Tablero::moverPieza(PosicionMatriz origen, PosicionMatriz destino)
     //Movimiento normal
 	listaPiezas.moverDeCasilla(origen, destino);
     aplicarEfectoTipoCasilla(listaPiezas.getPiezaEnPosicion(destino), casillas[destino.fila][destino.columna]); //para que se actualicen los valores de defensa y poder verlos en tiempo real, a efectos prácticos solo necesiTAM_TABLEROos aplicarlos antes de arena
-
+    comprobarFinJuego();
     cambiarTurno();
 
 
