@@ -72,7 +72,6 @@ class Tablero {
 
 	bool hayPrimeraCasillaHechizo = false;
 
-    std::vector<PosicionMatriz> movimientosPosibles;
 
 	//flag cuando dos piezas de bandos opuestos se encuentran en la misma casilla
     bool combatePendiente;

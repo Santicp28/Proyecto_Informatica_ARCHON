@@ -368,7 +368,6 @@ void Tablero::resaltarMovimientoPosible()
                 PosicionMatriz destino_posible{ f,c };
 
                 if (movimientoLegal(origenSeleccionado, destino_posible)) {
-                    movimientosPosibles.push_back(destino_posible);
                     casillas[f][c].setResaltada(true);
                 }
             }
@@ -386,7 +385,6 @@ void Tablero::limpiarResaltados() {
             casillas[f][c].setResaltada(false);
         }
     }
-    movimientosPosibles.clear();
 }
 
 void Tablero::dibujaOrigenSeleccionado(const Renderer& renderer, const Vector2D& esquinaSuperiorIzda, double longitud) const
