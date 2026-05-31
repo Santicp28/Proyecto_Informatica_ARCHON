@@ -169,10 +169,8 @@ xcopy "$(ProjectDir)assets\Graficos" "$(OutDir)Graficos" /E /I /Y</Command>
     <ClCompile Include="src\Hechicero.cpp" />
     <ClCompile Include="src\Hechizos.cpp" />
     <ClCompile Include="src\ListaDisparos.cpp" />
-    <ClCompile Include="src\ListaObstaculos.cpp" />
     <ClCompile Include="src\ListaPiezas.cpp" />
     <ClCompile Include="src\Manticora.cpp" />
-    <ClCompile Include="src\ObjetoMovil.cpp" />
     <ClCompile Include="src\Obstaculo.cpp" />
     <ClCompile Include="src\PanelStats.cpp" />
     <ClCompile Include="src\Renderer.cpp" />

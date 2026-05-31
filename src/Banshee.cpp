@@ -13,5 +13,5 @@ Banshee::Banshee(std::string nombre, TipoPieza tipo, Bando b) : Pieza(
     b,                             
     TipoMovimiento::VUELA           
 ) {
-    grito = new GritoArea();
+    grito = new GritoArea(80.0, 2.0); 
 }
