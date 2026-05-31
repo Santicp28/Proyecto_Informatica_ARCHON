@@ -113,3 +113,12 @@ void ContenedorSprites::descargarContenedorSprites()//destruir el objeto Sprite 
 	spriteDragon.reset();
 	spriteDuende.reset();
 }
+
+void ContenedorSprites::cambiarModo()
+{
+	cargado = !cargado;
+	if (cargado)
+		cargarContenedorSprites();
+	else
+		descargarContenedorSprites();
+}

@@ -66,7 +66,7 @@ struct ContenedorSprites//equivalente a Sprite* spriteCuerpo= nullptr;
 
 	ContenedorSprites(bool cargad = false) : cargado(cargad) {}
 	bool modoCargado() const { return cargado; }
-	void cambiarModo() { cargado = !cargado; }
+	void cambiarModo();
 	void cargarContenedorSprites();
 	void descargarContenedorSprites();
 };
