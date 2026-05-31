@@ -336,18 +336,18 @@ void Tablero::dibuja(const Renderer& renderer)const {
 		menuHechizosROJO.dibuja(renderer);
 	}
 
-	panelStatsLuz->dibuja(renderer);
-	panelStatsOscuridad->dibuja(renderer);
+	panelStatsAZUL->dibuja(renderer);
+	panelStatsROJO->dibuja(renderer);
 
-    if (ganador == Bando::LUZ){
+    if (ganador == Bando::AZUL){
         renderer.dibujaSprite(finluz.sprite, posicion, Config::sizeMundo.x, Config::sizeMundo.y);
     }
-    else if (ganador == Bando::OSCURIDAD) {
+    else if (ganador == Bando::ROJO) {
         renderer.dibujaSprite(finoscuro.sprite, posicion, Config::sizeMundo.x, Config::sizeMundo.y);
     }
-    if (ganador != Bando::NINGUNO)
+    if (ganador != Bando::NINGUNO){
         renderer.dibujaTexto("TAB PARA CONTINUAR", { 40.0, 40.0 }, { 0.0f, 0.0f, 0.0f }, 20, AlineacionTexto::IZQUIERDA);
-}
+    }
 	panelStatsAZUL->dibuja(renderer);
 	panelStatsROJO->dibuja(renderer);
 }
@@ -640,7 +640,7 @@ void Tablero::seleccionar1CasillaHechizos()
         if (piezaSeleccionada == nullptr) return; //hechizo de encarcelar solo se puede aplicar sobre una pieza
         if (piezaSeleccionada->getBando() == turnoActual) return; //solo puedo encarcelar una pieza del bando contrario
 
-        Hechizos::encarcelar(*piezaSeleccionada);
+        Hechizos::encarcelar(listaPiezas, *piezaSeleccionada);
     }
     else if (hechizoSeleccionado.vasoDeAgua) {
         if (piezaSeleccionada == nullptr) return; //hechizo de vasoDeAgua solo se puede aplicar sobre una pieza
