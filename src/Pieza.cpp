@@ -64,12 +64,10 @@ bool Pieza::puedeMoverseA(PosicionMatriz destino) {
     }
 }    
 bool Pieza::puedeDisparar() {
-    printf("[DISPARO] atacar=%d esAtaqueMelee=%d tiempoDesde=%.2f cadencia=%.2f\n",
-        atacar, esAtaqueMelee(), tiempoDesdeUltimoDisparo, cadencia);
 
 	if (!atacar) return false; 
     if (esAtaqueMelee()) return false;
-    //if (esAtaqueArea())return false;
+    if (esAtaqueArea())return false;
     if (tiempoDesdeUltimoDisparo >= cadencia) {
 		tiempoDesdeUltimoDisparo = 0.0; 
 		return true;
@@ -89,18 +87,11 @@ void Pieza::actualizarGolpe(double dt)
     if (golpe->getAngulo() >= 45 - 1.0)  
         golpeYaConecto = false;
 }
-//
-//void Pieza::actualizarGolpe(double dt)
-//{
-//    if (!golpe) return;
-//    bool yaEstabaExtendido = golpe->getAngulo() <= 10.0;
-//    golpe->actualizar(atacar, dt);
-//    bool ahoraExtendido = golpe->getAngulo() <= 10.0;
-//    golpeConectado = (!yaEstabaExtendido && ahoraExtendido);
-//
-//    printf("[GOLPE] angulo=%.2f atacar=%d golpeConectado=%d golpeYaConecto=%d\n",
-//        golpe->getAngulo(), atacar, golpeConectado, golpeYaConecto);
-//
-//    if (golpe->getAngulo() >= 44.0)
-//        golpeYaConecto = false;
-//}
+
+void Pieza::resetEstadoArena()
+{
+    velocidad_ = { 0, 0 };
+    atacar = false;
+    golpeYaConecto = false;
+    tiempoDesdeUltimoDisparo = 999.0;
+}

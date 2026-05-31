@@ -90,7 +90,7 @@ class Tablero {
 
     CicloAZUL_A_ROJO ciclo;
 
-	std::string mensajeEtapaActual;
+	std::string mensajeEtapaActual = "Clara";
 
 public:
     Tablero(double longit);
@@ -126,6 +126,8 @@ public:
     Bando getTurnoActual() const;
 
 	Bando getGanador() const { return ganador; }
+
+    bool resultadoCombate(Pieza* ganadorArena);
 	// ------- GETTERS ------ END
 
 
@@ -153,9 +155,8 @@ private:
     void seleccionarPiezasConCursor();
 
     bool posicionValida(PosicionMatriz pos) const;   //para asegurarnos que no nos salimos del tablero
-    // ----- FUNCIONES DE SELECCIÓN DE PIEZAS ------ END
-
-
+	// ----- FUNCIONES DE CURSOR Y SELECCIÓN ------ END
+    
 
     // ----- FUNCIONES PARA HECHIZOS ----- START
    /* void seleccionar0CasillaHechizos(); */
@@ -179,6 +180,8 @@ private:
     Bando comprobarCasillasDePoder();
 
     bool comprobarFinJuego();
+
+    // ------ FUNCIONES MISCELÁNEAS ------ END
 
     //para después de mover o terminar la arena
     //hacer una funcion para cuando se termina el combate y aplicar los resultados

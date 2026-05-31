@@ -1,6 +1,8 @@
 #pragma once
 #include "Pieza.h"
 #include "Grafpiezas.h"
+#include "sonidos.h"
+
 class Mago : public Pieza
 {
 public:
@@ -8,5 +10,6 @@ public:
     
 
     const char* getSpriteAtaque() const override { return mago.grafAtaque; }
+    void reproducirSonidoAtaque() const override { sfx_ataque_fuego.play(); }
 
 };

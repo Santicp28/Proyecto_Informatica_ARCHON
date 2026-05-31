@@ -43,7 +43,7 @@ inline constexpr TiposPiezas fenix = {
 };
 
 inline constexpr TiposPiezas caballero = {
-	"assets/Graficos/caballero.png",
+	"assets/Graficos/caballero1.png",
 	"assets/Graficos/espada.PNG"
 };
 
@@ -76,7 +76,7 @@ inline constexpr TiposPiezas banshee = {
 
 inline constexpr TiposPiezas cambiaforma = {
 	"assets/Graficos/cambiaformas.png",
-	"assets/Graficos/"
+	"assets/Graficos/espejo2.png"
 };
 
 inline constexpr TiposPiezas dragon = {
@@ -85,6 +85,6 @@ inline constexpr TiposPiezas dragon = {
 };
 
 inline constexpr TiposPiezas duende = {
-	"assets/Graficos/duende.png",
+	"assets/Graficos/duende1.png",
 	"assets/Graficos/garrote.PNG"
 };

@@ -131,6 +131,7 @@ void Tablero::inicializa()
 
     vamosUsarHechizo = false;
     limpiarHechizoSeleccionado();
+    mensajeEtapaActual = "Clara";
 }
 
 
@@ -276,12 +277,31 @@ void Tablero::dibuja(const Renderer& renderer)const {
     renderer.dibujaSprite(hoja.sprite, posicion, Config::sizeMundo.x * 0.6, Config::sizeMundo.y * 0.8);
 
 	if (estadoTablero != EstadoTablero::MENU_HECHIZOS) {
-        renderer.dibujaTexto("Turno de:" + std::string((turnoActual == Bando::AZUL) ? "AZUL" : "ROJO"),
-            { (Config::sizeMundo.x - Config::sizeMundo.y) * 0.5 * 0.5, Config::sizeMundo.y * 0.5 - 20 }, { 0.0f, 0.0f, 0.0f }, 20, AlineacionTexto::CENTRADO);
-        renderer.dibujaTexto("Ciclo hacia:" + std::string((ciclo.valor) ? "ROJO" : "AZUL"),
-            { (Config::sizeMundo.x - Config::sizeMundo.y) * 0.5 * 0.5, Config::sizeMundo.y * 0.5 }, { 0.0f, 0.0f, 0.0f }, 16, AlineacionTexto::CENTRADO);
+
+        double xIzq = (Config::sizeMundo.x - Config::sizeMundo.y) - 100;
+        double yBase = Config::sizeMundo.y - 400;
+
+        /*renderer.dibujaTexto("Turno de:" + std::string((turnoActual == Bando::LUZ) ? "LUZ" : "OSCURIDAD"),
+            { xIzq, yBase }, { 0.0f, 0.0f, 0.0f }, 14, AlineacionTexto::CENTRADO);
+        renderer.dibujaTexto("Ciclo hacia:" + std::string((ciclo.valor) ? "OSCURIDAD" : "LUZ"),
+            { xIzq, yBase + 30 }, { 0.0f, 0.0f, 0.0f }, 14, AlineacionTexto::CENTRADO);
         renderer.dibujaTexto("Etapa:" + mensajeEtapaActual,
-            { (Config::sizeMundo.x - Config::sizeMundo.y) * 0.5 * 0.5, Config::sizeMundo.y * 0.5 + 20 }, { 0.0f, 0.0f, 0.0f }, 16, AlineacionTexto::CENTRADO);
+            { xIzq, yBase + 60 }, { 0.0f, 0.0f, 0.0f }, 14, AlineacionTexto::CENTRADO);*/
+
+        renderer.dibujaTexto("Turno:",
+            { xIzq, yBase }, { 0.0f, 0.0f, 0.0f }, 14, AlineacionTexto::CENTRADO);
+        renderer.dibujaTexto((turnoActual == Bando::LUZ) ? "LUZ" : "OSC",
+            { xIzq, yBase + 20 }, { 0.0f, 0.0f, 0.0f }, 14, AlineacionTexto::CENTRADO);
+
+        renderer.dibujaTexto("Ciclo:",
+            { xIzq, yBase + 50 }, { 0.0f, 0.0f, 0.0f }, 14, AlineacionTexto::CENTRADO);
+        renderer.dibujaTexto((ciclo.valor) ? "->OSC" : "->LUZ",
+            { xIzq, yBase + 70 }, { 0.0f, 0.0f, 0.0f }, 14, AlineacionTexto::CENTRADO);
+
+        renderer.dibujaTexto("Etapa:",
+            { xIzq, yBase + 100 }, { 0.0f, 0.0f, 0.0f }, 14, AlineacionTexto::CENTRADO);
+        renderer.dibujaTexto(mensajeEtapaActual,
+            { xIzq, yBase + 120 }, { 0.0f, 0.0f, 0.0f }, 12, AlineacionTexto::CENTRADO);
     }
 	
 
@@ -384,6 +404,8 @@ bool Tablero::moverPieza(PosicionMatriz origen, PosicionMatriz destino)
 		//haciendo que si el atacante gana, se queda con la misma defensa con la que entraba (la de destino) y si el defensor gana se queda con la misma ya que no se mueve de casilla.
 
         combatePendiente = true; //FLAG PARA CAMBIAR A ARENA
+        printf("combate pendiente activado, origen=(%d,%d) destino=(%d,%d)\n",
+            origen.fila, origen.columna, destino.fila, destino.columna);
         origenCombate = origen;
         destinoCombate = destino;
 
@@ -751,9 +773,6 @@ void Tablero::cicloTurno()
         case 5:
 			mensajeEtapaActual = "Roja";
             break;
-        default:
-            mensajeEtapaActual = "";
-			break;
     }
 
     for (int f = 0; f < TAM_TABLERO; f++) {
@@ -780,7 +799,27 @@ void Tablero::limpiarCombatePendiente()
 {
     combatePendiente = false;
 }
+bool Tablero::resultadoCombate(Pieza* ganadorArena)
+{
+    Pieza* enOrigen = listaPiezas.getPiezaEnPosicion(origenCombate);
+    Pieza* enDestino = listaPiezas.getPiezaEnPosicion(destinoCombate);
 
+    if (ganadorArena ) {
+        Pieza* perdedor = (ganadorArena == enOrigen) ? enDestino : enOrigen;
+        listaPiezas.piezaPierde(perdedor);
+
+        if (ganadorArena == enOrigen)
+            listaPiezas.moverDeCasilla(origenCombate, destinoCombate);
+    }
+
+    enOrigen->resetEstadoArena();
+    //enOrigen->setEnArena(false);
+    enDestino->resetEstadoArena();
+    //enDestino->setEnArena(false);
+    bool finJuego = comprobarFinJuego();
+    cambiarTurno();
+    return finJuego;
+}
 
 void Tablero::actualizarPanelStats(PanelStats* panel, const Pieza* pieza)
 {
@@ -866,10 +905,6 @@ void Tablero::aplicarEfectoTipoCasilla(Pieza* p, const Casilla& c)
     //aplicar proteccion de hechizo
     if (c.getTipo() == TipoCasilla::PODER) p->setProteccionContraHechizos(true);
     else p->setProteccionContraHechizos(false);
-
-
-
-
 }
 
 

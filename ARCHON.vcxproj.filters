@@ -308,6 +308,9 @@
     <ClInclude Include="includes\Obstaculo.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="includes\sonidos.h">
+      <Filter>Archivos de encabezado\Graficos</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include=".getignore" />

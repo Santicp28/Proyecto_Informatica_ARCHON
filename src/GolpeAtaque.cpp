@@ -31,16 +31,22 @@ Vector2D GolpeAtaque::getPunta(const Vector2D& posJugador, const Vector2D& dir) 
 }
 
 void GolpeAtaque::dibuja(const Renderer& renderer, const Vector2D& posJugador,
-    const Vector2D& dir) const {
-    double t = anguloGolpe / ANGULO_MAX; // posicion inicial es 45º y final es en 0º
+    const Vector2D& dir) const
+{
+    double t = anguloGolpe / ANGULO_MAX;
 
     Vector2D dirHorizontal = (dir.x < 0) ? Vector2D{ -1.0, 0.0 } : Vector2D{ 1.0, 0.0 };
     Vector2D arriba{ 0.0, -1.0 };
 
-    // hace el arco desde 45º a 0º
     Vector2D dirEspada = (dirHorizontal * (1.0 - t) + arriba * t).unitario();
     Vector2D punta = posJugador + dirEspada * longitud;
+    Vector2D centroEspada = posJugador + dirEspada * (longitud * 0.5);
 
-    renderer.dibujaLinea(posJugador, punta, { 1.0f, 1.0f, 0.0f });
-
+    if (sprite) {
+        double angulo = std::atan2(dirEspada.y, dirEspada.x) * (180.0 / Config::PI) + 90.0;
+        renderer.dibujaSpriteRotado(sprite, posJugador, longitud+0.2, longitud, angulo);
+    }
+    else {
+        renderer.dibujaLinea(posJugador, punta, { 1.0f, 1.0f, 0.0f });
+    }
 }

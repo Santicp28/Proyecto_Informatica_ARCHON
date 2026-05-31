@@ -25,10 +25,12 @@ public:
 	void dibujaLinea(const Vector2D& limite1, const Vector2D& limite2, const Color& color)const;
 	void cuadradoParaPruebas()const;
 	void dibujaOvalo(const Vector2D& centro, const Color& color, double radioX, double radioY) const;
+	void dibujaSpriteRotado(const char* rutaPNG, const Vector2D& base, double ancho, double alto, double angulo) const;
 
 	void dibujaSprite(const char* rutaPNG, const Vector2D& centro, double ancho, double alto) const;
 	void dibujaSprite(const ETSIDI::Sprite& sprite, const Vector2D& centro, double ancho, double alto) const;
 	void dibujaTexto(const std::string& texto, const Vector2D& pos, const Color& color, int size, AlineacionTexto alineacion) const;
+
 
 private:
 	void dibujaColor(const Color& color)const { glColor3f(color.r, color.g, color.b); }

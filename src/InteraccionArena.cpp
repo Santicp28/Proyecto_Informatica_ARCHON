@@ -22,15 +22,12 @@ void InteraccionArena::colision(Pieza& p, const Bordes& b)
     resolverBorde(p, b.dcha);
 }
 
-
-
 bool InteraccionArena::colision(const Disparo& d, const Bordes& b)
 {
     const Pared* paredes[] = { &b.suelo, &b.techo, &b.izq, &b.dcha };
     for (const Pared* pared : paredes) {
         Vector2D dir;
         double dif = pared->distancia(d.posicion_, &dir) - d.sizeradio_;
-        printf("dif: %f\n", dif);
         if (dif <= 0) return true;
     }
     return false;
@@ -85,4 +82,8 @@ bool InteraccionArena::colision(const GolpeAtaque& golpe, const Vector2D& posAta
     const Vector2D& dir, const Pieza& defensor)
 {
     return golpe.colisiona(posAtacante, dir, defensor.posicion_, defensor.sizeradio_);
+}
+bool InteraccionArena::colision(const GritoArea& grito, const Vector2D& posBanshee, const Pieza& defensor)
+{
+    return grito.dentroDelArea(posBanshee, defensor.posicion_);
 }

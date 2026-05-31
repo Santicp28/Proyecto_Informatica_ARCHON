@@ -13,4 +13,5 @@ Banshee::Banshee(std::string nombre,Bando b) : Pieza(
     b,                             
     TipoMovimiento::VUELA           
 ) {
+    grito = new GritoArea();
 }

@@ -13,5 +13,5 @@ Caballero::Caballero(std::string nombre, Bando b) : Pieza(
     b,                             
     TipoMovimiento::CAMINA         
 ) {
-    golpe = new GolpeAtaque();
+    golpe = new GolpeAtaque(caballero.grafAtaque, 80.0);
 }

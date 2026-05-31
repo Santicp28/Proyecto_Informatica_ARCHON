@@ -15,7 +15,7 @@ public:
 
 	Disparo() = default;
 
-	Disparo(const Vector2D& pos, const Vector2D& vel,const char*spr,const Pieza* prop, double sizeradio = 50.0): 
+	Disparo(const Vector2D& pos, const Vector2D& vel,const char*spr,const Pieza* prop, double sizeradio = 20.0): 
 		ObjetoMovil(pos, vel, {}, sizeradio), origen_(pos), sprite(spr),propietario(prop) {}
 	
 	const Vector2D& Origen() const { return origen_; }
