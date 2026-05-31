@@ -19,6 +19,7 @@ void ContenedorSprites::cargarContenedorSprites()
 	spriteCursorLuz = make_unique<Sprite>("assets/Graficos/cursor_luz.PNG");
 	spriteCursorOscuro = make_unique<Sprite>("assets/Graficos/cursor_osc.PNG");
 	spriteCasillaEspecial = make_unique<Sprite>("assets/Graficos/casillas especial.PNG");
+	spritePanel = make_unique<Sprite>("assets/Graficos/panel.PNG");
 
 	spriteCancelar = make_unique<Sprite>("assets/Graficos/cease.png");
 	spriteElementos = make_unique<Sprite>("assets/Graficos/elemental.png");
@@ -28,8 +29,16 @@ void ContenedorSprites::cargarContenedorSprites()
 	spriteRevivir = make_unique<Sprite>("assets/Graficos/revive.png");
 	spriteTiempo = make_unique<Sprite>("assets/Graficos/shifttime.png");
 	spriteTeletransportar = make_unique<Sprite>("assets/Graficos/teleport.png");
+	spriteStatusEncarcelada = make_unique<Sprite>("assets/Graficos/imprision.png");
+	spriteStatusMojada = make_unique<Sprite>("assets/Graficos/mojado.png");
 
-	spriteArena= make_unique<Sprite>("assets/Graficos/arena.png");
+	spritePizarra = make_unique<Sprite>("assets/Graficos/pizarra.png");
+	spriteArbolMarron = make_unique<Sprite>("assets/Graficos/arbolmarron.png");
+	spriteArbolVerde = make_unique<Sprite>("assets/Graficos/arbolverde.png");
+	spriteGanaLuz = make_unique<Sprite>("assets/Graficos/ganaclaro.png");
+	spriteGanaOscuro = make_unique<Sprite>("assets/Graficos/ganaoscuro.png");
+	spriteFinLuz = make_unique<Sprite>("assets/Graficos/finluz.png");
+	spriteFinOscuro = make_unique<Sprite>("assets/Graficos/finoscuro.png");
 
 	spriteMago.spriteCuerpo = make_unique<Sprite>("assets/Graficos/mago.png");
 	spriteMago.spriteAtaque = make_unique<Sprite>("assets/Graficos/bolafuego.PNG");
@@ -84,6 +93,7 @@ void ContenedorSprites::descargarContenedorSprites()//destruir el objeto Sprite 
 	spriteCursorLuz.reset();
 	spriteCursorOscuro.reset();
 	spriteCasillaEspecial.reset();
+	spritePanel.reset();
 
 	spriteCancelar.reset();
 	spriteElementos.reset();
@@ -93,8 +103,16 @@ void ContenedorSprites::descargarContenedorSprites()//destruir el objeto Sprite 
 	spriteRevivir.reset();
 	spriteTiempo.reset();
 	spriteTeletransportar.reset();
+	spriteStatusEncarcelada.reset();
+	spriteStatusMojada.reset();
 
-	spriteArena.reset();
+	spritePizarra.reset();
+	spriteArbolMarron.reset();
+	spriteArbolVerde.reset();
+	spriteGanaLuz.reset();
+	spriteGanaOscuro.reset();
+	spriteFinLuz.reset();
+	spriteFinOscuro.reset();
 
 	spriteMago.reset();
 	spriteUnicornio.reset();

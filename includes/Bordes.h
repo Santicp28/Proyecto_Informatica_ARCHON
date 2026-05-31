@@ -2,6 +2,7 @@
 #include "Pared.h"
 #include "Vector2D.h"
 #include "Renderer.h"
+#include "ContenedorSprites.h"
 
 class InteraccionArena;
 
@@ -16,6 +17,6 @@ class Bordes
     const Color color{ 0.0f,0.0f,0.5f };
 public: 
     Bordes(const Vector2D& size, const Vector2D& centro);
-    void dibuja(const Renderer& renderer)const;
+    void dibuja(const Renderer& renderer, const ContenedorSprites& contenedorSprites) const;
 };
 

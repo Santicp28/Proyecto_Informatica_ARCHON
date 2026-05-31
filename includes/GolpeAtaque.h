@@ -6,14 +6,14 @@ class GolpeAtaque
 {
 	double anguloGolpe = 45.0;
 	double longitud = 80.0;
-	const char* sprite = nullptr;
+	unique_ptr<ETSIDI::Sprite> sprite;
 
   
 public:
     const double ANGULO_MIN = 0.0;
     const double ANGULO_MAX = 45.0;
     const double VELOCIDAD_GOLPE = 300.0;
-    GolpeAtaque(const char* spr = nullptr, double longitud_ = 80.0);
+    GolpeAtaque(const unique_ptr<ETSIDI::Sprite>& spr=nullptr, double longitud_ = 80.0);
 
     void actualizar(bool atacando, double dt);
     bool colisiona(const Vector2D& posJugador, const Vector2D& dir,

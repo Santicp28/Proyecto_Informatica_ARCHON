@@ -23,9 +23,7 @@ void PanelStats::dibuja(const Renderer& renderer, const ContenedorSprites& conte
     double y_texto_inicio = posicion.y + 45;
 
 
-	renderer.dibujaSprite(panel.sprite, centro, size.x * 2.2, size.y * 1.3); //Fondo con textura
-   // renderer.dibujaCuadrado(centro, colorFondo, size); //Fondo
-   //renderer.dibujaContornoCuadrado(centro, colorBorde, size); //Bordes
+	renderer.dibujaCuadrado(contenedorSprites.spritePanel, centro,Config::amarillo, {size.x * 2.2, size.y * 1.3}); //Fondo con textura
     
    renderer.dibujaTexto(titulo, {x_texto, posicion.y + 30}, colorTitulo, tamTitulo, AlineacionTexto::IZQUIERDA); //Título
 

@@ -35,6 +35,7 @@ struct ContenedorSprites//equivalente a Sprite* spriteCuerpo= nullptr;
 	unique_ptr<Sprite> spriteCursorLuz;
 	unique_ptr<Sprite> spriteCursorOscuro;
 	unique_ptr<Sprite> spriteCasillaEspecial;
+	unique_ptr<Sprite> spritePanel;
 
 	unique_ptr<Sprite> spriteCancelar;
 	unique_ptr<Sprite> spriteElementos;
@@ -44,8 +45,17 @@ struct ContenedorSprites//equivalente a Sprite* spriteCuerpo= nullptr;
 	unique_ptr<Sprite> spriteRevivir;
 	unique_ptr<Sprite> spriteTiempo;
 	unique_ptr<Sprite> spriteTeletransportar;
+	unique_ptr<Sprite> spriteStatusEncarcelada;
+	unique_ptr<Sprite> spriteStatusMojada;
 
-	unique_ptr<Sprite> spriteArena;
+	unique_ptr<Sprite> spritePizarra;
+	unique_ptr<Sprite> spriteArbolMarron;
+	unique_ptr<Sprite> spriteArbolVerde;
+	unique_ptr<Sprite> spriteGanaLuz;
+	unique_ptr<Sprite> spriteGanaOscuro;
+	unique_ptr<Sprite> spriteFinLuz;
+	unique_ptr<Sprite> spriteFinOscuro;
+
 
 	SpritePieza spriteMago;
 	SpritePieza spriteUnicornio;

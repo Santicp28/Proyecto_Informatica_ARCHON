@@ -11,7 +11,6 @@
 #include "Config.h"
 #include "ListaDisparos.h"
 #include "ListaObstaculos.h"
-#include "Grafarena.h"
 
 using std::vector;
 
@@ -31,7 +30,7 @@ class Arena
 	bool combateTerminado; //si empate o uno muerto
 	int  ganadorBando;     // 1 = LUZ, 2 = OSCURIDAD, 0 = en curso
 
-	void generaObstaculos(int cantidad = 8, unsigned int semilla = 0);
+	void generaObstaculos(const ContenedorSprites& contenedorSprites, int cantidad = 8, unsigned int semilla = 0);
 	bool esPosicionReservada(const Vector2D& pos, float margen) const;
 	bool esFinAbsoluto = false;
 	Bando bandoGanadorAbsoluto = Bando::NINGUNO;

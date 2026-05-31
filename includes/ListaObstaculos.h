@@ -5,7 +5,7 @@
 class ListaObstaculos {
         std::vector<Obstaculo> lista;
     public:
-        void agregar(const Vector2D& pos, const Vector2D& sz, ETSIDI::Sprite spr) {
+        void agregar(const Vector2D& pos, const Vector2D& sz, const unique_ptr<ETSIDI::Sprite>& spr) {
             lista.emplace_back(pos, sz, spr);
         }
       

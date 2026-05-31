@@ -5,6 +5,7 @@
 #include "InteraccionArena.h"
 #include "Disparo.h"
 #include "Renderer.h"
+#include "ContenedorSprites.h"
 
 using std::vector;
 class ListaDisparos

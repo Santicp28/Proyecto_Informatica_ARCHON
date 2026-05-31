@@ -1,9 +1,9 @@
 #include "freeglut.h"
 #include "Pared.h"
 
-void Pared::dibuja(const Renderer& renderer) const
+void Pared::dibuja(const Renderer& renderer, const ContenedorSprites& contenedorSprites) const
 {
-    renderer.dibujaLinea(limite1, limite2, color);
+    renderer.dibujaLinea(nullptr,limite1, limite2, color);
 }
 
 double Pared::distancia(const Vector2D& p, Vector2D* pdir) const

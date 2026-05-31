@@ -11,7 +11,6 @@
 #include "sonidos.h"
 #include <string>
 #include "ETSIDI.h"
-#include "Grafhechizos.h"
 
 class Disparo;
 class Pieza: public ObjetoMovil
@@ -33,7 +32,6 @@ protected:
     Bando bando;      // Bando
     TipoMovimiento tipo_movimiento;
     int rango_movimiento;
-    Color color;
     GolpeAtaque* golpe = nullptr;
     GritoArea* grito = nullptr;
 	
@@ -57,7 +55,7 @@ public:
 
     virtual void dibuja(const Renderer& renderer, const ContenedorSprites& contenedorSprites, const Vector2D& centro, double ancho, double alto) const = 0;
 
-    virtual const char* getSpriteAtaque() const { return nullptr; }
+    virtual const Sprite* getSpriteAtaque(const ContenedorSprites& contenedorSprites) { return nullptr; }
     virtual void reproducirSonidoAtaque() const { sfx_ataque_disparo.play(); }
 
     Pieza(std::string nom, TipoPieza tipo, Ataque at, Vida_maxima vi, Velocidad vel, Cadencia cad, Velocidad_ataque vel_at, Rango ra, Bando b, TipoMovimiento tm)

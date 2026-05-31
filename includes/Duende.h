@@ -5,7 +5,7 @@
 class Duende : public Pieza
 {
 public:
-    Duende(std::string nombre = "Duende", TipoPieza tipo = TipoPieza::DUENDE, Bando b = Bando::OSCURIDAD);
+    Duende(std::string nombre = "Duende", TipoPieza tipo = TipoPieza::DUENDE, Bando b = Bando::OSCURIDAD, const ContenedorSprites& contenedorSprites = ContenedorSprites());
 
     void reproducirSonidoAtaque() const override { sfx_ataque_melee.play(); }
     ~Duende() { delete golpe; golpe = nullptr; }

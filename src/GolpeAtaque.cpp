@@ -2,8 +2,8 @@
 #include <algorithm>
 #include "Config.h"
 using std::clamp;
-GolpeAtaque::GolpeAtaque(const char* spr, double longitud_)
-    : sprite(spr), longitud(longitud_)
+GolpeAtaque::GolpeAtaque(const unique_ptr<ETSIDI::Sprite>& spr, double longitud_)
+    : sprite(spr.get()), longitud(longitud_)
 {
 }
 void GolpeAtaque::actualizar(bool atacando, double dt)
@@ -47,6 +47,6 @@ void GolpeAtaque::dibuja(const Renderer& renderer, const Vector2D& posJugador,
         renderer.dibujaSpriteRotado(sprite, posJugador, longitud+0.2, longitud, angulo);
     }
     else {
-        renderer.dibujaLinea(posJugador, punta, { 1.0f, 1.0f, 0.0f });
+        renderer.dibujaLinea(nullptr,posJugador, punta, { 1.0f, 1.0f, 0.0f });
     }
 }

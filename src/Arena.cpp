@@ -51,7 +51,7 @@ bool Arena::esPosicionReservada(const Vector2D& pos, float margen) const
 
 
 
-void Arena::generaObstaculos(int cantidad, unsigned int semilla)
+void Arena::generaObstaculos(const ContenedorSprites& contenedorSprites, int cantidad, unsigned int semilla)
 {
     listaObstaculos.limpiar();
     std::srand(semilla == 0 ? static_cast<unsigned>(std::time(nullptr)) : semilla);
@@ -95,7 +95,7 @@ void Arena::generaObstaculos(int cantidad, unsigned int semilla)
         }
         if (solapa) continue;
 
-		listaObstaculos.agregar( candidato, obsSize, arbolverde.sprite );
+		listaObstaculos.agregar( candidato, obsSize, contenedorSprites.spriteArbolVerde );
         ++colocados;
     }
 }
@@ -307,19 +307,19 @@ void Arena::mueve(float dt)
 
 
 
-void Arena::dibuja(const Renderer& renderer) const
+void Arena::dibuja(const Renderer& renderer,const ContenedorSprites& contenedorSprites) const
 {
-	renderer.dibujaSprite(mesa.sprite, centro, Config::sizeMundo.x, Config::sizeMundo.y);
-	renderer.dibujaSprite(pizarra.sprite, centro, size.x, size.y);
-    //bordes.dibuja(renderer);
+	renderer.dibujaCuadrado(contenedorSprites.spriteMesa, centro,Config::gris, {Config::sizeMundo.x, Config::sizeMundo.y});
+	renderer.dibujaCuadrado(contenedorSprites.spritePizarra, centro, Config::verdeOscuro,{size.x, size.y});
+    bordes.dibuja(renderer, contenedorSprites);
     
 	renderer.dibujaTexto("vida: " + std::to_string(static_cast<int>(jugador1->getVidaActual())), { 20, 30 }, { 0.0f,0.0f,0.0f }, 20, AlineacionTexto::IZQUIERDA);
 	renderer.dibujaTexto("vida: " + std::to_string(static_cast<int>(jugador2->getVidaActual())), { 700, 30 }, { 0.0f,0.0f,0.0f }, 20, AlineacionTexto::IZQUIERDA);
 
 	listaObstaculos.dibuja(renderer);
-	listaDisparos.dibuja(renderer);
-	jugador1->dibuja(renderer, jugador1->posicion(), 175.0, 175.0);
-	jugador2->dibuja(renderer, jugador2->posicion(), 175.0, 175.0);
+	listaDisparos.dibuja(renderer, contenedorSprites);
+	jugador1->dibuja(renderer, contenedorSprites, jugador1->posicion(), 175.0, 175.0);
+	jugador2->dibuja(renderer,contenedorSprites, jugador2->posicion(), 175.0, 175.0);
 	//-------golpes espada------
 	if (jugador1 && jugador1->esAtaqueMelee())
 		jugador1->getGolpe().dibuja(renderer, jugador1->posicion(), jugador1->getDireccion());
@@ -334,15 +334,15 @@ void Arena::dibuja(const Renderer& renderer) const
 	if (combateTerminado) {
 		if (esFinAbsoluto) {
 			if (bandoGanadorAbsoluto == Bando::LUZ)
-				renderer.dibujaSprite(finluz.sprite, centro, size.x * 0.5, size.y * 0.3);
+				renderer.dibujaCuadrado(contenedorSprites.spriteFinLuz,centro, Config::azul, {size.x * 0.5, size.y * 0.3});
 			else
-				renderer.dibujaSprite(finoscuro.sprite, centro, size.x * 0.5, size.y * 0.3);
+				renderer.dibujaCuadrado(contenedorSprites.spriteFinOscuro, centro, Config::rojo, {size.x * 0.5, size.y * 0.3});
 		}
 		else {
 			if (ganadorBando == 1)
-				renderer.dibujaSprite(ganaluz.sprite, centro, size.x, size.y);
+				renderer.dibujaCuadrado(contenedorSprites.spriteGanaLuz,centro, Config::azul, {size.x, size.y});
 			else if (ganadorBando == 2)
-				renderer.dibujaSprite(ganaoscuro.sprite, centro, size.x, size.y);
+				renderer.dibujaCuadrado(contenedorSprites.spriteGanaOscuro,  centro, Config::rojo, {size.x, size.y});
 		}
 		renderer.dibujaTexto("TAB PARA CONTINUAR", { 40.0, 40.0 }, { 0.0f, 0.0f, 0.0f }, 20, AlineacionTexto::IZQUIERDA);
 	}

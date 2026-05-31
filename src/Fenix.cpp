@@ -15,7 +15,6 @@ Fenix::Fenix(std::string nombre, TipoPieza tipo, Bando b) : Pieza(
 ) {
     grito = new GritoArea(80.0,1.0);
 }
-}
 void Fenix::dibuja(const Renderer& renderer, const ContenedorSprites& contenedorSprites, const Vector2D& centro, double ancho, double alto) const {
     renderer.dibujaOvalo(contenedorSprites.spriteFenix.spriteCuerpo, centro, Config::magenta, ancho, alto);
 }

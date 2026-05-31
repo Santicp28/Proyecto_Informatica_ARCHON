@@ -9,10 +9,10 @@ Bordes::Bordes(const Vector2D& size, const Vector2D& centro)
 {
 }
 
-void Bordes::dibuja(const Renderer& renderer) const
+void Bordes::dibuja(const Renderer& renderer, const ContenedorSprites& contenedorSprites) const
 {
-    suelo.dibuja(renderer);
-    techo.dibuja(renderer);
-    izq.dibuja(renderer);
-    dcha.dibuja(renderer);
+    suelo.dibuja(renderer, contenedorSprites);
+    techo.dibuja(renderer, contenedorSprites);
+    izq.dibuja(renderer, contenedorSprites);
+    dcha.dibuja(renderer, contenedorSprites);
 }
