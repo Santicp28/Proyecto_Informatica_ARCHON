@@ -27,7 +27,7 @@
 #include "Unicornio.h"
 #include "Valquiria.h"
 #include "PanelStats.h"
-#include "PanelHechizo.h"
+
 
 enum class EstadoTablero {
     TABLERO,
@@ -89,6 +89,8 @@ class Tablero {
     int contadorTurnosParaCiclo;
 
     CicloLuz_A_Oscuridad ciclo;
+
+	std::string mensajeEtapaActual = "Clara";
 
 public:
     Tablero(double longit);

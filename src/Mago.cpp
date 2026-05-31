@@ -2,8 +2,9 @@
 #include "Pieza.h"
 
 
-Mago::Mago(std::string nombre, Bando b) : Pieza(
+Mago::Mago(std::string nombre, TipoPieza tipo, Bando b) : Pieza(
     nombre,
+    tipo,
     Ataque::ALTO,               
     Vida_maxima::MODERADA,        
     Velocidad::NORMAL,  
@@ -14,6 +15,4 @@ Mago::Mago(std::string nombre, Bando b) : Pieza(
     TipoMovimiento::TELETRANSPORTE 
 ) {
 }
-void Mago::dibuja(const Renderer& renderer, const Vector2D& centro, double ancho, double alto) const {
-    renderer.dibujaSprite(mago.graf, centro, ancho, alto);
-}
+

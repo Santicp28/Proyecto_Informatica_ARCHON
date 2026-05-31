@@ -45,6 +45,26 @@ enum class TipoCasilla {
     PODER,
 };
 
+enum class TipoPieza
+{
+    ARQUERO,
+    BANSHEE,
+    BASILISCO,
+    CABALLERO,
+    CAMBIAFORMA,
+    DJINNI,
+    DRAGON,
+    DUENDE,
+    FENIX,
+    GOLEM,
+    HECHICERO,
+    MAGO,
+    MANTICORA,
+    TROL,
+    UNICORNIO,
+    VALQUIRIA
+};
+
 enum class TipoMovimiento {
     CAMINA,
     VUELA,

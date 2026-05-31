@@ -1,8 +1,9 @@
 #include "Basilisco.h"
 #include "Pieza.h"
 
-Basilisco::Basilisco(std::string nombre, Bando b) : Pieza(
+Basilisco::Basilisco(std::string nombre, TipoPieza tipo, Bando b) : Pieza(
     nombre,
+    tipo,
     Ataque::ALTO,                  
     Vida_maxima::CORTA,                   
     Velocidad::NORMAL,             
@@ -13,6 +14,4 @@ Basilisco::Basilisco(std::string nombre, Bando b) : Pieza(
     TipoMovimiento::CAMINA         
 ) {
 }
-void Basilisco::dibuja(const Renderer& renderer, const Vector2D& centro, double ancho, double alto) const {
-    renderer.dibujaSprite(basilisco.graf, centro, ancho, alto);
-}
+

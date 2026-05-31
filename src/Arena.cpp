@@ -1,4 +1,6 @@
 #include "Arena.h"
+#include "sonidos.h"
+
 Arena::Arena() :
 	combateTerminado(false),
 	ganadorBando(0)
@@ -27,7 +29,13 @@ void Arena::inicializa(Pieza* p1, Pieza* p2)
 	esFinAbsoluto = false;
 	bandoGanadorAbsoluto = Bando::NINGUNO;
 	generaObstaculos(8);
+	tiempoDesdeUltimaGeneracion = 0.0f;
+	cantidadObstaculos = 8;
+	generaObstaculos(cantidadObstaculos);
 }
+
+
+
 bool Arena::esPosicionReservada(const Vector2D& pos, float margen) const
 {
     auto cerca = [&](const Vector2D& ref) {
@@ -36,23 +44,28 @@ bool Arena::esPosicionReservada(const Vector2D& pos, float margen) const
         return (dx * dx + dy * dy) < (margen * margen);
         };
 
-    return cerca(centro)
+    return cerca(centroArena)
         || cerca(posicionInicialJugador1)
         || cerca(posicionInicialJugador2);
 }
+
+
 
 void Arena::generaObstaculos(int cantidad, unsigned int semilla)
 {
     listaObstaculos.limpiar();
     std::srand(semilla == 0 ? static_cast<unsigned>(std::time(nullptr)) : semilla);
 
-    const float margenBorde = size.x * 0.08f;
-    const float xMin = margenBorde;
-    const float xMax = size.x - margenBorde;
-    const float yMin = margenBorde;
-    const float yMax = size.y - margenBorde;
-    const Vector2D obsSize{ size.x * 0.04f, size.y * 0.04f };
-    const float margenReservado = size.x * 0.15f;
+	const Vector2D sizeArena{ size.x * 0.78, size.y * 0.75 };
+	const float margenBorde = size.x * 0.05f;
+
+	const float xMin = (float)(centroArena.x - sizeArena.x * 0.5 + margenBorde);
+	const float xMax = (float)(centroArena.x + sizeArena.x * 0.5 - margenBorde);
+	const float yMin = (float)(centroArena.y - sizeArena.y * 0.5 + margenBorde);
+	const float yMax = (float)(centroArena.y + sizeArena.y * 0.5 - margenBorde);
+
+	const Vector2D obsSize{ size.x * 0.04f, size.y * 0.04f };
+	const float margenReservado = size.x * 0.15f;
 
     const int maxIntentos = 20;
     int colocados = 0;
@@ -87,6 +100,8 @@ void Arena::generaObstaculos(int cantidad, unsigned int semilla)
     }
 }
 
+
+
 void Arena::tecla(unsigned char key) {
     teclas[key] = true;
 	jugador1->atacar = teclas[' '];
@@ -103,6 +118,9 @@ void Arena::tecla(unsigned char key) {
 		vel = vel.unitario() * speed;
 	jugador1->velocidad(vel);
 }
+
+
+
 void Arena::teclaUP(unsigned char key) { 
     teclas[key] = false;
 	jugador1->atacar = teclas[' '];
@@ -117,6 +135,9 @@ void Arena::teclaUP(unsigned char key) {
 		vel = vel.unitario() * speed;
 	jugador1->velocidad(vel);
 }
+
+
+
 void Arena::teclaEspecial(int key) { 
     teclasEspeciales[key] = true; 
 	Vector2D vel{ 0.0, 0.0 };
@@ -131,6 +152,9 @@ void Arena::teclaEspecial(int key) {
     
 
 }
+
+
+
 void Arena::teclaEspecialUP(int key) { 
     teclasEspeciales[key] = false; 
 	Vector2D vel{ 0, 0 };
@@ -143,9 +167,20 @@ void Arena::teclaEspecialUP(int key) {
 		vel = vel.unitario() * speed;
 	jugador2->velocidad(vel);
 }
+
+
+
 void Arena::mueve(float dt)
 {
 	if (combateTerminado) return;
+
+	tiempoDesdeUltimaGeneracion += dt;
+	if (tiempoDesdeUltimaGeneracion >= intervaloGeneracion &&
+		cantidadObstaculos < maxObstaculos) {
+		cantidadObstaculos++;
+		generaObstaculos(cantidadObstaculos);
+		tiempoDesdeUltimaGeneracion = 0.0f;
+	}
 
 	jugador1->mueve(dt);
 	jugador2->mueve(dt);
@@ -178,12 +213,14 @@ void Arena::mueve(float dt)
 		if (InteraccionArena::colision(*listaDisparos[i], *jugador2) &&
 			listaDisparos[i]->getPropietario() != jugador2) {
 			jugador2->recibirDanio(jugador1->getAtaque());
+			sfx_recibir_danio.play();
 			listaDisparos.eliminar(i);
 			continue;
 		}
 		if (InteraccionArena::colision(*listaDisparos[i], *jugador1) &&
 			listaDisparos[i]->getPropietario() != jugador1) {
 			jugador1->recibirDanio(jugador2->getAtaque());
+			sfx_recibir_danio.play();
 			listaDisparos.eliminar(i);
 			continue;
 		}
@@ -196,6 +233,7 @@ void Arena::mueve(float dt)
 			jugador1->getSpriteAtaque(),
 			jugador1
 		));
+		jugador1->reproducirSonidoAtaque();
 	}
 	if (jugador2->puedeDisparar()) {
 		listaDisparos.agregar(new Disparo(
@@ -204,17 +242,20 @@ void Arena::mueve(float dt)
 			jugador2->getSpriteAtaque(),
 			jugador2
 		));
+		jugador2->reproducirSonidoAtaque();
 	}
 
 	//--------vida----------
 	if (jugador1->getVidaActual() <= 0) {
 		combateTerminado = true;
 		ganadorBando = 2;
+		sfx_muerte.play();
 		ultimoGanador = jugador2;
 	}
 	else if (jugador2->getVidaActual() <= 0) {
 		combateTerminado = true;
 		ganadorBando = 1;
+		sfx_muerte.play();
 		ultimoGanador = jugador1;
 	}
 
@@ -226,6 +267,8 @@ void Arena::mueve(float dt)
 		if (InteraccionArena::colision(jugador1->getGolpe(), jugador1->posicion(),
 			jugador1->getDireccion(), *jugador2)) {
 			jugador2->recibirDanio(jugador1->getAtaque());
+			jugador1->reproducirSonidoAtaque();
+			sfx_recibir_danio.play();
 			jugador1->golpeYaConecto = true;
 		}
 	}
@@ -234,6 +277,8 @@ void Arena::mueve(float dt)
 		if (InteraccionArena::colision(jugador2->getGolpe(), jugador2->posicion(),
 			jugador2->getDireccion(), *jugador1)) {
 			jugador1->recibirDanio(jugador2->getAtaque());
+			jugador2->reproducirSonidoAtaque();
+			sfx_recibir_danio.play();
 			jugador2->golpeYaConecto = true;
 		}
 	}
@@ -244,6 +289,8 @@ void Arena::mueve(float dt)
 		if (jugador1->getGrito().actualizar(dt, jugador1->getCadencia())) {
 			if (InteraccionArena::colision(jugador1->getGrito(), jugador1->posicion(), *jugador2))
 				jugador2->recibirDanio(jugador1->getAtaque());
+				jugador1->reproducirSonidoAtaque();
+				sfx_recibir_danio.play();
 		}
 	}
 	if (jugador2->esAtaqueArea()) {
@@ -252,13 +299,19 @@ void Arena::mueve(float dt)
 		if (jugador2->getGrito().actualizar(dt, jugador2->getCadencia())) {
 			if (InteraccionArena::colision(jugador2->getGrito(), jugador2->posicion(), *jugador1))
 				jugador1->recibirDanio(jugador2->getAtaque());
+				jugador2->reproducirSonidoAtaque();
+				sfx_recibir_danio.play();
 		}
 	}
 }
+
+
+
 void Arena::dibuja(const Renderer& renderer) const
 {
+	renderer.dibujaSprite(mesa.sprite, centro, Config::sizeMundo.x, Config::sizeMundo.y);
 	renderer.dibujaSprite(pizarra.sprite, centro, size.x, size.y);
-    bordes.dibuja(renderer);
+    //bordes.dibuja(renderer);
     
 
 	listaObstaculos.dibuja(renderer);
@@ -293,6 +346,8 @@ void Arena::dibuja(const Renderer& renderer) const
 	}
 
 }
+
+
 
 Pieza* Arena::getGanador() const
 {
